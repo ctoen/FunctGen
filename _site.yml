@@ -1,0 +1,17 @@
+name: "Functional Genomics 2020"
+navbar:
+  title: "Functional Genomics 2020"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Script"
+      href: DetailedWorkflow.html    
+    - text: "Week 1 - UCSC Genome Browser"
+      href: Week1.html
+    - text: "Week 2 - Bioconductor"
+      href: Week2.html
+    - text: "Datacamp Bioconductor"
+      href: intro_bioconductor.html
+    - text: "Links"
+      href: Links.html
+output_dir: "docs"

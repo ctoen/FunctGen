@@ -1,0 +1,81 @@
+---
+title: "1. UCSC Genome Browser"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    collapsed: false
+    number_sections: false
+    toc_depth: 1
+    #code_folding: hide
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
+```
+
+# Introduction  
+We will be looking at data from BLUEPRINT, a consortium of European universities and research institutes aimed to systematically study/uncover the epigenomic landscape of cells found in the blood. 
+
+Physiology and pathology (health and disease, development, lineage specification, onset and progression of disease, ) are both epigenetically regulated. 
+
+'Normal' epigenome of a given cell'. Producding reference epigenomes. 
+
+We will look at the relationship between histone signatures (combination of histone marks) and gene expression
+
+chromatin-based regulation of gene expression
+
+Epigenomic information, such as covalent histone modifications, DNA accessibility and DNA methylation
+
+BLUEPRINT  
+- reference genemes of cells found in the blood  
+- healthy individuals and with blood-based diseases including autoimmune diseases, leukemias.  
+
+#### Use of thses insights:  
+- epi-drugs  
+- case stratification, improved diagnosis and progrnosis  
+
+
+# Dataset  
+1. lymphocytic leukemia?  
+  - On the one hand, pathological tissues and cells exhibit epigenetic imprints of the developmental or differentiation stages from which they originate and, on the other hand, they acquire disease-specific epigenetic alterations  
+
+2. innate immune cells/innate immune memory?  
+  - comparing healthy with cancerous cells  
+  - environmental stimuli can determine a cell's future response/behavior by altering its epigenetic state, and thus alter susceptibility to disease  
+
+
+
+  
+
+```{r source biocLite or use biocManager, eval=F}
+my_version <- as.numeric(version$major)+as.numeric(version$minor)
+
+if(my_version <= 3.7){
+  # Bioconductor version 3.7 and earlier uses the BiocInstaller,
+  # install by sourcing the biocLite script:
+  source("https://bioconductor.org/biocLite.R")
+  #biocLite("packageName")
+} else {
+  # Bioconducter version 3.8 and later uses BiocManager,
+  # install using base R install.packages command:
+  if (!requireNamespace("BiocManager", quietly = TRUE)) 
+  install.packages("BiocManager")
+  # or simply: 
+  # install.packages("BiocManager") 
+}
+```
+
+
+
+GenomicAlignments loading BAM files
+```{r GenomicAlginments, eval=F}
+library(GenomicAlignments)
+```
+
+
+
+
+

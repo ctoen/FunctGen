@@ -1,0 +1,75 @@
+---
+title: "Functional Genomics 1 practical 2020"
+author: "Written by: Klaas, Simon, Siebren, Christa ... "
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    collapsed: false
+    number_sections: false
+    toc_depth: 2
+    
+---
+
+
+<div class="row" style="padding-top: 20px;">
+
+## Introduction
+<div class="col-sm-6">
+
+In this class we will be guiding you through several common steps performed to analyze (epi-)genomics data. You may already be familiar with the output of these analyses from scientific papers (figures, observations, hypotheses, conclusions).  
+
+</div>
+<div class="col-sm-6">
+
+<a href = "https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1001046">
+![](images/plosbiol_2011_ENCODE_userguid_fig1a.png)
+</a>
+Ref: https://doi.org/10.1371/journal.pbio.1001046   
+</div>
+
+
+## Learning objectives    
+<span style="color: red;">Examples, not final. Might also restrict to sub-learning objectives per section.</span>  
+
+* Understand how data are generated from a ChIP-sequencing experiment  
+* Know how to display and browse data in the UCSC Genome Browser and formulate some basic hypothesis based on observations using this tool  
+* Familiarize yourself with several basic Bioconductor packages  
+* Quantify and visualize signal distribution and signal strength of histone ChIP-seq in R   
+* Summarize genome-wide data ChIP-data into clustered heatmap  
+* etc.  
+
+## Structure of this practical  
+1. We will use the **UCSC Genome Browser** to visualize the data, look at the distribution of the signal, formulate hypothesis/-es and - roughly - evaluate the quality of the experiment (of note: obvously, this is not the only quality check).  
+
+2. Next, we will transform our observations into numbers and thus **quantify** the signal intensity and distribution of the epigenetic marks we are looking at.  
+    * For this purpose we will use packages from the [Bioconductor](http://bioconductor.org/) project, a extensive and cutting edge repository of R packages used for the analysis of high througput sequencing data.  
+    * We've limited these analyses to <span style="color: red;">chr21/protein coding genes/used random 5M reads instead of the original dataset (called *downsampling*)</span> to save running time on the server. More reads increases the power of the analyses and confidence of tests <span style="color: red;">but blabla</span>.  
+
+3. Combine data from different marks and cells and link differences and profiles to functional consequences with respect to gene expression. 
+
+Please use the virutal classroom space in Brightspace one you are stuck or have a question. A teacher will be present there during practical hours.   
+
+
+## Using R  
+We will code in R, which you have already familiarized yourself with during the Genomics & Big Data course. 
+
+##### What does an R package or function do?  
+- Use the built-in RStudio help interface to find a particular function  
+- Googling *[function or package name] 'r'*  
+- Go to the 'Packages' tab to find user guides and other documentation on the package    
+
+
+##### I get an error?  
+- Read the error, might give you hints 
+- various ways to find information about a function
+
+##### Some usefull links:   
+1. Google is great, Google your problem.  
+2. [Stackoverflow](https://stackoverflow.com) is great, Google will often take you there because someone has already asked your question, and someone else has answered, usually many people have answered your question many ways.  
+
+## Resources used to compile this practical/tutorial  
+- Datacamp  
+- [seq2science](https://vanheeringen-lab.github.io/seq2science/index.html)
+
+

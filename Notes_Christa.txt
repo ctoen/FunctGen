@@ -1,0 +1,19 @@
+# Personal notes from Christa  
+
+## Stuff to remember  
+Genome Browser explanation: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5673602/
+## Stuff to do  
+
+## Stuff to discuss with Siebren/Siemon/Klaas:  
+1. UCSC GB: 
+  - use track hub or download & modify data ourselves
+  - what failed trakc to use?
+
+
+## Optional Questions:  
+1. Possible explanations for having identified genomic regions in ChIP-seq experiment that do not include at least one binding site for the target protein/protein of interest:
+  
+- not perfect antibody or cross-reactivity of the antibody - should actually have been tested up front!
+- protein/IP target may not bind directly to identified DNA region  
+- 
+- never perfect analysis pipelines and too low signal cutoff thresholds
