@@ -1,0 +1,291 @@
+---
+title: "Bioconductor_tools"
+author: "Christa Toenhake"
+date: "9/16/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Bioconductor Packages:  
+- [Bioconductor](https://www.bioconductor.org/) provides tools for analysis of high throughput genomic data in R 
+- Has its own repository, own way to install packages, each release designed with specific version of R  
+- Provides cutting edge 
+
+package | purpose   
+-----|-----   
+[BSgenome](http://bioconductor.org/packages/release/bioc/html/BSgenome.html) | infrastructure and functions for related genome packages with full genome sequences for many species    
+[Biostrings](https://www.bioconductor.org/packages/release/bioc/html/Biostrings.html) | provides containters and functions for fast manipulation of large biological sequences (aka genome data)  
+[GenomicRanges](https://bioconductor.org/packages/release/bioc/vignettes/GenomicRanges/inst/doc/GenomicRangesIntroduction.html) | handles genomic intervals  
+[GenomicFeatures](https://www.bioconductor.org/packages/release/bioc/html/GenomicFeatures.html) | functions to retrieve and manage genomic features from public databases  
+
+
+## BSgenome
+```{r BSgenome}
+#BiocManager::install(c("BSgenome", "BSgenome.Hsapiens.UCSC.hg38"))
+library(BSgenome)
+#BSgenome.speciesName.provider.version
+library(BSgenome.Hsapiens.UCSC.hg38)
+
+# available genomes - lists BSgenome data packages available in Bioconductor repository for your version of Bioconductor
+available.genomes()
+
+hs_genome <- BSgenome.Hsapiens.UCSC.hg38
+
+show(hs_genome)
+# number of chromosomes
+length(hs_genome)
+# chromosome names
+names(hs_genome)
+# sequence lengths
+seqlengths(hs_genome)
+# get sequences
+getSeq(hs_genome, names = "chr1", start = 100, end = 150)
+```
+
+## BioStrings
+Biostrings = algorithms for fast manipulation of large biological sequences  
+- two main virtual classes = XString and XStringSet 
+BString class for *big string*  
+- a Set is a collection of strings that can have variable lengths
+```{r Biostrings}
+#BiocManager::install("Biostrings")
+library(Biostrings)
+# showClass to learn more about these containters and how they are related
+showClass("XString")
+showClass("BStringSet")
+showClass("BString") # subclass of XString
+showClass("DNAString")
+showClass("RNAString")
+showClass("AAString")
+
+# BioStrings are biology-oriented containers. 
+# They use a predefined set of alphabet for storing a DNA, RNA or amino acid sequence  
+DNA_BASES # 4 dNTPs
+RNA_BASES # 4 NTPs
+AA_STANDARD # 20 amino acids
+
+# Biostrings alphabets are based on two code  
+# Each alphabet corresponds to a specific biostring container, and each alphabet usually has extra code letters and symbols
+DNA_ALPHABET # IUPAC code - https://www.bioinformatics.org/sms/iupac.html
+RNA_ALPHABET # IUPAC code
+AA_ALPHABET # amino acid code
+RNA_GENETIC_CODE # translation code from rna codon to amino acide
+
+# use DNAString command to save sequence in object as DNAString sequence
+dna_seq <- DNAString("ATGATCTCGTAA")
+dna_seq
+dna_seq2 <- DNAString("ATGATCTCGTAAMYGTACKVGWTSD")
+rna_seq <- RNAString(dna_seq) # transcription
+rna_seq
+rna_seq2 <- RNAString(dna_seq2)
+# to code translation use translate(), also accepts DNAString classes
+aa_seq <- translate(rna_seq)  
+aa_seq
+translate(dna_seq)
+#translate(dna_seq2) # not able to translate
+
+# check the alphabet used:
+alphabet(rna_seq)
+alphabet(aa_seq)
+alphabetFrequency(aa_seq) # and the frequency of each letter in the sequence
+alphabet(dna_seq) 
+alphabetFrequency(dna_seq) 
+alphabet(dna_seq, baseOnly =T) # returns only the 
+alphabet(dna_seq2) 
+
+# report A, C, G, T and collapse rest to 'other' category:
+alphabetFrequency(dna_seq2, baseOnly =T) 
+
+# report as frequencies:
+alphabetFrequency(dna_seq2, baseOnly =T, as.prob = T) 
+
+# now with human genome chr21
+show(hs_genome)
+alphabet(hs_genome$chr21)
+alphabetFrequency(hs_genome$chr21)
+```
+
+### Useful functions to manipulate BioStrings:
+RNAString(), translate(), unlist(), length(), width(), complement(), rev, reverse(), reverseComplement, subseq(OBJECT, START, END)
+```{r biostring handling}
+# reading a string set (XStringSet for many sequences)
+# go from Set to String
+# read sequence as set:
+pf <- readDNAStringSet("data/p6_PlasmoDB-26_Pfalciparum3D7_Genome.fasta")
+# set is a list with length 16 (16 chromosomes)
+length(pf)
+# length of each chromosome
+width(pf)
+pf_width <- width(pf)
+
+#name of each chromosome
+names(pf)
+# make single string by:
+pf_seq <- unlist(pf)
+length(pf_seq)
+#widht(pf_seq) # no width because chromosomes arecollated
+
+# create a new set from a single sequence:
+# specify the sequence and the start and end or the start and with as numeric vectors
+pf_set <- DNAStringSet(pf_seq, start = c(1, 101, 201), width =rep(100, times = 3))
+names(pf_set) <- paste0("seq", seq(1, 3, by = 1))
+
+# complement of the strands we've seen so far:
+complement(pf_set)
+complement(dna_seq)
+# Rev() (base package) can also be useful:
+# to reverse the list order of the set from top to bottom:
+rev(pf_set)
+# reverse (IRranges) reverse the characters from right to left:
+reverse(pf_set)
+# obtain the reverse complement (works on DNAStraings and RNASTrings) use one or combined function:
+reverse(complement(pf_set))
+reverseComplement(pf_set) # faster and memory efficient
+
+```
+
+### Patterns in BioStrings  
+- exmaples are sequence repeats, protein end codon, splice start en end sites, TF binding sites, CpG islands  
+- discover occurance, frequency, periodicity and length  
+<br>
+`matchPattern(pattern, subject)`  compare 1 string to another string
+`vmatchPattern(pattern, subject)`  multple string matching. 1 to more or more to 1 
+`countPattern(pattern, subject)`  
+`vcountPattern(pattern, subject)`
+<br>
+`findPalindromes()` find palindromic regions within a single sequence. Does not work on a set.
+
+Example exercise is to find protein within virus genome sequence  
+
+```{r pattern finding in BioStrings}
+spe2_simple <- DNAString(x  ="TGCA----GTGC")
+spe2_uipac <- DNAString(x  ="NVTGCANNNNVGTGCR")
+spe2_set <- DNAStringSet(x = c("NVTGCANNNNVGTGCR", "NVTGCANNNNNVGTGCR"))
+names(spe2_set) <- c("spacer4bp", "spacer5bp")
+# use match for a single sequene subject 
+matchPattern(pattern = spe2_simple, subject = pf_seq, max.mismatch = 2)
+matchPattern(pattern = spe2_uipac, subject = pf_seq, max.mismatch = 1, fixed =F) # set fixed to false to allow IUPAC ambiguity code in the pattern can match any letter in the subject that is associated with the code,
+
+# use matchPDict and countPDict when you have multple patterns 
+matchPDict(pdict = spe2_set, subject = pf_seq, fixed = F)
+countPDict(pdict = spe2_set, subject = pf_seq, fixed = F)
+# use vmatch for 1 to many matching 
+vmatchPattern(spe2_simple, pf)
+```
+
+
+## Ranges and Features 
+### IRanges 
+- hierarchical data structures    
+- allow storage of metadata  
+- to extract ranges from BioStrings  
+- can be defined with two data types: numeric and locial. Numeric vectors will delimit the exact positions by index, and logical vectors will select a range by a condition.   
+<br>
+Construct an IRanges object by: `IRanges(start = c(), end = c(), width = c(), names  = c())` or define the width `IRanges(start = c(), width = c())`.  
+- IRanges areguments get recycled (fill in blanks)  
+- equation for sequence range = `width = end - start + 1`  
+- check width with `width()` function 
+- check length of ranges with `lengths()` 
+<br>
+Rle stands fro Run Lenth Encoding  
+- storage efficient  
+- Rle can be converted to IRranges by `IRanges(start = rle_object)`  
+<br>  
+Genomic intervals  
+- library GenomicRanges  
+
+### GRanges object  
+- minimally requires chr, start and end column from dataframe in input  
+- also has metadata, `seqnames` and `seqinfo`  
+- see ist of available accessors use: `methods(class = "GRanges")`  
+  + `seqnames(gr)` - chromosome names  
+  + `ranges(gr)` - returns IRanges object  
+  + `mcols(gr)` - display metadata per range  
+  + `seqinfo(gr)` - to store sequence information  
+  + `genome(gr)`- genome name   
+  + both are **setter** and **getter** functions  
+  + can be inherited by other S4 objects  
+- convert dataframe to GRanges object with `as()`  
+  + dataframe should have `start` `end` and `chr`  
+  + `gr <- as(dataframe, "GRanges")`  
+
+### GenomicFeatures
+- library(FenomicFeatures)  
+- manipulate TxDb objects from UCSC or BioMart  
+- Transcript Database Objects
+- Obtain TxDb object by: 
+  + use `loadDB` as in `loadDB(system.file("extdata", "hg19_knownGene_sample.sqlite", package="GenomicFeatures"))`  
+  + load TxDB annotation package like: `library(TxDb.Hsapiens.UCSC.hg19.knownGene)`  
+<br>
+Functions to manipulate TxDb object:  
+- `genes()` function extracts genomic features from TxDb-like object.  
+  + returns `GRanges` object  
+- other functions to extract features are `transcripts()`, `cds()`, `exons()`, and `promoters()`  
+  + input is TxDb object
+  + define `filter = ` to filter a condition on a column as list    
+  + define `columns = ` to select column names as list  
+
+### GRangesList  
+- container of collection of GRanges  
+- construct with:  
+  + `as(mylist, "GRangesList")`  
+  + `GRangesList(myGranges1, myGranges2, ...)`
+- convert back with `unlist()`  
+- accessers found by `methods(class = "GRangesList")`  
+- handy for eg. transcripts bij gene, exons by genes, read alignments, sliding windows 
+  + `slidingWindows()` - makes sliding windows  
+- `exonsBy()` function returns a GRangesList
+<br>
+Overlaps  
+- `countOverlaps(query, subject)`  
+- `findOverlaps(query, subject)`  
+- `subsetByOverlap(query, subject)`  
+- `overlapsAny()`  
+- query and subject can be GRanges and GRangesList  
+
+
+
+```{r genomic ranges}
+library(GenomicRanges)
+# example usage: 
+# gene of interest = abcd1
+# located on chrX  
+
+# BiocManager::install("TxDb.Hsapiens.UCSC.hg38.knownGene") # Transcript database from UCSC accessed through genomic features  
+library(TxDb.Hsapiens.UCSC.hg38.knownGene) 
+hg <- TxDb.Hsapiens.UCSC.hg38.knownGene
+
+# select genes from chromosomes X
+hg_chrXg <- genes(hg, filter = list(tx_chrom = c("chrX")) ) # list of filter specifications. Can be "gene_id", "tx_id", "tx_name", "tx_chrom", "tx_strand", "exon_id", "exon_name", "exon_chrom", "exon_strand", "cds_id", "cds_name", "cds_chrom", "cds_strand", and "exon_rank"  
+
+seqlevels(hg) <- c("chrX") # prefilter results
+# exons by transcript:
+exonsBytx <- exonsBy(hg, by = "tx") # exons by transcript, tx means transcript
+trByg <- transcriptsBy(hg, by = "gene") # transcripts by gene
+# select transcirpt id
+abcd1_222771<- exonsBytx[["222771"]]
+abcd1_222771
+
+# select transcripts of geneid 215 (abcd1 gene)
+abcd1_transcripts <- trByg$`215`
+abcd1_transcripts
+
+# From GRangesList object into a GRanges object  
+myGR <- unlist(hg)
+
+```
+### GenomicAlignments  
+```{r genoimcaignments}
+#if (!requireNamespace("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+
+#BiocManager::install("GenomicAlignments")
+```
+
+
+
+#### [Monash bioinformatics platform tutorial]
+https://monashbioinformaticsplatform.github.io/r-more/topics/sequences_and_features.html#dna-sequences-and-genomic-ranges

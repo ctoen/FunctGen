@@ -11,6 +11,9 @@ output:
     
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
+```
 
 <div class="row" style="padding-top: 20px;">
 

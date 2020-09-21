@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Christa Toenhake" />
+
+
+<title>Bioconductor_tools</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Functional Genomics 2020</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="p1_index.html">Home</a>
+</li>
+<li>
+  <a href="p2_learningObjectives.html">Learning Objectives</a>
+</li>
+<li>
+  <a href="p3_script.html">Script</a>
+</li>
+<li>
+  <a href="p4_week1.html">Week 1 - UCSC Genome Browser</a>
+</li>
+<li>
+  <a href="p5_week2.html">Week 2 - Bioconductor</a>
+</li>
+<li>
+  <a href="p6_intro_bioconductor.html">Datacamp Bioconductor</a>
+</li>
+<li>
+  <a href="p7_links.html">Links</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Bioconductor_tools</h1>
+<h4 class="author">Christa Toenhake</h4>
+<h4 class="date">9/16/2020</h4>
+
+</div>
+
+
+<p>Bioconductor Packages:<br />
+- <a href="https://www.bioconductor.org/">Bioconductor</a> provides tools for analysis of high throughput genomic data in R - Has its own repository, own way to install packages, each release designed with specific version of R<br />
+- Provides cutting edge</p>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>package</th>
+<th>purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="http://bioconductor.org/packages/release/bioc/html/BSgenome.html">BSgenome</a></td>
+<td>infrastructure and functions for related genome packages with full genome sequences for many species</td>
+</tr>
+<tr class="even">
+<td><a href="https://www.bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a></td>
+<td>provides containters and functions for fast manipulation of large biological sequences (aka genome data)</td>
+</tr>
+<tr class="odd">
+<td><a href="https://bioconductor.org/packages/release/bioc/vignettes/GenomicRanges/inst/doc/GenomicRangesIntroduction.html">GenomicRanges</a></td>
+<td>handles genomic intervals</td>
+</tr>
+<tr class="even">
+<td><a href="https://www.bioconductor.org/packages/release/bioc/html/GenomicFeatures.html">GenomicFeatures</a></td>
+<td>functions to retrieve and manage genomic features from public databases</td>
+</tr>
+</tbody>
+</table>
+<div id="bsgenome" class="section level2">
+<h2>BSgenome</h2>
+<pre class="r"><code>#BiocManager::install(c(&quot;BSgenome&quot;, &quot;BSgenome.Hsapiens.UCSC.hg38&quot;))
+library(BSgenome)</code></pre>
+<pre><code>## Loading required package: BiocGenerics</code></pre>
+<pre><code>## Loading required package: parallel</code></pre>
+<pre><code>## 
+## Attaching package: &#39;BiocGenerics&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:parallel&#39;:
+## 
+##     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+##     clusterExport, clusterMap, parApply, parCapply, parLapply,
+##     parLapplyLB, parRapply, parSapply, parSapplyLB</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     IQR, mad, sd, var, xtabs</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+##     dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+##     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+##     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+##     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+##     union, unique, unsplit, which, which.max, which.min</code></pre>
+<pre><code>## Loading required package: S4Vectors</code></pre>
+<pre><code>## Loading required package: stats4</code></pre>
+<pre><code>## 
+## Attaching package: &#39;S4Vectors&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     expand.grid</code></pre>
+<pre><code>## Loading required package: IRanges</code></pre>
+<pre><code>## Loading required package: GenomeInfoDb</code></pre>
+<pre><code>## Loading required package: GenomicRanges</code></pre>
+<pre><code>## Loading required package: Biostrings</code></pre>
+<pre><code>## Loading required package: XVector</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Biostrings&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     strsplit</code></pre>
+<pre><code>## Loading required package: rtracklayer</code></pre>
+<pre class="r"><code>#BSgenome.speciesName.provider.version
+library(BSgenome.Hsapiens.UCSC.hg38)
+
+# available genomes - lists BSgenome data packages available in Bioconductor repository for your version of Bioconductor
+available.genomes()</code></pre>
+<pre><code>##  [1] &quot;BSgenome.Alyrata.JGI.v1&quot;                  
+##  [2] &quot;BSgenome.Amellifera.BeeBase.assembly4&quot;    
+##  [3] &quot;BSgenome.Amellifera.UCSC.apiMel2&quot;         
+##  [4] &quot;BSgenome.Amellifera.UCSC.apiMel2.masked&quot;  
+##  [5] &quot;BSgenome.Aofficinalis.NCBI.V1&quot;            
+##  [6] &quot;BSgenome.Athaliana.TAIR.04232008&quot;         
+##  [7] &quot;BSgenome.Athaliana.TAIR.TAIR9&quot;            
+##  [8] &quot;BSgenome.Btaurus.UCSC.bosTau3&quot;            
+##  [9] &quot;BSgenome.Btaurus.UCSC.bosTau3.masked&quot;     
+## [10] &quot;BSgenome.Btaurus.UCSC.bosTau4&quot;            
+## [11] &quot;BSgenome.Btaurus.UCSC.bosTau4.masked&quot;     
+## [12] &quot;BSgenome.Btaurus.UCSC.bosTau6&quot;            
+## [13] &quot;BSgenome.Btaurus.UCSC.bosTau6.masked&quot;     
+## [14] &quot;BSgenome.Btaurus.UCSC.bosTau8&quot;            
+## [15] &quot;BSgenome.Btaurus.UCSC.bosTau9&quot;            
+## [16] &quot;BSgenome.Carietinum.NCBI.v1&quot;              
+## [17] &quot;BSgenome.Celegans.UCSC.ce10&quot;              
+## [18] &quot;BSgenome.Celegans.UCSC.ce11&quot;              
+## [19] &quot;BSgenome.Celegans.UCSC.ce2&quot;               
+## [20] &quot;BSgenome.Celegans.UCSC.ce6&quot;               
+## [21] &quot;BSgenome.Cfamiliaris.UCSC.canFam2&quot;        
+## [22] &quot;BSgenome.Cfamiliaris.UCSC.canFam2.masked&quot; 
+## [23] &quot;BSgenome.Cfamiliaris.UCSC.canFam3&quot;        
+## [24] &quot;BSgenome.Cfamiliaris.UCSC.canFam3.masked&quot; 
+## [25] &quot;BSgenome.Cjacchus.UCSC.calJac3&quot;           
+## [26] &quot;BSgenome.Dmelanogaster.UCSC.dm2&quot;          
+## [27] &quot;BSgenome.Dmelanogaster.UCSC.dm2.masked&quot;   
+## [28] &quot;BSgenome.Dmelanogaster.UCSC.dm3&quot;          
+## [29] &quot;BSgenome.Dmelanogaster.UCSC.dm3.masked&quot;   
+## [30] &quot;BSgenome.Dmelanogaster.UCSC.dm6&quot;          
+## [31] &quot;BSgenome.Drerio.UCSC.danRer10&quot;            
+## [32] &quot;BSgenome.Drerio.UCSC.danRer11&quot;            
+## [33] &quot;BSgenome.Drerio.UCSC.danRer5&quot;             
+## [34] &quot;BSgenome.Drerio.UCSC.danRer5.masked&quot;      
+## [35] &quot;BSgenome.Drerio.UCSC.danRer6&quot;             
+## [36] &quot;BSgenome.Drerio.UCSC.danRer6.masked&quot;      
+## [37] &quot;BSgenome.Drerio.UCSC.danRer7&quot;             
+## [38] &quot;BSgenome.Drerio.UCSC.danRer7.masked&quot;      
+## [39] &quot;BSgenome.Dvirilis.Ensembl.dvircaf1&quot;       
+## [40] &quot;BSgenome.Ecoli.NCBI.20080805&quot;             
+## [41] &quot;BSgenome.Gaculeatus.UCSC.gasAcu1&quot;         
+## [42] &quot;BSgenome.Gaculeatus.UCSC.gasAcu1.masked&quot;  
+## [43] &quot;BSgenome.Ggallus.UCSC.galGal3&quot;            
+## [44] &quot;BSgenome.Ggallus.UCSC.galGal3.masked&quot;     
+## [45] &quot;BSgenome.Ggallus.UCSC.galGal4&quot;            
+## [46] &quot;BSgenome.Ggallus.UCSC.galGal4.masked&quot;     
+## [47] &quot;BSgenome.Ggallus.UCSC.galGal5&quot;            
+## [48] &quot;BSgenome.Ggallus.UCSC.galGal6&quot;            
+## [49] &quot;BSgenome.Hsapiens.1000genomes.hs37d5&quot;     
+## [50] &quot;BSgenome.Hsapiens.NCBI.GRCh38&quot;            
+## [51] &quot;BSgenome.Hsapiens.UCSC.hg17&quot;              
+## [52] &quot;BSgenome.Hsapiens.UCSC.hg17.masked&quot;       
+## [53] &quot;BSgenome.Hsapiens.UCSC.hg18&quot;              
+## [54] &quot;BSgenome.Hsapiens.UCSC.hg18.masked&quot;       
+## [55] &quot;BSgenome.Hsapiens.UCSC.hg19&quot;              
+## [56] &quot;BSgenome.Hsapiens.UCSC.hg19.masked&quot;       
+## [57] &quot;BSgenome.Hsapiens.UCSC.hg38&quot;              
+## [58] &quot;BSgenome.Hsapiens.UCSC.hg38.masked&quot;       
+## [59] &quot;BSgenome.Mdomestica.UCSC.monDom5&quot;         
+## [60] &quot;BSgenome.Mfascicularis.NCBI.5.0&quot;          
+## [61] &quot;BSgenome.Mfuro.UCSC.musFur1&quot;              
+## [62] &quot;BSgenome.Mmulatta.UCSC.rheMac10&quot;          
+## [63] &quot;BSgenome.Mmulatta.UCSC.rheMac2&quot;           
+## [64] &quot;BSgenome.Mmulatta.UCSC.rheMac2.masked&quot;    
+## [65] &quot;BSgenome.Mmulatta.UCSC.rheMac3&quot;           
+## [66] &quot;BSgenome.Mmulatta.UCSC.rheMac3.masked&quot;    
+## [67] &quot;BSgenome.Mmulatta.UCSC.rheMac8&quot;           
+## [68] &quot;BSgenome.Mmusculus.UCSC.mm10&quot;             
+## [69] &quot;BSgenome.Mmusculus.UCSC.mm10.masked&quot;      
+## [70] &quot;BSgenome.Mmusculus.UCSC.mm8&quot;              
+## [71] &quot;BSgenome.Mmusculus.UCSC.mm8.masked&quot;       
+## [72] &quot;BSgenome.Mmusculus.UCSC.mm9&quot;              
+## [73] &quot;BSgenome.Mmusculus.UCSC.mm9.masked&quot;       
+## [74] &quot;BSgenome.Osativa.MSU.MSU7&quot;                
+## [75] &quot;BSgenome.Ptroglodytes.UCSC.panTro2&quot;       
+## [76] &quot;BSgenome.Ptroglodytes.UCSC.panTro2.masked&quot;
+## [77] &quot;BSgenome.Ptroglodytes.UCSC.panTro3&quot;       
+## [78] &quot;BSgenome.Ptroglodytes.UCSC.panTro3.masked&quot;
+## [79] &quot;BSgenome.Ptroglodytes.UCSC.panTro5&quot;       
+## [80] &quot;BSgenome.Ptroglodytes.UCSC.panTro6&quot;       
+## [81] &quot;BSgenome.Rnorvegicus.UCSC.rn4&quot;            
+## [82] &quot;BSgenome.Rnorvegicus.UCSC.rn4.masked&quot;     
+## [83] &quot;BSgenome.Rnorvegicus.UCSC.rn5&quot;            
+## [84] &quot;BSgenome.Rnorvegicus.UCSC.rn5.masked&quot;     
+## [85] &quot;BSgenome.Rnorvegicus.UCSC.rn6&quot;            
+## [86] &quot;BSgenome.Scerevisiae.UCSC.sacCer1&quot;        
+## [87] &quot;BSgenome.Scerevisiae.UCSC.sacCer2&quot;        
+## [88] &quot;BSgenome.Scerevisiae.UCSC.sacCer3&quot;        
+## [89] &quot;BSgenome.Sscrofa.UCSC.susScr11&quot;           
+## [90] &quot;BSgenome.Sscrofa.UCSC.susScr3&quot;            
+## [91] &quot;BSgenome.Sscrofa.UCSC.susScr3.masked&quot;     
+## [92] &quot;BSgenome.Tgondii.ToxoDB.7.0&quot;              
+## [93] &quot;BSgenome.Tguttata.UCSC.taeGut1&quot;           
+## [94] &quot;BSgenome.Tguttata.UCSC.taeGut1.masked&quot;    
+## [95] &quot;BSgenome.Tguttata.UCSC.taeGut2&quot;           
+## [96] &quot;BSgenome.Vvinifera.URGI.IGGP12Xv0&quot;        
+## [97] &quot;BSgenome.Vvinifera.URGI.IGGP12Xv2&quot;        
+## [98] &quot;BSgenome.Vvinifera.URGI.IGGP8X&quot;</code></pre>
+<pre class="r"><code>hs_genome &lt;- BSgenome.Hsapiens.UCSC.hg38
+
+show(hs_genome)</code></pre>
+<pre><code>## Human genome:
+## # organism: Homo sapiens (Human)
+## # provider: UCSC
+## # provider version: hg38
+## # release date: Dec. 2017
+## # release name: Genome Reference Consortium GRCh38.p12
+## # 595 sequences:
+## #   chr1                    chr2                    chr3                   
+## #   chr4                    chr5                    chr6                   
+## #   chr7                    chr8                    chr9                   
+## #   chr10                   chr11                   chr12                  
+## #   chr13                   chr14                   chr15                  
+## #   ...                     ...                     ...                    
+## #   chr19_KV575254v1_alt    chr19_KV575255v1_alt    chr19_KV575256v1_alt   
+## #   chr19_KV575257v1_alt    chr19_KV575258v1_alt    chr19_KV575259v1_alt   
+## #   chr19_KV575260v1_alt    chr22_KN196485v1_alt    chr22_KN196486v1_alt   
+## #   chr22_KQ458387v1_alt    chr22_KQ458388v1_alt    chr22_KQ759761v1_alt   
+## #   chrX_KV766199v1_alt                                                    
+## # (use &#39;seqnames()&#39; to see all the sequence names, use the &#39;$&#39; or &#39;[[&#39; operator
+## # to access a given sequence)</code></pre>
+<pre class="r"><code># number of chromosomes
+length(hs_genome)</code></pre>
+<pre><code>## [1] 595</code></pre>
+<pre class="r"><code># chromosome names
+names(hs_genome)</code></pre>
+<pre><code>##   [1] &quot;chr1&quot;                    &quot;chr2&quot;                   
+##   [3] &quot;chr3&quot;                    &quot;chr4&quot;                   
+##   [5] &quot;chr5&quot;                    &quot;chr6&quot;                   
+##   [7] &quot;chr7&quot;                    &quot;chr8&quot;                   
+##   [9] &quot;chr9&quot;                    &quot;chr10&quot;                  
+##  [11] &quot;chr11&quot;                   &quot;chr12&quot;                  
+##  [13] &quot;chr13&quot;                   &quot;chr14&quot;                  
+##  [15] &quot;chr15&quot;                   &quot;chr16&quot;                  
+##  [17] &quot;chr17&quot;                   &quot;chr18&quot;                  
+##  [19] &quot;chr19&quot;                   &quot;chr20&quot;                  
+##  [21] &quot;chr21&quot;                   &quot;chr22&quot;                  
+##  [23] &quot;chrX&quot;                    &quot;chrY&quot;                   
+##  [25] &quot;chrM&quot;                    &quot;chr1_GL383518v1_alt&quot;    
+##  [27] &quot;chr1_GL383519v1_alt&quot;     &quot;chr1_GL383520v2_alt&quot;    
+##  [29] &quot;chr1_KI270759v1_alt&quot;     &quot;chr1_KI270760v1_alt&quot;    
+##  [31] &quot;chr1_KI270761v1_alt&quot;     &quot;chr1_KI270762v1_alt&quot;    
+##  [33] &quot;chr1_KI270763v1_alt&quot;     &quot;chr1_KI270764v1_alt&quot;    
+##  [35] &quot;chr1_KI270765v1_alt&quot;     &quot;chr1_KI270766v1_alt&quot;    
+##  [37] &quot;chr1_KI270892v1_alt&quot;     &quot;chr2_GL383521v1_alt&quot;    
+##  [39] &quot;chr2_GL383522v1_alt&quot;     &quot;chr2_GL582966v2_alt&quot;    
+##  [41] &quot;chr2_KI270767v1_alt&quot;     &quot;chr2_KI270768v1_alt&quot;    
+##  [43] &quot;chr2_KI270769v1_alt&quot;     &quot;chr2_KI270770v1_alt&quot;    
+##  [45] &quot;chr2_KI270771v1_alt&quot;     &quot;chr2_KI270772v1_alt&quot;    
+##  [47] &quot;chr2_KI270773v1_alt&quot;     &quot;chr2_KI270774v1_alt&quot;    
+##  [49] &quot;chr2_KI270775v1_alt&quot;     &quot;chr2_KI270776v1_alt&quot;    
+##  [51] &quot;chr2_KI270893v1_alt&quot;     &quot;chr2_KI270894v1_alt&quot;    
+##  [53] &quot;chr3_GL383526v1_alt&quot;     &quot;chr3_JH636055v2_alt&quot;    
+##  [55] &quot;chr3_KI270777v1_alt&quot;     &quot;chr3_KI270778v1_alt&quot;    
+##  [57] &quot;chr3_KI270779v1_alt&quot;     &quot;chr3_KI270780v1_alt&quot;    
+##  [59] &quot;chr3_KI270781v1_alt&quot;     &quot;chr3_KI270782v1_alt&quot;    
+##  [61] &quot;chr3_KI270783v1_alt&quot;     &quot;chr3_KI270784v1_alt&quot;    
+##  [63] &quot;chr3_KI270895v1_alt&quot;     &quot;chr3_KI270924v1_alt&quot;    
+##  [65] &quot;chr3_KI270934v1_alt&quot;     &quot;chr3_KI270935v1_alt&quot;    
+##  [67] &quot;chr3_KI270936v1_alt&quot;     &quot;chr3_KI270937v1_alt&quot;    
+##  [69] &quot;chr4_GL000257v2_alt&quot;     &quot;chr4_GL383527v1_alt&quot;    
+##  [71] &quot;chr4_GL383528v1_alt&quot;     &quot;chr4_KI270785v1_alt&quot;    
+##  [73] &quot;chr4_KI270786v1_alt&quot;     &quot;chr4_KI270787v1_alt&quot;    
+##  [75] &quot;chr4_KI270788v1_alt&quot;     &quot;chr4_KI270789v1_alt&quot;    
+##  [77] &quot;chr4_KI270790v1_alt&quot;     &quot;chr4_KI270896v1_alt&quot;    
+##  [79] &quot;chr4_KI270925v1_alt&quot;     &quot;chr5_GL339449v2_alt&quot;    
+##  [81] &quot;chr5_GL383530v1_alt&quot;     &quot;chr5_GL383531v1_alt&quot;    
+##  [83] &quot;chr5_GL383532v1_alt&quot;     &quot;chr5_GL949742v1_alt&quot;    
+##  [85] &quot;chr5_KI270791v1_alt&quot;     &quot;chr5_KI270792v1_alt&quot;    
+##  [87] &quot;chr5_KI270793v1_alt&quot;     &quot;chr5_KI270794v1_alt&quot;    
+##  [89] &quot;chr5_KI270795v1_alt&quot;     &quot;chr5_KI270796v1_alt&quot;    
+##  [91] &quot;chr5_KI270897v1_alt&quot;     &quot;chr5_KI270898v1_alt&quot;    
+##  [93] &quot;chr6_GL000250v2_alt&quot;     &quot;chr6_GL000251v2_alt&quot;    
+##  [95] &quot;chr6_GL000252v2_alt&quot;     &quot;chr6_GL000253v2_alt&quot;    
+##  [97] &quot;chr6_GL000254v2_alt&quot;     &quot;chr6_GL000255v2_alt&quot;    
+##  [99] &quot;chr6_GL000256v2_alt&quot;     &quot;chr6_GL383533v1_alt&quot;    
+## [101] &quot;chr6_KB021644v2_alt&quot;     &quot;chr6_KI270758v1_alt&quot;    
+## [103] &quot;chr6_KI270797v1_alt&quot;     &quot;chr6_KI270798v1_alt&quot;    
+## [105] &quot;chr6_KI270799v1_alt&quot;     &quot;chr6_KI270800v1_alt&quot;    
+## [107] &quot;chr6_KI270801v1_alt&quot;     &quot;chr6_KI270802v1_alt&quot;    
+## [109] &quot;chr7_GL383534v2_alt&quot;     &quot;chr7_KI270803v1_alt&quot;    
+## [111] &quot;chr7_KI270804v1_alt&quot;     &quot;chr7_KI270805v1_alt&quot;    
+## [113] &quot;chr7_KI270806v1_alt&quot;     &quot;chr7_KI270807v1_alt&quot;    
+## [115] &quot;chr7_KI270808v1_alt&quot;     &quot;chr7_KI270809v1_alt&quot;    
+## [117] &quot;chr7_KI270899v1_alt&quot;     &quot;chr8_KI270810v1_alt&quot;    
+## [119] &quot;chr8_KI270811v1_alt&quot;     &quot;chr8_KI270812v1_alt&quot;    
+## [121] &quot;chr8_KI270813v1_alt&quot;     &quot;chr8_KI270814v1_alt&quot;    
+## [123] &quot;chr8_KI270815v1_alt&quot;     &quot;chr8_KI270816v1_alt&quot;    
+## [125] &quot;chr8_KI270817v1_alt&quot;     &quot;chr8_KI270818v1_alt&quot;    
+## [127] &quot;chr8_KI270819v1_alt&quot;     &quot;chr8_KI270820v1_alt&quot;    
+## [129] &quot;chr8_KI270821v1_alt&quot;     &quot;chr8_KI270822v1_alt&quot;    
+## [131] &quot;chr8_KI270900v1_alt&quot;     &quot;chr8_KI270901v1_alt&quot;    
+## [133] &quot;chr8_KI270926v1_alt&quot;     &quot;chr9_GL383539v1_alt&quot;    
+## [135] &quot;chr9_GL383540v1_alt&quot;     &quot;chr9_GL383541v1_alt&quot;    
+## [137] &quot;chr9_GL383542v1_alt&quot;     &quot;chr9_KI270823v1_alt&quot;    
+## [139] &quot;chr10_GL383545v1_alt&quot;    &quot;chr10_GL383546v1_alt&quot;   
+## [141] &quot;chr10_KI270824v1_alt&quot;    &quot;chr10_KI270825v1_alt&quot;   
+## [143] &quot;chr11_GL383547v1_alt&quot;    &quot;chr11_JH159136v1_alt&quot;   
+## [145] &quot;chr11_JH159137v1_alt&quot;    &quot;chr11_KI270826v1_alt&quot;   
+## [147] &quot;chr11_KI270827v1_alt&quot;    &quot;chr11_KI270829v1_alt&quot;   
+## [149] &quot;chr11_KI270830v1_alt&quot;    &quot;chr11_KI270831v1_alt&quot;   
+## [151] &quot;chr11_KI270832v1_alt&quot;    &quot;chr11_KI270902v1_alt&quot;   
+## [153] &quot;chr11_KI270903v1_alt&quot;    &quot;chr11_KI270927v1_alt&quot;   
+## [155] &quot;chr12_GL383549v1_alt&quot;    &quot;chr12_GL383550v2_alt&quot;   
+## [157] &quot;chr12_GL383551v1_alt&quot;    &quot;chr12_GL383552v1_alt&quot;   
+## [159] &quot;chr12_GL383553v2_alt&quot;    &quot;chr12_GL877875v1_alt&quot;   
+## [161] &quot;chr12_GL877876v1_alt&quot;    &quot;chr12_KI270833v1_alt&quot;   
+## [163] &quot;chr12_KI270834v1_alt&quot;    &quot;chr12_KI270835v1_alt&quot;   
+## [165] &quot;chr12_KI270836v1_alt&quot;    &quot;chr12_KI270837v1_alt&quot;   
+## [167] &quot;chr12_KI270904v1_alt&quot;    &quot;chr13_KI270838v1_alt&quot;   
+## [169] &quot;chr13_KI270839v1_alt&quot;    &quot;chr13_KI270840v1_alt&quot;   
+## [171] &quot;chr13_KI270841v1_alt&quot;    &quot;chr13_KI270842v1_alt&quot;   
+## [173] &quot;chr13_KI270843v1_alt&quot;    &quot;chr14_KI270844v1_alt&quot;   
+## [175] &quot;chr14_KI270845v1_alt&quot;    &quot;chr14_KI270846v1_alt&quot;   
+## [177] &quot;chr14_KI270847v1_alt&quot;    &quot;chr15_GL383554v1_alt&quot;   
+## [179] &quot;chr15_GL383555v2_alt&quot;    &quot;chr15_KI270848v1_alt&quot;   
+## [181] &quot;chr15_KI270849v1_alt&quot;    &quot;chr15_KI270850v1_alt&quot;   
+## [183] &quot;chr15_KI270851v1_alt&quot;    &quot;chr15_KI270852v1_alt&quot;   
+## [185] &quot;chr15_KI270905v1_alt&quot;    &quot;chr15_KI270906v1_alt&quot;   
+## [187] &quot;chr16_GL383556v1_alt&quot;    &quot;chr16_GL383557v1_alt&quot;   
+## [189] &quot;chr16_KI270853v1_alt&quot;    &quot;chr16_KI270854v1_alt&quot;   
+## [191] &quot;chr16_KI270855v1_alt&quot;    &quot;chr16_KI270856v1_alt&quot;   
+## [193] &quot;chr17_GL000258v2_alt&quot;    &quot;chr17_GL383563v3_alt&quot;   
+## [195] &quot;chr17_GL383564v2_alt&quot;    &quot;chr17_GL383565v1_alt&quot;   
+## [197] &quot;chr17_GL383566v1_alt&quot;    &quot;chr17_JH159146v1_alt&quot;   
+## [199] &quot;chr17_JH159147v1_alt&quot;    &quot;chr17_JH159148v1_alt&quot;   
+## [201] &quot;chr17_KI270857v1_alt&quot;    &quot;chr17_KI270858v1_alt&quot;   
+## [203] &quot;chr17_KI270859v1_alt&quot;    &quot;chr17_KI270860v1_alt&quot;   
+## [205] &quot;chr17_KI270861v1_alt&quot;    &quot;chr17_KI270862v1_alt&quot;   
+## [207] &quot;chr17_KI270907v1_alt&quot;    &quot;chr17_KI270908v1_alt&quot;   
+## [209] &quot;chr17_KI270909v1_alt&quot;    &quot;chr17_KI270910v1_alt&quot;   
+## [211] &quot;chr18_GL383567v1_alt&quot;    &quot;chr18_GL383568v1_alt&quot;   
+## [213] &quot;chr18_GL383569v1_alt&quot;    &quot;chr18_GL383570v1_alt&quot;   
+## [215] &quot;chr18_GL383571v1_alt&quot;    &quot;chr18_GL383572v1_alt&quot;   
+## [217] &quot;chr18_KI270863v1_alt&quot;    &quot;chr18_KI270864v1_alt&quot;   
+## [219] &quot;chr18_KI270911v1_alt&quot;    &quot;chr18_KI270912v1_alt&quot;   
+## [221] &quot;chr19_GL000209v2_alt&quot;    &quot;chr19_GL383573v1_alt&quot;   
+## [223] &quot;chr19_GL383574v1_alt&quot;    &quot;chr19_GL383575v2_alt&quot;   
+## [225] &quot;chr19_GL383576v1_alt&quot;    &quot;chr19_GL949746v1_alt&quot;   
+## [227] &quot;chr19_GL949747v2_alt&quot;    &quot;chr19_GL949748v2_alt&quot;   
+## [229] &quot;chr19_GL949749v2_alt&quot;    &quot;chr19_GL949750v2_alt&quot;   
+## [231] &quot;chr19_GL949751v2_alt&quot;    &quot;chr19_GL949752v1_alt&quot;   
+## [233] &quot;chr19_GL949753v2_alt&quot;    &quot;chr19_KI270865v1_alt&quot;   
+## [235] &quot;chr19_KI270866v1_alt&quot;    &quot;chr19_KI270867v1_alt&quot;   
+## [237] &quot;chr19_KI270868v1_alt&quot;    &quot;chr19_KI270882v1_alt&quot;   
+## [239] &quot;chr19_KI270883v1_alt&quot;    &quot;chr19_KI270884v1_alt&quot;   
+## [241] &quot;chr19_KI270885v1_alt&quot;    &quot;chr19_KI270886v1_alt&quot;   
+## [243] &quot;chr19_KI270887v1_alt&quot;    &quot;chr19_KI270888v1_alt&quot;   
+## [245] &quot;chr19_KI270889v1_alt&quot;    &quot;chr19_KI270890v1_alt&quot;   
+## [247] &quot;chr19_KI270891v1_alt&quot;    &quot;chr19_KI270914v1_alt&quot;   
+## [249] &quot;chr19_KI270915v1_alt&quot;    &quot;chr19_KI270916v1_alt&quot;   
+## [251] &quot;chr19_KI270917v1_alt&quot;    &quot;chr19_KI270918v1_alt&quot;   
+## [253] &quot;chr19_KI270919v1_alt&quot;    &quot;chr19_KI270920v1_alt&quot;   
+## [255] &quot;chr19_KI270921v1_alt&quot;    &quot;chr19_KI270922v1_alt&quot;   
+## [257] &quot;chr19_KI270923v1_alt&quot;    &quot;chr19_KI270929v1_alt&quot;   
+## [259] &quot;chr19_KI270930v1_alt&quot;    &quot;chr19_KI270931v1_alt&quot;   
+## [261] &quot;chr19_KI270932v1_alt&quot;    &quot;chr19_KI270933v1_alt&quot;   
+## [263] &quot;chr19_KI270938v1_alt&quot;    &quot;chr20_GL383577v2_alt&quot;   
+## [265] &quot;chr20_KI270869v1_alt&quot;    &quot;chr20_KI270870v1_alt&quot;   
+## [267] &quot;chr20_KI270871v1_alt&quot;    &quot;chr21_GL383578v2_alt&quot;   
+## [269] &quot;chr21_GL383579v2_alt&quot;    &quot;chr21_GL383580v2_alt&quot;   
+## [271] &quot;chr21_GL383581v2_alt&quot;    &quot;chr21_KI270872v1_alt&quot;   
+## [273] &quot;chr21_KI270873v1_alt&quot;    &quot;chr21_KI270874v1_alt&quot;   
+## [275] &quot;chr22_GL383582v2_alt&quot;    &quot;chr22_GL383583v2_alt&quot;   
+## [277] &quot;chr22_KB663609v1_alt&quot;    &quot;chr22_KI270875v1_alt&quot;   
+## [279] &quot;chr22_KI270876v1_alt&quot;    &quot;chr22_KI270877v1_alt&quot;   
+## [281] &quot;chr22_KI270878v1_alt&quot;    &quot;chr22_KI270879v1_alt&quot;   
+## [283] &quot;chr22_KI270928v1_alt&quot;    &quot;chrX_KI270880v1_alt&quot;    
+## [285] &quot;chrX_KI270881v1_alt&quot;     &quot;chrX_KI270913v1_alt&quot;    
+## [287] &quot;chr1_KI270706v1_random&quot;  &quot;chr1_KI270707v1_random&quot; 
+## [289] &quot;chr1_KI270708v1_random&quot;  &quot;chr1_KI270709v1_random&quot; 
+## [291] &quot;chr1_KI270710v1_random&quot;  &quot;chr1_KI270711v1_random&quot; 
+## [293] &quot;chr1_KI270712v1_random&quot;  &quot;chr1_KI270713v1_random&quot; 
+## [295] &quot;chr1_KI270714v1_random&quot;  &quot;chr2_KI270715v1_random&quot; 
+## [297] &quot;chr2_KI270716v1_random&quot;  &quot;chr3_GL000221v1_random&quot; 
+## [299] &quot;chr4_GL000008v2_random&quot;  &quot;chr5_GL000208v1_random&quot; 
+## [301] &quot;chr9_KI270717v1_random&quot;  &quot;chr9_KI270718v1_random&quot; 
+## [303] &quot;chr9_KI270719v1_random&quot;  &quot;chr9_KI270720v1_random&quot; 
+## [305] &quot;chr11_KI270721v1_random&quot; &quot;chr14_GL000009v2_random&quot;
+## [307] &quot;chr14_GL000194v1_random&quot; &quot;chr14_GL000225v1_random&quot;
+## [309] &quot;chr14_KI270722v1_random&quot; &quot;chr14_KI270723v1_random&quot;
+## [311] &quot;chr14_KI270724v1_random&quot; &quot;chr14_KI270725v1_random&quot;
+## [313] &quot;chr14_KI270726v1_random&quot; &quot;chr15_KI270727v1_random&quot;
+## [315] &quot;chr16_KI270728v1_random&quot; &quot;chr17_GL000205v2_random&quot;
+## [317] &quot;chr17_KI270729v1_random&quot; &quot;chr17_KI270730v1_random&quot;
+## [319] &quot;chr22_KI270731v1_random&quot; &quot;chr22_KI270732v1_random&quot;
+## [321] &quot;chr22_KI270733v1_random&quot; &quot;chr22_KI270734v1_random&quot;
+## [323] &quot;chr22_KI270735v1_random&quot; &quot;chr22_KI270736v1_random&quot;
+## [325] &quot;chr22_KI270737v1_random&quot; &quot;chr22_KI270738v1_random&quot;
+## [327] &quot;chr22_KI270739v1_random&quot; &quot;chrY_KI270740v1_random&quot; 
+## [329] &quot;chrUn_GL000195v1&quot;        &quot;chrUn_GL000213v1&quot;       
+## [331] &quot;chrUn_GL000214v1&quot;        &quot;chrUn_GL000216v2&quot;       
+## [333] &quot;chrUn_GL000218v1&quot;        &quot;chrUn_GL000219v1&quot;       
+## [335] &quot;chrUn_GL000220v1&quot;        &quot;chrUn_GL000224v1&quot;       
+## [337] &quot;chrUn_GL000226v1&quot;        &quot;chrUn_KI270302v1&quot;       
+## [339] &quot;chrUn_KI270303v1&quot;        &quot;chrUn_KI270304v1&quot;       
+## [341] &quot;chrUn_KI270305v1&quot;        &quot;chrUn_KI270310v1&quot;       
+## [343] &quot;chrUn_KI270311v1&quot;        &quot;chrUn_KI270312v1&quot;       
+## [345] &quot;chrUn_KI270315v1&quot;        &quot;chrUn_KI270316v1&quot;       
+## [347] &quot;chrUn_KI270317v1&quot;        &quot;chrUn_KI270320v1&quot;       
+## [349] &quot;chrUn_KI270322v1&quot;        &quot;chrUn_KI270329v1&quot;       
+## [351] &quot;chrUn_KI270330v1&quot;        &quot;chrUn_KI270333v1&quot;       
+## [353] &quot;chrUn_KI270334v1&quot;        &quot;chrUn_KI270335v1&quot;       
+## [355] &quot;chrUn_KI270336v1&quot;        &quot;chrUn_KI270337v1&quot;       
+## [357] &quot;chrUn_KI270338v1&quot;        &quot;chrUn_KI270340v1&quot;       
+## [359] &quot;chrUn_KI270362v1&quot;        &quot;chrUn_KI270363v1&quot;       
+## [361] &quot;chrUn_KI270364v1&quot;        &quot;chrUn_KI270366v1&quot;       
+## [363] &quot;chrUn_KI270371v1&quot;        &quot;chrUn_KI270372v1&quot;       
+## [365] &quot;chrUn_KI270373v1&quot;        &quot;chrUn_KI270374v1&quot;       
+## [367] &quot;chrUn_KI270375v1&quot;        &quot;chrUn_KI270376v1&quot;       
+## [369] &quot;chrUn_KI270378v1&quot;        &quot;chrUn_KI270379v1&quot;       
+## [371] &quot;chrUn_KI270381v1&quot;        &quot;chrUn_KI270382v1&quot;       
+## [373] &quot;chrUn_KI270383v1&quot;        &quot;chrUn_KI270384v1&quot;       
+## [375] &quot;chrUn_KI270385v1&quot;        &quot;chrUn_KI270386v1&quot;       
+## [377] &quot;chrUn_KI270387v1&quot;        &quot;chrUn_KI270388v1&quot;       
+## [379] &quot;chrUn_KI270389v1&quot;        &quot;chrUn_KI270390v1&quot;       
+## [381] &quot;chrUn_KI270391v1&quot;        &quot;chrUn_KI270392v1&quot;       
+## [383] &quot;chrUn_KI270393v1&quot;        &quot;chrUn_KI270394v1&quot;       
+## [385] &quot;chrUn_KI270395v1&quot;        &quot;chrUn_KI270396v1&quot;       
+## [387] &quot;chrUn_KI270411v1&quot;        &quot;chrUn_KI270412v1&quot;       
+## [389] &quot;chrUn_KI270414v1&quot;        &quot;chrUn_KI270417v1&quot;       
+## [391] &quot;chrUn_KI270418v1&quot;        &quot;chrUn_KI270419v1&quot;       
+## [393] &quot;chrUn_KI270420v1&quot;        &quot;chrUn_KI270422v1&quot;       
+## [395] &quot;chrUn_KI270423v1&quot;        &quot;chrUn_KI270424v1&quot;       
+## [397] &quot;chrUn_KI270425v1&quot;        &quot;chrUn_KI270429v1&quot;       
+## [399] &quot;chrUn_KI270435v1&quot;        &quot;chrUn_KI270438v1&quot;       
+## [401] &quot;chrUn_KI270442v1&quot;        &quot;chrUn_KI270448v1&quot;       
+## [403] &quot;chrUn_KI270465v1&quot;        &quot;chrUn_KI270466v1&quot;       
+## [405] &quot;chrUn_KI270467v1&quot;        &quot;chrUn_KI270468v1&quot;       
+## [407] &quot;chrUn_KI270507v1&quot;        &quot;chrUn_KI270508v1&quot;       
+## [409] &quot;chrUn_KI270509v1&quot;        &quot;chrUn_KI270510v1&quot;       
+## [411] &quot;chrUn_KI270511v1&quot;        &quot;chrUn_KI270512v1&quot;       
+## [413] &quot;chrUn_KI270515v1&quot;        &quot;chrUn_KI270516v1&quot;       
+## [415] &quot;chrUn_KI270517v1&quot;        &quot;chrUn_KI270518v1&quot;       
+## [417] &quot;chrUn_KI270519v1&quot;        &quot;chrUn_KI270521v1&quot;       
+## [419] &quot;chrUn_KI270522v1&quot;        &quot;chrUn_KI270528v1&quot;       
+## [421] &quot;chrUn_KI270529v1&quot;        &quot;chrUn_KI270530v1&quot;       
+## [423] &quot;chrUn_KI270538v1&quot;        &quot;chrUn_KI270539v1&quot;       
+## [425] &quot;chrUn_KI270544v1&quot;        &quot;chrUn_KI270548v1&quot;       
+## [427] &quot;chrUn_KI270579v1&quot;        &quot;chrUn_KI270580v1&quot;       
+## [429] &quot;chrUn_KI270581v1&quot;        &quot;chrUn_KI270582v1&quot;       
+## [431] &quot;chrUn_KI270583v1&quot;        &quot;chrUn_KI270584v1&quot;       
+## [433] &quot;chrUn_KI270587v1&quot;        &quot;chrUn_KI270588v1&quot;       
+## [435] &quot;chrUn_KI270589v1&quot;        &quot;chrUn_KI270590v1&quot;       
+## [437] &quot;chrUn_KI270591v1&quot;        &quot;chrUn_KI270593v1&quot;       
+## [439] &quot;chrUn_KI270741v1&quot;        &quot;chrUn_KI270742v1&quot;       
+## [441] &quot;chrUn_KI270743v1&quot;        &quot;chrUn_KI270744v1&quot;       
+## [443] &quot;chrUn_KI270745v1&quot;        &quot;chrUn_KI270746v1&quot;       
+## [445] &quot;chrUn_KI270747v1&quot;        &quot;chrUn_KI270748v1&quot;       
+## [447] &quot;chrUn_KI270749v1&quot;        &quot;chrUn_KI270750v1&quot;       
+## [449] &quot;chrUn_KI270751v1&quot;        &quot;chrUn_KI270752v1&quot;       
+## [451] &quot;chrUn_KI270753v1&quot;        &quot;chrUn_KI270754v1&quot;       
+## [453] &quot;chrUn_KI270755v1&quot;        &quot;chrUn_KI270756v1&quot;       
+## [455] &quot;chrUn_KI270757v1&quot;        &quot;chr1_KN196472v1_fix&quot;    
+## [457] &quot;chr1_KN196473v1_fix&quot;     &quot;chr1_KN196474v1_fix&quot;    
+## [459] &quot;chr1_KN538360v1_fix&quot;     &quot;chr1_KN538361v1_fix&quot;    
+## [461] &quot;chr1_KQ031383v1_fix&quot;     &quot;chr1_KZ208906v1_fix&quot;    
+## [463] &quot;chr1_KZ559100v1_fix&quot;     &quot;chr2_KN538362v1_fix&quot;    
+## [465] &quot;chr2_KN538363v1_fix&quot;     &quot;chr2_KQ031384v1_fix&quot;    
+## [467] &quot;chr3_KN196475v1_fix&quot;     &quot;chr3_KN196476v1_fix&quot;    
+## [469] &quot;chr3_KN538364v1_fix&quot;     &quot;chr3_KQ031385v1_fix&quot;    
+## [471] &quot;chr3_KQ031386v1_fix&quot;     &quot;chr3_KV766192v1_fix&quot;    
+## [473] &quot;chr3_KZ559104v1_fix&quot;     &quot;chr4_KQ983257v1_fix&quot;    
+## [475] &quot;chr5_KV575244v1_fix&quot;     &quot;chr6_KN196478v1_fix&quot;    
+## [477] &quot;chr6_KQ031387v1_fix&quot;     &quot;chr6_KQ090016v1_fix&quot;    
+## [479] &quot;chr6_KV766194v1_fix&quot;     &quot;chr6_KZ208911v1_fix&quot;    
+## [481] &quot;chr7_KQ031388v1_fix&quot;     &quot;chr7_KV880764v1_fix&quot;    
+## [483] &quot;chr7_KV880765v1_fix&quot;     &quot;chr7_KZ208912v1_fix&quot;    
+## [485] &quot;chr8_KV880766v1_fix&quot;     &quot;chr8_KV880767v1_fix&quot;    
+## [487] &quot;chr8_KZ208914v1_fix&quot;     &quot;chr8_KZ208915v1_fix&quot;    
+## [489] &quot;chr9_KN196479v1_fix&quot;     &quot;chr10_KN196480v1_fix&quot;   
+## [491] &quot;chr10_KN538365v1_fix&quot;    &quot;chr10_KN538366v1_fix&quot;   
+## [493] &quot;chr10_KN538367v1_fix&quot;    &quot;chr10_KQ090021v1_fix&quot;   
+## [495] &quot;chr11_KN196481v1_fix&quot;    &quot;chr11_KQ090022v1_fix&quot;   
+## [497] &quot;chr11_KQ759759v1_fix&quot;    &quot;chr11_KV766195v1_fix&quot;   
+## [499] &quot;chr11_KZ559108v1_fix&quot;    &quot;chr11_KZ559109v1_fix&quot;   
+## [501] &quot;chr12_KN196482v1_fix&quot;    &quot;chr12_KN538369v1_fix&quot;   
+## [503] &quot;chr12_KN538370v1_fix&quot;    &quot;chr12_KQ759760v1_fix&quot;   
+## [505] &quot;chr12_KZ208916v1_fix&quot;    &quot;chr12_KZ208917v1_fix&quot;   
+## [507] &quot;chr13_KN196483v1_fix&quot;    &quot;chr13_KN538371v1_fix&quot;   
+## [509] &quot;chr13_KN538372v1_fix&quot;    &quot;chr13_KN538373v1_fix&quot;   
+## [511] &quot;chr14_KZ208920v1_fix&quot;    &quot;chr15_KN538374v1_fix&quot;   
+## [513] &quot;chr16_KV880768v1_fix&quot;    &quot;chr16_KZ559113v1_fix&quot;   
+## [515] &quot;chr17_KV575245v1_fix&quot;    &quot;chr17_KV766196v1_fix&quot;   
+## [517] &quot;chr18_KQ090028v1_fix&quot;    &quot;chr18_KZ208922v1_fix&quot;   
+## [519] &quot;chr18_KZ559115v1_fix&quot;    &quot;chr19_KN196484v1_fix&quot;   
+## [521] &quot;chr19_KQ458386v1_fix&quot;    &quot;chr22_KQ759762v1_fix&quot;   
+## [523] &quot;chrY_KN196487v1_fix&quot;     &quot;chrY_KZ208923v1_fix&quot;    
+## [525] &quot;chrY_KZ208924v1_fix&quot;     &quot;chr1_KQ458382v1_alt&quot;    
+## [527] &quot;chr1_KQ458383v1_alt&quot;     &quot;chr1_KQ458384v1_alt&quot;    
+## [529] &quot;chr1_KQ983255v1_alt&quot;     &quot;chr1_KV880763v1_alt&quot;    
+## [531] &quot;chr1_KZ208904v1_alt&quot;     &quot;chr1_KZ208905v1_alt&quot;    
+## [533] &quot;chr2_KQ983256v1_alt&quot;     &quot;chr2_KZ208907v1_alt&quot;    
+## [535] &quot;chr2_KZ208908v1_alt&quot;     &quot;chr3_KZ208909v1_alt&quot;    
+## [537] &quot;chr3_KZ559101v1_alt&quot;     &quot;chr3_KZ559102v1_alt&quot;    
+## [539] &quot;chr3_KZ559103v1_alt&quot;     &quot;chr3_KZ559105v1_alt&quot;    
+## [541] &quot;chr4_KQ090013v1_alt&quot;     &quot;chr4_KQ090014v1_alt&quot;    
+## [543] &quot;chr4_KQ090015v1_alt&quot;     &quot;chr4_KQ983258v1_alt&quot;    
+## [545] &quot;chr4_KV766193v1_alt&quot;     &quot;chr5_KN196477v1_alt&quot;    
+## [547] &quot;chr5_KV575243v1_alt&quot;     &quot;chr5_KZ208910v1_alt&quot;    
+## [549] &quot;chr6_KQ090017v1_alt&quot;     &quot;chr7_KZ208913v1_alt&quot;    
+## [551] &quot;chr7_KZ559106v1_alt&quot;     &quot;chr8_KZ559107v1_alt&quot;    
+## [553] &quot;chr9_KQ090018v1_alt&quot;     &quot;chr9_KQ090019v1_alt&quot;    
+## [555] &quot;chr10_KQ090020v1_alt&quot;    &quot;chr11_KN538368v1_alt&quot;   
+## [557] &quot;chr11_KZ559110v1_alt&quot;    &quot;chr11_KZ559111v1_alt&quot;   
+## [559] &quot;chr12_KQ090023v1_alt&quot;    &quot;chr12_KZ208918v1_alt&quot;   
+## [561] &quot;chr12_KZ559112v1_alt&quot;    &quot;chr13_KQ090024v1_alt&quot;   
+## [563] &quot;chr13_KQ090025v1_alt&quot;    &quot;chr14_KZ208919v1_alt&quot;   
+## [565] &quot;chr15_KQ031389v1_alt&quot;    &quot;chr16_KQ031390v1_alt&quot;   
+## [567] &quot;chr16_KQ090026v1_alt&quot;    &quot;chr16_KQ090027v1_alt&quot;   
+## [569] &quot;chr16_KZ208921v1_alt&quot;    &quot;chr17_KV766197v1_alt&quot;   
+## [571] &quot;chr17_KV766198v1_alt&quot;    &quot;chr17_KZ559114v1_alt&quot;   
+## [573] &quot;chr18_KQ458385v1_alt&quot;    &quot;chr18_KZ559116v1_alt&quot;   
+## [575] &quot;chr19_KV575246v1_alt&quot;    &quot;chr19_KV575247v1_alt&quot;   
+## [577] &quot;chr19_KV575248v1_alt&quot;    &quot;chr19_KV575249v1_alt&quot;   
+## [579] &quot;chr19_KV575250v1_alt&quot;    &quot;chr19_KV575251v1_alt&quot;   
+## [581] &quot;chr19_KV575252v1_alt&quot;    &quot;chr19_KV575253v1_alt&quot;   
+## [583] &quot;chr19_KV575254v1_alt&quot;    &quot;chr19_KV575255v1_alt&quot;   
+## [585] &quot;chr19_KV575256v1_alt&quot;    &quot;chr19_KV575257v1_alt&quot;   
+## [587] &quot;chr19_KV575258v1_alt&quot;    &quot;chr19_KV575259v1_alt&quot;   
+## [589] &quot;chr19_KV575260v1_alt&quot;    &quot;chr22_KN196485v1_alt&quot;   
+## [591] &quot;chr22_KN196486v1_alt&quot;    &quot;chr22_KQ458387v1_alt&quot;   
+## [593] &quot;chr22_KQ458388v1_alt&quot;    &quot;chr22_KQ759761v1_alt&quot;   
+## [595] &quot;chrX_KV766199v1_alt&quot;</code></pre>
+<pre class="r"><code># sequence lengths
+seqlengths(hs_genome)</code></pre>
+<pre><code>##                    chr1                    chr2                    chr3 
+##               248956422               242193529               198295559 
+##                    chr4                    chr5                    chr6 
+##               190214555               181538259               170805979 
+##                    chr7                    chr8                    chr9 
+##               159345973               145138636               138394717 
+##                   chr10                   chr11                   chr12 
+##               133797422               135086622               133275309 
+##                   chr13                   chr14                   chr15 
+##               114364328               107043718               101991189 
+##                   chr16                   chr17                   chr18 
+##                90338345                83257441                80373285 
+##                   chr19                   chr20                   chr21 
+##                58617616                64444167                46709983 
+##                   chr22                    chrX                    chrY 
+##                50818468               156040895                57227415 
+##                    chrM     chr1_GL383518v1_alt     chr1_GL383519v1_alt 
+##                   16569                  182439                  110268 
+##     chr1_GL383520v2_alt     chr1_KI270759v1_alt     chr1_KI270760v1_alt 
+##                  366580                  425601                  109528 
+##     chr1_KI270761v1_alt     chr1_KI270762v1_alt     chr1_KI270763v1_alt 
+##                  165834                  354444                  911658 
+##     chr1_KI270764v1_alt     chr1_KI270765v1_alt     chr1_KI270766v1_alt 
+##                   50258                  185285                  256271 
+##     chr1_KI270892v1_alt     chr2_GL383521v1_alt     chr2_GL383522v1_alt 
+##                  162212                  143390                  123821 
+##     chr2_GL582966v2_alt     chr2_KI270767v1_alt     chr2_KI270768v1_alt 
+##                   96131                  161578                  110099 
+##     chr2_KI270769v1_alt     chr2_KI270770v1_alt     chr2_KI270771v1_alt 
+##                  120616                  136240                  110395 
+##     chr2_KI270772v1_alt     chr2_KI270773v1_alt     chr2_KI270774v1_alt 
+##                  133041                   70887                  223625 
+##     chr2_KI270775v1_alt     chr2_KI270776v1_alt     chr2_KI270893v1_alt 
+##                  138019                  174166                  161218 
+##     chr2_KI270894v1_alt     chr3_GL383526v1_alt     chr3_JH636055v2_alt 
+##                  214158                  180671                  173151 
+##     chr3_KI270777v1_alt     chr3_KI270778v1_alt     chr3_KI270779v1_alt 
+##                  173649                  248252                  205312 
+##     chr3_KI270780v1_alt     chr3_KI270781v1_alt     chr3_KI270782v1_alt 
+##                  224108                  113034                  162429 
+##     chr3_KI270783v1_alt     chr3_KI270784v1_alt     chr3_KI270895v1_alt 
+##                  109187                  184404                  162896 
+##     chr3_KI270924v1_alt     chr3_KI270934v1_alt     chr3_KI270935v1_alt 
+##                  166540                  163458                  197351 
+##     chr3_KI270936v1_alt     chr3_KI270937v1_alt     chr4_GL000257v2_alt 
+##                  164170                  165607                  586476 
+##     chr4_GL383527v1_alt     chr4_GL383528v1_alt     chr4_KI270785v1_alt 
+##                  164536                  376187                  119912 
+##     chr4_KI270786v1_alt     chr4_KI270787v1_alt     chr4_KI270788v1_alt 
+##                  244096                  111943                  158965 
+##     chr4_KI270789v1_alt     chr4_KI270790v1_alt     chr4_KI270896v1_alt 
+##                  205944                  220246                  378547 
+##     chr4_KI270925v1_alt     chr5_GL339449v2_alt     chr5_GL383530v1_alt 
+##                  555799                 1612928                  101241 
+##     chr5_GL383531v1_alt     chr5_GL383532v1_alt     chr5_GL949742v1_alt 
+##                  173459                   82728                  226852 
+##     chr5_KI270791v1_alt     chr5_KI270792v1_alt     chr5_KI270793v1_alt 
+##                  195710                  179043                  126136 
+##     chr5_KI270794v1_alt     chr5_KI270795v1_alt     chr5_KI270796v1_alt 
+##                  164558                  131892                  172708 
+##     chr5_KI270897v1_alt     chr5_KI270898v1_alt     chr6_GL000250v2_alt 
+##                 1144418                  130957                 4672374 
+##     chr6_GL000251v2_alt     chr6_GL000252v2_alt     chr6_GL000253v2_alt 
+##                 4795265                 4604811                 4677643 
+##     chr6_GL000254v2_alt     chr6_GL000255v2_alt     chr6_GL000256v2_alt 
+##                 4827813                 4606388                 4929269 
+##     chr6_GL383533v1_alt     chr6_KB021644v2_alt     chr6_KI270758v1_alt 
+##                  124736                  185823                   76752 
+##     chr6_KI270797v1_alt     chr6_KI270798v1_alt     chr6_KI270799v1_alt 
+##                  197536                  271782                  152148 
+##     chr6_KI270800v1_alt     chr6_KI270801v1_alt     chr6_KI270802v1_alt 
+##                  175808                  870480                   75005 
+##     chr7_GL383534v2_alt     chr7_KI270803v1_alt     chr7_KI270804v1_alt 
+##                  119183                 1111570                  157952 
+##     chr7_KI270805v1_alt     chr7_KI270806v1_alt     chr7_KI270807v1_alt 
+##                  209988                  158166                  126434 
+##     chr7_KI270808v1_alt     chr7_KI270809v1_alt     chr7_KI270899v1_alt 
+##                  271455                  209586                  190869 
+##     chr8_KI270810v1_alt     chr8_KI270811v1_alt     chr8_KI270812v1_alt 
+##                  374415                  292436                  282736 
+##     chr8_KI270813v1_alt     chr8_KI270814v1_alt     chr8_KI270815v1_alt 
+##                  300230                  141812                  132244 
+##     chr8_KI270816v1_alt     chr8_KI270817v1_alt     chr8_KI270818v1_alt 
+##                  305841                  158983                  145606 
+##     chr8_KI270819v1_alt     chr8_KI270820v1_alt     chr8_KI270821v1_alt 
+##                  133535                   36640                  985506 
+##     chr8_KI270822v1_alt     chr8_KI270900v1_alt     chr8_KI270901v1_alt 
+##                  624492                  318687                  136959 
+##     chr8_KI270926v1_alt     chr9_GL383539v1_alt     chr9_GL383540v1_alt 
+##                  229282                  162988                   71551 
+##     chr9_GL383541v1_alt     chr9_GL383542v1_alt     chr9_KI270823v1_alt 
+##                  171286                   60032                  439082 
+##    chr10_GL383545v1_alt    chr10_GL383546v1_alt    chr10_KI270824v1_alt 
+##                  179254                  309802                  181496 
+##    chr10_KI270825v1_alt    chr11_GL383547v1_alt    chr11_JH159136v1_alt 
+##                  188315                  154407                  200998 
+##    chr11_JH159137v1_alt    chr11_KI270826v1_alt    chr11_KI270827v1_alt 
+##                  191409                  186169                   67707 
+##    chr11_KI270829v1_alt    chr11_KI270830v1_alt    chr11_KI270831v1_alt 
+##                  204059                  177092                  296895 
+##    chr11_KI270832v1_alt    chr11_KI270902v1_alt    chr11_KI270903v1_alt 
+##                  210133                  106711                  214625 
+##    chr11_KI270927v1_alt    chr12_GL383549v1_alt    chr12_GL383550v2_alt 
+##                  218612                  120804                  169178 
+##    chr12_GL383551v1_alt    chr12_GL383552v1_alt    chr12_GL383553v2_alt 
+##                  184319                  138655                  152874 
+##    chr12_GL877875v1_alt    chr12_GL877876v1_alt    chr12_KI270833v1_alt 
+##                  167313                  408271                   76061 
+##    chr12_KI270834v1_alt    chr12_KI270835v1_alt    chr12_KI270836v1_alt 
+##                  119498                  238139                   56134 
+##    chr12_KI270837v1_alt    chr12_KI270904v1_alt    chr13_KI270838v1_alt 
+##                   40090                  572349                  306913 
+##    chr13_KI270839v1_alt    chr13_KI270840v1_alt    chr13_KI270841v1_alt 
+##                  180306                  191684                  169134 
+##    chr13_KI270842v1_alt    chr13_KI270843v1_alt    chr14_KI270844v1_alt 
+##                   37287                  103832                  322166 
+##    chr14_KI270845v1_alt    chr14_KI270846v1_alt    chr14_KI270847v1_alt 
+##                  180703                 1351393                 1511111 
+##    chr15_GL383554v1_alt    chr15_GL383555v2_alt    chr15_KI270848v1_alt 
+##                  296527                  388773                  327382 
+##    chr15_KI270849v1_alt    chr15_KI270850v1_alt    chr15_KI270851v1_alt 
+##                  244917                  430880                  263054 
+##    chr15_KI270852v1_alt    chr15_KI270905v1_alt    chr15_KI270906v1_alt 
+##                  478999                 5161414                  196384 
+##    chr16_GL383556v1_alt    chr16_GL383557v1_alt    chr16_KI270853v1_alt 
+##                  192462                   89672                 2659700 
+##    chr16_KI270854v1_alt    chr16_KI270855v1_alt    chr16_KI270856v1_alt 
+##                  134193                  232857                   63982 
+##    chr17_GL000258v2_alt    chr17_GL383563v3_alt    chr17_GL383564v2_alt 
+##                 1821992                  375691                  133151 
+##    chr17_GL383565v1_alt    chr17_GL383566v1_alt    chr17_JH159146v1_alt 
+##                  223995                   90219                  278131 
+##    chr17_JH159147v1_alt    chr17_JH159148v1_alt    chr17_KI270857v1_alt 
+##                   70345                   88070                 2877074 
+##    chr17_KI270858v1_alt    chr17_KI270859v1_alt    chr17_KI270860v1_alt 
+##                  235827                  108763                  178921 
+##    chr17_KI270861v1_alt    chr17_KI270862v1_alt    chr17_KI270907v1_alt 
+##                  196688                  391357                  137721 
+##    chr17_KI270908v1_alt    chr17_KI270909v1_alt    chr17_KI270910v1_alt 
+##                 1423190                  325800                  157099 
+##    chr18_GL383567v1_alt    chr18_GL383568v1_alt    chr18_GL383569v1_alt 
+##                  289831                  104552                  167950 
+##    chr18_GL383570v1_alt    chr18_GL383571v1_alt    chr18_GL383572v1_alt 
+##                  164789                  198278                  159547 
+##    chr18_KI270863v1_alt    chr18_KI270864v1_alt    chr18_KI270911v1_alt 
+##                  167999                  111737                  157710 
+##    chr18_KI270912v1_alt    chr19_GL000209v2_alt    chr19_GL383573v1_alt 
+##                  174061                  177381                  385657 
+##    chr19_GL383574v1_alt    chr19_GL383575v2_alt    chr19_GL383576v1_alt 
+##                  155864                  170222                  188024 
+##    chr19_GL949746v1_alt    chr19_GL949747v2_alt    chr19_GL949748v2_alt 
+##                  987716                  729520                 1064304 
+##    chr19_GL949749v2_alt    chr19_GL949750v2_alt    chr19_GL949751v2_alt 
+##                 1091841                 1066390                 1002683 
+##    chr19_GL949752v1_alt    chr19_GL949753v2_alt    chr19_KI270865v1_alt 
+##                  987100                  796479                   52969 
+##    chr19_KI270866v1_alt    chr19_KI270867v1_alt    chr19_KI270868v1_alt 
+##                   43156                  233762                   61734 
+##    chr19_KI270882v1_alt    chr19_KI270883v1_alt    chr19_KI270884v1_alt 
+##                  248807                  170399                  157053 
+##    chr19_KI270885v1_alt    chr19_KI270886v1_alt    chr19_KI270887v1_alt 
+##                  171027                  204239                  209512 
+##    chr19_KI270888v1_alt    chr19_KI270889v1_alt    chr19_KI270890v1_alt 
+##                  155532                  170698                  184499 
+##    chr19_KI270891v1_alt    chr19_KI270914v1_alt    chr19_KI270915v1_alt 
+##                  170680                  205194                  170665 
+##    chr19_KI270916v1_alt    chr19_KI270917v1_alt    chr19_KI270918v1_alt 
+##                  184516                  190932                  123111 
+##    chr19_KI270919v1_alt    chr19_KI270920v1_alt    chr19_KI270921v1_alt 
+##                  170701                  198005                  282224 
+##    chr19_KI270922v1_alt    chr19_KI270923v1_alt    chr19_KI270929v1_alt 
+##                  187935                  189352                  186203 
+##    chr19_KI270930v1_alt    chr19_KI270931v1_alt    chr19_KI270932v1_alt 
+##                  200773                  170148                  215732 
+##    chr19_KI270933v1_alt    chr19_KI270938v1_alt    chr20_GL383577v2_alt 
+##                  170537                 1066800                  128386 
+##    chr20_KI270869v1_alt    chr20_KI270870v1_alt    chr20_KI270871v1_alt 
+##                  118774                  183433                   58661 
+##    chr21_GL383578v2_alt    chr21_GL383579v2_alt    chr21_GL383580v2_alt 
+##                   63917                  201197                   74653 
+##    chr21_GL383581v2_alt    chr21_KI270872v1_alt    chr21_KI270873v1_alt 
+##                  116689                   82692                  143900 
+##    chr21_KI270874v1_alt    chr22_GL383582v2_alt    chr22_GL383583v2_alt 
+##                  166743                  162811                   96924 
+##    chr22_KB663609v1_alt    chr22_KI270875v1_alt    chr22_KI270876v1_alt 
+##                   74013                  259914                  263666 
+##    chr22_KI270877v1_alt    chr22_KI270878v1_alt    chr22_KI270879v1_alt 
+##                  101331                  186262                  304135 
+##    chr22_KI270928v1_alt     chrX_KI270880v1_alt     chrX_KI270881v1_alt 
+##                  176103                  284869                  144206 
+##     chrX_KI270913v1_alt  chr1_KI270706v1_random  chr1_KI270707v1_random 
+##                  274009                  175055                   32032 
+##  chr1_KI270708v1_random  chr1_KI270709v1_random  chr1_KI270710v1_random 
+##                  127682                   66860                   40176 
+##  chr1_KI270711v1_random  chr1_KI270712v1_random  chr1_KI270713v1_random 
+##                   42210                  176043                   40745 
+##  chr1_KI270714v1_random  chr2_KI270715v1_random  chr2_KI270716v1_random 
+##                   41717                  161471                  153799 
+##  chr3_GL000221v1_random  chr4_GL000008v2_random  chr5_GL000208v1_random 
+##                  155397                  209709                   92689 
+##  chr9_KI270717v1_random  chr9_KI270718v1_random  chr9_KI270719v1_random 
+##                   40062                   38054                  176845 
+##  chr9_KI270720v1_random chr11_KI270721v1_random chr14_GL000009v2_random 
+##                   39050                  100316                  201709 
+## chr14_GL000194v1_random chr14_GL000225v1_random chr14_KI270722v1_random 
+##                  191469                  211173                  194050 
+## chr14_KI270723v1_random chr14_KI270724v1_random chr14_KI270725v1_random 
+##                   38115                   39555                  172810 
+## chr14_KI270726v1_random chr15_KI270727v1_random chr16_KI270728v1_random 
+##                   43739                  448248                 1872759 
+## chr17_GL000205v2_random chr17_KI270729v1_random chr17_KI270730v1_random 
+##                  185591                  280839                  112551 
+## chr22_KI270731v1_random chr22_KI270732v1_random chr22_KI270733v1_random 
+##                  150754                   41543                  179772 
+## chr22_KI270734v1_random chr22_KI270735v1_random chr22_KI270736v1_random 
+##                  165050                   42811                  181920 
+## chr22_KI270737v1_random chr22_KI270738v1_random chr22_KI270739v1_random 
+##                  103838                   99375                   73985 
+##  chrY_KI270740v1_random        chrUn_GL000195v1        chrUn_GL000213v1 
+##                   37240                  182896                  164239 
+##        chrUn_GL000214v1        chrUn_GL000216v2        chrUn_GL000218v1 
+##                  137718                  176608                  161147 
+##        chrUn_GL000219v1        chrUn_GL000220v1        chrUn_GL000224v1 
+##                  179198                  161802                  179693 
+##        chrUn_GL000226v1        chrUn_KI270302v1        chrUn_KI270303v1 
+##                   15008                    2274                    1942 
+##        chrUn_KI270304v1        chrUn_KI270305v1        chrUn_KI270310v1 
+##                    2165                    1472                    1201 
+##        chrUn_KI270311v1        chrUn_KI270312v1        chrUn_KI270315v1 
+##                   12399                     998                    2276 
+##        chrUn_KI270316v1        chrUn_KI270317v1        chrUn_KI270320v1 
+##                    1444                   37690                    4416 
+##        chrUn_KI270322v1        chrUn_KI270329v1        chrUn_KI270330v1 
+##                   21476                    1040                    1652 
+##        chrUn_KI270333v1        chrUn_KI270334v1        chrUn_KI270335v1 
+##                    2699                    1368                    1048 
+##        chrUn_KI270336v1        chrUn_KI270337v1        chrUn_KI270338v1 
+##                    1026                    1121                    1428 
+##        chrUn_KI270340v1        chrUn_KI270362v1        chrUn_KI270363v1 
+##                    1428                    3530                    1803 
+##        chrUn_KI270364v1        chrUn_KI270366v1        chrUn_KI270371v1 
+##                    2855                    8320                    2805 
+##        chrUn_KI270372v1        chrUn_KI270373v1        chrUn_KI270374v1 
+##                    1650                    1451                    2656 
+##        chrUn_KI270375v1        chrUn_KI270376v1        chrUn_KI270378v1 
+##                    2378                    1136                    1048 
+##        chrUn_KI270379v1        chrUn_KI270381v1        chrUn_KI270382v1 
+##                    1045                    1930                    4215 
+##        chrUn_KI270383v1        chrUn_KI270384v1        chrUn_KI270385v1 
+##                    1750                    1658                     990 
+##        chrUn_KI270386v1        chrUn_KI270387v1        chrUn_KI270388v1 
+##                    1788                    1537                    1216 
+##        chrUn_KI270389v1        chrUn_KI270390v1        chrUn_KI270391v1 
+##                    1298                    2387                    1484 
+##        chrUn_KI270392v1        chrUn_KI270393v1        chrUn_KI270394v1 
+##                     971                    1308                     970 
+##        chrUn_KI270395v1        chrUn_KI270396v1        chrUn_KI270411v1 
+##                    1143                    1880                    2646 
+##        chrUn_KI270412v1        chrUn_KI270414v1        chrUn_KI270417v1 
+##                    1179                    2489                    2043 
+##        chrUn_KI270418v1        chrUn_KI270419v1        chrUn_KI270420v1 
+##                    2145                    1029                    2321 
+##        chrUn_KI270422v1        chrUn_KI270423v1        chrUn_KI270424v1 
+##                    1445                     981                    2140 
+##        chrUn_KI270425v1        chrUn_KI270429v1        chrUn_KI270435v1 
+##                    1884                    1361                   92983 
+##        chrUn_KI270438v1        chrUn_KI270442v1        chrUn_KI270448v1 
+##                  112505                  392061                    7992 
+##        chrUn_KI270465v1        chrUn_KI270466v1        chrUn_KI270467v1 
+##                    1774                    1233                    3920 
+##        chrUn_KI270468v1        chrUn_KI270507v1        chrUn_KI270508v1 
+##                    4055                    5353                    1951 
+##        chrUn_KI270509v1        chrUn_KI270510v1        chrUn_KI270511v1 
+##                    2318                    2415                    8127 
+##        chrUn_KI270512v1        chrUn_KI270515v1        chrUn_KI270516v1 
+##                   22689                    6361                    1300 
+##        chrUn_KI270517v1        chrUn_KI270518v1        chrUn_KI270519v1 
+##                    3253                    2186                  138126 
+##        chrUn_KI270521v1        chrUn_KI270522v1        chrUn_KI270528v1 
+##                    7642                    5674                    2983 
+##        chrUn_KI270529v1        chrUn_KI270530v1        chrUn_KI270538v1 
+##                    1899                    2168                   91309 
+##        chrUn_KI270539v1        chrUn_KI270544v1        chrUn_KI270548v1 
+##                     993                    1202                    1599 
+##        chrUn_KI270579v1        chrUn_KI270580v1        chrUn_KI270581v1 
+##                   31033                    1553                    7046 
+##        chrUn_KI270582v1        chrUn_KI270583v1        chrUn_KI270584v1 
+##                    6504                    1400                    4513 
+##        chrUn_KI270587v1        chrUn_KI270588v1        chrUn_KI270589v1 
+##                    2969                    6158                   44474 
+##        chrUn_KI270590v1        chrUn_KI270591v1        chrUn_KI270593v1 
+##                    4685                    5796                    3041 
+##        chrUn_KI270741v1        chrUn_KI270742v1        chrUn_KI270743v1 
+##                  157432                  186739                  210658 
+##        chrUn_KI270744v1        chrUn_KI270745v1        chrUn_KI270746v1 
+##                  168472                   41891                   66486 
+##        chrUn_KI270747v1        chrUn_KI270748v1        chrUn_KI270749v1 
+##                  198735                   93321                  158759 
+##        chrUn_KI270750v1        chrUn_KI270751v1        chrUn_KI270752v1 
+##                  148850                  150742                   27745 
+##        chrUn_KI270753v1        chrUn_KI270754v1        chrUn_KI270755v1 
+##                   62944                   40191                   36723 
+##        chrUn_KI270756v1        chrUn_KI270757v1     chr1_KN196472v1_fix 
+##                   79590                   71251                  186494 
+##     chr1_KN196473v1_fix     chr1_KN196474v1_fix     chr1_KN538360v1_fix 
+##                  166200                  122022                  460100 
+##     chr1_KN538361v1_fix     chr1_KQ031383v1_fix     chr1_KZ208906v1_fix 
+##                  305542                  467143                  330031 
+##     chr1_KZ559100v1_fix     chr2_KN538362v1_fix     chr2_KN538363v1_fix 
+##                   44955                  208149                  365499 
+##     chr2_KQ031384v1_fix     chr3_KN196475v1_fix     chr3_KN196476v1_fix 
+##                  481245                  451168                  305979 
+##     chr3_KN538364v1_fix     chr3_KQ031385v1_fix     chr3_KQ031386v1_fix 
+##                  415308                  373699                  165718 
+##     chr3_KV766192v1_fix     chr3_KZ559104v1_fix     chr4_KQ983257v1_fix 
+##                  411654                  105527                  230434 
+##     chr5_KV575244v1_fix     chr6_KN196478v1_fix     chr6_KQ031387v1_fix 
+##                  673059                  268330                  320750 
+##     chr6_KQ090016v1_fix     chr6_KV766194v1_fix     chr6_KZ208911v1_fix 
+##                  245716                  139427                  242796 
+##     chr7_KQ031388v1_fix     chr7_KV880764v1_fix     chr7_KV880765v1_fix 
+##                  179932                  142129                  468267 
+##     chr7_KZ208912v1_fix     chr8_KV880766v1_fix     chr8_KV880767v1_fix 
+##                  589656                  156998                  265876 
+##     chr8_KZ208914v1_fix     chr8_KZ208915v1_fix     chr9_KN196479v1_fix 
+##                  165120                 6367528                  330164 
+##    chr10_KN196480v1_fix    chr10_KN538365v1_fix    chr10_KN538366v1_fix 
+##                  277797                   14347                   85284 
+##    chr10_KN538367v1_fix    chr10_KQ090021v1_fix    chr11_KN196481v1_fix 
+##                  420164                  264545                  108875 
+##    chr11_KQ090022v1_fix    chr11_KQ759759v1_fix    chr11_KV766195v1_fix 
+##                  181958                  196940                  140877 
+##    chr11_KZ559108v1_fix    chr11_KZ559109v1_fix    chr12_KN196482v1_fix 
+##                  305244                  279644                  211377 
+##    chr12_KN538369v1_fix    chr12_KN538370v1_fix    chr12_KQ759760v1_fix 
+##                  541038                   86533                  315610 
+##    chr12_KZ208916v1_fix    chr12_KZ208917v1_fix    chr13_KN196483v1_fix 
+##                 1046838                   64689                   35455 
+##    chr13_KN538371v1_fix    chr13_KN538372v1_fix    chr13_KN538373v1_fix 
+##                  206320                  356766                  148762 
+##    chr14_KZ208920v1_fix    chr15_KN538374v1_fix    chr16_KV880768v1_fix 
+##                  690932                 4998962                 1927115 
+##    chr16_KZ559113v1_fix    chr17_KV575245v1_fix    chr17_KV766196v1_fix 
+##                  480415                  154723                  281919 
+##    chr18_KQ090028v1_fix    chr18_KZ208922v1_fix    chr18_KZ559115v1_fix 
+##                  407387                   93070                  230843 
+##    chr19_KN196484v1_fix    chr19_KQ458386v1_fix    chr22_KQ759762v1_fix 
+##                  370917                  405389                  101037 
+##     chrY_KN196487v1_fix     chrY_KZ208923v1_fix     chrY_KZ208924v1_fix 
+##                  101150                   48370                  209722 
+##     chr1_KQ458382v1_alt     chr1_KQ458383v1_alt     chr1_KQ458384v1_alt 
+##                  141019                  349938                  212205 
+##     chr1_KQ983255v1_alt     chr1_KV880763v1_alt     chr1_KZ208904v1_alt 
+##                  278659                  551020                  166136 
+##     chr1_KZ208905v1_alt     chr2_KQ983256v1_alt     chr2_KZ208907v1_alt 
+##                  140355                  535088                  181658 
+##     chr2_KZ208908v1_alt     chr3_KZ208909v1_alt     chr3_KZ559101v1_alt 
+##                  140361                  175849                  164041 
+##     chr3_KZ559102v1_alt     chr3_KZ559103v1_alt     chr3_KZ559105v1_alt 
+##                  197752                  302885                  195063 
+##     chr4_KQ090013v1_alt     chr4_KQ090014v1_alt     chr4_KQ090015v1_alt 
+##                   90922                  163749                  236512 
+##     chr4_KQ983258v1_alt     chr4_KV766193v1_alt     chr5_KN196477v1_alt 
+##                  205407                  420675                  139087 
+##     chr5_KV575243v1_alt     chr5_KZ208910v1_alt     chr6_KQ090017v1_alt 
+##                  362221                  135987                   82315 
+##     chr7_KZ208913v1_alt     chr7_KZ559106v1_alt     chr8_KZ559107v1_alt 
+##                  680662                  172555                  103072 
+##     chr9_KQ090018v1_alt     chr9_KQ090019v1_alt    chr10_KQ090020v1_alt 
+##                  163882                  134099                  185507 
+##    chr11_KN538368v1_alt    chr11_KZ559110v1_alt    chr11_KZ559111v1_alt 
+##                  203552                  301637                  181167 
+##    chr12_KQ090023v1_alt    chr12_KZ208918v1_alt    chr12_KZ559112v1_alt 
+##                  109323                  174808                  154139 
+##    chr13_KQ090024v1_alt    chr13_KQ090025v1_alt    chr14_KZ208919v1_alt 
+##                  168146                  123480                  171798 
+##    chr15_KQ031389v1_alt    chr16_KQ031390v1_alt    chr16_KQ090026v1_alt 
+##                 2365364                  169136                   59016 
+##    chr16_KQ090027v1_alt    chr16_KZ208921v1_alt    chr17_KV766197v1_alt 
+##                  267463                   78609                  246895 
+##    chr17_KV766198v1_alt    chr17_KZ559114v1_alt    chr18_KQ458385v1_alt 
+##                  276292                  116753                  205101 
+##    chr18_KZ559116v1_alt    chr19_KV575246v1_alt    chr19_KV575247v1_alt 
+##                  163186                  163926                  170206 
+##    chr19_KV575248v1_alt    chr19_KV575249v1_alt    chr19_KV575250v1_alt 
+##                  168131                  293522                  241058 
+##    chr19_KV575251v1_alt    chr19_KV575252v1_alt    chr19_KV575253v1_alt 
+##                  159285                  178197                  166713 
+##    chr19_KV575254v1_alt    chr19_KV575255v1_alt    chr19_KV575256v1_alt 
+##                   99845                  161095                  223118 
+##    chr19_KV575257v1_alt    chr19_KV575258v1_alt    chr19_KV575259v1_alt 
+##                  100553                  156965                  171263 
+##    chr19_KV575260v1_alt    chr22_KN196485v1_alt    chr22_KN196486v1_alt 
+##                  145691                  156562                  153027 
+##    chr22_KQ458387v1_alt    chr22_KQ458388v1_alt    chr22_KQ759761v1_alt 
+##                  155930                  174749                  145162 
+##     chrX_KV766199v1_alt 
+##                  188004</code></pre>
+<pre class="r"><code># get sequences
+getSeq(hs_genome, names = &quot;chr1&quot;, start = 100, end = 150)</code></pre>
+<pre><code>## 51-letter DNAString object
+## seq: NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN</code></pre>
+</div>
+<div id="biostrings" class="section level2">
+<h2>BioStrings</h2>
+<p>Biostrings = algorithms for fast manipulation of large biological sequences<br />
+- two main virtual classes = XString and XStringSet BString class for <em>big string</em><br />
+- a Set is a collection of strings that can have variable lengths</p>
+<pre class="r"><code>#BiocManager::install(&quot;Biostrings&quot;)
+library(Biostrings)
+# showClass to learn more about these containters and how they are related
+showClass(&quot;XString&quot;)</code></pre>
+<pre><code>## Virtual Class &quot;XString&quot; [package &quot;Biostrings&quot;]
+## 
+## Slots:
+##                                                                               
+## Name:             shared            offset            length   elementMetadata
+## Class:         SharedRaw           integer           integer DataTable_OR_NULL
+##                         
+## Name:           metadata
+## Class:              list
+## 
+## Extends: 
+## Class &quot;XRaw&quot;, directly
+## Class &quot;XVector&quot;, by class &quot;XRaw&quot;, distance 2
+## Class &quot;Vector&quot;, by class &quot;XRaw&quot;, distance 3
+## Class &quot;Annotated&quot;, by class &quot;XRaw&quot;, distance 4
+## Class &quot;vector_OR_Vector&quot;, by class &quot;XRaw&quot;, distance 4
+## 
+## Known Subclasses: &quot;BString&quot;, &quot;DNAString&quot;, &quot;RNAString&quot;, &quot;AAString&quot;</code></pre>
+<pre class="r"><code>showClass(&quot;BStringSet&quot;)</code></pre>
+<pre><code>## Class &quot;BStringSet&quot; [package &quot;Biostrings&quot;]
+## 
+## Slots:
+##                                                                               
+## Name:               pool            ranges       elementType   elementMetadata
+## Class:    SharedRaw_Pool    GroupedIRanges         character DataTable_OR_NULL
+##                         
+## Name:           metadata
+## Class:              list
+## 
+## Extends: 
+## Class &quot;XStringSet&quot;, directly
+## Class &quot;XRawList&quot;, by class &quot;XStringSet&quot;, distance 2
+## Class &quot;XVectorList&quot;, by class &quot;XStringSet&quot;, distance 3
+## Class &quot;List&quot;, by class &quot;XStringSet&quot;, distance 4
+## Class &quot;Vector&quot;, by class &quot;XStringSet&quot;, distance 5
+## Class &quot;list_OR_List&quot;, by class &quot;XStringSet&quot;, distance 5
+## Class &quot;Annotated&quot;, by class &quot;XStringSet&quot;, distance 6
+## Class &quot;vector_OR_Vector&quot;, by class &quot;XStringSet&quot;, distance 6
+## 
+## Known Subclasses: 
+## Class &quot;XStringQuality&quot;, directly
+## Class &quot;QualityScaledBStringSet&quot;, directly
+## Class &quot;PhredQuality&quot;, by class &quot;XStringQuality&quot;, distance 2
+## Class &quot;SolexaQuality&quot;, by class &quot;XStringQuality&quot;, distance 2
+## Class &quot;IlluminaQuality&quot;, by class &quot;XStringQuality&quot;, distance 2</code></pre>
+<pre class="r"><code>showClass(&quot;BString&quot;) # subclass of XString</code></pre>
+<pre><code>## Class &quot;BString&quot; [package &quot;Biostrings&quot;]
+## 
+## Slots:
+##                                                                               
+## Name:             shared            offset            length   elementMetadata
+## Class:         SharedRaw           integer           integer DataTable_OR_NULL
+##                         
+## Name:           metadata
+## Class:              list
+## 
+## Extends: 
+## Class &quot;XString&quot;, directly
+## Class &quot;XRaw&quot;, by class &quot;XString&quot;, distance 2
+## Class &quot;XVector&quot;, by class &quot;XString&quot;, distance 3
+## Class &quot;Vector&quot;, by class &quot;XString&quot;, distance 4
+## Class &quot;Annotated&quot;, by class &quot;XString&quot;, distance 5
+## Class &quot;vector_OR_Vector&quot;, by class &quot;XString&quot;, distance 5</code></pre>
+<pre class="r"><code>showClass(&quot;DNAString&quot;)</code></pre>
+<pre><code>## Class &quot;DNAString&quot; [package &quot;Biostrings&quot;]
+## 
+## Slots:
+##                                                                               
+## Name:             shared            offset            length   elementMetadata
+## Class:         SharedRaw           integer           integer DataTable_OR_NULL
+##                         
+## Name:           metadata
+## Class:              list
+## 
+## Extends: 
+## Class &quot;XString&quot;, directly
+## Class &quot;XRaw&quot;, by class &quot;XString&quot;, distance 2
+## Class &quot;XVector&quot;, by class &quot;XString&quot;, distance 3
+## Class &quot;Vector&quot;, by class &quot;XString&quot;, distance 4
+## Class &quot;Annotated&quot;, by class &quot;XString&quot;, distance 5
+## Class &quot;vector_OR_Vector&quot;, by class &quot;XString&quot;, distance 5</code></pre>
+<pre class="r"><code>showClass(&quot;RNAString&quot;)</code></pre>
+<pre><code>## Class &quot;RNAString&quot; [package &quot;Biostrings&quot;]
+## 
+## Slots:
+##                                                                               
+## Name:             shared            offset            length   elementMetadata
+## Class:         SharedRaw           integer           integer DataTable_OR_NULL
+##                         
+## Name:           metadata
+## Class:              list
+## 
+## Extends: 
+## Class &quot;XString&quot;, directly
+## Class &quot;XRaw&quot;, by class &quot;XString&quot;, distance 2
+## Class &quot;XVector&quot;, by class &quot;XString&quot;, distance 3
+## Class &quot;Vector&quot;, by class &quot;XString&quot;, distance 4
+## Class &quot;Annotated&quot;, by class &quot;XString&quot;, distance 5
+## Class &quot;vector_OR_Vector&quot;, by class &quot;XString&quot;, distance 5</code></pre>
+<pre class="r"><code>showClass(&quot;AAString&quot;)</code></pre>
+<pre><code>## Class &quot;AAString&quot; [package &quot;Biostrings&quot;]
+## 
+## Slots:
+##                                                                               
+## Name:             shared            offset            length   elementMetadata
+## Class:         SharedRaw           integer           integer DataTable_OR_NULL
+##                         
+## Name:           metadata
+## Class:              list
+## 
+## Extends: 
+## Class &quot;XString&quot;, directly
+## Class &quot;XRaw&quot;, by class &quot;XString&quot;, distance 2
+## Class &quot;XVector&quot;, by class &quot;XString&quot;, distance 3
+## Class &quot;Vector&quot;, by class &quot;XString&quot;, distance 4
+## Class &quot;Annotated&quot;, by class &quot;XString&quot;, distance 5
+## Class &quot;vector_OR_Vector&quot;, by class &quot;XString&quot;, distance 5</code></pre>
+<pre class="r"><code># BioStrings are biology-oriented containers. 
+# They use a predefined set of alphabet for storing a DNA, RNA or amino acid sequence  
+DNA_BASES # 4 dNTPs</code></pre>
+<pre><code>## [1] &quot;A&quot; &quot;C&quot; &quot;G&quot; &quot;T&quot;</code></pre>
+<pre class="r"><code>RNA_BASES # 4 NTPs</code></pre>
+<pre><code>## [1] &quot;A&quot; &quot;C&quot; &quot;G&quot; &quot;U&quot;</code></pre>
+<pre class="r"><code>AA_STANDARD # 20 amino acids</code></pre>
+<pre><code>##  [1] &quot;A&quot; &quot;R&quot; &quot;N&quot; &quot;D&quot; &quot;C&quot; &quot;Q&quot; &quot;E&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;L&quot; &quot;K&quot; &quot;M&quot; &quot;F&quot; &quot;P&quot; &quot;S&quot; &quot;T&quot; &quot;W&quot; &quot;Y&quot;
+## [20] &quot;V&quot;</code></pre>
+<pre class="r"><code># Biostrings alphabets are based on two code  
+# Each alphabet corresponds to a specific biostring container, and each alphabet usually has extra code letters and symbols
+DNA_ALPHABET # IUPAC code - https://www.bioinformatics.org/sms/iupac.html</code></pre>
+<pre><code>##  [1] &quot;A&quot; &quot;C&quot; &quot;G&quot; &quot;T&quot; &quot;M&quot; &quot;R&quot; &quot;W&quot; &quot;S&quot; &quot;Y&quot; &quot;K&quot; &quot;V&quot; &quot;H&quot; &quot;D&quot; &quot;B&quot; &quot;N&quot; &quot;-&quot; &quot;+&quot; &quot;.&quot;</code></pre>
+<pre class="r"><code>RNA_ALPHABET # IUPAC code</code></pre>
+<pre><code>##  [1] &quot;A&quot; &quot;C&quot; &quot;G&quot; &quot;U&quot; &quot;M&quot; &quot;R&quot; &quot;W&quot; &quot;S&quot; &quot;Y&quot; &quot;K&quot; &quot;V&quot; &quot;H&quot; &quot;D&quot; &quot;B&quot; &quot;N&quot; &quot;-&quot; &quot;+&quot; &quot;.&quot;</code></pre>
+<pre class="r"><code>AA_ALPHABET # amino acid code</code></pre>
+<pre><code>##  [1] &quot;A&quot; &quot;R&quot; &quot;N&quot; &quot;D&quot; &quot;C&quot; &quot;Q&quot; &quot;E&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;L&quot; &quot;K&quot; &quot;M&quot; &quot;F&quot; &quot;P&quot; &quot;S&quot; &quot;T&quot; &quot;W&quot; &quot;Y&quot;
+## [20] &quot;V&quot; &quot;U&quot; &quot;O&quot; &quot;B&quot; &quot;J&quot; &quot;Z&quot; &quot;X&quot; &quot;*&quot; &quot;-&quot; &quot;+&quot; &quot;.&quot;</code></pre>
+<pre class="r"><code>RNA_GENETIC_CODE # translation code from rna codon to amino acide</code></pre>
+<pre><code>## UUU UUC UUA UUG UCU UCC UCA UCG UAU UAC UAA UAG UGU UGC UGA UGG CUU CUC CUA CUG 
+## &quot;F&quot; &quot;F&quot; &quot;L&quot; &quot;L&quot; &quot;S&quot; &quot;S&quot; &quot;S&quot; &quot;S&quot; &quot;Y&quot; &quot;Y&quot; &quot;*&quot; &quot;*&quot; &quot;C&quot; &quot;C&quot; &quot;*&quot; &quot;W&quot; &quot;L&quot; &quot;L&quot; &quot;L&quot; &quot;L&quot; 
+## CCU CCC CCA CCG CAU CAC CAA CAG CGU CGC CGA CGG AUU AUC AUA AUG ACU ACC ACA ACG 
+## &quot;P&quot; &quot;P&quot; &quot;P&quot; &quot;P&quot; &quot;H&quot; &quot;H&quot; &quot;Q&quot; &quot;Q&quot; &quot;R&quot; &quot;R&quot; &quot;R&quot; &quot;R&quot; &quot;I&quot; &quot;I&quot; &quot;I&quot; &quot;M&quot; &quot;T&quot; &quot;T&quot; &quot;T&quot; &quot;T&quot; 
+## AAU AAC AAA AAG AGU AGC AGA AGG GUU GUC GUA GUG GCU GCC GCA GCG GAU GAC GAA GAG 
+## &quot;N&quot; &quot;N&quot; &quot;K&quot; &quot;K&quot; &quot;S&quot; &quot;S&quot; &quot;R&quot; &quot;R&quot; &quot;V&quot; &quot;V&quot; &quot;V&quot; &quot;V&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;D&quot; &quot;D&quot; &quot;E&quot; &quot;E&quot; 
+## GGU GGC GGA GGG 
+## &quot;G&quot; &quot;G&quot; &quot;G&quot; &quot;G&quot; 
+## attr(,&quot;alt_init_codons&quot;)
+## [1] &quot;UUG&quot; &quot;CUG&quot;</code></pre>
+<pre class="r"><code># use DNAString command to save sequence in object as DNAString sequence
+dna_seq &lt;- DNAString(&quot;ATGATCTCGTAA&quot;)
+dna_seq</code></pre>
+<pre><code>## 12-letter DNAString object
+## seq: ATGATCTCGTAA</code></pre>
+<pre class="r"><code>dna_seq2 &lt;- DNAString(&quot;ATGATCTCGTAAMYGTACKVGWTSD&quot;)
+rna_seq &lt;- RNAString(dna_seq) # transcription
+rna_seq</code></pre>
+<pre><code>## 12-letter RNAString object
+## seq: AUGAUCUCGUAA</code></pre>
+<pre class="r"><code>rna_seq2 &lt;- RNAString(dna_seq2)
+# to code translation use translate(), also accepts DNAString classes
+aa_seq &lt;- translate(rna_seq)  
+aa_seq</code></pre>
+<pre><code>## 4-letter AAString object
+## seq: MIS*</code></pre>
+<pre class="r"><code>translate(dna_seq)</code></pre>
+<pre><code>## 4-letter AAString object
+## seq: MIS*</code></pre>
+<pre class="r"><code>#translate(dna_seq2) # not able to translate
+
+# check the alphabet used:
+alphabet(rna_seq)</code></pre>
+<pre><code>##  [1] &quot;A&quot; &quot;C&quot; &quot;G&quot; &quot;U&quot; &quot;M&quot; &quot;R&quot; &quot;W&quot; &quot;S&quot; &quot;Y&quot; &quot;K&quot; &quot;V&quot; &quot;H&quot; &quot;D&quot; &quot;B&quot; &quot;N&quot; &quot;-&quot; &quot;+&quot; &quot;.&quot;</code></pre>
+<pre class="r"><code>alphabet(aa_seq)</code></pre>
+<pre><code>##  [1] &quot;A&quot; &quot;R&quot; &quot;N&quot; &quot;D&quot; &quot;C&quot; &quot;Q&quot; &quot;E&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;L&quot; &quot;K&quot; &quot;M&quot; &quot;F&quot; &quot;P&quot; &quot;S&quot; &quot;T&quot; &quot;W&quot; &quot;Y&quot;
+## [20] &quot;V&quot; &quot;U&quot; &quot;O&quot; &quot;B&quot; &quot;J&quot; &quot;Z&quot; &quot;X&quot; &quot;*&quot; &quot;-&quot; &quot;+&quot; &quot;.&quot;</code></pre>
+<pre class="r"><code>alphabetFrequency(aa_seq) # and the frequency of each letter in the sequence</code></pre>
+<pre><code>##     A     R     N     D     C     Q     E     G     H     I     L     K     M 
+##     0     0     0     0     0     0     0     0     0     1     0     0     1 
+##     F     P     S     T     W     Y     V     U     O     B     J     Z     X 
+##     0     0     1     0     0     0     0     0     0     0     0     0     0 
+##     *     -     +     . other 
+##     1     0     0     0     0</code></pre>
+<pre class="r"><code>alphabet(dna_seq) </code></pre>
+<pre><code>##  [1] &quot;A&quot; &quot;C&quot; &quot;G&quot; &quot;T&quot; &quot;M&quot; &quot;R&quot; &quot;W&quot; &quot;S&quot; &quot;Y&quot; &quot;K&quot; &quot;V&quot; &quot;H&quot; &quot;D&quot; &quot;B&quot; &quot;N&quot; &quot;-&quot; &quot;+&quot; &quot;.&quot;</code></pre>
+<pre class="r"><code>alphabetFrequency(dna_seq) </code></pre>
+<pre><code>## A C G T M R W S Y K V H D B N - + . 
+## 4 2 2 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0</code></pre>
+<pre class="r"><code>alphabet(dna_seq, baseOnly =T) # returns only the </code></pre>
+<pre><code>## [1] &quot;A&quot; &quot;C&quot; &quot;G&quot; &quot;T&quot;</code></pre>
+<pre class="r"><code>alphabet(dna_seq2) </code></pre>
+<pre><code>##  [1] &quot;A&quot; &quot;C&quot; &quot;G&quot; &quot;T&quot; &quot;M&quot; &quot;R&quot; &quot;W&quot; &quot;S&quot; &quot;Y&quot; &quot;K&quot; &quot;V&quot; &quot;H&quot; &quot;D&quot; &quot;B&quot; &quot;N&quot; &quot;-&quot; &quot;+&quot; &quot;.&quot;</code></pre>
+<pre class="r"><code># report A, C, G, T and collapse rest to &#39;other&#39; category:
+alphabetFrequency(dna_seq2, baseOnly =T) </code></pre>
+<pre><code>##     A     C     G     T other 
+##     5     3     4     6     7</code></pre>
+<pre class="r"><code># report as frequencies:
+alphabetFrequency(dna_seq2, baseOnly =T, as.prob = T) </code></pre>
+<pre><code>##     A     C     G     T other 
+##  0.20  0.12  0.16  0.24  0.28</code></pre>
+<pre class="r"><code># now with human genome chr21
+show(hs_genome)</code></pre>
+<pre><code>## Human genome:
+## # organism: Homo sapiens (Human)
+## # provider: UCSC
+## # provider version: hg38
+## # release date: Dec. 2017
+## # release name: Genome Reference Consortium GRCh38.p12
+## # 595 sequences:
+## #   chr1                    chr2                    chr3                   
+## #   chr4                    chr5                    chr6                   
+## #   chr7                    chr8                    chr9                   
+## #   chr10                   chr11                   chr12                  
+## #   chr13                   chr14                   chr15                  
+## #   ...                     ...                     ...                    
+## #   chr19_KV575254v1_alt    chr19_KV575255v1_alt    chr19_KV575256v1_alt   
+## #   chr19_KV575257v1_alt    chr19_KV575258v1_alt    chr19_KV575259v1_alt   
+## #   chr19_KV575260v1_alt    chr22_KN196485v1_alt    chr22_KN196486v1_alt   
+## #   chr22_KQ458387v1_alt    chr22_KQ458388v1_alt    chr22_KQ759761v1_alt   
+## #   chrX_KV766199v1_alt                                                    
+## # (use &#39;seqnames()&#39; to see all the sequence names, use the &#39;$&#39; or &#39;[[&#39; operator
+## # to access a given sequence)</code></pre>
+<pre class="r"><code>alphabet(hs_genome$chr21)</code></pre>
+<pre><code>##  [1] &quot;A&quot; &quot;C&quot; &quot;G&quot; &quot;T&quot; &quot;M&quot; &quot;R&quot; &quot;W&quot; &quot;S&quot; &quot;Y&quot; &quot;K&quot; &quot;V&quot; &quot;H&quot; &quot;D&quot; &quot;B&quot; &quot;N&quot; &quot;-&quot; &quot;+&quot; &quot;.&quot;</code></pre>
+<pre class="r"><code>alphabetFrequency(hs_genome$chr21)</code></pre>
+<pre><code>##        A        C        G        T        M        R        W        S 
+## 11820664  8185244  8226381 11856330        0        0        0        0 
+##        Y        K        V        H        D        B        N        - 
+##        0        0        0        0        0        0  6621364        0 
+##        +        . 
+##        0        0</code></pre>
+<div id="useful-functions-to-manipulate-biostrings" class="section level3">
+<h3>Useful functions to manipulate BioStrings:</h3>
+<p>RNAString(), translate(), unlist(), length(), width(), complement(), rev, reverse(), reverseComplement, subseq(OBJECT, START, END)</p>
+<pre class="r"><code># reading a string set (XStringSet for many sequences)
+# go from Set to String
+# read sequence as set:
+pf &lt;- readDNAStringSet(&quot;data/p6_PlasmoDB-26_Pfalciparum3D7_Genome.fasta&quot;)
+# set is a list with length 16 (16 chromosomes)
+length(pf)</code></pre>
+<pre><code>## [1] 16</code></pre>
+<pre class="r"><code># length of each chromosome
+width(pf)</code></pre>
+<pre><code>##  [1] 1200490 1343557  947102 1541735 2271494 1418242 3291936 1067971 1445207
+## [10] 2925236 1472805  640851 1687656 2038340    5967   34242</code></pre>
+<pre class="r"><code>pf_width &lt;- width(pf)
+
+#name of each chromosome
+names(pf)</code></pre>
+<pre><code>##  [1] &quot;Pf3D7_04_v3 | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=1200490 | SO=chromosome&quot;            
+##  [2] &quot;Pf3D7_05_v3 | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=1343557 | SO=chromosome&quot;            
+##  [3] &quot;Pf3D7_02_v3 | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=947102 | SO=chromosome&quot;             
+##  [4] &quot;Pf3D7_09_v3 | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=1541735 | SO=chromosome&quot;            
+##  [5] &quot;Pf3D7_12_v3 | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=2271494 | SO=chromosome&quot;            
+##  [6] &quot;Pf3D7_06_v3 | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=1418242 | SO=chromosome&quot;            
+##  [7] &quot;Pf3D7_14_v3 | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=3291936 | SO=chromosome&quot;            
+##  [8] &quot;Pf3D7_03_v3 | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=1067971 | SO=chromosome&quot;            
+##  [9] &quot;Pf3D7_07_v3 | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=1445207 | SO=chromosome&quot;            
+## [10] &quot;Pf3D7_13_v3 | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=2925236 | SO=chromosome&quot;            
+## [11] &quot;Pf3D7_08_v3 | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=1472805 | SO=chromosome&quot;            
+## [12] &quot;Pf3D7_01_v3 | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=640851 | SO=chromosome&quot;             
+## [13] &quot;Pf3D7_10_v3 | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=1687656 | SO=chromosome&quot;            
+## [14] &quot;Pf3D7_11_v3 | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=2038340 | SO=chromosome&quot;            
+## [15] &quot;M76611 | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=5967 | SO=mitochondrial_chromosome&quot;      
+## [16] &quot;PFC10_API_IRAB | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=34242 | SO=apicoplast_chromosome&quot;</code></pre>
+<pre class="r"><code># make single string by:
+pf_seq &lt;- unlist(pf)
+length(pf_seq)</code></pre>
+<pre><code>## [1] 23332831</code></pre>
+<pre class="r"><code>#widht(pf_seq) # no width because chromosomes arecollated
+
+# create a new set from a single sequence:
+# specify the sequence and the start and end or the start and with as numeric vectors
+pf_set &lt;- DNAStringSet(pf_seq, start = c(1, 101, 201), width =rep(100, times = 3))
+names(pf_set) &lt;- paste0(&quot;seq&quot;, seq(1, 3, by = 1))
+
+# complement of the strands we&#39;ve seen so far:
+complement(pf_set)</code></pre>
+<pre><code>## DNAStringSet object of length 3:
+##     width seq                                               names               
+## [1]   100 TTGGGATTTGGGACTTGGGATTT...TTGGGATTTGGGACTTGGGACTT seq1
+## [2]   100 GGGATTTGGGATTTGGGATTTGG...GGATTTGGGACTTGGGATTTGGG seq2
+## [3]   100 ATTTGGGATTTGGGATTTGGGAT...TTGGGACTTGGGATTTGGGATTT seq3</code></pre>
+<pre class="r"><code>complement(dna_seq)</code></pre>
+<pre><code>## 12-letter DNAString object
+## seq: TACTAGAGCATT</code></pre>
+<pre class="r"><code># Rev() (base package) can also be useful:
+# to reverse the list order of the set from top to bottom:
+rev(pf_set)</code></pre>
+<pre><code>## DNAStringSet object of length 3:
+##     width seq                                               names               
+## [1]   100 TAAACCCTAAACCCTAAACCCTA...AACCCTGAACCCTAAACCCTAAA seq3
+## [2]   100 CCCTAAACCCTAAACCCTAAACC...CCTAAACCCTGAACCCTAAACCC seq2
+## [3]   100 AACCCTAAACCCTGAACCCTAAA...AACCCTAAACCCTGAACCCTGAA seq1</code></pre>
+<pre class="r"><code># reverse (IRranges) reverse the characters from right to left:
+reverse(pf_set)</code></pre>
+<pre><code>## DNAStringSet object of length 3:
+##     width seq                                               names               
+## [1]   100 AAGTCCCAAGTCCCAAATCCCAA...AAATCCCAAGTCCCAAATCCCAA seq1
+## [2]   100 CCCAAATCCCAAGTCCCAAATCC...CCAAATCCCAAATCCCAAATCCC seq2
+## [3]   100 AAATCCCAAATCCCAAGTCCCAA...ATCCCAAATCCCAAATCCCAAAT seq3</code></pre>
+<pre class="r"><code># obtain the reverse complement (works on DNAStraings and RNASTrings) use one or combined function:
+reverse(complement(pf_set))</code></pre>
+<pre><code>## DNAStringSet object of length 3:
+##     width seq                                               names               
+## [1]   100 TTCAGGGTTCAGGGTTTAGGGTT...TTTAGGGTTCAGGGTTTAGGGTT seq1
+## [2]   100 GGGTTTAGGGTTCAGGGTTTAGG...GGTTTAGGGTTTAGGGTTTAGGG seq2
+## [3]   100 TTTAGGGTTTAGGGTTCAGGGTT...TAGGGTTTAGGGTTTAGGGTTTA seq3</code></pre>
+<pre class="r"><code>reverseComplement(pf_set) # faster and memory efficient</code></pre>
+<pre><code>## DNAStringSet object of length 3:
+##     width seq                                               names               
+## [1]   100 TTCAGGGTTCAGGGTTTAGGGTT...TTTAGGGTTCAGGGTTTAGGGTT seq1
+## [2]   100 GGGTTTAGGGTTCAGGGTTTAGG...GGTTTAGGGTTTAGGGTTTAGGG seq2
+## [3]   100 TTTAGGGTTTAGGGTTCAGGGTT...TAGGGTTTAGGGTTTAGGGTTTA seq3</code></pre>
+</div>
+<div id="patterns-in-biostrings" class="section level3">
+<h3>Patterns in BioStrings</h3>
+<ul>
+<li>exmaples are sequence repeats, protein end codon, splice start en end sites, TF binding sites, CpG islands<br />
+</li>
+<li>discover occurance, frequency, periodicity and length<br />
+<br> <code>matchPattern(pattern, subject)</code> compare 1 string to another string <code>vmatchPattern(pattern, subject)</code> multple string matching. 1 to more or more to 1 <code>countPattern(pattern, subject)</code><br />
+<code>vcountPattern(pattern, subject)</code> <br> <code>findPalindromes()</code> find palindromic regions within a single sequence. Does not work on a set.</li>
+</ul>
+<p>Example exercise is to find protein within virus genome sequence</p>
+<pre class="r"><code>spe2_simple &lt;- DNAString(x  =&quot;TGCA----GTGC&quot;)
+spe2_uipac &lt;- DNAString(x  =&quot;NVTGCANNNNVGTGCR&quot;)
+spe2_set &lt;- DNAStringSet(x = c(&quot;NVTGCANNNNVGTGCR&quot;, &quot;NVTGCANNNNNVGTGCR&quot;))
+names(spe2_set) &lt;- c(&quot;spacer4bp&quot;, &quot;spacer5bp&quot;)
+# use match for a single sequene subject 
+matchPattern(pattern = spe2_simple, subject = pf_seq, max.mismatch = 2)</code></pre>
+<pre><code>## Views on a 23332831-letter DNAString subject
+## subject: AACCCTAAACCCTGAACCCTAAACCCTAAACCCT...AAAACCTATAAAAAAAATAGGATCNNNNNNNNNN
+## views: NONE</code></pre>
+<pre class="r"><code>matchPattern(pattern = spe2_uipac, subject = pf_seq, max.mismatch = 1, fixed =F) # set fixed to false to allow IUPAC ambiguity code in the pattern can match any letter in the subject that is associated with the code,</code></pre>
+<pre><code>## Views on a 23332831-letter DNAString subject
+## subject: AACCCTAAACCCTGAACCCTAAACCCTAAACCCT...AAAACCTATAAAAAAAATAGGATCNNNNNNNNNN
+## views:
+##            start      end width
+##     [1]     1865     1880    16 [GGTGCACCTACATGCA]
+##     [2]     2000     2015    16 [GGTGCACTTACATGCA]
+##     [3]     2832     2847    16 [GTTGCACTTAGGTGCA]
+##     [4]     3393     3408    16 [TATGCACCATCATGCA]
+##     [5]     4029     4044    16 [CCTGCACCCTCATGCA]
+##     ...      ...      ...   ... ...
+##   [691] 23096072 23096087    16 [GGTGCATTTTAGTGTG]
+##   [692] 23125822 23125837    16 [TATGCACACAAATGCA]
+##   [693] 23148051 23148066    16 [TATGAAAGATAGTGCA]
+##   [694] 23182839 23182854    16 [GCCGCAGCAAAGTGCG]
+##   [695] 23295184 23295199    16 [AATGCATTTAAGAGCA]</code></pre>
+<pre class="r"><code># use matchPDict and countPDict when you have multple patterns 
+matchPDict(pdict = spe2_set, subject = pf_seq, fixed = F)</code></pre>
+<pre><code>## MIndex object of length 2
+## $spacer4bp
+## IRanges object with 333 ranges and 0 metadata columns:
+##             start       end     width
+##         &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+##     [1]      4187      4202        16
+##     [2]      4714      4729        16
+##     [3]      5123      5138        16
+##     [4]      7191      7206        16
+##     [5]     26417     26432        16
+##     ...       ...       ...       ...
+##   [329]  21276340  21276355        16
+##   [330]  21276366  21276381        16
+##   [331]  21745002  21745017        16
+##   [332]  21861605  21861620        16
+##   [333]  21917781  21917796        16
+## 
+## $spacer5bp
+## IRanges object with 49 ranges and 0 metadata columns:
+##            start       end     width
+##        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+##    [1]     26143     26159        17
+##    [2]     26243     26259        17
+##    [3]    319665    319681        17
+##    [4]   1182941   1182957        17
+##    [5]   1195330   1195346        17
+##    ...       ...       ...       ...
+##   [45]  19543463  19543479        17
+##   [46]  19543563  19543579        17
+##   [47]  21219362  21219378        17
+##   [48]  21263455  21263471        17
+##   [49]  21275818  21275834        17</code></pre>
+<pre class="r"><code>countPDict(pdict = spe2_set, subject = pf_seq, fixed = F)</code></pre>
+<pre><code>## [1] 333  49</code></pre>
+<pre class="r"><code># use vmatch for 1 to many matching 
+vmatchPattern(spe2_simple, pf)</code></pre>
+<pre><code>## MIndex object of length 16
+## $`Pf3D7_04_v3 | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=1200490 | SO=chromosome`
+## IRanges object with 0 ranges and 0 metadata columns:
+##        start       end     width
+##    &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+## 
+## $`Pf3D7_05_v3 | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=1343557 | SO=chromosome`
+## IRanges object with 0 ranges and 0 metadata columns:
+##        start       end     width
+##    &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+## 
+## $`Pf3D7_02_v3 | organism=Plasmodium_falciparum_3D7 | version=2013-03-01 | length=947102 | SO=chromosome`
+## IRanges object with 0 ranges and 0 metadata columns:
+##        start       end     width
+##    &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+## 
+## ...
+## &lt;13 more elements&gt;</code></pre>
+</div>
+</div>
+<div id="ranges-and-features" class="section level2">
+<h2>Ranges and Features</h2>
+<div id="iranges" class="section level3">
+<h3>IRanges</h3>
+<ul>
+<li>hierarchical data structures<br />
+</li>
+<li>allow storage of metadata<br />
+</li>
+<li>to extract ranges from BioStrings<br />
+</li>
+<li>can be defined with two data types: numeric and locial. Numeric vectors will delimit the exact positions by index, and logical vectors will select a range by a condition.<br />
+<br> Construct an IRanges object by: <code>IRanges(start = c(), end = c(), width = c(), names  = c())</code> or define the width <code>IRanges(start = c(), width = c())</code>.<br />
+</li>
+<li>IRanges areguments get recycled (fill in blanks)<br />
+</li>
+<li>equation for sequence range = <code>width = end - start + 1</code><br />
+</li>
+<li>check width with <code>width()</code> function</li>
+<li>check length of ranges with <code>lengths()</code> <br> Rle stands fro Run Lenth Encoding<br />
+</li>
+<li>storage efficient<br />
+</li>
+<li>Rle can be converted to IRranges by <code>IRanges(start = rle_object)</code><br />
+<br><br />
+Genomic intervals<br />
+</li>
+<li>library GenomicRanges</li>
+</ul>
+</div>
+<div id="granges-object" class="section level3">
+<h3>GRanges object</h3>
+<ul>
+<li>minimally requires chr, start and end column from dataframe in input<br />
+</li>
+<li>also has metadata, <code>seqnames</code> and <code>seqinfo</code><br />
+</li>
+<li>see ist of available accessors use: <code>methods(class = &quot;GRanges&quot;)</code>
+<ul>
+<li><code>seqnames(gr)</code> - chromosome names<br />
+</li>
+<li><code>ranges(gr)</code> - returns IRanges object<br />
+</li>
+<li><code>mcols(gr)</code> - display metadata per range<br />
+</li>
+<li><code>seqinfo(gr)</code> - to store sequence information<br />
+</li>
+<li><code>genome(gr)</code>- genome name<br />
+</li>
+<li>both are <strong>setter</strong> and <strong>getter</strong> functions<br />
+</li>
+<li>can be inherited by other S4 objects<br />
+</li>
+</ul></li>
+<li>convert dataframe to GRanges object with <code>as()</code>
+<ul>
+<li>dataframe should have <code>start</code> <code>end</code> and <code>chr</code><br />
+</li>
+<li><code>gr &lt;- as(dataframe, &quot;GRanges&quot;)</code></li>
+</ul></li>
+</ul>
+</div>
+<div id="genomicfeatures" class="section level3">
+<h3>GenomicFeatures</h3>
+<ul>
+<li>library(FenomicFeatures)<br />
+</li>
+<li>manipulate TxDb objects from UCSC or BioMart<br />
+</li>
+<li>Transcript Database Objects</li>
+<li>Obtain TxDb object by:
+<ul>
+<li>use <code>loadDB</code> as in <code>loadDB(system.file(&quot;extdata&quot;, &quot;hg19_knownGene_sample.sqlite&quot;, package=&quot;GenomicFeatures&quot;))</code><br />
+</li>
+<li>load TxDB annotation package like: <code>library(TxDb.Hsapiens.UCSC.hg19.knownGene)</code><br />
+<br> Functions to manipulate TxDb object:<br />
+</li>
+</ul></li>
+<li><code>genes()</code> function extracts genomic features from TxDb-like object.
+<ul>
+<li>returns <code>GRanges</code> object<br />
+</li>
+</ul></li>
+<li>other functions to extract features are <code>transcripts()</code>, <code>cds()</code>, <code>exons()</code>, and <code>promoters()</code>
+<ul>
+<li>input is TxDb object</li>
+<li>define <code>filter =</code> to filter a condition on a column as list<br />
+</li>
+<li>define <code>columns =</code> to select column names as list</li>
+</ul></li>
+</ul>
+</div>
+<div id="grangeslist" class="section level3">
+<h3>GRangesList</h3>
+<ul>
+<li>container of collection of GRanges<br />
+</li>
+<li>construct with:
+<ul>
+<li><code>as(mylist, &quot;GRangesList&quot;)</code><br />
+</li>
+<li><code>GRangesList(myGranges1, myGranges2, ...)</code></li>
+</ul></li>
+<li>convert back with <code>unlist()</code><br />
+</li>
+<li>accessers found by <code>methods(class = &quot;GRangesList&quot;)</code><br />
+</li>
+<li>handy for eg. transcripts bij gene, exons by genes, read alignments, sliding windows
+<ul>
+<li><code>slidingWindows()</code> - makes sliding windows<br />
+</li>
+</ul></li>
+<li><code>exonsBy()</code> function returns a GRangesList <br> Overlaps<br />
+</li>
+<li><code>countOverlaps(query, subject)</code><br />
+</li>
+<li><code>findOverlaps(query, subject)</code><br />
+</li>
+<li><code>subsetByOverlap(query, subject)</code><br />
+</li>
+<li><code>overlapsAny()</code><br />
+</li>
+<li>query and subject can be GRanges and GRangesList</li>
+</ul>
+<pre class="r"><code>library(GenomicRanges)
+# example usage: 
+# gene of interest = abcd1
+# located on chrX  
+
+# BiocManager::install(&quot;TxDb.Hsapiens.UCSC.hg38.knownGene&quot;) # Transcript database from UCSC accessed through genomic features  
+library(TxDb.Hsapiens.UCSC.hg38.knownGene) </code></pre>
+<pre><code>## Loading required package: GenomicFeatures</code></pre>
+<pre><code>## Loading required package: AnnotationDbi</code></pre>
+<pre><code>## Loading required package: Biobase</code></pre>
+<pre><code>## Welcome to Bioconductor
+## 
+##     Vignettes contain introductory material; view with
+##     &#39;browseVignettes()&#39;. To cite Bioconductor, see
+##     &#39;citation(&quot;Biobase&quot;)&#39;, and for packages &#39;citation(&quot;pkgname&quot;)&#39;.</code></pre>
+<pre class="r"><code>hg &lt;- TxDb.Hsapiens.UCSC.hg38.knownGene
+
+# select genes from chromosomes X
+hg_chrXg &lt;- genes(hg, filter = list(tx_chrom = c(&quot;chrX&quot;)) ) # list of filter specifications. Can be &quot;gene_id&quot;, &quot;tx_id&quot;, &quot;tx_name&quot;, &quot;tx_chrom&quot;, &quot;tx_strand&quot;, &quot;exon_id&quot;, &quot;exon_name&quot;, &quot;exon_chrom&quot;, &quot;exon_strand&quot;, &quot;cds_id&quot;, &quot;cds_name&quot;, &quot;cds_chrom&quot;, &quot;cds_strand&quot;, and &quot;exon_rank&quot;  </code></pre>
+<pre><code>##   32 genes were dropped because they have exons located on both strands
+##   of the same reference sequence or on more than one reference sequence,
+##   so cannot be represented by a single genomic range.
+##   Use &#39;single.strand.genes.only=FALSE&#39; to get all the genes in a
+##   GRangesList object, or use suppressMessages() to suppress this message.</code></pre>
+<pre class="r"><code>seqlevels(hg) &lt;- c(&quot;chrX&quot;) # prefilter results
+# exons by transcript:
+exonsBytx &lt;- exonsBy(hg, by = &quot;tx&quot;) # exons by transcript, tx means transcript
+trByg &lt;- transcriptsBy(hg, by = &quot;gene&quot;) # transcripts by gene
+# select transcirpt id
+abcd1_222771&lt;- exonsBytx[[&quot;222771&quot;]]
+abcd1_222771</code></pre>
+<pre><code>## GRanges object with 10 ranges and 3 metadata columns:
+##        seqnames              ranges strand |   exon_id   exon_name exon_rank
+##           &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;character&gt; &lt;integer&gt;
+##    [1]     chrX 153724856-153726166      + |    618414        &lt;NA&gt;         1
+##    [2]     chrX 153729232-153729412      + |    618416        &lt;NA&gt;         2
+##    [3]     chrX 153736112-153736254      + |    618419        &lt;NA&gt;         3
+##    [4]     chrX 153736345-153736513      + |    618420        &lt;NA&gt;         4
+##    [5]     chrX 153737157-153737251      + |    618421        &lt;NA&gt;         5
+##    [6]     chrX 153740092-153740237      + |    618422        &lt;NA&gt;         6
+##    [7]     chrX 153740574-153740719      + |    618424        &lt;NA&gt;         7
+##    [8]     chrX 153742987-153743071      + |    618425        &lt;NA&gt;         8
+##    [9]     chrX 153743221-153743346      + |    618426        &lt;NA&gt;         9
+##   [10]     chrX 153743489-153744755      + |    618427        &lt;NA&gt;        10
+##   -------
+##   seqinfo: 1 sequence from hg38 genome</code></pre>
+<pre class="r"><code># select transcripts of geneid 215 (abcd1 gene)
+abcd1_transcripts &lt;- trByg$`215`
+abcd1_transcripts</code></pre>
+<pre><code>## GRanges object with 3 ranges and 2 metadata columns:
+##       seqnames              ranges strand |     tx_id           tx_name
+##          &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;       &lt;character&gt;
+##   [1]     chrX 153724856-153744755      + |    222771 ENST00000218104.6
+##   [2]     chrX 153725817-153729897      + |    222772 ENST00000370129.4
+##   [3]     chrX 153735344-153740604      + |    222773 ENST00000443684.2
+##   -------
+##   seqinfo: 1 sequence from hg38 genome</code></pre>
+<pre class="r"><code># From GRangesList object into a GRanges object  
+myGR &lt;- unlist(hg)</code></pre>
+</div>
+<div id="genomicalignments" class="section level3">
+<h3>GenomicAlignments</h3>
+<pre class="r"><code>#if (!requireNamespace(&quot;BiocManager&quot;, quietly = TRUE))
+#    install.packages(&quot;BiocManager&quot;)
+
+#BiocManager::install(&quot;GenomicAlignments&quot;)</code></pre>
+<div id="monash-bioinformatics-platform-tutorial" class="section level4">
+<h4>[Monash bioinformatics platform tutorial]</h4>
+<p><a href="https://monashbioinformaticsplatform.github.io/r-more/topics/sequences_and_features.html#dna-sequences-and-genomic-ranges" class="uri">https://monashbioinformaticsplatform.github.io/r-more/topics/sequences_and_features.html#dna-sequences-and-genomic-ranges</a></p>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

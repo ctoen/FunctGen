@@ -1,0 +1,63 @@
+---
+title: "FG1 - Learning Objectives"
+author: "Written by: Klaas, Simon, Siebren, Christa ... "
+output: 
+  html_document:
+    css: custom.css
+    toc: true
+    toc_float: true
+    collapsed: false
+    number_sections: false
+    toc_depth: 3
+editor_options: 
+  chunk_output_type: inline
+---
+<style type="text/css">
+.title {
+  display: none;
+}
+
+#getting-started img {
+  margin-right: 10px;
+}
+
+</style>
+
+<div class="row" style="padding-top:20px;">
+<br>
+> ### Goal:
+In this practical course we will eventually examine epigenetic marks around differentially expressed genes and how these marks are different.  
+
+
+<br>
+**In <span style="color: red;">red</span> are things that we could also remove, they might for example be disturbing from the bigger picture or it is a list that we might expand or shorten**  
+<br>
+
+> ### Global Learning Objectives  
+1. Understand how data are generated from a ChIP-sequencing experiment.   
+2. Know how to display and browse data in the UCSC Genome Browser and formulate some basic hypothesis based on observations using this tool.  
+3. Familiarize yourself with several basic Bioconductor packages.   
+4. Quantify and visualize signal distribution and signal strength of histone ChIP-seq in R.   
+5. Summarize genome-wide data ChIP-data into clustered heatmap.   
+6. Relate marker genes from cell clusters detected in single-cell RNA-seq experiment to differences between cells at the epigenetic level. 
+
+> ### Week 1 Learning Objectives: seq2science, UCSC Genome browser  
+1. Know how output from the sequencer looks like  and what processing steps should be taken to obtain trustworthy data that we visualize and that we can perform calculations (and statistics) on.  
+2. Understand how to move around ("*browsing*") in the UCSC genome browser and know how to go to regions and genes of interest.  
+3. Recognize the following elements in the UCSC genome browser: *chromosome, centromere, telomere, gene, exon, intron, <span style="color: red;">utr</span>, promoter, enhancer/repressor*.   
+4. Define the following terms as they relate to the UCSC genome browser: *browsing, track, coverage, peaks, <span style="color: red;">summit</span>*.    
+5. Recognize and differentiate the profile of <span style="color: red;">*ATAC-seq, RNA-seq and histone ChIP-seq* datasets in the genome browser based on their coverage profile and their location with respect to genes (H4K4me3, H3K27ac, H3K36me3, H3K9me3 histone ChIP-seq</span>).   
+
+> ### Week 2 Learning Objectives: Bioconductor and comparison among marks  
+1. Move around in GRanges container  
+2. Use GenomicFeatures to obtain 
+3. Find and count the overlap among histone ChIP-seq peaks and promoters and enhancer regions  
+- `countOverlaps(query, subject)`, `findOverlaps(query, subject)`  
+
+> 
+
+
+> ### Week 3 Learning Objectives: Comparison among cells   
+
+> ### Week 4 Learning Objectives: relate gene expression differences to epigenetic changes  
+

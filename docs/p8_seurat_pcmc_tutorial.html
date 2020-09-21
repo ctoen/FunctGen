@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Written by: Klaas, Simon, Siebren, Christa …" />
+
+
+<title>seurat_pcmc_tutorial</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="custom.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Functional Genomics 2020</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="p1_index.html">Home</a>
+</li>
+<li>
+  <a href="p2_learningObjectives.html">Learning Objectives</a>
+</li>
+<li>
+  <a href="p3_script.html">Script</a>
+</li>
+<li>
+  <a href="p4_week1.html">Week 1 - UCSC Genome Browser</a>
+</li>
+<li>
+  <a href="p5_week2.html">Week 2 - Bioconductor</a>
+</li>
+<li>
+  <a href="p6_intro_bioconductor.html">Datacamp Bioconductor</a>
+</li>
+<li>
+  <a href="p7_links.html">Links</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">seurat_pcmc_tutorial</h1>
+<h4 class="author">Written by: Klaas, Simon, Siebren, Christa …</h4>
+
+</div>
+
+
+<style type="text/css">
+.title {
+  display: none;
+}
+
+#getting-started img {
+  margin-right: 10px;
+}
+
+</style>
+<div class="row" style="padding-top:20px;">
+
+<div id="seurat-guided-clustering-tutorial" class="section level1">
+<h1>Seurat Guided Clustering Tutorial</h1>
+<p>Purpose: for myself to find DE genes and TFs among them in this dataset</p>
+<p>Ref: <a href="https://satijalab.org/seurat/v3.2/pbmc3k_tutorial.html">seurat tutorial</a></p>
+<pre class="r"><code>library(dplyr)
+library(Seurat)
+library(patchwork) # to easily combine mutliple ggplots in one window, similar to but easier than gridExtra::grid.arrange() and cowplot::plot_grid, ref: https://github.com/thomasp85/patchwork  </code></pre>
+<p>Go through the processing steps to get the same clustering as in the tutorial:</p>
+<pre class="r"><code># Load the PBMC dataset
+pbmc.data &lt;- Read10X(data.dir = &quot;data/p8_pbmc3k_filtered_gene_bc_matrices/hg19/&quot;)
+# Initialize the Seurat object with the raw (non-normalized data).
+# outputs in pbmc[[&quot;RNA&quot;]]@counts
+pbmc &lt;- CreateSeuratObject(counts = pbmc.data, project = &quot;pbmc3k&quot;, min.cells = 3, min.features = 200)
+ pbmc
+# The [[ operator can add columns to object metadata. This is a great place to stash QC stats
+pbmc[[&quot;percent.mt&quot;]] &lt;- PercentageFeatureSet(pbmc, pattern = &quot;^MT-&quot;)
+# continue with cells that likely represent a viable cell and are not duplicates by: 
+pbmc &lt;- subset(pbmc, subset = nFeature_RNA &gt; 200 &amp; nFeature_RNA &lt; 2500 &amp; percent.mt &lt; 5)
+# global-scaling normalization: normalizes the feature expression measurements for each cell by the total expression, multiplies this by a scale factor (10,000 by default), and log-transforms the result
+# outputs in pbmc[[&quot;RNA&quot;]]@data
+pbmc &lt;- NormalizeData(pbmc, normalization.method = &quot;LogNormalize&quot;, scale.factor = 10000)
+# identify highly variable features, focusing on these genes helps to highlight biological signal in single-cell datasets. Plot to ensure that it is the same as tutorial.
+pbmc &lt;- FindVariableFeatures(pbmc, selection.method = &quot;vst&quot;, nfeatures = 2000)
+top10 &lt;- head(VariableFeatures(pbmc), 10)
+plot1 &lt;- VariableFeaturePlot(pbmc)
+plot2 &lt;- LabelPoints(plot = plot1, points = top10, repel = TRUE)
+plot2</code></pre>
+<pre class="r"><code># scale data such that mean expression across cell for given gene is 0 and variance is 1, gives equal weight to all genes so that highly expressed genes do not dominate, standard pre-processing step for dimensionality reduction techniques
+# outputs in pbmc[[&quot;RNA&quot;]]@scale.data
+all.genes &lt;- rownames(pbmc)
+pbmc &lt;- ScaleData(pbmc, features = all.genes)
+
+# perform linear reduction using PCA, by default on only highly variable features and check result in dimheatmap
+pbmc &lt;- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
+DimHeatmap(pbmc, dims = 1:15, cells = 500, balanced = TRUE)
+
+### skip part to find dimensionality of the data because I&#39;m for now only interested in the clusters and DE genes</code></pre>
+<pre class="r"><code># cluster the data
+pbmc &lt;- FindNeighbors(pbmc, dims = 1:10)
+pbmc &lt;- FindClusters(pbmc, resolution = 0.5)
+# If you haven&#39;t installed UMAP, you can do so via reticulate::py_install(packages =&#39;umap-learn&#39;)
+# note that you can set `label = TRUE` or use the LabelClusters function to help label individual clusters
+pbmc &lt;- RunUMAP(pbmc, dims = 1:10)
+DimPlot(pbmc, reduction = &quot;umap&quot;)
+# find markers for every cluster compared to all remaining cells, report only the positive ones
+pbmc.markers &lt;- FindAllMarkers(pbmc, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+pbmc.markers %&gt;% group_by(cluster) %&gt;% top_n(n = 2, wt = avg_logFC)</code></pre>
+<p>Fortunately in the case of this dataset, we can use canonical markers to easily match the unbiased clustering to known cell types:</p>
+<p>cluster ID | markers | cell type<br />
+0 | IL7R, CCR7 | naive CD4+ T cell<br />
+1 | IL7R, S100A4 | Memory CD4+ T cell 2 | CD14, LYZ | CD14+ Mono<br />
+3 | MS4A1 | B<br />
+4 | CD8A | CD8+ T cell<br />
+5 | FCGR3A, MS4A7 | FCGR3A+ Mono<br />
+6 | GNLY, NKG7 | NK<br />
+7 | FCER1A, CST3 | DC<br />
+8 | PPBP | Platelet</p>
+<pre class="r"><code>new.cluster.ids &lt;- c(&quot;Naive CD4 T&quot;, &quot;Memory CD4 T&quot;, &quot;CD14+ Mono&quot;, &quot;B&quot;, &quot;CD8 T&quot;, &quot;FCGR3A+ Mono&quot;, 
+    &quot;NK&quot;, &quot;DC&quot;, &quot;Platelet&quot;)
+names(new.cluster.ids) &lt;- levels(pbmc)
+pbmc &lt;- RenameIdents(pbmc, new.cluster.ids)
+DimPlot(pbmc, reduction = &quot;umap&quot;, label = TRUE, pt.size = 0.5) + NoLegend()</code></pre>
+<div id="now-with-pbmc10k-dataset" class="section level2">
+<h2>now with pbmc10k dataset</h2>
+<p><a href="https://support.10xgenomics.com/single-cell-gene-expression/datasets/3.0.0/pbmc_10k_v3">link</a><br />
+<a href="https://cf.10xgenomics.com/samples/cell-exp/3.0.0/pbmc_10k_v3/pbmc_10k_v3_filtered_feature_bc_matrix.tar.gz">Downlaod Feature / cell matrix (filtered)</a></p>
+<p>Peripheral blood mononuclear cells (PBMCs) from a healthy donor (the same cells were used to generate pbmc_1k_v2, pbmc_10k_v3). PBMCs are primary cells with relatively small amounts of RNA (~1pg RNA/cell).</p>
+<ul>
+<li>11,769 cells detected.<br />
+</li>
+<li>Sequenced on Illumina NovaSeq with approximately 54,000 reads per cell.<br />
+</li>
+<li>28bp read1 (16bp Chromium barcode and 12bp UMI), 91bp read2 (transcript), and 8bp I7 sample barcode<br />
+</li>
+<li>run with –expect-cells=10000.</li>
+</ul>
+<p><a href="https://cf.10xgenomics.com/samples/cell-exp/3.0.0/pbmc_10k_v3/pbmc_10k_v3_web_summary.html">dataset summary</a></p>
+<pre class="r"><code>pbmc10k.data &lt;- Read10X(data.dir = &quot;data/p8_pbmc10k10k_filtered_feature_bc_matrix&quot;)
+pbmc10k &lt;- CreateSeuratObject(counts = pbmc10k.data$`Gene Expression`, project = &quot;pbmc10k3k&quot;, min.cells = 3, min.features = 200)
+pbmc10k
+# The [[ operator can add columns to object metadata. This is a great place to stash QC stats
+pbmc10k[[&quot;percent.mt&quot;]] &lt;- PercentageFeatureSet(pbmc10k, pattern = &quot;^MT-&quot;)
+# continue with cells that likely represent a viable cell and are not duplicates by: 
+pbmc10k &lt;- subset(pbmc10k, subset = nFeature_RNA &gt; 200 &amp; nFeature_RNA &lt; 2500 &amp; percent.mt &lt; 5)
+# global-scaling normalization: normalizes the feature expression measurements for each cell by the total expression, multiplies this by a scale factor (10,000 by default), and log-transforms the result
+# outputs in pbmc10k[[&quot;RNA&quot;]]@data
+pbmc10k &lt;- NormalizeData(pbmc10k, normalization.method = &quot;LogNormalize&quot;, scale.factor = 10000)
+# identify highly variable features, focusing on these genes helps to highlight biological signal in single-cell datasets. Plot to ensure that it is the same as tutorial.
+pbmc10k &lt;- FindVariableFeatures(pbmc10k, selection.method = &quot;vst&quot;, nfeatures = 2000)
+top10 &lt;- head(VariableFeatures(pbmc10k), 10)
+plot1 &lt;- VariableFeaturePlot(pbmc10k)
+plot2 &lt;- LabelPoints(plot = plot1, points = top10, repel = TRUE)
+plot2
+all.genes &lt;- rownames(pbmc10k)
+pbmc10k &lt;- ScaleData(pbmc10k, features = all.genes)
+
+# perform linear reduction using PCA, by default on only highly variable features and check result in dimheatmap
+pbmc10k &lt;- RunPCA(pbmc10k, features = VariableFeatures(object = pbmc10k))
+pbmc10k &lt;- FindNeighbors(pbmc10k, dims = 1:10)
+pbmc10k &lt;- FindClusters(pbmc10k, resolution = 0.5)
+# If you haven&#39;t installed UMAP, you can do so via reticulate::py_install(packages =&#39;umap-learn&#39;)
+# note that you can set `label = TRUE` or use the LabelClusters function to help label individual clusters
+pbmc10k10k &lt;- RunUMAP(pbmc10k10k, dims = 1:10)
+DimPlot(pbmc10k10k, reduction = &quot;umap&quot;)
+
+#new.cluster.ids &lt;- c(&quot;Naive CD4 T&quot;, &quot;Memory CD4 T&quot;, &quot;CD14+ Mono&quot;, &quot;B&quot;, &quot;CD8 T&quot;, &quot;FCGR3A+ Mono&quot;, 
+#    &quot;NK&quot;, &quot;DC&quot;, &quot;Platelet&quot;)
+#names(new.cluster.ids) &lt;- levels(pbmc10k)
+#pbmc10k &lt;- RenameIdents(pbmc10k, new.cluster.ids)
+#DimPlot(pbmc10k, reduction = &quot;umap&quot;, label = TRUE, pt.size = 0.5) + NoLegend()</code></pre>
+</div>
+<div id="tfs-in-pbmc3k-dataset" class="section level2">
+<h2>TFs in PBMC3k dataset</h2>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
