@@ -25,10 +25,6 @@ editor_options:
 
 <div class="row" style="padding-top: 20px;">
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
-```
-
 # Script  
 ## Week 1
 ### 1.1 ChIP-seq recap/discussion    
@@ -112,6 +108,8 @@ The custom track contains five tracks, numbered 1-5, representing different geno
 
 
 ## Week 2  
+Look into: http://compgenomr.github.io/book/operations-on-genomic-intervals-with-genomicranges-package.html   
+
 ### 2.1 Introduction to Bioconductor  
 **Bioconductor Packages:**   
 

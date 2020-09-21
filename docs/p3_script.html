@@ -348,7 +348,7 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="p1_index.html">Home</a>
+  <a href="index.html">Home</a>
 </li>
 <li>
   <a href="p2_learningObjectives.html">Learning Objectives</a>
@@ -357,16 +357,19 @@ div.tocify {
   <a href="p3_script.html">Script</a>
 </li>
 <li>
-  <a href="p4_week1.html">Week 1 - UCSC Genome Browser</a>
+  <a href="p4_week1.html">W1</a>
 </li>
 <li>
-  <a href="p5_week2.html">Week 2 - Bioconductor</a>
+  <a href="p5_week2.html">W2</a>
 </li>
 <li>
-  <a href="p6_intro_bioconductor.html">Datacamp Bioconductor</a>
+  <a href="p6_intro_bioconductor.html">DC Bioconductor</a>
 </li>
 <li>
   <a href="p7_links.html">Links</a>
+</li>
+<li>
+  <a href="p8_seurat_pbmc_tutorial.html">PBMC3k</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -396,8 +399,6 @@ div.tocify {
 
 </style>
 <div class="row" style="padding-top: 20px;">
-
-
 
 <div id="script" class="section level1">
 <h1>Script</h1>
@@ -521,6 +522,7 @@ Peak calling software is used to identify peaks within a certain range of confid
 </div>
 <div id="week-2" class="section level2">
 <h2>Week 2</h2>
+<p>Look into: <a href="http://compgenomr.github.io/book/operations-on-genomic-intervals-with-genomicranges-package.html" class="uri">http://compgenomr.github.io/book/operations-on-genomic-intervals-with-genomicranges-package.html</a></p>
 <div id="introduction-to-bioconductor" class="section level3">
 <h3>2.1 Introduction to Bioconductor</h3>
 <p><strong>Bioconductor Packages:</strong></p>
@@ -565,10 +567,116 @@ Peak calling software is used to identify peaks within a certain range of confid
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>library(tidyverse) # compilation of packages for usein data science. These packages are developed such that they nicely work together for data import, tidying, manipulation, visualization and programming  
-library(GenomicRanges) # functions and data structures (containters) to handle genomic intervals which are datasets with notation chr-start-end. 
-library(GenomicFeatures) # for functions to retrieve and manage genomic features (eg genes, exons, transcripts, promoters) from public databases  
-library(GenomicAlignments) # containers to store short sequence alignments  </code></pre>
+<pre class="r"><code>library(tidyverse) # compilation of packages for usein data science. These packages are developed such that they nicely work together for data import, tidying, manipulation, visualization and programming  </code></pre>
+<pre><code>## ── Attaching packages ──────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
+## ✓ tibble  3.0.3     ✓ dplyr   1.0.2
+## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
+## ✓ readr   1.3.1     ✓ forcats 0.5.0</code></pre>
+<pre><code>## ── Conflicts ─────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(GenomicRanges) # functions and data structures (containters) to handle genomic intervals which are datasets with notation chr-start-end. </code></pre>
+<pre><code>## Loading required package: stats4</code></pre>
+<pre><code>## Loading required package: BiocGenerics</code></pre>
+<pre><code>## Loading required package: parallel</code></pre>
+<pre><code>## 
+## Attaching package: &#39;BiocGenerics&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:parallel&#39;:
+## 
+##     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+##     clusterExport, clusterMap, parApply, parCapply, parLapply,
+##     parLapplyLB, parRapply, parSapply, parSapplyLB</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     combine, intersect, setdiff, union</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     IQR, mad, sd, var, xtabs</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+##     dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+##     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+##     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+##     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+##     union, unique, unsplit, which, which.max, which.min</code></pre>
+<pre><code>## Loading required package: S4Vectors</code></pre>
+<pre><code>## 
+## Attaching package: &#39;S4Vectors&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     first, rename</code></pre>
+<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     expand</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     expand.grid</code></pre>
+<pre><code>## Loading required package: IRanges</code></pre>
+<pre><code>## 
+## Attaching package: &#39;IRanges&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     collapse, desc, slice</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     reduce</code></pre>
+<pre><code>## Loading required package: GenomeInfoDb</code></pre>
+<pre class="r"><code>library(GenomicFeatures) # for functions to retrieve and manage genomic features (eg genes, exons, transcripts, promoters) from public databases  </code></pre>
+<pre><code>## Loading required package: AnnotationDbi</code></pre>
+<pre><code>## Loading required package: Biobase</code></pre>
+<pre><code>## Welcome to Bioconductor
+## 
+##     Vignettes contain introductory material; view with
+##     &#39;browseVignettes()&#39;. To cite Bioconductor, see
+##     &#39;citation(&quot;Biobase&quot;)&#39;, and for packages &#39;citation(&quot;pkgname&quot;)&#39;.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;AnnotationDbi&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     select</code></pre>
+<pre class="r"><code>library(GenomicAlignments) # containers to store short sequence alignments  </code></pre>
+<pre><code>## Loading required package: SummarizedExperiment</code></pre>
+<pre><code>## Loading required package: DelayedArray</code></pre>
+<pre><code>## Loading required package: matrixStats</code></pre>
+<pre><code>## 
+## Attaching package: &#39;matrixStats&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:Biobase&#39;:
+## 
+##     anyMissing, rowMedians</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     count</code></pre>
+<pre><code>## 
+## Attaching package: &#39;DelayedArray&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:matrixStats&#39;:
+## 
+##     colMaxs, colMins, colRanges, rowMaxs, rowMins, rowRanges</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     simplify</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     aperm, apply, rowsum</code></pre>
+<pre><code>## Loading required package: Biostrings</code></pre>
+<pre><code>## Loading required package: XVector</code></pre>
+<pre><code>## 
+## Attaching package: &#39;XVector&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     compact</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Biostrings&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     strsplit</code></pre>
+<pre><code>## Loading required package: Rsamtools</code></pre>
+<pre><code>## 
+## Attaching package: &#39;GenomicAlignments&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     last</code></pre>
 </div>
 <div id="genomicranges" class="section level3">
 <h3>2.2 GenomicRanges</h3>

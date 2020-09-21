@@ -273,7 +273,7 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="p1_index.html">Home</a>
+  <a href="index.html">Home</a>
 </li>
 <li>
   <a href="p2_learningObjectives.html">Learning Objectives</a>
@@ -282,16 +282,19 @@ $(document).ready(function () {
   <a href="p3_script.html">Script</a>
 </li>
 <li>
-  <a href="p4_week1.html">Week 1 - UCSC Genome Browser</a>
+  <a href="p4_week1.html">W1</a>
 </li>
 <li>
-  <a href="p5_week2.html">Week 2 - Bioconductor</a>
+  <a href="p5_week2.html">W2</a>
 </li>
 <li>
-  <a href="p6_intro_bioconductor.html">Datacamp Bioconductor</a>
+  <a href="p6_intro_bioconductor.html">DC Bioconductor</a>
 </li>
 <li>
   <a href="p7_links.html">Links</a>
+</li>
+<li>
+  <a href="p8_seurat_pbmc_tutorial.html">PBMC3k</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -349,43 +352,6 @@ $(document).ready(function () {
 <h2>BSgenome</h2>
 <pre class="r"><code>#BiocManager::install(c(&quot;BSgenome&quot;, &quot;BSgenome.Hsapiens.UCSC.hg38&quot;))
 library(BSgenome)</code></pre>
-<pre><code>## Loading required package: BiocGenerics</code></pre>
-<pre><code>## Loading required package: parallel</code></pre>
-<pre><code>## 
-## Attaching package: &#39;BiocGenerics&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:parallel&#39;:
-## 
-##     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
-##     clusterExport, clusterMap, parApply, parCapply, parLapply,
-##     parLapplyLB, parRapply, parSapply, parSapplyLB</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     IQR, mad, sd, var, xtabs</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     anyDuplicated, append, as.data.frame, basename, cbind, colnames,
-##     dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
-##     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
-##     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-##     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
-##     union, unique, unsplit, which, which.max, which.min</code></pre>
-<pre><code>## Loading required package: S4Vectors</code></pre>
-<pre><code>## Loading required package: stats4</code></pre>
-<pre><code>## 
-## Attaching package: &#39;S4Vectors&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:base&#39;:
-## 
-##     expand.grid</code></pre>
-<pre><code>## Loading required package: IRanges</code></pre>
-<pre><code>## Loading required package: GenomeInfoDb</code></pre>
-<pre><code>## Loading required package: GenomicRanges</code></pre>
-<pre><code>## Loading required package: Biostrings</code></pre>
-<pre><code>## Loading required package: XVector</code></pre>
-<pre><code>## 
-## Attaching package: &#39;Biostrings&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:base&#39;:
-## 
-##     strsplit</code></pre>
 <pre><code>## Loading required package: rtracklayer</code></pre>
 <pre class="r"><code>#BSgenome.speciesName.provider.version
 library(BSgenome.Hsapiens.UCSC.hg38)
@@ -1765,16 +1731,8 @@ Genomic intervals<br />
 # located on chrX  
 
 # BiocManager::install(&quot;TxDb.Hsapiens.UCSC.hg38.knownGene&quot;) # Transcript database from UCSC accessed through genomic features  
-library(TxDb.Hsapiens.UCSC.hg38.knownGene) </code></pre>
-<pre><code>## Loading required package: GenomicFeatures</code></pre>
-<pre><code>## Loading required package: AnnotationDbi</code></pre>
-<pre><code>## Loading required package: Biobase</code></pre>
-<pre><code>## Welcome to Bioconductor
-## 
-##     Vignettes contain introductory material; view with
-##     &#39;browseVignettes()&#39;. To cite Bioconductor, see
-##     &#39;citation(&quot;Biobase&quot;)&#39;, and for packages &#39;citation(&quot;pkgname&quot;)&#39;.</code></pre>
-<pre class="r"><code>hg &lt;- TxDb.Hsapiens.UCSC.hg38.knownGene
+library(TxDb.Hsapiens.UCSC.hg38.knownGene) 
+hg &lt;- TxDb.Hsapiens.UCSC.hg38.knownGene
 
 # select genes from chromosomes X
 hg_chrXg &lt;- genes(hg, filter = list(tx_chrom = c(&quot;chrX&quot;)) ) # list of filter specifications. Can be &quot;gene_id&quot;, &quot;tx_id&quot;, &quot;tx_name&quot;, &quot;tx_chrom&quot;, &quot;tx_strand&quot;, &quot;exon_id&quot;, &quot;exon_name&quot;, &quot;exon_chrom&quot;, &quot;exon_strand&quot;, &quot;cds_id&quot;, &quot;cds_name&quot;, &quot;cds_chrom&quot;, &quot;cds_strand&quot;, and &quot;exon_rank&quot;  </code></pre>

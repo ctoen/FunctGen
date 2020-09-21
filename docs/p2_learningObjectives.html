@@ -350,7 +350,7 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="p1_index.html">Home</a>
+  <a href="index.html">Home</a>
 </li>
 <li>
   <a href="p2_learningObjectives.html">Learning Objectives</a>
@@ -359,16 +359,19 @@ div.tocify {
   <a href="p3_script.html">Script</a>
 </li>
 <li>
-  <a href="p4_week1.html">Week 1 - UCSC Genome Browser</a>
+  <a href="p4_week1.html">W1</a>
 </li>
 <li>
-  <a href="p5_week2.html">Week 2 - Bioconductor</a>
+  <a href="p5_week2.html">W2</a>
 </li>
 <li>
-  <a href="p6_intro_bioconductor.html">Datacamp Bioconductor</a>
+  <a href="p6_intro_bioconductor.html">DC Bioconductor</a>
 </li>
 <li>
   <a href="p7_links.html">Links</a>
+</li>
+<li>
+  <a href="p8_seurat_pbmc_tutorial.html">PBMC3k</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -399,7 +402,11 @@ div.tocify {
 
 </style>
 <div class="row" style="padding-top:20px;">
-<p><br> &gt; ### Goal: In this practical course we will eventually examine epigenetic marks around differentially expressed genes and how these marks are different.</p>
+<p><br></p>
+<blockquote>
+<h3 id="goal">Goal:</h3>
+<p>In this practical course we will eventually examine epigenetic marks around differentially expressed genes and how these marks are different.</p>
+</blockquote>
 <p><br> <strong>In <span style="color: red;">red</span> are things that we could also remove, they might for example be disturbing from the bigger picture or it is a list that we might expand or shorten</strong><br />
 <br></p>
 <blockquote>
@@ -432,28 +439,51 @@ div.tocify {
 <li>Recognize and differentiate the profile of <span style="color: red;"><em>ATAC-seq, RNA-seq and histone ChIP-seq</em> datasets in the genome browser based on their coverage profile and their location with respect to genes (H4K4me3, H3K27ac, H3K36me3, H3K9me3 histone ChIP-seq</span>).</li>
 </ol>
 </blockquote>
+<p>Q1: We want to know what kind of histone mark can be found in the promoter of … gene<br />
+Q2: Find histone mark covering the enhancer located 20kb upstream of ….</p>
 <blockquote>
 <h3 id="week-2-learning-objectives-bioconductor-and-comparison-among-marks">Week 2 Learning Objectives: Bioconductor and comparison among marks</h3>
 <ol style="list-style-type: decimal">
 <li>Move around in GRanges container<br />
 </li>
 <li>Use GenomicFeatures to obtain</li>
-<li>Find and count the overlap among histone ChIP-seq peaks and promoters and enhancer regions<br />
+<li>Find and count the overlap among histone ChIP-seq peaks and promoters or genic regions<br />
 </li>
 </ol>
 <ul>
-<li><code>countOverlaps(query, subject)</code>, <code>findOverlaps(query, subject)</code></li>
+<li><code>countOverlaps(query, subject)</code>, <code>findOverlaps(query, subject)</code><br />
+</li>
 </ul>
+<ol start="4" style="list-style-type: decimal">
+<li>Plotting summarized coverage of histone marks around TSS and over genic regions <span style="color: red;">–&gt; or this one to week 3</span></li>
+</ol>
 </blockquote>
-<blockquote>
-
-</blockquote>
+<p>In week 1 we have estimated which mark is enriched in promoters, gene bodies or other intergenic regions, this week we will add a number to that estimate.<br />
+Q1: We want quantify in what region the H3Kme3 signal is enriched.<br />
+Q2: We want to do the same for H3K27ac and for H3K36me3.<br />
+Q3: What is the average coverage profile of different marks around landmark elements like TAG, TSS and TSS</p>
 <blockquote>
 <h3 id="week-3-learning-objectives-comparison-among-cells">Week 3 Learning Objectives: Comparison among cells</h3>
+<ol style="list-style-type: decimal">
+<li>visualize histone marks of one cell around genomic landmarks in heatmap<br />
+</li>
+<li>be able to cluster heatmap data<br />
+</li>
+<li>instead of different marks, use same mark from different cell types</li>
+</ol>
 </blockquote>
+<p>Q1: Do histone marks show regional overlap? –&gt; plot different marks in a heatmap and cluster the data</p>
+<p>Q2: Want to identify differentially marked regions and common marked regions among different cell types.</p>
 <blockquote>
 <h3 id="week-4-learning-objectives-relate-gene-expression-differences-to-epigenetic-changes">Week 4 Learning Objectives: relate gene expression differences to epigenetic changes</h3>
+<ol style="list-style-type: decimal">
+<li>go from list with DE genes per cell type to TSSs<br />
+</li>
+<li>Plot histone markings around these genes in different cell types</li>
+</ol>
 </blockquote>
+<p>Q1: What histone marks can be found around DE genes of different cell types</p>
+<p>Q2:</p>
 
 
 

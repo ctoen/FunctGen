@@ -25,6 +25,11 @@ editor_options:
 
 <div class="row" style="padding-top:20px;">
 <br>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
+```
+
 > ### Goal:
 In this practical course we will eventually examine epigenetic marks around differentially expressed genes and how these marks are different.  
 
@@ -48,16 +53,35 @@ In this practical course we will eventually examine epigenetic marks around diff
 4. Define the following terms as they relate to the UCSC genome browser: *browsing, track, coverage, peaks, <span style="color: red;">summit</span>*.    
 5. Recognize and differentiate the profile of <span style="color: red;">*ATAC-seq, RNA-seq and histone ChIP-seq* datasets in the genome browser based on their coverage profile and their location with respect to genes (H4K4me3, H3K27ac, H3K36me3, H3K9me3 histone ChIP-seq</span>).   
 
+Q1: We want to know what kind of histone mark can be found in the promoter of ... gene   
+Q2: Find histone mark covering the enhancer located 20kb upstream of ....  
+
 > ### Week 2 Learning Objectives: Bioconductor and comparison among marks  
 1. Move around in GRanges container  
 2. Use GenomicFeatures to obtain 
-3. Find and count the overlap among histone ChIP-seq peaks and promoters and enhancer regions  
+3. Find and count the overlap among histone ChIP-seq peaks and promoters or genic regions   
 - `countOverlaps(query, subject)`, `findOverlaps(query, subject)`  
+4. Plotting summarized coverage of histone marks around TSS and over genic regions <span style="color: red;">--> or this one to week 3</span>    
 
-> 
-
+In week 1 we have estimated which mark is enriched in promoters, gene bodies or other intergenic regions, this week we will add a number to that estimate.  
+Q1: We want quantify in what region the H3Kme3 signal is enriched.  
+Q2: We want to do the same for H3K27ac and for H3K36me3.  
+Q3: What is the average coverage profile of different marks around landmark elements like TAG, TSS and TSS
 
 > ### Week 3 Learning Objectives: Comparison among cells   
+1. visualize histone marks of one cell around genomic landmarks in heatmap  
+2. be able to cluster heatmap data  
+3. instead of different marks, use same mark from different cell types  
+
+Q1: Do histone marks show regional overlap? --> plot different marks in a heatmap and cluster the data  
+
+Q2: Want to identify differentially marked regions and common marked regions among different cell types.  
 
 > ### Week 4 Learning Objectives: relate gene expression differences to epigenetic changes  
+1. go from list with DE genes per cell type to TSSs  
+2. Plot histone markings around these genes in different cell types  
 
+Q1: What histone marks can be found around DE genes of different cell types    
+
+
+Q2: 
