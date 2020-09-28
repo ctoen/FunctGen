@@ -17,7 +17,7 @@ Bioconductor Packages:
 package | purpose   
 -----|-----   
 [BSgenome](http://bioconductor.org/packages/release/bioc/html/BSgenome.html) | infrastructure and functions for related genome packages with full genome sequences for many species    
-[Biostrings](https://www.bioconductor.org/packages/release/bioc/html/Biostrings.html) | provides containters and functions for fast manipulation of large biological sequences (aka genome data)  
+[Biostrings](https://www.bioconductor.org/packages/release/bioc/html/Biostrings.html) | provides containers and functions for fast manipulation of large biological sequences (aka genome data)  
 [GenomicRanges](https://bioconductor.org/packages/release/bioc/vignettes/GenomicRanges/inst/doc/GenomicRangesIntroduction.html) | handles genomic intervals  
 [GenomicFeatures](https://www.bioconductor.org/packages/release/bioc/html/GenomicFeatures.html) | functions to retrieve and manage genomic features from public databases  
 

@@ -395,95 +395,225 @@ div.tocify {
 .title {
   display: none;
 }
+.author {
+  display: none;
+}
 
 #getting-started img {
   margin-right: 10px;
 }
 
 </style>
-<div class="row" style="padding-top:20px;">
+<div class="row" style="padding-top:10px;">
 <p><br></p>
+<ul>
+<li>Question-/Problem-driven learning –&gt; formulate candidate questions per week.<br />
+</li>
+<li>Example dataset: monocytes, T cells and B cells (and NK cells? and platelets?).
+<ul>
+<li>NK cells can become a question for the heatmap, what they most look like? Or is this going too much in biology already?<br />
+</li>
+</ul></li>
+<li>Start in UCSC genome browser with one cell type (eg monocytes). Introduce same data of other cell types in week 2.<br />
+<br></li>
+</ul>
+<div id="overall" class="section level2">
+<h2>Overall</h2>
 <blockquote>
-<h3 id="goal">Goal:</h3>
-<p>In this practical course we will eventually examine epigenetic marks around differentially expressed genes and how these marks are different.</p>
+<h4 id="goal-of-this-practical">Goal of this practical</h4>
+<ul>
+<li>Our aim is to identify clusters of differentially marked genes among various blood cells. <em>Importantly</em>, we want to know in what extend these clusters overlap (and could explain) differential gene expression detected in a related single-cell RNA-seq dataset.<br />
+<br></li>
+<li>We want to identify the major/significant epigenetic and transcriptional differences among varioud blood cells. How can we discriminate these cells at the epigenetically? Which TFs drive the expression of important marker genes of a given blood cell?</li>
+</ul>
 </blockquote>
-<p><br> <strong>In <span style="color: red;">red</span> are things that we could also remove, they might for example be disturbing from the bigger picture or it is a list that we might expand or shorten</strong><br />
-<br></p>
 <blockquote>
-<h3 id="global-learning-objectives">Global Learning Objectives</h3>
+<h4 id="global-learning-objectives">Global learning objectives</h4>
 <ol style="list-style-type: decimal">
 <li>Understand how data are generated from a ChIP-sequencing experiment.<br />
 </li>
-<li>Know how to display and browse data in the UCSC Genome Browser and formulate some basic hypothesis based on observations using this tool.<br />
+<li>Know how to display and browse through genomics data in the UCSC Genome Browser and formulate some basic hypotheses based on observations using this tool.<br />
 </li>
-<li>Familiarize yourself with several basic Bioconductor packages.<br />
+<li>Tell apart UCSC genome browser tracks of H3K27ac, H3K27me3, H3K36me3, H3K4me1 and H3K4me3 histone ChIP-seq and ATAC-seq signal. <span style="color: red;">and BS-seq, and input?</span><br />
 </li>
-<li>Quantify and visualize signal distribution and signal strength of histone ChIP-seq in R.<br />
+<li>Understand and be able to navigate within the containters provided by <span style="color: red;">several…GenomicRanges, GenomicFeatures</span> Bioconductor packages.<br />
 </li>
-<li>Summarize genome-wide data ChIP-data into clustered heatmap.<br />
+<li>Count, summarize/quantify and visualize histone ChIP-seq signal distribution and signal strength in R.<br />
 </li>
-<li>Relate marker genes from cell clusters detected in single-cell RNA-seq experiment to differences between cells at the epigenetic level.</li>
+<li>Summarize genome-wide ChIP-seq signal in heatmap and cluster this heatmap.<br />
+</li>
+<li>Assign regulatory elements to a gene (and be able to reflect on pros and cons of this procedure).<br />
+</li>
+<li>Summarize the overlap between marker genes from cell clusters detected in single-cell RNA-seq experiment to differences between cells at the epigenetic level.<br />
+</li>
+<li>Or, Identify DNA motifs and TFs that are active in the differentially marked regions.</li>
 </ol>
 </blockquote>
-<blockquote>
-<h3 id="week-1-learning-objectives-seq2science-ucsc-genome-browser">Week 1 Learning Objectives: seq2science, UCSC Genome browser</h3>
-<ol style="list-style-type: decimal">
-<li>Know how output from the sequencer looks like and what processing steps should be taken to obtain trustworthy data that we visualize and that we can perform calculations (and statistics) on.<br />
-</li>
-<li>Understand how to move around (“<em>browsing</em>”) in the UCSC genome browser and know how to go to regions and genes of interest.<br />
-</li>
-<li>Recognize the following elements in the UCSC genome browser: <em>chromosome, centromere, telomere, gene, exon, intron, <span style="color: red;">utr</span>, promoter, enhancer/repressor</em>.<br />
-</li>
-<li>Define the following terms as they relate to the UCSC genome browser: <em>browsing, track, coverage, peaks, <span style="color: red;">summit</span></em>.<br />
-</li>
-<li>Recognize and differentiate the profile of <span style="color: red;"><em>ATAC-seq, RNA-seq and histone ChIP-seq</em> datasets in the genome browser based on their coverage profile and their location with respect to genes (H4K4me3, H3K27ac, H3K36me3, H3K9me3 histone ChIP-seq</span>).</li>
-</ol>
-</blockquote>
-<p>Q1: We want to know what kind of histone mark can be found in the promoter of … gene<br />
-Q2: Find histone mark covering the enhancer located 20kb upstream of ….</p>
-<blockquote>
-<h3 id="week-2-learning-objectives-bioconductor-and-comparison-among-marks">Week 2 Learning Objectives: Bioconductor and comparison among marks</h3>
-<ol style="list-style-type: decimal">
-<li>Move around in GRanges container<br />
-</li>
-<li>Use GenomicFeatures to obtain</li>
-<li>Find and count the overlap among histone ChIP-seq peaks and promoters or genic regions<br />
-</li>
-</ol>
+<hr />
+</div>
+<div id="week-1" class="section level2">
+<h2>Week 1</h2>
 <ul>
-<li><code>countOverlaps(query, subject)</code>, <code>findOverlaps(query, subject)</code><br />
+<li><em>seq2science, UCSC Genome browser</em><br />
 </li>
+<li>Global objectives #1-3.<br />
+</li>
+<li><p>Perform in H5P?<br />
+<br></p></li>
+<li>Discuss ChIP-seq in presentation<br />
+</li>
+<li>Follow seq2science workflow<br />
+</li>
+<li><p>Peakcalling: note that it is not black/white, not absolute, thresholds are set. NOT into technicalities and mathematics of read piling/peak models, narrow-wide peaks<br />
+<br></p></li>
 </ul>
-<ol start="4" style="list-style-type: decimal">
-<li>Plotting summarized coverage of histone marks around TSS and over genic regions <span style="color: red;">–&gt; or this one to week 3</span></li>
-</ol>
-</blockquote>
-<p>In week 1 we have estimated which mark is enriched in promoters, gene bodies or other intergenic regions, this week we will add a number to that estimate.<br />
-Q1: We want quantify in what region the H3Kme3 signal is enriched.<br />
-Q2: We want to do the same for H3K27ac and for H3K36me3.<br />
-Q3: What is the average coverage profile of different marks around landmark elements like TAG, TSS and TSS</p>
 <blockquote>
-<h3 id="week-3-learning-objectives-comparison-among-cells">Week 3 Learning Objectives: Comparison among cells</h3>
+<h4 id="learning-objectives-after-this-tutorial-the-student-should-understandbe-able-to">Learning Objectives (<em>after this tutorial the student should understand/be able to…</em>)</h4>
 <ol style="list-style-type: decimal">
-<li>visualize histone marks of one cell around genomic landmarks in heatmap<br />
+<li>Know how ChIP-seq is performed experimentally (incl why &amp; what controls are needed).<br />
 </li>
-<li>be able to cluster heatmap data<br />
+<li>Know how raw ChIP-seq read output is processed to obtain trustworthy data.<br />
 </li>
-<li>instead of different marks, use same mark from different cell types</li>
+<li>Understand how to mov (“<em>browsing</em>”) around in the UCSC genome browser and know how to go to regions and genes of interest.<br />
+</li>
+<li>Recognize the following elements/regions in the UCSC genome browser: <em>chromosome, centromere, telomere, gene, exon, intron, <span style="color: red;">utr</span>, promoter, enhancer/repressor</em>.<br />
+</li>
+<li>Can interpret - and thus understand - ChIP- and ATAC-seq signal in the UCSC genome browser.<br />
+</li>
+<li>Recognize and differentiate the profile of <em>ATAC-seq, RNA-seq and histone ChIP-seq</em> datasets in the genome browser based on their coverage profile and their location with respect to genes (H3K27ac, H3K27me3, H3K36me3, H3K4me1 and H3K4me3).</li>
 </ol>
 </blockquote>
-<p>Q1: Do histone marks show regional overlap? –&gt; plot different marks in a heatmap and cluster the data</p>
-<p>Q2: Want to identify differentially marked regions and common marked regions among different cell types.</p>
 <blockquote>
-<h3 id="week-4-learning-objectives-relate-gene-expression-differences-to-epigenetic-changes">Week 4 Learning Objectives: relate gene expression differences to epigenetic changes</h3>
+<h4 id="working-questions">Working questions</h4>
 <ol style="list-style-type: decimal">
-<li>go from list with DE genes per cell type to TSSs<br />
+<li>We want to know what the peak (what histone mark) in the promoter of … [gene] …. is.<br />
 </li>
-<li>Plot histone markings around these genes in different cell types</li>
+<li>Find histone mark covering the enhancer located 20kb upstream of …. [gene] ….<br />
+</li>
+<li><em>Or</em> Now find the nearest upstream H3K27ac mark. Where is it located?<br />
+</li>
+<li><em>Summarizing</em> What marks are generally found at promoters, at gene bodies, active enhancers and at repressed domains?</li>
 </ol>
 </blockquote>
-<p>Q1: What histone marks can be found around DE genes of different cell types</p>
-<p>Q2:</p>
+<hr />
+</div>
+<div id="week-2" class="section level2">
+<h2>Week 2</h2>
+<ul>
+<li><em>Bioconductor, count peak distribution and comparison among marks</em><br />
+</li>
+<li>Global objectives #4-5.</li>
+</ul>
+<p>In week 1 we have estimated which mark is enriched in promoters, gene bodies or other intergenic regions. This week we will put a number to these estimates. More specifically,..<br />
+<br></p>
+<blockquote>
+<h4 id="learning-objectives">Learning Objectives</h4>
+<ol style="list-style-type: decimal">
+<li>Move around in GRanges container.<br />
+</li>
+<li>Obtain annotation of your reference genome of interest and know how to extract the features important to you.<br />
+</li>
+<li>Find and count the overlap among histone ChIP-seq peaks and genomic elements or another peak set. (<code>countOverlaps(query, subject)</code>, <code>findOverlaps(query, subject)</code>)<br />
+</li>
+<li>Plot the quantification (ggplot + geom_bar).<br />
+</li>
+<li>Determine whether or not enrichment is significant (test?).</li>
+</ol>
+</blockquote>
+<blockquote>
+<h4 id="working-questions-1">Working questions</h4>
+<ol style="list-style-type: decimal">
+<li>In what genomic region do we find most of the H3K4me3 peaks? And is this a significant enrichment over the background (genome)?<br />
+</li>
+<li>And what if we look at H3K27ac or H3K36me3?<br />
+</li>
+<li>Do these numbers differ (significantly?) when we look at T cells, B cells or NK cells or memory T cells or macrophages?<br />
+</li>
+<li>What marks overlap and what marks hardly overlap? <span style="color: red;"> too vague, need idea of output</span></li>
+</ol>
+</blockquote>
+<p><span style="color: red;">Would be nice to add a summarizing question that evokes thoughts about signal intensity (differences) as bridge for week 3. Like question 4 but better or improvement thereof.</span></p>
+<hr />
+</div>
+<div id="week-3" class="section level2">
+<h2>Week 3</h2>
+<ul>
+<li><em>Comparing coverage/signal intensity in CoveragePlot and heatmap among regions and cells</em><br />
+</li>
+<li>Global objectives #5-6</li>
+<li>Heatmap using <span style="color: red;">package ngs.plot, EnrichedHeatmap, deepTools, ???</span><br />
+</li>
+<li>Use heatmap to compare marks or cells? Or both? How many columns?</li>
+</ul>
+<p>In week 1 we looked at the localization of histone marks (peaks) and we quantified this in week 2 of peaks. You might have seen that some histone marks show partial overlap with other marks. In addition, up till now we have worked with the presence or absence of <em>peaks</em>. This binary measure is not sufficient to summarize the diversity in <em>signal intensities</em> we observed before in the UCSC genome browser.</p>
+<p><span style="color: red;">Go into singal intensity differences here and/or into different markings among cells? or both?</span><br />
+<br></p>
+<blockquote>
+<h4 id="learning-objectives-1">Learning Objectives</h4>
+<ol style="list-style-type: decimal">
+<li>Be able to visually summarize read coverage (<em>signal</em>) of different histone marks around genomic landmarks (TSS or over gene body)<br />
+</li>
+<li>Understand and interpret clustered heatmap of histone marks and or cells. <span style="color: red;">Improve! How should heatmap look like?</span><br />
+</li>
+<li>How to assign histone ChIP-seq peaks to genes (and understand the assumptions/decisions you make when you do this).</li>
+</ol>
+</blockquote>
+<blockquote>
+<h4 id="working-questions-2">Working questions</h4>
+<ol style="list-style-type: decimal">
+<li>Does H3K36me3 signal start at the TSS or at the ATG/start codon?<br />
+</li>
+<li><em>Or</em> Does H3K36me3 signal increase or decrease downstream from ATG/start (vs upstream)?<br />
+</li>
+<li>Are H3K4me3 and H3K27ac signal higher or weaker directly upstream of the TSS compared to directly downstream of the TSS? Do these marks behave the same?<br />
+</li>
+<li>Do NK cells look more like monocytes or like T cells? Based on histone markings we have here.<br />
+</li>
+<li>We have this cluster of H3K4me3 + H3K27me3 marked promoters, what genes belong to these promoters?<br />
+</li>
+<li>The [TF] is essential for T cell phenotype. What cluster do you find this gene’s promotor?<br />
+</li>
+<li>Same for enhancers?</li>
+</ol>
+</blockquote>
+<hr />
+</div>
+<div id="week-4" class="section level2">
+<h2>Week 4</h2>
+<ul>
+<li><em>overlap marker genes scRNA-seq to detected epigenetic differences</em> or <em>find or count motif occurrences using pattern matching from GRanges</em><br />
+</li>
+<li>Use PBMC3k dataset<br />
+</li>
+<li><p>Get UMAP from Satija lab.<br />
+<br></p></li>
+<li>We continue with clusters that differentially mark T cells from monoyctes [..] and assign them to closest gene.<br />
+</li>
+<li>Open/active regions only?<br />
+</li>
+<li><p>Compare these to + and - marker genes from scRNA-seq</p></li>
+</ul>
+<blockquote>
+<h4 id="learning-objectives-2">Learning Objectives</h4>
+<ol style="list-style-type: decimal">
+<li>Can interpret UMAP from scRNA-seq.lk<br />
+</li>
+<li>Understand the added value of scRNA-seq over bulk rna-seq (lecture not this workshop)<br />
+</li>
+<li>Compare gene lists obtained from the two techniques</li>
+</ol>
+</blockquote>
+<blockquote>
+<h4 id="working-questions-3">Working Questions</h4>
+<ol style="list-style-type: decimal">
+<li>We have this cluster of actively marked regions in monocytes. Are these genes indeed expressed?<br />
+</li>
+<li>Where in the heatmap do we find the marker genes back that were detected in the sc-RNA-seq experiment?<br />
+</li>
+<li>These TFs were found markers for resp. monocytes, T-cell, B-cells in the scRNA-seq experiment. Can these findings be supported by our ChIP-seq data?</li>
+</ol>
+</blockquote>
+</div>
 
 
 
@@ -531,7 +661,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1,h2,h3",
+      selectors: "h1,h2,h3,h4",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
