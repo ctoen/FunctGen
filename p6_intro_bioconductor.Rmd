@@ -277,13 +277,57 @@ abcd1_transcripts
 myGR <- unlist(hg)
 
 ```
-### GenomicAlignments  
+
+## Sequence quality    
+- Explore sequence data quality using `shortRead` and 
+- Using Illumina sequences  
+
+- we store sequences as text. Two formats: fastq and fastq.  
+- fastq are standard for storing sequences from high-throughput sequencing  
+  + fastq has 4 lines  
+  + extensions with .fastq or .fq
+- fasta has 2 lines per sequenced read   
+  + line 1 starts with '>' and unique sequence id  
+  + raw sequence string  
+  + extensions are .fasta .fa or .seq  
+
+Read in fastq or fasta files with `readFastq()` or `readFastq()`, both need a location and a file pattern to read one or many files   
+- `readFasta()` reads fasta file  
+  + `dirPath = ...` and `pattern =  ... `  
+  + read compressed or uncompressed files  
+  + returns one class object with class ShortRead  
+  + `methods(class = "ShortRead") to get accessors  
+- `writeFasta()` writes fasta and can compress on the fly  
+- `readFastq()` reads all fastq formatted files in a directory   
+  + can have additional filters `qualityType = ...` and `filter = ...`  
+  + returned object has class ShortReadQ   
+- to work with subset of sequences, you sample  
+  + `set.seed()` is important to ensure sampling the same reads when rerun  
+  + `FastqSampler()` draws a subset with particular length  
+  + `yield()` extracts the sequences in object  
+  
+- `sread()` extracts the sequence  
+- `id()` extracts the read id  
+
+```{r import data with shortread}
+#if (!requireNamespace("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+# BiocManager::install("ShortRead")
+
+library(ShortRead)
+
+# 
+```
+
+
+## GenomicAlignments  
 ```{r genoimcaignments}
 #if (!requireNamespace("BiocManager", quietly = TRUE))
 #    install.packages("BiocManager")
 
 #BiocManager::install("GenomicAlignments")
 ```
+
 
 
 
