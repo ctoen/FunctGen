@@ -16,6 +16,4 @@ navbar:
       href: p6_intro_bioconductor.html
     - text: "Links"
       href: p7_links.html
-    - text: "PBMC3k"
-      href: p8_seurat_pbmc_tutorial.html
 output_dir: "docs"

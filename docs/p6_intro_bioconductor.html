@@ -293,9 +293,6 @@ $(document).ready(function () {
 <li>
   <a href="p7_links.html">Links</a>
 </li>
-<li>
-  <a href="p8_seurat_pbmc_tutorial.html">PBMC3k</a>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -336,7 +333,7 @@ $(document).ready(function () {
 </tr>
 <tr class="even">
 <td><a href="https://www.bioconductor.org/packages/release/bioc/html/Biostrings.html">Biostrings</a></td>
-<td>provides containters and functions for fast manipulation of large biological sequences (aka genome data)</td>
+<td>provides containers and functions for fast manipulation of large biological sequences (aka genome data)</td>
 </tr>
 <tr class="odd">
 <td><a href="https://bioconductor.org/packages/release/bioc/vignettes/GenomicRanges/inst/doc/GenomicRangesIntroduction.html">GenomicRanges</a></td>
@@ -1777,8 +1774,61 @@ abcd1_transcripts</code></pre>
 <pre class="r"><code># From GRangesList object into a GRanges object  
 myGR &lt;- unlist(hg)</code></pre>
 </div>
-<div id="genomicalignments" class="section level3">
-<h3>GenomicAlignments</h3>
+</div>
+<div id="sequence-quality" class="section level2">
+<h2>Sequence quality</h2>
+<ul>
+<li>Explore sequence data quality using <code>shortRead</code> and</li>
+<li><p>Using Illumina sequences</p></li>
+<li>we store sequences as text. Two formats: fastq and fastq.<br />
+</li>
+<li>fastq are standard for storing sequences from high-throughput sequencing
+<ul>
+<li>fastq has 4 lines<br />
+</li>
+<li>extensions with .fastq or .fq</li>
+</ul></li>
+<li>fasta has 2 lines per sequenced read
+<ul>
+<li>line 1 starts with ‘&gt;’ and unique sequence id<br />
+</li>
+<li>raw sequence string<br />
+</li>
+<li>extensions are .fasta .fa or .seq</li>
+</ul></li>
+</ul>
+<p>Read in fastq or fasta files with <code>readFastq()</code> or <code>readFastq()</code>, both need a location and a file pattern to read one or many files<br />
+- <code>readFasta()</code> reads fasta file<br />
++ <code>dirPath = ...</code> and <code>pattern =  ...</code><br />
++ read compressed or uncompressed files<br />
++ returns one class object with class ShortRead<br />
++ <code>methods(class = &quot;ShortRead&quot;) to get accessors   -</code>writeFasta()<code>writes fasta and can compress on the fly   -</code>readFastq()<code>reads all fastq formatted files in a directory      + can have additional filters</code>qualityType = …<code>and</code>filter = …<code>+ returned object has class ShortReadQ    - to work with subset of sequences, you sample     +</code>set.seed()<code>is important to ensure sampling the same reads when rerun     +</code>FastqSampler()<code>draws a subset with particular length     +</code>yield()` extracts the sequences in object</p>
+<ul>
+<li><code>sread()</code> extracts the sequence<br />
+</li>
+<li><code>id()</code> extracts the read id</li>
+</ul>
+<pre class="r"><code>#if (!requireNamespace(&quot;BiocManager&quot;, quietly = TRUE))
+#    install.packages(&quot;BiocManager&quot;)
+# BiocManager::install(&quot;ShortRead&quot;)
+
+library(ShortRead)</code></pre>
+<pre><code>## Loading required package: BiocParallel</code></pre>
+<pre><code>## 
+## Attaching package: &#39;ShortRead&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     id</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     compose</code></pre>
+<pre><code>## The following object is masked from &#39;package:tibble&#39;:
+## 
+##     view</code></pre>
+<pre class="r"><code># </code></pre>
+</div>
+<div id="genomicalignments" class="section level2">
+<h2>GenomicAlignments</h2>
 <pre class="r"><code>#if (!requireNamespace(&quot;BiocManager&quot;, quietly = TRUE))
 #    install.packages(&quot;BiocManager&quot;)
 
@@ -1786,7 +1836,6 @@ myGR &lt;- unlist(hg)</code></pre>
 <div id="monash-bioinformatics-platform-tutorial" class="section level4">
 <h4>[Monash bioinformatics platform tutorial]</h4>
 <p><a href="https://monashbioinformaticsplatform.github.io/r-more/topics/sequences_and_features.html#dna-sequences-and-genomic-ranges" class="uri">https://monashbioinformaticsplatform.github.io/r-more/topics/sequences_and_features.html#dna-sequences-and-genomic-ranges</a></p>
-</div>
 </div>
 </div>
 
