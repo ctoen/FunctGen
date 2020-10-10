@@ -17,3 +17,8 @@ output: html_document
 6. Check out my slightly older programming book that also introduces R [https://crumplab.github.io/programmingforpsych/](https://crumplab.github.io/programmingforpsych/)
 7. This is the definitive guide for all things R Markdown (you will find this very useful as you get better at this skill): [https://bookdown.org/yihui/rmarkdown/](https://bookdown.org/yihui/rmarkdown/)
 
+
+### Background information   
+- use Google wisely ;)  
+- [the ENCODE project](https://www.encodeproject.org/)  
+- 

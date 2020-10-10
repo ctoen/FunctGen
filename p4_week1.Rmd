@@ -4,78 +4,167 @@ output:
   html_document:
     toc: true
     toc_float: true
+    css: custom.css  
     collapsed: false
     number_sections: false
-    toc_depth: 1
+    toc_depth: 4
     #code_folding: hide
 editor_options: 
   chunk_output_type: inline
 ---
 
+<style type="text/css">
+.title {
+  display: none;
+}
+
+#getting-started img {
+  margin-right: 10px;
+}
+
+</style>
+
+<div class="row" style="padding-top: 20px;">
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
 ```
+# Week 1:   
 
-# Introduction  
-We will be looking at data from BLUEPRINT, a consortium of European universities and research institutes aimed to systematically study/uncover the epigenomic landscape of cells found in the blood. 
+- Raw ChIP-seq data processing and visualize epigenomics data in the UCSC Genome browser.  
+- Global learning objectives #1-3.   
 
-Physiology and pathology (health and disease, development, lineage specification, onset and progression of disease, ) are both epigenetically regulated. 
+> #### Learning Objectives  
+1. Know how raw read output (from eg ChIP-seq) is processed to obtain trustworthy data.  
+2. Understand how to move ("*browse*") through the UCSC genome browser and know how to go to regions and genes of interest.  
+3. Recognize the following elements/regions in the UCSC genome browser: *chromosome, centromere, telomere, gene, exon, intron, utr, promoter, enhancer/repressor*.   
+4. Tell apart UCSC genome browser tracks of H3K27ac, H3K27me3, H3K36me3, H3K4me1, H3K4me3 and H3K9me3 histone ChIP-seq and ATAC-seq signal (and ChIP-seq input) based on their coverage profile and their location with respect to genes and other annotated genomic/chromosomal elements. 
+5. Can interpret - and thus understand - ChIP- and ATAC-seq signal in the UCSC genome browser.   
 
-'Normal' epigenome of a given cell'. Producding reference epigenomes. 
+<br>
 
-We will look at the relationship between histone signatures (combination of histone marks) and gene expression
+### 1.1 Genomics methods recap/discussion  
+**Discuss**:  
 
-chromatin-based regulation of gene expression
+- What is ChIP-seq? What is ATAC-seq? Presentation with ChIP-seq steps? Refer to book?  
+- Sequencing samples. What happens in sequencer? What is the output?  
+- Brief genomics recap/pre-quiz?  
 
-Epigenomic information, such as covalent histone modifications, DNA accessibility and DNA methylation
+<br>  
 
-BLUEPRINT  
-- reference genemes of cells found in the blood  
-- healthy individuals and with blood-based diseases including autoimmune diseases, leukemias.  
+### 1.2 From data outputted by the sequencer to science   
+[Seq2science](https://vanheeringen-lab.github.io/seq2science/index.html)  
+*fastq file, bam processing, bigwig, peak calling, count table*  
 
-#### Use of thses insights:  
-- epi-drugs  
-- case stratification, improved diagnosis and progrnosis  
+**Discuss**:  
 
+- Modify Siebrens pptx.  
+- Fastq files, what does the data look like?  
+- 4 lines of code with:  
+    1. unique_read_name (starts with @-sign)  
+    2. nucleotide sequence  
+    3. `+` (previously, this line showed the same as line 1)  
+    4. nucleotide quality score (Phred encoded)  
+    
+- The neccessary processing steps:  
+  a. Read quality and adapter trimming   
+  b. Aligning fastq reads to reference genome    
+  c. BAM sieving.  
+    - What considerations are important? PCR duplicates, multi mapping reaads    
+    - Discuss use of input sample    
+  d. Peak calling. Use of control samples. Narrow and Broad peaks?       
+  e. Count table: What does it look?  
+<br> 
 
-# Dataset  
-1. lymphocytic leukemia?  
-  - On the one hand, pathological tissues and cells exhibit epigenetic imprints of the developmental or differentiation stages from which they originate and, on the other hand, they acquire disease-specific epigenetic alterations  
-
-2. innate immune cells/innate immune memory?  
-  - comparing healthy with cancerous cells  
-  - environmental stimuli can determine a cell's future response/behavior by altering its epigenetic state, and thus alter susceptibility to disease  
-
-
-
-  
-
-```{r source biocLite or use biocManager, eval=F}
-my_version <- as.numeric(version$major)+as.numeric(version$minor)
-
-if(my_version <= 3.7){
-  # Bioconductor version 3.7 and earlier uses the BiocInstaller,
-  # install by sourcing the biocLite script:
-  source("https://bioconductor.org/biocLite.R")
-  #biocLite("packageName")
-} else {
-  # Bioconducter version 3.8 and later uses BiocManager,
-  # install using base R install.packages command:
-  if (!requireNamespace("BiocManager", quietly = TRUE)) 
-  install.packages("BiocManager")
-  # or simply: 
-  # install.packages("BiocManager") 
-}
-```
+![](images/week1/whatbioinformaticiancsdo.png)
 
 
+> #### Working questions   
+1. What histone mark marks the promoter of TNF gene? Let's go and look for it ;).   
+2. Now your turn, what about CD3 is this gene active in monocytes? (no it is not, also logical, it is part of the T cel receptor present on the cellsurface of T cells)    
+3. Look at the enhancer located 20kb upstream of .... [gene] .... Based on the histone and chromatin accessibility data would you say this enhancer is active or inactive? What histone marks do you find around it?    
+4. *Summarizing* What marks are generally found at promoters, at gene bodies, active enhancers and at repressed domains?  
 
-GenomicAlignments loading BAM files
-```{r GenomicAlginments, eval=F}
-library(GenomicAlignments)
-```
+
+**Week 1**: 
 
 
 
+#### The UCSC Genome Browser  
+The UCSC Genome Browser is a visualization tool that uses the genomic coordinate system as reference  
+- coordinates are written as chromosome:start-end.  
+- 1-based  
+- is a visualization tool of genomics data 
+- hosted by the ...  
+- can be accessed via:  
+- Depending on the reference genome of your interest, many or few additional tracks containing information are present  
+
+A **track** is a graph within the genome browser, spanning the complete genome  
+
+**Browsing** theUCSC genome browser, scanning through the genome, can be done in various ways:  
+- On top use the `<<<`, `<<`, `<` and `>`, `>>` and `>>>` buttons 
+- Using a 
+
+- **Focus**: how we make data out of a ChIP-seq experiment, how to use the UCSC Genome Browser, and familiarize ourselves with the UCSC Genome Browser visualization.   
+- *seq2science, UCSC Genome browser*  
+- Global objectives #1-3: 
+  1. Understand how we come from a ChIP-sequencing experiment to useful data. 
+  2. Know how to display and browse through genomics data in the UCSC Genome Browser and formulate some basic hypotheses using this tool.  
+  3. Tell apart different genomics datasets based on their pattern int he UCSC Genome Browser.  
+- Perform in H5P?  
+<br>
+
+- Discuss ChIP-seq in presentation  
+- Follow seq2science workflow  
+- Peakcalling: note that it is not black/white, not absolute, thresholds are set. NOT into technicalities and mathematics of read piling/peak models, narrow-wide peaks  
+<br>  
+
+### 1.3 Look at the read density yourself in a genome browser   
+*Functional elements, ChIP signals, peaks, hypotheses about enrichment.*  
+
+**Discuss**:  
+
+- UCSC Genome Browser  
+  * how to switch off tracks. Hide all tracks except for **GENCODE v32** and **Base Position**.     
+  * how to browse trough the data  
+  * how to upload custom data. Upload the <span style="color: red;">processed chip-seq data of histone marks in **heatlhy cells**, input and a **failed track** as .bigwig file. Or use trackhub?</span>  
+    +  bigwig is a special data format to display dense, continuous data as graphs. The main advantage of this format is that only the portions of the files needed to dispaly a particular regoin are transferred making it considerably faster in a genome browsing tool [ref](https://genome.ucsc.edu/goldenPath/help/bigWig.html).    
+  * As functional genomic elements: <span style="color: red;">upload custom track or use **ENCODE cCREs** track?</span>  
+
+Now browse through the data.  
+
+Peaks are ... 
+
+**Assignments/Questions**:   
+
+1. One of the tracks represents the input, which one and why?  
+2. What kind of data is visualized in track "A"?  
+3. Browse to these four regions, which one of them would you consider to display a peak (tip, make screenshot and paste in a temporary pptx. to compare the images)  
+4. Of the marks visualized which ones are associated with gene expression and which ones with repression (from lecture)?  
+
+**Discuss**:   
+Peak calling software is used to identify peaks within a certain range of confidence. <span style="color: red;">and using replictes?</span>  
+
+**Assignments/Questions**:
+
+5. Which of the following influences the number of peaks identified:  
+  - P-value threshold, the lower the fewer peaks  
+  - read depth   
+  - Q-value/false-discovery rate, the   
+  - the type of control sample  ...   
+  - 
+
+**Discuss**:  
+
+Upload peaks called by the software.  
+
+**Assignments/Questions**:  
+
+6. What are different functional genomic elements you have heard of during lectures?   
+
+The custom track contains five tracks, numbered 1-5, representing different genomic elements.   
+
+7. Which # represent what kind of element?   
+8. Browse through the browser, estimate for each histone mark whether it is enriched in one or several of the genomic elements (1-5)   
 
 

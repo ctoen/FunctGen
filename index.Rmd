@@ -4,10 +4,11 @@ author: "Written by: Klaas, Simon, Siebren, Christa ... "
 output: 
   html_document:
     toc: true
+    css: custom.css
     toc_float: true
     collapsed: false
     number_sections: false
-    toc_depth: 2
+    toc_depth: 4
     
 ---
 
@@ -18,31 +19,142 @@ knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
 ```
 
 ## Introduction
-<div class="col-sm-6">
+This is the computer practical for the [Functional Genomics 1](https://www.ru.nl/courseguides/science/vm/osirislinks/bb/nwi-bb064b/) course. It builds upon R programming skills taught in the first year during [Genomics and Big Data](https://www.ru.nl/courseguides/science/vm/osirislinks/bp/nwi-bp031/) and a basic understanding of the R programming language is required. We will also use statistics from the course [Statistics 1](https://www.ru.nl/courseguides/science/vm/osirislinks/bp/nwi-bp012c/).  
 
-In this class we will be guiding you through several common steps performed to analyze (epi-)genomics data. You may already be familiar with the output of these analyses from scientific papers (figures, observations, hypotheses, conclusions).  
+The **purpose** of this practical is to teach you common bio-informatics analyses performed to analyse epigenomics data. You may already be familiar with the output of these analyses from scientific publications or lectures. We will focus on **how to detect, quantify, annotate and visualise epigenetic marks**. At the end of our analyses, we will also relate epigenetic markings to gene activity as well as candidate TFs that might establish them.  
 
-</div>
-<div class="col-sm-6">
+For this practical, we will use **data for white blood cells** from the [the ENCODE project](https://www.encodeproject.org/), namely: monocytes, T cells, B cells and natural killer cells. ENCODE is an ongoing, collaborative research effort to build a comprehensive list of functional elements in the human genome. We have chosen these datasets because they are well-documenten and easy to find through the ENCODE data portal, and not because we want to teach you the hematopoietic system.  
+<br>  
 
+> ### Research goals  
+  1. Use  combinations of histone PTM data and chromatin accessibility to identify functional genomic elements (eg promoter, enhancers etc) and predict gene activity (active or repressed).    
+  2. Check obove mentioned predictions on gene activity in single-cell RNA-seq data.  
+  3. Vice versa, use the epigenetic data to explain gene expression differences detected in a single-cell RNA-seq experiment.  
+  4. Predict TFs that could mediate cell-specific gene expression.   
+
+<br>  
+
+> ### Global learning objectives  
+  1. Understand how useful data is obtained from a ChIP-sequencing experiment.   
+  2. Know how to display and browse through genomics data in the UCSC Genome Browser and formulate some basic hypotheses using this tool.  
+  3. Tell apart different genomic datasets based on their pattern int he UCSC Genome Browser.   
+  4. Quantify and visually summarize the genomic distribution of histone ChIP-seq peaks and signal strength in r.   
+  5. Statistically test for enrichment of histone marks in functional genomic elements.  
+  6. Summarize genome-wide ChIP-seq signal in a heatmap and use this heatmap to identify identify functional genomic elements and predict gene activity.  
+  7. Check hypotheses about the epigenetic landscape based on single-cell RNA-seq data with actual epigenomics data, and vice versa (check hypotheses on gene activity in single-cel RNA-seq data).   
+  8. Formulate hypotheses about (cell-specific) TF function using histone ChIP-seq and ATAC-seq data.  
+  
+  
 <a href = "https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1001046">
-![](images/plosbiol_2011_ENCODE_userguid_fig1a.png)
-</a>
-Ref: https://doi.org/10.1371/journal.pbio.1001046   
-</div>
-
-
-## Learning objectives    
-<span style="color: red;">Examples, not final. Might also restrict to sub-learning objectives per section.</span>  
-
-* Understand how data are generated from a ChIP-sequencing experiment  
-* Know how to display and browse data in the UCSC Genome Browser and formulate some basic hypothesis based on observations using this tool  
-* Familiarize yourself with several basic Bioconductor packages  
-* Quantify and visualize signal distribution and signal strength of histone ChIP-seq in R   
-* Summarize genome-wide data ChIP-data into clustered heatmap  
-* etc.  
+![](images/plosbiol_2011_ENCODE_userguid_fig1a.png){width=80%}
+</a>  
+[The ENCODE Project Consortium, 2011, PLoS Biology](https://doi.org/10.1371/journal.pbio.1001046)  
+<br>    
 
 ## Structure of this practical  
+**Week 1**: Raw ChIP-seq data processing and visualize epigenomics data in the UCSC Genome browser.  
+Global learning objectives #1-3.  
+  
+**Week 2**: Quantify the (co-)occurrences of epigenetic marks and use this to annotate genomic regions.   
+Global learning objectives #4-5.  
+  
+**Week 3**: Compare epigenetic profiles among different cell types.   
+Global learning objectives #5-6.  
+  
+**Week 4**: Synthesis: epigenomics, scRNA-seq and motif finding.   
+Global learning objectives #7-8.  
+<br>  
+
+## Need help?  
+Use the virtual classroom space in Brightspace/Zoom meeting when you need advice. A teacher will be present there during practical hours.  
+
+Additional links to resoures can be found under [links](#Resources) 
+<br>  
+
+## Computational environment    
+For this practical it is not required to install R and R studio. Instead, we provide you with the correct environment and required packages. In case you want to repeat the practical at home/on your own computer you should make sure you install the following packages:   
+
+* tidyverse ..
+* blabla
+<br> 
+
+## Background info    
+### Using R  
+We will code in R, which you have already familiarized yourself with during the Genomics & Big Data course. 
+
+##### What does an R package or function do?  
+- Use the built-in RStudio help interface to find a particular function  
+- Googling *[function or package name] 'r'*  
+- Go to the 'Packages' tab to find user guides and other documentation on the package    
+- Look into the 'Help' tab of the function  
+
+##### I get an error?  
+- Read the error, might give you hints 
+- Google the error + r  
+- [Stackoverflow](https://stackoverflow.com) is great, Google will often take you there because someone has already asked your question, and someone else has answered, usually many people have answered your question many ways.  
+<br> 
+
+### Table with cell markers and TFs  
+Here’s a table with cell surface proteins, cytokines and TFs that are specific to certain cell types.  
+
+Some of the cell surface markers were used to isolate these cells from the bulk using (MACS and) FACS.   
+
+Cell | Marker | Localization and/or function | Gene(s) |  Also found on | Ref  
+---|---|---|---|---|---         
+**Monocytes** | CD14 | plasma membrane | [CD14](https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD14) | macrophages | [Schidl 2014 Blood](https://pubmed.ncbi.nlm.nih.gov/24671955/)  
+  ,,  | CCR2 | plasma membrane | [CCR2](https://www.genecards.org/cgi-bin/carddisp.pl?gene=CCR2) | ?? | [Schidl 2014 Blood](https://pubmed.ncbi.nlm.nih.gov/24671955/)   
+  ,,  | CD163 | plasma membrane | [CD163](https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD163) | ?? | [Schidl 2014 Blood](https://pubmed.ncbi.nlm.nih.gov/24671955/)   
+  ,,  | VCAN |  extracellular space | [VCAN](https://www.genecards.org/cgi-bin/carddisp.pl?gene=VCAN) | ?? | [Schidl 2014 Blood](https://pubmed.ncbi.nlm.nih.gov/24671955/)   
+  ,,  | S100A8 | ?? | ?? | ?? | [Schidl 2014 Blood](https://pubmed.ncbi.nlm.nih.gov/24671955/)   
+  ,,  | S100A9 | ?? | ?? | ?? | [Schidl 2014 Blood](https://pubmed.ncbi.nlm.nih.gov/24671955/)   
+  ,,  | S100A12 | ?? | ?? | ?? | [Schidl 2014 Blood](https://pubmed.ncbi.nlm.nih.gov/24671955/)   
+  ,, | CEBPb | ?? | ?? | ?? | [Schidl 2014 Blood](https://pubmed.ncbi.nlm.nih.gov/24671955/)   
+  ,, | PU.1 | nucleus, transcription factor | [SPI1](https://www.genecards.org/cgi-bin/carddisp.pl?gene=SPI1&keywords=SPI1) | myeloid cells and B cells  
+**NK cells**  | CD16 | plasma membrane | ?? | macrophages, neutrophils  
+**T cells** (CD4+ and CD8+) | CD3 | plasma membrane | [CD3-delta](https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD3D), [-gamma](https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD3G), [-epsilon](https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD3E) | ??
+  ,,  | CD45RA | plasma membrane | [PTPRC](https://www.genecards.org/cgi-bin/carddisp.pl?gene=PTPRC) | B cells, NK cells, neutrophils, monocytes, ...  
+**CD4+ T cells** | CD4 | plasma membrane | [CD4 gene](https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD4) | monocytes, macrophages, dendritic cells  
+ ,, | ThPOK | nucleus, transcription factor | [ZBTB7B](https://www.genecards.org/cgi-bin/carddisp.pl?gene=ZBTB7B) | CD4+ T cells and B cells |  [Taniuchi 2018 Ann Rev Immunology](https://pubmed.ncbi.nlm.nih.gov/29677476/)  
+ ,, | T-bet | nucleus, transcription factor | [TBX21](https://www.genecards.org/cgi-bin/carddisp.pl?gene=TBX21) | .. | ..  
+ ,, | GATA-3 | nucleus, transcription factor | [GATA3](https://www.genecards.org/cgi-bin/carddisp.pl?gene=GATA3) | **CD8 T cells??** | ..  
+ ,, | RunX3 | nucleus, transcription factor |  
+ ,, | INF-gamma | cytokine, secreted | [INFG](https://www.genecards.org/cgi-bin/carddisp.pl?gene=IFNG) | .. | ..   
+ ,, | IL-4 | cytokine, secreted | [IL4](https://www.genecards.org/cgi-bin/carddisp.pl?gene=IL4) | .. | .. |  
+**CD8+ T cells** | CD8A | plasma membrane | [CD8A](https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD8A) | CD8+ T cells, B cells, NK cells  | ..scRNA-seq marker    
+**B cells** | PU.1 | nucleus, transcription factor | [SPI1](https://www.genecards.org/cgi-bin/carddisp.pl?gene=SPI1&keywords=SPI1) | myeloid cells and B cells  
+<br> 
+
+### Hematopoiesis scheme  
+<a href = "https://www.blueprint-epigenome.eu/UserFiles/File/cell%20types%20images%20etc/Haematopoiesis_original.pdf">
+![](images/BP_Haematopoiesis_original.png)
+</a>
+[BLUEPRINT, hematopoiesis](https://www.blueprint-epigenome.eu/UserFiles/File/cell%20types%20images%20etc/Haematopoiesis_original.pdf)  
+<br> 
+
+### White blood cells in current dataset  
+Blood cells originate from common, multipotent hemopoietic stem cells in the bone marrow which divide to keep their population stocked or differentiate into more specific progenitors of the myeloid or lymphoid lineages. These progenitors undergo a limited number of divisions and differentiate along the way into mature blood cells: white blood cells, red blood cells and platelets. 
+
+White blood cells encompass a varied group of cells. Each type has its own developmental process controlled by cytokines, cytokine receptors, transcription factors and chromatin remodellers and with distinct morphologies and functions at maturity. Of all the different white blood cells, we will focus on monocytes, NK cells, T cells and B cells in our analyses. 
+
+**Monocytes** make up 2-8% of the white blood cells, derive from the myeloid lineage and are part of the innate immune system (first line of defense, limited/general specificity to particular antigens and can’t multiply furhter). They can enter peripheral tissue and differentiate into macrophages which are good at engulfing larger particles but also in dendritic cells which are highly adapted to present foreign antigens to cells of the adaptive immune system.    
+
+**Natural killer cells** or **NK lymphocytes** come from the lymphoid lineage. They are part of the innate immune system with high cytotoxic capabilities and an important first line of defense against virus infections and the formation of abnormal tissues such as cancers. 
+
+**T cells** or **T lymphocytes** come from the lymphoid lineage as well and can recognize antigens presented by infected cells or special-antigen presenting cells using their T cell receptor. They can either kill the infected cell immediately - cytotoxic activity - or recruit and/or activate other immune cells including B cells - helper activity. These cytotoxic T lymphocytes are recognized by CD8 molecule on their membrane and helper T lymphocytes by CD4. 
+
+**B cells** or **B lymphocytes** also come from the lymphoid lineage and are part of the adaptive (second line, cells differentiated to target specific antigens). Upon activation they differentiate into an antibody-producing plasma cell or a memory B cell. 
+
+Besides white blood cells we also find **red blood cells** and **platelets** in the blood. Both originate from the myeloid lineage and have lost their nucleus during development but contain RNA including mRNA. Mature red blood cells mediate transport of O2 and CO2 in the blood. Platelets originate from megakaryocytes in the bone marrow and release coagulation factors in response to a bleeding or injury of the blood vessel wall. 
+<br> 
+
+## References  
+### Resources used to compile this practical/tutorial  
+- [seq2science](https://vanheeringen-lab.github.io/seq2science/index.html)
+- ENCODE project  
+- ...  
+<br> 
+
+## Old text  
 1. We will use the **UCSC Genome Browser** to visualize the data, look at the distribution of the signal, formulate hypothesis/-es and - roughly - evaluate the quality of the experiment (of note: obvously, this is not the only quality check).  
 
 2. Next, we will transform our observations into numbers and thus **quantify** the signal intensity and distribution of the epigenetic marks we are looking at.  
@@ -50,29 +162,3 @@ Ref: https://doi.org/10.1371/journal.pbio.1001046
     * We've limited these analyses to <span style="color: red;">chr21/protein coding genes/used random 5M reads instead of the original dataset (called *downsampling*)</span> to save running time on the server. More reads increases the power of the analyses and confidence of tests <span style="color: red;">but blabla</span>.  
 
 3. Combine data from different marks and cells and link differences and profiles to functional consequences with respect to gene expression. 
-
-Please use the virutal classroom space in Brightspace one you are stuck or have a question. A teacher will be present there during practical hours.   
-
-
-## Using R  
-We will code in R, which you have already familiarized yourself with during the Genomics & Big Data course. 
-
-##### What does an R package or function do?  
-- Use the built-in RStudio help interface to find a particular function  
-- Googling *[function or package name] 'r'*  
-- Go to the 'Packages' tab to find user guides and other documentation on the package    
-
-
-##### I get an error?  
-- Read the error, might give you hints 
-- various ways to find information about a function
-
-##### Some usefull links:   
-1. Google is great, Google your problem.  
-2. [Stackoverflow](https://stackoverflow.com) is great, Google will often take you there because someone has already asked your question, and someone else has answered, usually many people have answered your question many ways.  
-
-## Resources used to compile this practical/tutorial  
-- Datacamp  
-- [seq2science](https://vanheeringen-lab.github.io/seq2science/index.html)
-
-

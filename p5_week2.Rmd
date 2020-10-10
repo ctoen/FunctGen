@@ -14,6 +14,36 @@ output:
 knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
 ```
 
+
+
+  
+
+```{r source biocLite or use biocManager, eval=F}
+my_version <- as.numeric(version$major)+as.numeric(version$minor)
+
+if(my_version <= 3.7){
+  # Bioconductor version 3.7 and earlier uses the BiocInstaller,
+  # install by sourcing the biocLite script:
+  source("https://bioconductor.org/biocLite.R")
+  #biocLite("packageName")
+} else {
+  # Bioconducter version 3.8 and later uses BiocManager,
+  # install using base R install.packages command:
+  if (!requireNamespace("BiocManager", quietly = TRUE)) 
+  install.packages("BiocManager")
+  # or simply: 
+  # install.packages("BiocManager") 
+}
+```
+
+
+
+GenomicAlignments loading BAM files
+```{r GenomicAlginments, eval=F}
+library(GenomicAlignments)
+```
+
+
 IMPORTANT: You can delete everything in here and start fresh. You might want to start by not deleting anything above this line until you know what that stuff is doing.
 
 

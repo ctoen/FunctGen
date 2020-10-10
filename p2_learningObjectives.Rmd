@@ -1,15 +1,18 @@
 ---
 title: "FG1 - Learning Objectives"
-author: "Written by: Klaas, Simon, Siebren, Christa ... "
-output: 
+author: 'Written by: Klaas, Simon, Siebren, Christa ... '
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '4'
   html_document:
+    collapsed: no
     css: custom.css
-    toc: true
-    toc_float: true
-    collapsed: false
-    number_sections: false
+    number_sections: no
+    toc: no
     toc_depth: 4
-editor_options: 
+    toc_float: yes
+editor_options:
   chunk_output_type: inline
 ---
 <style type="text/css">
@@ -36,8 +39,7 @@ knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
 #### Some general notes  
 
 - Question-/Problem-driven learning --> formulate candidate questions per week.  
-- Example dataset: monocytes, CD4 and CD8 T cells,  B cells and NK cells).  
-  * NK cells can become a question for the heatmap, what they most look like? Or is this going too much in biology already?  
+- Example dataset: monocytes, CD4 and CD8 T cells,  B cells and NK cells.  
 - Start in UCSC genome browser with one cell type (eg monocytes). Introduce same data of other cell types in week 2.   
 <br>
 
@@ -53,15 +55,15 @@ knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
 <br>
 
 > #### 'Research goals' of this practical
-* Identify and visualize which epigenetic marks or combinations thereof are found at distinct genomic elements.  
-* Vice versa, use  the combination of histone PTM data and chromatin accessibility to identify functional genomic elements (eg promoter, enhancers etc) and predict gene activity (active or repressed).    
-* Check predictions on gene activity in single-cell RNA-seq data <span style="color: red;">(or with bulk RNA-seq?)</span>.  
-* Use the epigenetic data to explain gene expression differences detected in a single-cell RNA-seq experiment.  
+* Use  combinations of histone PTM data and chromatin accessibility to identify functional genomic elements (eg promoter, enhancers etc) and predict gene activity (active or repressed) using heatmaps.    
+* Check obove mentioned predictions on gene activity in single-cell RNA-seq data.  
+* Vice versa, use the epigenetic data to explain gene expression differences detected in a single-cell RNA-seq experiment.  
+* Predict TFs that could mediate cell-specific gene expression.    
 
 > #### Global learning objectives  
-1. Understand how data are generated from a <span style="color: red;">genomics/ATAC-/RNA-ChIP-sequencing experiment</span>.   
-2. Know how to display and browse through genomics data in the UCSC Genome Browser and formulate some basic hypotheses using this tool.  
-3. Tell apart different genomics datasets based on their pattern int he UCSC Genome Browser.  
+  1. Understand how we come from a ChIP-sequencing experiment to useful data. 
+  2. Know how to display and browse through genomics data in the UCSC Genome Browser and formulate some basic hypotheses using this tool.  
+  3. Tell apart different genomics datasets based on their pattern int he UCSC Genome Browser.   
 4. Quantify and visually summarize the genomic distribution of histone ChIP-seq peaks and signal strength in r.   
 5. Statistically test for enrichment of histone marks in functional genomic elements.  
 6. Summarize genome-wide ChIP-seq signal in a heatmap and use this heatmap to identify identify functional genomic elements and predict gene activity.  
@@ -150,11 +152,6 @@ Luckily, we have another option to plot the occurrences and co-occurrences of hi
 
 In week 1 we looked at the localization of histone marks (peaks) and we quantified this in week 2 of peaks. You might have seen that some histone marks show partial overlap with other marks. This week we will summarize and, importantly, compare histone markings genome-wide *among different cell types*   
 <br>
-
-Move to specific learning objectives:
-10. Assign enhancers to a gene (and be able to reflect on pros and cons of this procedure).  
-11. Summarize the overlap between marker genes from cell clusters detected in single-cell RNA-seq experiment to differences between cells at the epigenetic level.  
-12. Optionally, Identify DNA motifs and TFs that are active in the differentially marked regions.  
 
 > #### Learning Objectives    
 1. Be able to visually summarize read coverage (*signal*) of different histone marks around genomic landmarks (coverage plot around TSS or over gene body).   
