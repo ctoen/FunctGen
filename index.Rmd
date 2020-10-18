@@ -24,7 +24,7 @@ This is the computer practical for the [Functional Genomics 1](https://www.ru.nl
 
 The **purpose** of this practical is to teach you common bio-informatics analyses performed to analyse epigenomics data. You may already be familiar with the output of these analyses from scientific publications or lectures. We will focus on **how to detect, quantify, annotate and visualise epigenetic marks**. At the end of our analyses, we will also relate epigenetic markings to gene activity as well as candidate TFs that might establish them.  
 
-For this practical, we will use **data for white blood cells** from the [the ENCODE project](https://www.encodeproject.org/), namely: monocytes, T cells, B cells and natural killer cells. ENCODE is an ongoing, collaborative research effort to build a comprehensive list of functional elements in the human genome. We have chosen these datasets because they are well-documenten and easy to find through the ENCODE data portal, and not because we want to teach you the hematopoietic system.  
+For this practical, we will use **data for white blood cells** from the [the BLUEPRINT project](http://dcc.blueprint-epigenome.eu/#/home), namely: monocytes, T cells, B cells and natural killer cells. BLUEPRINT is a *FP7 project aiming to produce a blueprint of haemopoetic epigenomes.* We have chosen these datasets because they are well-documenten and easy to find through the BLUEPRINT data portal, and not because we want to teach you the hematopoietic system.  
 <br>  
 
 > ### Research goals  
@@ -151,7 +151,7 @@ Besides white blood cells we also find **red blood cells** and **platelets** in 
 ## References  
 ### Resources used to compile this practical/tutorial  
 - [seq2science](https://vanheeringen-lab.github.io/seq2science/index.html)
-- ENCODE project  
+- BLUEPRINT project  
 - ...  
 <br> 
 
