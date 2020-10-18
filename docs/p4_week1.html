@@ -15,7 +15,7 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -23,25 +23,99 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
 
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
-}
-</script>
-
 
 
 <style type="text/css">
@@ -355,19 +429,7 @@ div.tocify {
   <a href="p2_learningObjectives.html">Learning Objectives</a>
 </li>
 <li>
-  <a href="p3_script.html">Script</a>
-</li>
-<li>
-  <a href="p4_week1.html">W1</a>
-</li>
-<li>
-  <a href="p5_week2.html">W2</a>
-</li>
-<li>
-  <a href="p6_intro_bioconductor.html">DC Bioconductor</a>
-</li>
-<li>
-  <a href="p7_links.html">Links</a>
+  <a href="p4_week1.html">UCSC Genome Browser</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -391,201 +453,484 @@ div.tocify {
   display: none;
 }
 
-#getting-started img {
-  margin-right: 10px;
-}
-
 </style>
-<div class="row" style="padding-top: 20px;">
-
-
-<div id="week-1" class="section level1">
-<h1>Week 1:</h1>
-<ul>
-<li>Raw ChIP-seq data processing and visualize epigenomics data in the UCSC Genome browser.<br />
-</li>
-<li>Global learning objectives #1-3.<br />
-<br></li>
-</ul>
+<div id="learning-objectives" class="section level2">
+<h2>1.1 Learning Objectives</h2>
+<p><br> <strong>This week we will look at how sequencing data is processed and familiarize ourselves with the UCSC Genome browser to visually inspect (epi-)genomics data.</strong><br />
+<br></p>
 <blockquote>
-<h4 id="learning-objectives">Learning Objectives</h4>
 <ol style="list-style-type: decimal">
-<li>Know how raw reads (from eg ChIP-seq) are processed to obtain trustworthy data.<br />
+<li>Know how raw reads (from eg ChIP-seq) are processed to obtain trustworthy and interpretable data.<br />
 </li>
 <li>Understand how to move (“<em>browse</em>”) through the UCSC genome browser and know how to go to regions and genes of interest.<br />
 </li>
-<li>Recognize the following elements/regions in the UCSC genome browser: chromosome, centromere, telomere, gene, exon, intron, utr, promoter, enhancer/repressor.<br />
+<li>Recognize the following elements/regions in the UCSC genome browser: chromosome, <span style="color: red;">centromere, telomere</span>, gene, exon, intron, utr, promoter, enhancer/repressor.<br />
 </li>
 <li>Tell apart UCSC genome browser tracks of H3K27ac, H3K27me3, H3K36me3, H3K4me1, H3K4me3 and H3K9me3 histone ChIP-seq and ATAC-seq signal (and ChIP-seq input) based on their coverage profile and their location with respect to genes and other annotated genomic/chromosomal elements.</li>
-<li>Can interpret - and thus understand - ChIP- and ATAC-seq signal in the UCSC genome browser.</li>
+<li>Can interpret - and thus understand - ChIP- and ATAC-seq signal in the UCSC genome browser.<br />
+</li>
 </ol>
+<ul>
+<li>These refer to Global learning objectives #1-3.</li>
+</ul>
 </blockquote>
 <p><br></p>
-<div id="genomics-methods-recapdiscussion" class="section level3">
-<h3>1.1 Genomics methods recap/discussion</h3>
-<p><strong>Discuss</strong>:</p>
+<hr />
+<p><br></p>
+</div>
+<div id="genomic-methods-recap" class="section level2">
+<h2>1.2 Genomic methods recap</h2>
 <ul>
 <li>What is ChIP-seq? What is ATAC-seq? Presentation with ChIP-seq steps? Refer to book?<br />
+</li>
+<li>What is a library and what do we mean with ‘library preparation’? What’s the use of adapters?<br />
 </li>
 <li>Sequencing samples. What happens in sequencer? What is the output?<br />
 </li>
 <li>Brief genomics recap/pre-quiz?</li>
 </ul>
 <p><br></p>
+<hr />
+<p><br></p>
 </div>
-<div id="from-raw-data-to-science" class="section level3">
-<h3>1.2 From raw data to science</h3>
-<p><img src="images/week1/whatbioinformaticiancsdo.png" /> <br></p>
-<p><a href="https://vanheeringen-lab.github.io/seq2science/index.html">Seq2science</a><br />
-<em>fastq file, bam processing, bigwig, peak calling, count table</em></p>
-<p><strong>Discuss</strong>:</p>
+<div id="from-raw-data-to-science" class="section level2">
+<h2>1.3 From raw data to science</h2>
+<center>
+<img src="images/week1/2_seq2science/whatbioinformaticiancsdo.png" style="width:60.0%" />
+</center>
+<p><br><br></p>
+<div id="sequencer-output" class="section level3">
+<h3>1.3.1 Sequencer output</h3>
+The sequencer determines the sequence of the DNA molecules in your sample and produces massive amounts of data. The read sequences are written to <code>.fastq</code> files that show 4 lines per DNA sequence. This is an example with 2 DNA sequences (8 lines):<br />
+<br>
+</center>
+<img src="images/week1/2_seq2science/fastq_example3.png" /><br />
+
+</center>
+<p><br></p>
+<p>The lines in the fastq file tell us:</p>
 <ul>
-<li>Modify Siebrens pptx.<br />
+<li>line 1: start with ‘@’-sign and contains sequence ID given by the sequencer including sequencer id, flowcell id and sample barcode<br />
 </li>
-<li>Fastq files, what does the data look like?<br />
+<li>line 2: the read DNA sequence in ACGTN-alphabet<br />
 </li>
-<li>4 lines of code with:
-<ol style="list-style-type: decimal">
-<li>unique_read_name (starts with @-sign)<br />
+<li>line 3: ‘+’ (originally reported the sequence ID again)<br />
 </li>
-<li>nucleotide sequence<br />
-</li>
-<li><code>+</code> (previously, this line showed the same as line 1)<br />
-</li>
-<li>nucleotide quality score (Phred encoded)</li>
-</ol></li>
-<li>The neccessary processing steps:
-<ol style="list-style-type: lower-alpha">
-<li>Read quality and adapter trimming<br />
-</li>
-<li>Aligning fastq reads to reference genome<br />
-</li>
-<li>BAM sieving.<br />
-</li>
-</ol>
-<ul>
-<li>What considerations are important? PCR duplicates, multi mapping reaads<br />
-</li>
-<li>Discuss use of input sample<br />
-</li>
+<li>line 4: quality score for each nucleotide</li>
 </ul>
-<ol start="4" style="list-style-type: lower-alpha">
-<li>Peak calling. Use of control samples. Narrow and Broad peaks?<br />
-</li>
-<li>Count table: What does it look?<br />
+<p>Fastq files have the extension .fq or .fastq, or are compressed as .fq.gz or .fastq.gz</p>
+<p><br></p>
+<hr />
+<p><br></p>
+</div>
+<div id="post-sequencing-processing-steps" class="section level3">
+<h3>1.3.2 Post-sequencing processing steps</h3>
+<p>The chemical reaction and quality of the optical measurement that occur in the sequencer are not perfect and depend among others on the nucleotide composition of all samples, the length of the DNA molecules and the concentration of the samples. The Phred quality score (line 3) represents the nucleotide identification accuracy or base call accuray. This encoded score can be used downstream to remove nucleotides or complete reads with low quality.</p>
+<p>In adddition, you want to know where the DNA molecule came from in your reference genome and, depending on your experimental set-up, likely want to identify regions with more reads than expected if reads were randomly distributed over the genome. E.g. identify peaks of TF binding, peaks of histone variants, expressed genes, or interacting chromosomal regions.</p>
+<p>It is the bio-informaticians (or your) task to:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Remove adapters and poor-quality nucleotides</strong>: The adapters should be removed, as they were not part of the original sample and low-quality nt’s are more likely to be wrong and we therefore remove those as well. Can result in that reads are removed completely because of their overall low quality or short length.<br />
 <br></li>
-</ol></li>
+<li><strong>Align reads to the genome</strong>: Identify the likely location in the reference genome where the original DNA molecule came from. Since the first publication of the human genome, successive versions (also called <em>assemblies</em> or <em>builds</em>) have been released with improvements in quality thanks to technological advancements as well as improvements in the representativeness of the genome with respect to the genetic diversity found in the human population, including historically underrepresentated populations. We will work with the (one of the) latests relasese referred to as GRCh38 (Genome Reference Consortium Human Build 38). <span style="color: red;">A large number of alignment softwares are available… </span>. The alignment procedure often adds flags for reads aligned to a unique region or to multiple regions which you can use to filter.<br />
+<br></li>
+<li><strong>Filter artefacts and reads aligning to multiple regions</strong>: Remove duplicated regions, remove PCR artefacts and optionally remove reads aligning non-uniquely.<br />
+<br></li>
+<li><strong>Visualize the data</strong>: .Bigwig files are created which can be uploaded to the UCSC Genome Browser which we will look at in more detail today as well.<br />
+<br></li>
+<li><strong>Call peaks</strong>: Computationally identify regions with significantly higher number of reads than expected. There are different tools out there to perform this task MACS2 is one of them and was used to call peaks in the datasets that we will be using. Peak calling is a mathemetical/statistical procedure that depends on set thresholds (p-value, false-discovery rate), the control sample used. It is always wise to visually inspect the resulting peaks in the UCSC genome browser.<br />
+<br></li>
+<li><strong>Read counting</strong>: Count reads that fall within genes, other genomic elements or peak regions. These countings and the actual peak locations are used for eg. differential gene expression in differentiated vs undifferentiated. Or control versus treatment. A well-known, widely used tool for this purpose is DESeq2.<br />
+<br></li>
+<li>Optionally <strong>DNaseI footprinting</strong>, <strong>variant calling</strong>, <strong>novel gene identification</strong>: Depending on your experimental set up … For DNaseI-seq, we can identify small depleted regions within peaks that correspond to the nucleotides that interact with the TF. This interaction protects these nucleotides from DNaseI attacks. These so-called footprints can be used to identify TF motifs and predict the likely TF bound. Although this sounds simple, and for a stable binding factor like CTCF it may be the case, it is not always that simple in reality.<br />
+<br></li>
+</ol>
+<p><span style="color: red;">Visual depiction of the different steps – or make assignment to put them in the right order with quality checks in between?</span> E.g.:<br />
+<img src="images/week1/2_seq2science/seq2science_siebrenspptx.png" style="width:70.0%" /> <br />
+<a href="https://vanheeringen-lab.github.io/seq2science/content/workflows.html">Sec2science / adapted from Siebrens presentation / shows RNA-seq pipeline</a><br />
+<br></p>
+<p><img src="images/week1/2_seq2science/encode_chipseq_readmapping.png" style="width:50.0%" /> <br />
+<a href="https://www.encodeproject.org/pipelines/ENCPL220NBH/">The ENCODE Project, ChIP-seq read mapping</a><br />
+<br></p>
+<p><img src="images/week1/2_seq2science/Furay_2012_naturereviews_fig2_chipseqanalysis.png" style="width:70.0%" /> <br />
+<a href="https://pubmed.ncbi.nlm.nih.gov/23090257/">Furay, 2012, Nat Rev</a></p>
+<p><br></p>
+<hr />
+<p><br></p>
+</div>
+<div id="quality-evaluation" class="section level3">
+<h3>1.3.3 Quality evaluation</h3>
+<p>It is important to check the quality of your data along the way:</p>
+<ul>
+<li>FASTQC (Qualty Check) software visaully summarizes the attached Phred quality scores.<br />
+</li>
+<li>Evaluate the data yourself in the genome browser and compare replicate samples, samples of different histone marks, compare to a reference dataset or compare to the input material.<br />
+</li>
+<li>Clustering of samples; can reveal label swaps, failed experiments or contaminations.</li>
 </ul>
+<p><br></p>
+<hr />
+<p><br></p>
+</div>
+<div id="output-files-bigwigs-peaks-counts" class="section level3">
+<h3><span style="color: red;">1.3.4 Output files: bigwigs, peaks &amp; counts</span></h3>
+<p><span style="color: red;">Showing examples of how the output may look like or do this along the way in the numbered list above?</p>
+<p><br></p>
+<hr />
+<p><br></p>
+</div>
+<div id="alternatively-use-fair-data" class="section level3">
+<h3><span style="color: red;">1.3.5 Alternatively: use FAIR data</h3>
+<p><span style="color: red;">Several reserach consortia provide easy access and clear description of their data through data portals. These files can be downloaded or immediately uploaded to the UCSC Genome browser using the URL.<br />
+</span></p>
+<p><br></p>
+<hr />
+<p><br></p>
+</div>
+<div id="exercises" class="section level3">
+<h3>1.3.6 Exercises</h3>
+<p>Ideas:</p>
+<ul>
+<li>Put steps in right order with options for quality checks.<br />
+</li>
+<li>Recognize a type of file?<br />
+</li>
+<li>Evaluate good/bad fastqc output?</li>
+</ul>
+<p><br></p>
+<hr />
+<p><br></p>
+</div>
+</div>
+<div id="data-visualization-ucsc-genome-browser" class="section level2">
+<h2>1.4 Data visualization: UCSC Genome Browser</h2>
 <blockquote>
-<h4 id="working-questions">Working questions</h4>
+<p>UCSC GB sessions for making these exercises:</p>
+<ul>
+<li>Default should look like (if it doesn’t, I need to adjust the text: <a href="http://genome-euro.ucsc.edu/s/ctoenhake/hg38_default" class="uri">http://genome-euro.ucsc.edu/s/ctoenhake/hg38_default</a><br />
+</li>
+<li>Genes and ruler only: <a href="http://genome-euro.ucsc.edu/s/ctoenhake/hg38_genesonly" class="uri">http://genome-euro.ucsc.edu/s/ctoenhake/hg38_genesonly</a><br />
+</li>
+<li>Monocyte data (blueprint in colors, encode in black): <a href="http://genome-euro.ucsc.edu/s/ctoenhake/hg38_monos_blueprint_and_encode" class="uri">http://genome-euro.ucsc.edu/s/ctoenhake/hg38_monos_blueprint_and_encode</a></li>
+</ul>
+</blockquote>
+<div id="ucsc-genome-browser-intro" class="section level4">
+<h4>1.4.1 UCSC Genome browser intro</h4>
+<p>Genome browsers are great tools to display genomics data. You can walk, or <em>browse</em>, through all chromosomes, look at the location of genes, extract DNA sequences, examine pre-loaded data or upload your own data.<br />
+<br></p>
+<blockquote>
+<p>If you didn’t do so already, watch the following youtube video’s to get familiar with the UCSC Genome Browser:</p>
 <ol style="list-style-type: decimal">
-<li>What histone mark marks the promoter of TNF gene? Let’s go and look for it ;).<br />
+<li><a href="https://www.youtube.com/watch?v=DNXI-M9oQl8">UCSC Genome Browser Basics</a><br />
 </li>
-<li>Now your turn, what about CD3 is this gene active in monocytes? (no it is not, also logical, it is part of the T cel receptor present on the cellsurface of T cells)<br />
+<li><a href="https://www.youtube.com/watch?v=1Kpy5G_MSG8">UCSC Genome Browser Tracks</a></li>
+</ol>
+<p><strong>Optionally</strong>, finding the coordinates of a sequence using blat, handy for eg. primers, and using the Table Browser to, among others, obtain DNA, RNA or protein sequences:</p>
+<ol start="3" style="list-style-type: decimal">
+<li><a href="https://www.youtube.com/watch?v=E6DDNGDXH8A">UCSC Genome Browser Blat</a><br />
 </li>
-<li>Look at the enhancer located 20kb upstream of …. [gene] …. Based on the histone and chromatin accessibility data would you say this enhancer is active or inactive? What histone marks do you find around it?<br />
-</li>
-<li><em>Summarizing</em> What marks are generally found at promoters, at gene bodies, active enhancers and at repressed domains?</li>
+<li><a href="https://www.youtube.com/watch?v=Ueqt5Wgre9c&amp;ab">UCSC Genome Browser Table Browser</a></li>
 </ol>
 </blockquote>
-<p><strong>Week 1</strong>:</p>
-<div id="the-ucsc-genome-browser" class="section level4">
-<h4>The UCSC Genome Browser</h4>
-<p>The UCSC Genome Browser is a visualization tool that uses the genomic coordinate system as reference<br />
-- coordinates are written as chromosome:start-end.<br />
-- 1-based<br />
-- is a visualization tool of genomics data - hosted by the …<br />
-- can be accessed via:<br />
-- Depending on the reference genome of your interest, many or few additional tracks containing information are present</p>
-<p>A <strong>track</strong> is a graph within the genome browser, spanning the complete genome</p>
-<p><strong>Browsing</strong> theUCSC genome browser, scanning through the genome, can be done in various ways:<br />
-- On top use the <code>&lt;&lt;&lt;</code>, <code>&lt;&lt;</code>, <code>&lt;</code> and <code>&gt;</code>, <code>&gt;&gt;</code> and <code>&gt;&gt;&gt;</code> buttons - Using a</p>
+<p><br></p>
+</div>
+<div id="go-to-the-ucsc-genome-browser" class="section level3">
+<h3>1.4.2 Go to the UCSC Genome browser</h3>
+<p><strong>First, we will familiarize ourselves with browsing through the UCSC genome browser and the recognition of genes, their coding elements and their orientation.</strong></p>
+<p><span style="color: royalblue; font-family: Arial; font-size:18px;">ACTION: Go to the UCSC Genome Browser, <a href="genome.ucsc.edu">genome.ucsc.edu</a>.</span><br />
+<br> The starting page has been updated since the video was made but still holds the same blue bar at the top with <strong>Genomes</strong>, <strong>Tools</strong>, etc:</p>
+<p><img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_genome_browser_fig1_startpage_topmenubar.png" style="width:100.0%" /> <br />
+<br></p>
+<blockquote>
+<p><em>Tip</em>: In case you have been here before, it is wise to reset user settings such that you don’t continue with settings from a previous project. For this, hover over “Genome Browser” and select “Reser All User Settings”.</p>
+</blockquote>
+<p><span style="color: royalblue; font-family: Arial; font-size:18px;">ACTION: Go to the “Genomes” tab.</span><br />
+<br></p>
+<blockquote>
+<p><em>Tip</em>: A pop-up may appear now or one stap later, redirected you to the official European mirror site if those servers are geographically closer, that’s ok.</p>
 <ul>
-<li><strong>Focus</strong>: how we make data out of a ChIP-seq experiment, how to use the UCSC Genome Browser, and familiarize ourselves with the UCSC Genome Browser visualization.<br />
+<li>European mirror site, servers are located at the Universität Bielefeld Center for Biotechnology in Bielefeld, Germany: <a href="http://genome-euro.ucsc.edu">http://genome-euro.ucsc.edu</a><br />
 </li>
-<li><em>seq2science, UCSC Genome browser</em><br />
+<li>Asian mirror site, located at the RIKEN Yokohama Campus, Japan: <a href="http://genome-asia.ucsc.edu">http://genome-asia.ucsc.edu</a></li>
+</ul>
+</blockquote>
+<p><br> On the left you can browse and select the genome you are interested in (not a drop-down menu anymore as in the video). By default, the human genome is selected.<br />
+<br> <span style="color: royalblue; font-family: Arial; font-size:18px;">ACTION: Make sure that “Dec. 2013 (GRCh38/hg38)” is selected under “Human Assembly”.</span><br />
+<br> We can go to a position of our choice by entering the gene or chromosomal coordinates under <strong>Position/Search Term</strong> or immediatly go to the ‘Current position’ by clicking on <strong>GO</strong> on the right-hand side or <strong>Genome Browser</strong> in the menu bar on top.<br />
+<br> <span style="color: royalblue; font-family: Arial; font-size:18px;">ACTION: Go to <em>ACTB</em> gene (gene coding for non-muscular actin).</span></p>
+<blockquote>
+<p><em>Hint</em> your browser should be showing chr7:5,527,148-5,530,601.</p>
+</blockquote>
+<p>As discussed in the video, in the top of the window we have navigation and zoom bottons. Right below we can read the chromosomal coordinates of and length of the gene and below that we see a miniature chromosome with the characteristic gray/black pattern from karyotyping. A red |-sign gives us an idea of our current positioning in the chromosome.</p>
+<p><img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_locationinchromosome.png" style="width:100.0%" /> <br />
+<br></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r exercise"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">     <span class="kw">question</span>(<span class="st">&quot;Question 1: What chromosome is ACTB located on? And is it located on the short or long arm of this chromosome?&quot;</span>,</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">              <span class="kw">answer</span>(<span class="st">&quot;chr7, short arm&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">              <span class="kw">answer</span>(<span class="st">&quot;chr7, long arm&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Where do you see the red |-sign in the miniature chromosome on top?&quot;</span>),</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">              <span class="kw">answer</span>(<span class="st">&quot;chr17, short arm&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Review the UCSC Genome Browser Basics video, or find *chr#* in the browser window&quot;</span>),</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">              <span class="kw">answer</span>(<span class="st">&quot;chr17, long arm&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Review the UCSC Genome Browser Basics video, or find *chr#* in the browser window&quot;</span>),</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">              <span class="dt">allow_retry =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">              )</a></code></pre></div>
+<p><br> The data window displays various <em>tracks</em> or <em>track sets</em>. Tracks runs the complete length of the chromosome. Data includes most often:</p>
+<ul>
+<li><strong>positional information</strong>, of a gene, SNP or cir-regulatory element for example, often displayed as horizontal bars the thickness and color of which can hold additional information depending on the type of track.<br />
 </li>
-<li>Global objectives #1-3:
+<li><strong>signal information</strong>, of gene expression, detection of histone marks or degree of conservation. Often displayed as histograms but can also be summarized in vertical bars with different levels of color intensity encoding the signal intensity.</li>
+</ul>
+<p><br> <span style="color: red;"> Question asign what the name of the track with gene locations is or poicutre with c/b/c/d/e/f etc. instead of track name and asking which one diplays the chromosomal coordinates and which one the gene locations?</span></p>
+<p><br> The method of display and whether individual tracks are displayed can be changed by:</p>
 <ol style="list-style-type: decimal">
-<li>Understand how we come from a ChIP-sequencing experiment to useful data.</li>
-<li>Know how to display and browse through genomics data in the UCSC Genome Browser and formulate some basic hypotheses using this tool.<br />
+<li>Right-mouse click on the grey, vertical bar at the left-most area of the Genome Browser shows you options <code>hide</code>, <code>dense</code>, <code>squish</code>, <code>pack</code> and <code>full</code>. Additional adjustments to the track can be made by selecting <code>Configure [track name]</code> in this menu.<br />
 </li>
-<li>Tell apart different genomics datasets based on their pattern int he UCSC Genome Browser.<br />
-</li>
-</ol></li>
-<li><p>Perform in H5P?<br />
-<br></p></li>
-<li>Discuss ChIP-seq in presentation<br />
-</li>
-<li>Follow seq2science workflow<br />
-</li>
-<li><p>Peakcalling: note that it is not black/white, not absolute, thresholds are set. NOT into technicalities and mathematics of read piling/peak models, narrow-wide peaks<br />
-<br></p></li>
+<li>Scroll to the area below the data window, here you see a possibly overwhelming list of potential tracks, most are <code>hidden</code>. Using the pull down menu you can change display settings of multiple tracks at once. Always make sure to hit the <code>refresh</code> button below the browser window to ensure all changes are performed.</li>
+</ol>
+<p><br> <span style="color: royalblue; font-family: Arial; font-size:18px;">ACTION: (1) hide all tracks and tracksets except for “ruler”, “GENCODE v32”. And (2) for “GENCODE v32” via <code>Configure GENCODE v32</code>, make sure the option <code>splice variants</code> is unchecked.</span><br />
+<br> Your GB session should look like this: <img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_genetracksonly.png" style="width:100.0%" /> <br />
+<br> We see the complete <em>ACTB</em> gene with exons as horizontally stretched rectangles and introns as horintal lines. The rectangles with largest height within exons are the <em>coding</em> exons, the other regions are the 5- and 3UTR. The arrowheads inside the introns indicate the coding diretion.<br />
+<br> More information about <em>ACTB</em> can be obtained by clicking on the gene in the browser:<br />
+<img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_geneinformation.png" style="width:100.0%" /> <br />
+<br></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r exercise"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">question</span>(<span class="st">&quot;Question 2: How many exons does the *ACTB* gene have?&quot;</span>,</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">          <span class="kw">answer</span>(<span class="st">&quot;5&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;exons are displayed as thicker lines in the gene, introns as lines with arrows in them.&quot;</span>),</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">          <span class="kw">answer</span>(<span class="st">&quot;6&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">          <span class="kw">answer</span>(<span class="st">&quot;7&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;one exon can contain coding and non-coding (UTR) elements&quot;</span> ),</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">          <span class="kw">answer</span>(<span class="st">&quot;8&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;one exon can contain coding and non-coding (UTR) elements&quot;</span>),</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">           <span class="dt">allow_retry =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><br><br />
+<img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_question_TSSquestion.png" alt="ACT locus for question 3" style="width:100.0%" /> <br />
+<br></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r exercise"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">question</span>(<span class="st">&quot;Question 3: Which letter points to the start codon?&quot;</span>,</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">              <span class="kw">answer</span>(<span class="st">&quot;A&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Look at the directionality of the gene, this is more likely the end of the gene.&quot;</span>),</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">              <span class="kw">answer</span>(<span class="st">&quot;B&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Look at the directionality of the gene, this is more likely the end of the coding exons.&quot;</span>),</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">              <span class="kw">answer</span>(<span class="st">&quot;C&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">              <span class="kw">answer</span>(<span class="st">&quot;D&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Be aware of the small 5UTR in this exon!&quot;</span>),</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">              <span class="kw">answer</span>(<span class="st">&quot;E&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;This is more likely the TSS.&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r exercise"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">     <span class="kw">question</span>(<span class="st">&quot;Question 4: What statement about the *ACTB* gene is correct? (Select ALL that apply.) &quot;</span>,</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">              <span class="kw">answer</span>(<span class="st">&quot;ACTB gene is encoded on the minus-strand&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">              <span class="kw">answer</span>(<span class="st">&quot;The TTS of ACTB gene has a higher coordinate than its TSS&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Look at the direction of arrows in the introns.&quot;</span>),</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">              <span class="kw">answer</span>(<span class="st">&quot;The coding size of this gene is appr 2kb&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">              <span class="kw">answer</span>(<span class="st">&quot;If we want to look at the promoter of this gene, we have to move slightly to the left&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">              <span class="kw">answer</span>(<span class="st">&quot;This gene is not transcribed&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;you don&#39;t have data to say this is correct&quot;</span>)</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">)</a></code></pre></div>
+<p><br></p>
+<p><span style="color: royalblue; font-family: Arial; font-size:18px;">ACTION: Go to the gene <em>SPI1</em>, this gene encodes the myeloid and B-cell–specific transcription factor PU.1 <a href="https://doi.org/10.1182/blood-2012-01-402453">Pham 2012 Blood</a>.</span></p>
+<ul>
+<li>Copy this sentence and fill in the blanks with numbers in the code:</li>
 </ul>
+<p>SPI1 gene is located on chr […]. It spans […] bp and is encoded on the [plus/minus] strand. It has […] exons and […] introns. It is an [zinc finger domain TF/ETS-domain transcription factor]. The first downstream protein-gene is [MYBPC3/SLC39A13]</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Fill in the blanks with numbers in the code:  </span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">SPI1 gene is located on chr ...  . It spans ... bp and is encoded on the [plus<span class="op">/</span>minus] strand. It has ... coding exons and ... introns. It is an [zinc finger domain TF<span class="op">/</span>ETS<span class="op">-</span>domain transcription factor]. The first downstream protein<span class="op">-</span>gene is [MYBPC3<span class="op">/</span>SLC39A13].  </a></code></pre></div>
+<p><strong>Wonderfull, you are now able to recognize genes, their location within the chromosome, and thei coding elements as well as their orientation. These are important reference points used when we evaluate the quality of epigenomics data and to formulate hypothesis that we can test later on.</strong></p>
+<hr />
+<p><br></p>
 </div>
-</div>
-<div id="look-at-the-read-density-yourself-in-a-genome-browser" class="section level3">
-<h3>1.3 Look at the read density yourself in a genome browser</h3>
-<p><em>Functional elements, ChIP signals, peaks, hypotheses about enrichment.</em></p>
-<p><strong>Discuss</strong>:</p>
+<div id="viewing-encodeblueprint-data" class="section level3">
+<h3>1.4.3 Viewing ENCODE/BLUEPRINT data</h3>
+<p><strong>Yes! Finally time for some real data! You will inspect the characteristic histone PTM and DNaseI-seq combinations, what their location in relation to genes and - ultimately - what this may say about the gene’s transcription state.</strong><br />
+<br> To upload the data we have already put them together in a so-called track hub, hosted by our own server. We can add this to our browser session by going to the tab “My Data” in the top menu and select “Track Hubs”. In the “My hubs” tab you can paste a URL that directs to the data you want to upload.<br />
+<br> <img src="images/week1/3c_ucsc_gb_looking_at_data/ucsc_gb_encode_fig1_gototrackhub.png" alt="Go to Track Hubs" style="width:100.0%" /> <br />
+<img src="images/week1/3c_ucsc_gb_looking_at_data/ucsc_gb_encode_fig2_trackhub.png" alt="My Hubs window" style="width:100.0%" /> <br />
+<br> <span style="color: royalblue; font-family: Arial; font-size:18px;">ACTION: Use the description above and the trackhub URL […..] to upload the required data.</span><br />
+<br><br />
+Note that, after adding the trackhub, an additional section is added below the browser, specfic to the tracks in this trackhub.<br />
+<br> This trackhub contains histone PTM ChIP-seq and ATAC-seq data of monocytes, to be precise of <strong>CD14+, CD16- classical monocytes</strong>. <br></p>
+<blockquote>
+<p><em>Background</em>: CD14 and CD16 are cell surface markers of the <strong>CD (Cluster of Differentiation) gene family</strong> which we will come across more often during this practical. These cell surface molecules and their differential expression are used for immunophenotyping of cells. CD molecules can function as receptors, ligands and, for example, activate signalling cascades, mediate cell adhesion, cell migration, regulate gene expression etc. <a href="https://www.genenames.org/data/genegroup/#!/group/471">HUGO, genegoups, CD</a></p>
+</blockquote>
+<p><br> We have the following datasets:</p>
 <ul>
-<li>UCSC Genome Browser
+<li><p>ChIP-seq data histone PTMs:</p>
 <ul>
-<li>how to switch off tracks. Hide all tracks except for <strong>GENCODE v32</strong> and <strong>Base Position</strong>.<br />
+<li>H3K9me3 (gray)<br />
 </li>
-<li>how to browse trough the data<br />
+<li>H3K27me3 (gray)<br />
 </li>
-<li>how to upload custom data. Upload the <span style="color: red;">processed chip-seq data of histone marks in <strong>heatlhy cells</strong>, input and a <strong>failed track</strong> as .bigwig file. Or use trackhub?</span>
-<ul>
-<li>bigwig is a special data format to display dense, continuous data as graphs. The main advantage of this format is that only the portions of the files needed to dispaly a particular regoin are transferred making it considerably faster in a genome browsing tool <a href="https://genome.ucsc.edu/goldenPath/help/bigWig.html">ref</a>.<br />
+<li>H3K4me3(red)<br />
 </li>
+<li>H3K4me1(yellow)<br />
+</li>
+<li>H3K27me1 (peach)<br />
+</li>
+<li>H3K36me3 (green)</li>
 </ul></li>
-<li>As functional genomic elements: <span style="color: red;">upload custom track or use <strong>ENCODE cCREs</strong> track?</span></li>
+<li>DNaseI-seq data in the blue track.<br />
+</li>
+<li>polyA-selected, stranded RNA-seq data, again in green.<br />
+</li>
+<li><p>Input ChIP-seq in black.</p></li>
+</ul>
+<blockquote>
+<p><em>Tip</em>: What we haven’t discussed so far is the y-axis at the left side of the track with <em>signal</em> information such as the ones just uploaded. Using this y-axis we can evaluate signal intensities. The height is currently set to 30, 50 or 100 <span style="color: red;">Reads/million?</span>. You can change it by right-mouse click on the trakname, select the <code>Configure [trackname]</code> option and change the <code>min</code> and <code>max</code> of the <strong>Vertical viewing range</strong>. Hit <code>APPLY</code> afterwards.</p>
+</blockquote>
+<p><br> <span style="color: royalblue; font-family: Arial; font-size:18px;">ACTION: Go back to the ACTB locus and zoom out 3x to see the regions surrounding the <em>ACTB</em> locus.</span></p>
+<blockquote>
+<p><em>Hint</em>: your browser should be showing chr7:5,523,694-5,534,055 approximately, a few bases more or less is not a problem.</p>
+</blockquote>
+<p>Use the RNA-seq data…</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">     <span class="kw">question</span>(<span class="st">&quot;Question 5: would you conclude that the ACTB gene is active?&quot;</span>,</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">              <span class="kw">answer</span>(<span class="st">&quot;Yes&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">              <span class="kw">answer</span>(<span class="st">&quot;No&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Look at the signal in RNA-seq data&quot;</span>)</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">     )</a></code></pre></div>
+<p><br> <span style="color: red;">Explain peaks?…. again?</span><br />
+<br></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">question</span>(<span class="st">&quot;Question 6: Which of the following regions points to a DNaseI-seq peak?)&quot;</span>,</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">  <span class="kw">answer</span>(<span class="st">&quot;chr7:5530101-5530501&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Nice try but this region has a H3K27ac ChIP-seq peak.&quot;</span>),</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">  <span class="kw">answer</span>(<span class="st">&quot;chr7:5530501-5530800&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>, <span class="dt">message =</span> <span class="st">&quot;Yes. Note that this DNaseI-seq peak is located at the *ACTB* TSS/promoter&quot;</span>),</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">  <span class="kw">answer</span>(<span class="st">&quot;chr7:5532001-5532500&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Try again. If anything, you may be looking at the H3K4me1 signal.&quot;</span>, ),</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">  <span class="kw">answer</span>(<span class="st">&quot;None of the these&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Try again. Please look again&quot;</span>),</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">  <span class="dt">allow_retry =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">     )</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r exercise"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">question</span>(<span class="st">&quot;Question 7: Which histone marks, are found at the ACTB promoter? (Select ALL that apply)&quot;</span>,</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">  <span class="kw">answer</span>(<span class="st">&quot;H3K9me3&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>),</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">  <span class="kw">answer</span>(<span class="st">&quot;H3K27me3&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>),</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">  <span class="kw">answer</span>(<span class="st">&quot;H3K4me3&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>, <span class="dt">message =</span> <span class="st">&quot;correct&quot;</span>),</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">  <span class="kw">answer</span>(<span class="st">&quot;H3K4me1&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>),</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">  <span class="kw">answer</span>(<span class="st">&quot;H3K27ac&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>, <span class="dt">message =</span> <span class="st">&quot;correct&quot;</span>),</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">  <span class="kw">answer</span>(<span class="st">&quot;H3K36me3&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>),</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">  <span class="kw">answer</span>(<span class="st">&quot;none&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r exercise"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">question</span>(<span class="st">&quot;Question 8: The DNaseI-seq peak located *upstream* of the *ACTB* could be an enhancer. What observation gives additional supports for this statement?&quot;</span>,</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">  <span class="kw">answer</span>(<span class="st">&quot;Absence of H3K27me3&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Absence of H3K27me3 does not necessarily mean the region is an enhancer.&quot;</span>),</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">  <span class="kw">answer</span>(<span class="st">&quot;Absence of H3K4me1 signal in this region.&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>),</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">  <span class="kw">answer</span>(<span class="st">&quot;Presence of H3K4me1 signal in this region.&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span> ),</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">  <span class="kw">answer</span>(<span class="st">&quot;The location of this DNaseI-seq peak suggests it is as it lies outside a gene&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>))</a></code></pre></div>
+<p><br></p>
+<p><span style="color: royalblue; font-family: Arial; font-size:18px;">ACTION:Zoom out 3x and then another 10x.</span></p>
+<blockquote>
+<p><em>Hint</em>: your browser should be showing chr7:5,373,445-5,684,304 approximately, a few bases more or less is not a problem.</p>
+</blockquote>
+<p>A prominant H3K27me3 peaks comes in the viewing window now. It covers the promoter of <em>FSCN1</em> gene.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">question</span>(<span class="st">&quot;Question 9: What additional histone marks, mark this region? (Select ALL that apply.&quot;</span>,</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">         <span class="kw">answer</span>(<span class="st">&quot;H3K9me3&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>),</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">         <span class="kw">answer</span>(<span class="st">&quot;H3K27me3&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>),</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">         <span class="kw">answer</span>(<span class="st">&quot;H3K4me3&quot;</span>, <span class="dt">correct =</span> T, <span class="dt">message =</span> <span class="st">&quot;correct&quot;</span>),</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">         <span class="kw">answer</span>(<span class="st">&quot;H3K4me1&quot;</span>, <span class="dt">correct =</span> T, <span class="dt">message =</span> <span class="st">&quot;correct&quot;</span>),</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">         <span class="kw">answer</span>(<span class="st">&quot;H3K27ac&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>),</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">         <span class="kw">answer</span>(<span class="st">&quot;H3K36me3&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>),</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">         <span class="kw">answer</span>(<span class="st">&quot;none&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>)</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">         )</a></code></pre></div>
+<p><br> This is an exmaple of a bivalent promoter.<br />
+<br></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">question</span>(<span class="st">&quot;Question 10: Based on the histone marks, would you predict that *FSCN1* is transcribed?&quot;</span>,</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">         <span class="kw">answer</span>(<span class="st">&quot;Yes&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>),</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">         <span class="kw">answer</span>(<span class="st">&quot;No&quot;</span>, <span class="dt">correct =</span> T)</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">         )</a></code></pre></div>
+<p><br> So far we have seen active promoters and bivalent promoters. Let’s look at a silenced gene.</p>
+<p><span style="color: royalblue; font-family: Arial; font-size:18px;">ACTION: Go to the ACTA1 gene, <a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=ACTA1&amp;keywords=acta1">encoding muscular actin</a>. Zoom out 10x.</span></p>
+<blockquote>
+<p><em>Hint</em> you should be at ± chr1:229,418,420-229,446,919.</p>
+</blockquote>
+<p><br></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">question</span>(<span class="st">&quot;Question 11: Which histone mark mediates repression of *ACTA1* in these cells?&quot;</span>,</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">         <span class="kw">answer</span>(<span class="st">&quot;H3K9me3&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>),</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">         <span class="kw">answer</span>(<span class="st">&quot;H3K27me3&quot;</span>, <span class="dt">correct =</span> T),</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">         <span class="kw">answer</span>(<span class="st">&quot;H3K4me3&quot;</span>,  <span class="dt">message =</span> <span class="st">&quot;correct&quot;</span>),</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">         <span class="kw">answer</span>(<span class="st">&quot;H3K4me1&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;correct&quot;</span>),</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">         <span class="kw">answer</span>(<span class="st">&quot;H3K27ac&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>),</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">         <span class="kw">answer</span>(<span class="st">&quot;H3K36me3&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>),</a>
+<a class="sourceLine" id="cb12-8" data-line-number="8">         <span class="kw">answer</span>(<span class="st">&quot;none&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>),</a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">         <span class="dt">allow_retry =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10">         )</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">question</span>(<span class="st">&quot;Question 12: Which other observations support that this gene is not active? (Select ALL that apply)&quot;</span>,</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">         <span class="kw">answer</span>(<span class="st">&quot;Absence of H3K36me3 marking covering the gene body.&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;H3K36me3 is indeed lacking but other observations are correct as well.&quot;</span>),</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">         <span class="kw">answer</span>(<span class="st">&quot;Absence of signal in RNA-seq signal&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;RNA-seq is indeed lacking but other observations are correct as well.&quot;</span>),</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">         <span class="kw">answer</span>(<span class="st">&quot;Absence of H3K4me3 signal at the *ACTA1* promoter&quot;</span>,  <span class="dt">message =</span> <span class="st">&quot;correct&quot;</span>),</a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">         <span class="kw">answer</span>(<span class="st">&quot;All the above&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>, <span class="dt">message =</span> <span class="st">&quot;Indeed, the absence of signals in RNA-seq, H3K36me3 *and* H3K4me3 all support that this gene is not expressed. Observe that the H3K27me3 signal covers a relatively broad domain.&quot;</span> ),</a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">         <span class="dt">allow_retry =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb13-7" data-line-number="7">         )</a></code></pre></div>
+<p><br></p>
+<p><span style="color: royalblue; font-family: Arial; font-size:18px;">ACTION: Go to the MYOD1 gene, <a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=MYOD1&amp;keywords=myod1">encoding TF for muscle cell differentiation</a>. Zoom out 3x.</span></p>
+<blockquote>
+<p><em>Hint</em> you should be at ± chr11:17,717,005-17,724,702.</p>
+</blockquote>
+<p><br></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">question</span>(<span class="st">&quot;Question 12: Which mark is likely mediates the silencing of *MYOD1* in these cells?&quot;</span>,</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">         <span class="kw">answer</span>(<span class="st">&quot;H3K9me3&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>),</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">         <span class="kw">answer</span>(<span class="st">&quot;H3K27me3&quot;</span>, <span class="dt">correct =</span> T),</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">         <span class="kw">answer</span>(<span class="st">&quot;H3K4me3&quot;</span>,  <span class="dt">message =</span> <span class="st">&quot;correct&quot;</span>),</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5">         <span class="kw">answer</span>(<span class="st">&quot;H3K4me1&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;correct&quot;</span>),</a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">         <span class="kw">answer</span>(<span class="st">&quot;H3K27ac&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>),</a>
+<a class="sourceLine" id="cb14-7" data-line-number="7">         <span class="kw">answer</span>(<span class="st">&quot;H3K36me3&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>),</a>
+<a class="sourceLine" id="cb14-8" data-line-number="8">         <span class="kw">answer</span>(<span class="st">&quot;none&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;wrong&quot;</span>),</a>
+<a class="sourceLine" id="cb14-9" data-line-number="9">         <span class="dt">allow_retry =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10">         )</a></code></pre></div>
+<p><br></p>
+<p>Other H3K37me3 marked promoters:</p>
+<ul>
+<li>SLCA4A6 gene, encoding a serotonin (neurotransmitter) … bivalent? Has bit of H3K4me1.<br />
+</li>
+<li>OCE2 (eye color) - also bivalent?<br />
+</li>
+<li>NEUROG2 (tf for noerogenesis) - also bivalent?<br />
+</li>
+<li>OLIG2 (tf neuro/oligodendrite genesis) - also bivalent?</li>
+</ul>
+<p>Also look at a broad H3K9me3 domain? I see some but those have H3K4me3 and H3K36me3 marking as well….</p>
+<ul>
+<li><p>Background:</p>
+<ul>
+<li>H3K9me3 spans braod domains of 10ks of bp’s. Constitutive hetrochromatin and less often facultative heterochromatin.<br />
+</li>
+<li>H3K9me3 and H3K27me3 are mechanistically differen.<br />
+</li>
+<li>Not part of bivalent promoters?<br />
+</li>
+<li>reviews: <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4698194/">Becker 2017 Trens in Genetics</a>; <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6803365/">Ninova 2019 Genomics</a></li>
+</ul></li>
+<li><p>Example locations:</p>
+<ul>
+<li>chr19 broad domains with KRAB-ZNF encoding genes. Spanning 0.4-1Mb chr19:28,115,617-58,617,616 <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1665633/">Vogel 2005 Genome Res</a><br />
+</li>
+<li>H3K9me3 is associated with non-coding regions in the genome as well as repressing lineage-inappropriate genes <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4698194/">Becker 2015 Trends in Genetics</a></li>
 </ul></li>
 </ul>
-<p>Now browse through the data.</p>
-<p>Peaks are …</p>
-<p><strong>Assignments/Questions</strong>:</p>
-<ol style="list-style-type: decimal">
-<li>One of the tracks represents the input, which one and why?<br />
-</li>
-<li>What kind of data is visualized in track “A”?<br />
-</li>
-<li>Browse to these four regions, which one of them would you consider to display a peak (tip, make screenshot and paste in a temporary pptx. to compare the images)<br />
-</li>
-<li>Of the marks visualized which ones are associated with gene expression and which ones with repression (from lecture)?</li>
-</ol>
-<p><strong>Discuss</strong>:<br />
-Peak calling software is used to identify peaks within a certain range of confidence. <span style="color: red;">and using replictes?</span></p>
-<p><strong>Assignments/Questions</strong>:</p>
-<ol start="5" style="list-style-type: decimal">
-<li>Which of the following influences the number of peaks identified:<br />
-</li>
-</ol>
-<ul>
-<li>P-value threshold, the lower the fewer peaks<br />
-</li>
-<li>read depth<br />
-</li>
-<li>Q-value/false-discovery rate, the<br />
-</li>
-<li>the type of control sample …<br />
-</li>
-<li></li>
-</ul>
-<p><strong>Discuss</strong>:</p>
-<p>Upload peaks called by the software.</p>
-<p><strong>Assignments/Questions</strong>:</p>
-<ol start="6" style="list-style-type: decimal">
-<li>What are different functional genomic elements you have heard of during lectures?</li>
-</ol>
-<p>The custom track contains five tracks, numbered 1-5, representing different genomic elements.</p>
-<ol start="7" style="list-style-type: decimal">
-<li>Which # represent what kind of element?<br />
-</li>
-<li>Browse through the browser, estimate for each histone mark whether it is enriched in one or several of the genomic elements (1-5)</li>
-</ol>
 </div>
+<div id="recognizing-blinded-genomics-data" class="section level3">
+<h3>1.4.4 Recognizing blinded genomics data</h3>
+<p>So far you have browsed through ChIP-, DNaseI- and RNA-seq data. These tracks had the correct track names attached to them.<br />
+<br> <span style="color: royalblue; font-family: Arial; font-size:18px;">ACTION: upload the following track hub [URL].</span><br />
+<br> Our collegue accidently let the tubes fall before the tubes were properly labelled (always label your tubes first before adding your sample!). We know ChIPs were performed for H3K9me3, H3K27me3, H3K4me3, H3K36me3, H3K4me1 and H3K27ac. Which track (labelled a-f) is which?</p>
+</div>
+</div>
+<div id="old-questions-ignore-please" class="section level2">
+<h2>Old questions, ignore please!!</h2>
+<p>Let’s go to the <strong>CD14</strong> gene.<br />
+<img src="images/week1/ucsc_genome_browser_fig2_genomespage_cd14.png" style="width:80.0%" /> <br />
+<br></p>
+<p><br></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r exercise"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">     <span class="kw">question</span>(<span class="st">&quot;What chromosome is CD14 located on? And is it located on the short or long arm of this chromosome?&quot;</span>,</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">              <span class="kw">answer</span>(<span class="st">&quot;chr5, short arm&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Where do you see the red |-sign in the miniature chromosome on top?&quot;</span>),</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">              <span class="kw">answer</span>(<span class="st">&quot;chr5, long arm&quot;</span>, <span class="dt">correct =</span><span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">              <span class="kw">answer</span>(<span class="st">&quot;chr14, short arm&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Review the UCSC Genome Browser Basics video&quot;</span>),</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">              <span class="kw">answer</span>(<span class="st">&quot;chr14, long arm&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Review the UCSC Genome Browser Basics video, or find *chr#* in the browser&quot;</span>),</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">              <span class="dt">allow_retry =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">              )</a></code></pre></div>
+<p><br></p>
+<p>Focus on the **GENCODE v32 gene annotation. This image is a screenshot of the CD14 gene:<br />
+<img src="images/week1/ucsc_genome_browser_fig3_q2_V3.png" /> <br />
+<br></p>
+<p>Focus on the top gene, <span style="color: red;"> Or remove isoforms?</span></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r exercise"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">quiz</span>(<span class="dt">caption =</span> <span class="st">&quot;Quiz 2&quot;</span>, </a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">     <span class="kw">question</span>(<span class="st">&quot;What element(s) become, once this gene is transcribed, part of the mature CD14 mRNA?&quot;</span>,</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">              <span class="kw">answer</span>(<span class="st">&quot;only D&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;utrs are also part of the mRNA&quot;</span>),</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4">              <span class="kw">answer</span>(<span class="st">&quot;D, H and I&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;most mRNAs have an UTR on both the 3&#39; and 5&#39; side&quot;</span>),</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">              <span class="kw">answer</span>(<span class="st">&quot;C, D and G&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;almost correct, but focus on the top gene&quot;</span> ),</a>
+<a class="sourceLine" id="cb16-6" data-line-number="6">              <span class="kw">answer</span>(<span class="st">&quot;C, D, H and I&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb16-7" data-line-number="7">              <span class="dt">allow_retry =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb16-8" data-line-number="8">     </a>
+<a class="sourceLine" id="cb16-9" data-line-number="9">     <span class="kw">question</span>(<span class="st">&quot;Which arrows point to the start- and stopcodon?&quot;</span>,</a>
+<a class="sourceLine" id="cb16-10" data-line-number="10">              <span class="kw">answer</span>(<span class="st">&quot;A points to the startcodon, J to the stopcodon&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;the startcodon is most often not the same as the TSS&quot;</span>),</a>
+<a class="sourceLine" id="cb16-11" data-line-number="11">              <span class="kw">answer</span>(<span class="st">&quot;B points to the startcodon, F to the stopcodon&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;look at the directionality of the gene&quot;</span>),</a>
+<a class="sourceLine" id="cb16-12" data-line-number="12">              <span class="kw">answer</span>(<span class="st">&quot;F points to the startcodon, B to the stopcodon&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb16-13" data-line-number="13">              <span class="kw">answer</span>(<span class="st">&quot;J points to the startcodon, A to the stopcodon&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;the startcodon is most often not the same as the TSS&quot;</span>),</a>
+<a class="sourceLine" id="cb16-14" data-line-number="14">              <span class="dt">allow_retry =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb16-15" data-line-number="15">     </a>
+<a class="sourceLine" id="cb16-16" data-line-number="16">     <span class="kw">question</span>(<span class="st">&quot;What statement about the configuration of CD14 gene is correct? (Select ALL that apply) &quot;</span>,</a>
+<a class="sourceLine" id="cb16-17" data-line-number="17">              <span class="kw">answer</span>(<span class="st">&quot;CD14 gene is encoded on the minus-strand&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb16-18" data-line-number="18">              <span class="kw">answer</span>(<span class="st">&quot;The TTS of CD14 gene has a higher coordinate than its TSS&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;look at the direction of arrows in the introns&quot;</span>),</a>
+<a class="sourceLine" id="cb16-19" data-line-number="19">              <span class="kw">answer</span>(<span class="st">&quot;Transcription of this gene can result in at least two different mRNA isoforms that differ in their 3UTR length&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;look at the directionality of the gene&quot;</span>),</a>
+<a class="sourceLine" id="cb16-20" data-line-number="20">              <span class="kw">answer</span>(<span class="st">&quot;If we want to look at the promoter of this gene, we have to move slightly to the left&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb16-21" data-line-number="21">              <span class="kw">answer</span>(<span class="st">&quot;This gene is not transcribed&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;you don&#39;t have data to say this is correct&quot;</span>)</a>
+<a class="sourceLine" id="cb16-22" data-line-number="22">              )</a>
+<a class="sourceLine" id="cb16-23" data-line-number="23">)</a></code></pre></div>
 </div>
 
 
@@ -634,7 +979,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1,h2,h3,h4",
+      selectors: "h1,h2,h3",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {

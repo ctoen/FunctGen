@@ -16,13 +16,10 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -253,69 +250,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
 
 </head>
 
@@ -323,16 +257,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -356,19 +280,7 @@ div.tocify {
   <a href="p2_learningObjectives.html">Learning Objectives</a>
 </li>
 <li>
-  <a href="p3_script.html">Script</a>
-</li>
-<li>
-  <a href="p4_week1.html">W1</a>
-</li>
-<li>
-  <a href="p5_week2.html">W2</a>
-</li>
-<li>
-  <a href="p6_intro_bioconductor.html">DC Bioconductor</a>
-</li>
-<li>
-  <a href="p7_links.html">Links</a>
+  <a href="p4_week1.html">UCSC Genome Browser</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -408,11 +320,8 @@ div.tocify {
 <ul>
 <li>Question-/Problem-driven learning –&gt; formulate candidate questions per week.<br />
 </li>
-<li>Example dataset: monocytes, CD4 and CD8 T cells, B cells and NK cells).
-<ul>
-<li>NK cells can become a question for the heatmap, what they most look like? Or is this going too much in biology already?<br />
+<li>Example dataset: monocytes, CD4 and CD8 T cells, B cells and NK cells.<br />
 </li>
-</ul></li>
 <li>Start in UCSC genome browser with one cell type (eg monocytes). Introduce same data of other cell types in week 2.<br />
 <br></li>
 </ul>
@@ -436,20 +345,19 @@ div.tocify {
 <blockquote>
 <h4 id="research-goals-of-this-practical">‘Research goals’ of this practical</h4>
 <ul>
-<li>Identify and visualize which epigenetic marks or combinations thereof are found at distinct genomic elements.<br />
+<li>Use combinations of histone PTM data and chromatin accessibility to identify functional genomic elements (eg promoter, enhancers etc) and predict gene activity (active or repressed) using heatmaps.<br />
 </li>
-<li>Vice versa, use the combination of histone PTM data and chromatin accessibility to identify functional genomic elements (eg promoter, enhancers etc) and predict gene activity (active or repressed).<br />
+<li>Check obove mentioned predictions on gene activity in single-cell RNA-seq data.<br />
 </li>
-<li>Check predictions on gene activity in single-cell RNA-seq data <span style="color: red;">(or with bulk RNA-seq?)</span>.<br />
+<li>Vice versa, use the epigenetic data to explain gene expression differences detected in a single-cell RNA-seq experiment.<br />
 </li>
-<li>Use the epigenetic data to explain gene expression differences detected in a single-cell RNA-seq experiment.</li>
+<li>Predict TFs that could mediate cell-specific gene expression.</li>
 </ul>
 </blockquote>
 <blockquote>
 <h4 id="global-learning-objectives">Global learning objectives</h4>
 <ol style="list-style-type: decimal">
-<li>Understand how data are generated from a <span style="color: red;">genomics/ATAC-/RNA-ChIP-sequencing experiment</span>.<br />
-</li>
+<li>Understand how we come from a ChIP-sequencing experiment to useful data.</li>
 <li>Know how to display and browse through genomics data in the UCSC Genome Browser and formulate some basic hypotheses using this tool.<br />
 </li>
 <li>Tell apart different genomics datasets based on their pattern int he UCSC Genome Browser.<br />
@@ -585,9 +493,6 @@ div.tocify {
 </ul>
 <p>In week 1 we looked at the localization of histone marks (peaks) and we quantified this in week 2 of peaks. You might have seen that some histone marks show partial overlap with other marks. This week we will summarize and, importantly, compare histone markings genome-wide <em>among different cell types</em><br />
 <br></p>
-<p>Move to specific learning objectives: 10. Assign enhancers to a gene (and be able to reflect on pros and cons of this procedure).<br />
-11. Summarize the overlap between marker genes from cell clusters detected in single-cell RNA-seq experiment to differences between cells at the epigenetic level.<br />
-12. Optionally, Identify DNA motifs and TFs that are active in the differentially marked regions.</p>
 <blockquote>
 <h4 id="learning-objectives-1">Learning Objectives</h4>
 <ol style="list-style-type: decimal">
@@ -666,8 +571,6 @@ div.tocify {
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -700,32 +603,6 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3,h4",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

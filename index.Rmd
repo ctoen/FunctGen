@@ -4,6 +4,7 @@ author: "Written by: Klaas, Simon, Siebren, Christa ... "
 output: 
   html_document:
     toc: true
+    theme: cerulean
     css: custom.css
     toc_float: true
     collapsed: false

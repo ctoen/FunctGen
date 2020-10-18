@@ -2,18 +2,15 @@
 title: "FG1 - Learning Objectives"
 author: 'Written by: Klaas, Simon, Siebren, Christa ... '
 output:
-  pdf_document:
-    toc: yes
-    toc_depth: '4'
   html_document:
     collapsed: no
+    theme: cerulean
     css: custom.css
     number_sections: no
     toc: no
     toc_depth: 4
     toc_float: yes
-editor_options:
-  chunk_output_type: inline
+
 ---
 <style type="text/css">
 .title {
