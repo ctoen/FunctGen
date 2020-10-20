@@ -1,3 +1,6 @@
+## To view the page, visit: 
+https://ctoen.github.io/FunctGen/  
+It should be set to public.  
 
 I used the crumplab LabJournalWebsite as the template for this project/repository: [https://crumplab.github.io/LabJournalWebsite/index.html](https://crumplab.github.io/LabJournalWebsite/index.html)
   
