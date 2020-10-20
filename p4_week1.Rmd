@@ -184,7 +184,7 @@ Ideas:
 
 ## 1.4 Data visualization: UCSC Genome Browser     
 
-> UCSC GB sessions for making these exercises:  
+> UCSC GB sessions for making these exercises (tipo: use right-mouse click to not loose this tutorial page):  
 >  
 - Default should look like (if it doesn't, I need to adjust the text): http://genome-euro.ucsc.edu/s/ctoenhake/hg38_default    
 - Genes and ruler only: http://genome-euro.ucsc.edu/s/ctoenhake/hg38_genesonly   
@@ -577,7 +577,9 @@ So far you have browsed through ChIP-, DNaseI- and RNA-seq data. These tracks ha
 Our collegue accidently let the tubes fall before the tubes were properly labelled (always label your tubes first before adding your sample!). We know ChIPs were performed for H3K9me3, H3K27me3, H3K4me3, H3K36me3, H3K4me1 and H3K27ac. Which track (labelled a-f) is which?  
 
 ### 1.4.6 Summary  
-Hypothesis forming, where do marks occur?  
+To summarize, we have seen various marks, finishe the following statements based on your observations in the UCSC genome browser:  
+
+
 
 
 
