@@ -154,12 +154,3 @@ Besides white blood cells we also find **red blood cells** and **platelets** in 
 - BLUEPRINT project  
 - ...  
 <br> 
-
-## Old text  
-1. We will use the **UCSC Genome Browser** to visualize the data, look at the distribution of the signal, formulate hypothesis/-es and - roughly - evaluate the quality of the experiment (of note: obvously, this is not the only quality check).  
-
-2. Next, we will transform our observations into numbers and thus **quantify** the signal intensity and distribution of the epigenetic marks we are looking at.  
-    * For this purpose we will use packages from the [Bioconductor](http://bioconductor.org/) project, a extensive and cutting edge repository of R packages used for the analysis of high througput sequencing data.  
-    * We've limited these analyses to <span style="color: red;">chr21/protein coding genes/used random 5M reads instead of the original dataset (called *downsampling*)</span> to save running time on the server. More reads increases the power of the analyses and confidence of tests <span style="color: red;">but blabla</span>.  
-
-3. Combine data from different marks and cells and link differences and profiles to functional consequences with respect to gene expression. 
