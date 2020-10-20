@@ -25,7 +25,7 @@ editor_options:
 knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
 ```
 
-```{r fontcolorfunction}
+```{r fontcolorfunction, echo = F}
 colorize <- function(x, color) {
   if (knitr::is_latex_output()) {
     sprintf("\\textcolor{%s}{%s}", color, x)
@@ -111,14 +111,14 @@ It is the bio-informaticians (or your) task to:
 <br>
 4. **Visualize the data**: .Bigwig files are created which can be uploaded to the UCSC Genome Browser which we will look at in more detail today as well.  
 <br>
-5. **Call peaks**: Computationally identify regions with significantly higher number of reads than expected. There are different tools out there to perform this task MACS2 is one of them and was used to call peaks in the datasets that we will be using. Peak calling is a mathemetical/statistical procedure that depends on set thresholds (p-value, false-discovery rate), the control sample used. It is always wise to visually inspect the resulting peaks in the UCSC genome browser.  
+5. **Call peaks**: Computationally identify regions with significantly higher number of reads than expected. There are different tools out there to perform this task MACS2 is one of them and was used to call peaks in the datasets that we will be using. Peak calling is a mathemetical/statistical procedure and never black and white. It depends among others on thresholds used (p-value, false-discovery rate) abnd the control sample. And it is always wise to visually inspect the resulting peaks in the UCSC genome browser.  
 <br>
 6. **Read counting**: Count reads that fall within genes, other genomic elements or peak regions. These countings and the actual peak locations are used for eg. differential gene expression in differentiated vs undifferentiated. Or control versus treatment. A well-known, widely used tool for this purpose is DESeq2.  
 <br>
 7. Optionally **DNaseI footprinting**, **variant calling**, **novel gene identification**: Depending on your experimental set up ... For DNaseI-seq, we can identify small depleted regions within peaks that correspond to the nucleotides that interact with the TF. This interaction protects these nucleotides from DNaseI attacks. These so-called footprints can be used to identify TF motifs and predict the likely TF bound. Although this sounds simple, and for a stable binding factor like CTCF it may be the case, it is not always that simple in reality.    
 <br>
 
-<span style="color: red;"> Additional Ideas: </span>  
+<span style="color: red;"> Additional Ideas but I do not know whether we have time for them: </span>  
 
 
 - Mention specific softwares/tools?  
@@ -184,7 +184,7 @@ Ideas:
 
 ## 1.4 Data visualization: UCSC Genome Browser     
 
-> UCSC GB sessions for making these exercises (tipo: use right-mouse click to not loose this tutorial page):  
+> UCSC GB sessions for making these exercises (tip: use right-mouse click to not loose this tutorial page):  
 >  
 - Default should look like (if it doesn't, I need to adjust the text): http://genome-euro.ucsc.edu/s/ctoenhake/hg38_default    
 - Genes and ruler only: http://genome-euro.ucsc.edu/s/ctoenhake/hg38_genesonly   
@@ -205,7 +205,10 @@ Genome browsers are great tools to display genomics data. You can walk, or *brow
 3. [UCSC Genome Browser Blat](https://www.youtube.com/watch?v=E6DDNGDXH8A)   
 4. [UCSC Genome Browser Table Browser](https://www.youtube.com/watch?v=Ueqt5Wgre9c&ab)  
 
-<br>
+<br>  
+
+***  
+<br> 
 
 ### 1.4.2 Go to the UCSC Genome browser  
 **First, we will familiarize ourselves with browsing through the UCSC genome browser and the recognition of genes, their coding elements and their orientation.**  
@@ -245,9 +248,12 @@ We can go to a position of our choice by entering the gene or chromosomal coordi
 
 As discussed in the video, in the top of the window we have navigation and zoom bottons. Right below we can read the chromosomal coordinates of and length of the gene and below that we see a miniature chromosome with the characteristic gray/black pattern from karyotyping. A red |-sign gives us an idea of our current positioning in the chromosome.   
 <br>
+> UCSC GB session for making following exercises (tip: use right-mouse click to not loose this tutorial page): Default should look like (if it doesn't, I need to adjust the text): http://genome-euro.ucsc.edu/s/ctoenhake/hg38_default    
+
+<br>
 ![](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_locationinchromosome.png){width=100%}\     
 <br>
-```{r Q1_actin_location, eval = F, echo=T, class.source = "exercise"}
+```{r Q1_actin_location, eval = F, echo=T, exercise = T}
      question("Question 1: What chromosome is ACTB located on? And is it located on the short or long arm of this chromosome?",
               answer("chr7, short arm", correct = TRUE),
               answer("chr7, long arm", message = "Where do you see the red |-sign in the miniature chromosome on top?"),
@@ -263,7 +269,7 @@ The data window displays various *tracks* or *track sets*. Tracks runs the compl
 - **signal information**, of gene expression, detection of histone marks or degree of conservation. Often displayed as histograms but can also be summarized in vertical bars with different levels of color intensity encoding the signal intensity.   
 
 <br>
-<span style="color: red;"> Question asign what the name of the track with gene locations is or poicutre with c/b/c/d/e/f etc. instead of track name and asking which one diplays the chromosomal coordinates and which one the gene locations?</span> 
+<span style="color: red;"> Question asign what the name of the track with gene locations is or picutre with c/b/c/d/e/f etc. instead of track name and asking which one diplays the chromosomal coordinates and which one the gene locations?</span> 
 
 <br>
 The method of display and whether individual tracks are displayed can be changed by:  
@@ -281,10 +287,13 @@ Your GB session should look like this: ![](images/week1/3b_ucsc_gb_looking_at_ge
 <br>
 We see the complete *ACTB* gene with exons as horizontally stretched rectangles and introns as horintal lines with arrowheads in them  indicating the coding direction/strand. The exons have different heights. The highest regions correspond to  *coding* exons, the other regions are the 5- and 3UTR.  
 <br>
-More information about *ACTB* can be obtained by clicking on the gene in the browser:  
-![](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_geneinformation.png){width=100%}\    
+> UCSC GB sessions for making following exercises (tip: use right-mouse click to not loose this tutorial page): Genes and ruler only: http://genome-euro.ucsc.edu/s/ctoenhake/hg38_genesonly   
+
 <br>
-```{r Q2_ACTB_exons, eval = F, echo=T, class.source = "exercise"}
+More information about *ACTB* can be obtained by clicking on the gene in the browser:  
+![(Top part of the gene information page *ACTB*) ](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_geneinformation.png){width=100%}\    
+<br>
+```{r Q2_ACTB_exons, eval = F, echo=T, exercise = T}
 question("Question 2: How many exons does the *ACTB* gene have?",
           answer("5", message = "exons are displayed as thicker lines in the gene, introns as lines with arrows in them."),
           answer("6", correct = TRUE),
@@ -295,7 +304,7 @@ question("Question 2: How many exons does the *ACTB* gene have?",
 <br>  
 ![ACT locus for question 3](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_question_TSSquestion.png){width=100%}\        
 <br>     
-```{r Q3_ACTB_start, eval = F, echo=T, class.source = "exercise"}
+```{r Q3_ACTB_start, eval = F, echo=T, exercise = T}
 question("Question 3: Which letter points to the start codon?",
               answer("A", message = "Look at the directionality of the gene, this is more likely the end of the gene."),
               answer("B", message = "Look at the directionality of the gene, this is more likely the end of the coding exons."),
@@ -303,8 +312,8 @@ question("Question 3: Which letter points to the start codon?",
               answer("D", message = "Be aware of the small 5UTR in this exon!"),
               answer("E", message = "This is more likely the TSS."))
 ```
-
-```{r Q4_ACTB_statements, eval = F, echo=T, class.source = "exercise"}
+<br>
+```{r Q4_ACTB_statements, eval = F, echo=T, exercise = T}
      question("Question 4: What statement about the *ACTB* gene is correct? (Select ALL that apply.) ",
               answer("ACTB gene is encoded on the minus-strand", correct = TRUE),
               answer("The TTS of ACTB gene has a higher coordinate than its TSS", message = "Look at the direction of arrows in the introns."),
@@ -327,7 +336,7 @@ question("Question 3: Which letter points to the start codon?",
 
 SPI1 gene is located on chr [...]. It spans [...] bp and is encoded on the [plus/minus] strand. It has [...] exons and [...] introns. It is an [zinc finger domain TF/ETS-domain transcription factor]. The first downstream protein-gene is [MYBPC3/SLC39A13].
 
-```{r Q5_spti, exercise =T, eval = F, exercise.eval=FALSE}
+```{r Q5_spti, exercise =T, eval = F, exercise.eval=FALSE, exercise = T}
 # Fill in the blanks with numbers in the code:  
 SPI1 gene is located on chr ...  . It spans ... bp and is encoded on the [plus/minus] strand. It has ... coding exons and ... introns. It is an [zinc finger domain TF/ETS-domain transcription factor]. The first downstream protein-gene is [MYBPC3/SLC39A13].  
 ```
@@ -383,8 +392,11 @@ We have the following datasets:
 
 > *Hint*: your browser should be showing chr7:5,523,694-5,534,055 approximately, a few bases more or less is not a problem.   
 
+<br>
+> UCSC GB sessions for making the following exercises (tip: use right-mouse click to not loose this tutorial page):  Monocyte wiggle data (blueprint in colors, encode in black): http://genome-euro.ucsc.edu/s/ctoenhake/hg38_monos_blueprint_and_encode    
+
 Use the RNA-seq data...   
-```{r Q6_ACTB_expression, eval = F, echo=T, class = "bg-warning"}
+```{r Q6_ACTB_expression, eval = F, echo=T, exercise = T}
      question("Question 6: would you conclude that the ACTB gene is active?",
               answer("Yes", correct = TRUE),
               answer("No", message = "Look at the signal in RNA-seq data")
@@ -393,7 +405,7 @@ Use the RNA-seq data...
 <br>
 Within the Genomics tracks we can discriminate regions of high signal from the background. These are the peaks.  
 <br>
-```{r Q7_ACTB_DNaseIseq, eval = F, echo=T, class = "bg-warning"}
+```{r Q7_ACTB_DNaseIseq, eval = F, echo=T, exercise = T}
 question("Question 7: Which of the following regions points to a DNaseI-seq peak?)",
   answer("chr7:5530101-5530501", message = "Nice try but this region has a H3K27ac ChIP-seq peak."),
   answer("chr7:5530501-5530800", correct = TRUE, message = "Yes. Note that this DNaseI-seq peak is located at the *ACTB* TSS/promoter"),
@@ -403,7 +415,7 @@ question("Question 7: Which of the following regions points to a DNaseI-seq peak
      )
 ```
 
-```{r Q8_ACTB_histone_marks_one, eval = F, echo=T, class.source = "exercise"}
+```{r Q8_ACTB_histone_marks_one, eval = F, echo=T, exercise = T}
 question("Question 8: Which histone marks, are detected at the ACTB promoter? (Select ALL that apply)",
   answer("H3K9me3", message = "H3K9me3 is not detected here"),
   answer("H3K27me3", message = "H3K27me3 is not detected here"),
@@ -415,7 +427,11 @@ question("Question 8: Which histone marks, are detected at the ACTB promoter? (S
 ```
 
 <span style="color: red"> or is the promoter spanning 3kb and including the H3K4me1 peak? </span>  
-<br>
+
+<br>  
+
+***  
+<br> 
 
 ### 1.4.4 Peaks from peak calling software 
 ***It would be cumbersume if we would have to identify all peaks manually, not to mention a highly biased procedure. Luckily we have peak calling software to help us with that. In the following section we will use those results along with the tracks.***  
@@ -426,22 +442,16 @@ The peaks have been compiled in another trackhub: [URL].
 <br>
 *Called* peaks are represented as horizontal bars. 
 <br>
-```{r Q9_peak_calling, eval = F, echo=T, class.source = "exercise"}
-question("Question 9: What determines the width of the *called* peaks? (Select ALL that apply.)",
-         answer("the False Discovery Rate used with peak calling", correct =T ),
-         answer("The local read density"),
-         answer("The signal in the corresponding 'input' dataset at these regions"),
-         answer("The surrounding 'noise' signal"),
-         allow_retry =TRUE)
-```
-<br>
 <span style="color: orange; font-family: Arial; font-size:18px;">ACTION: Zoom out 3x and then another 10x.</span>     
 
 > *Hint*: your browser should be showing chr7:5,373,445-5,684,304 approximately, a few bases more or less is not a problem.   
 
 A prominant H3K27me3 peaks comes in the viewing window now. It covers the promoter of *FSCN1* gene. 
+
+> UCSC GB session for the following exercises (tip: use right-mouse click to not loose this tutorial page): Monocyte wiggle + peak data, blueprint only: http://genome-euro.ucsc.edu/s/ctoenhake/hg38_monos_blueprint_and_encode/hg38_monos_blueprint_wiglle_and_peaks  
+
 <br>
-```{r Q10_FSCN1_bivalent_promoter, eval = F, echo=T}
+```{r Q10_FSCN1_bivalent_promoter, eval = F, echo=T, exercise = T}
 question("Question 10: What additional histone marks, mark this region? (Select ALL that apply.)",
          answer("H3K9me3", message = "we don't see H3K9me3"),
          answer("H3K27me3", message = "we don't see H3K27me3"),
@@ -455,7 +465,7 @@ question("Question 10: What additional histone marks, mark this region? (Select 
 <br>
 This is an exmaple of a bivalent promoter.  
 <br>
-```{r Q11_FSCN1_expression, eval = F, echo=T}
+```{r Q11_FSCN1_expression, eval = F, echo=T, exercise = T}
 question("Question 11: Based on the histone marks, would you predict that *FSCN1* is transcribed?",
          answer("Yes"),
          answer("No", correct = T)
@@ -464,7 +474,7 @@ question("Question 11: Based on the histone marks, would you predict that *FSCN1
 <br>
 The region inbetween *ACTB* and *FSCN1* is maked as well. What marks do you observe and what functional elements could they point to?  
 <br>
-```{r Q12_ACTB_enhacer_one, eval = F, echo=T}
+```{r Q12_ACTB_enhacer_one, eval = F, echo=T, exercise = T}
 question("Question 12: epigenetic marks inbetween *ACTB* and *FSCN1* (Select ALL that apply.)",
   answer("H3K9me3", message = "H3K9me3 is not detected here"),
   answer("H3K27me3", message = "H3K27me3 is not detected here"),
@@ -475,7 +485,7 @@ question("Question 12: epigenetic marks inbetween *ACTB* and *FSCN1* (Select ALL
   answer("DNaseI-seq", correct = TRUE))
 ```
 <br>
-```{r Q13_ACTB_enhancer_two, eval = F, echo=T}
+```{r Q13_ACTB_enhancer_two, eval = F, echo=T, exercise = T}
 question("Question 13: What functional element do these marks most likely reflect?",
   answer("terminator"),
   answer("promoter"),
@@ -489,8 +499,8 @@ question("Question 13: What functional element do these marks most likely reflec
 <br>
 Another highly expressed gene in this cell type is *CD14*, remember it's protein was used to select these cells on. Answer the following question about this gene using the UCSC Genome Browser:   
 <br>
-```{r cd14_questions, eval = F, echo=T, class.source = "exercise"}
-question("Question 11: What statement about *CD14* is correct? (Select ALL that apply) ",
+```{r Q14_cd14_questions, eval = F, echo=T, exercise = T}
+question("Question 14: What statement about *CD14* is correct? (Select ALL that apply) ",
   answer("CD14 gene is encoded on the minus-strand", correct = TRUE),
   answer("The TTS of CD14 gene has a higher coordinate than its TSS"), 
   asnwer("*CD14* is encoded on the long arm of chr5", correct = TRUE)
@@ -504,8 +514,8 @@ Approximately 20 kb downstream of *CD14* is another enhancer. What histone marks
 
 > For testing purposes: the enhancer I'm pointing to is located at chr5:140611060-140612601  
 
-```{r cd14_enhancer, eval = F, echo=T, class.source = "exercise"}
-question("Question 12: Which marks mark the enhancer 20kb downstream of *CD14*?",
+```{r Q15_cd14_enhancer, eval = F, echo=T, exercise = T}
+question("Question 15: Which marks mark the enhancer 20kb downstream of *CD14*?",
   answer("H3K9me3", message = "not H3K9me3"),
   answer("H3K27me3", message = "not H3K27me3"),
   answer("H3K4me3", message = "not H3K4me3"),
@@ -521,7 +531,7 @@ So far we have seen active promoters, bivalent promoters and enhancers. A region
 
 > Tip: zoom out to chr5:139,000,001-143,000,000.  
 
-```{r cd14_near_silencing, eval = F, echo=T, class.source = "exercise"}
+```{r cd14_near_silencing, eval = F, echo=T, exercise = T}
 question("Question 13: The expression of what gene family is controlled by this marking?",
   answer("PCDHA gene family", correct = T, message = "PCDHA gene cluster encodes a family of cadherin-like cell surface proteins that are expressed in neurons and are present at synaptic junctions."),
 answer("A group of LINC RNAs"),
@@ -529,7 +539,7 @@ answer("A group of LINC RNAs"),
   allow_retry = T)
 ```
 <br>
-```{r cd14_near_silencing_two, eval = F, echo=T, class.source = "exercise"}
+```{r cd14_near_silencing_two, eval = F, echo=T, exercise = T}
 question("Question 14: What is the approximate size of the H3K9me3 silenced region? (*Tip2: click-and-drag in the brwoser to capture and thereby measure the width of the H3K9me3 domain)",
   answer("250kb"),
   answer("500kb"),
@@ -545,7 +555,7 @@ Silencing does not necessarily have to be mediated by H3K9me3.
 > *Hint*: you should be at ±  chr1:229,418,420-229,446,919.  
 
 <br>
-```{r ACTA1_marking_one, eval = F, echo=T}
+```{r ACTA1_marking_one, eval = F, echo=T, exercise = T}
 question("Question 13=5: Which histone mark mediates repression of *ACTA1* in these cells?",
          answer("H3K9me3", message = "wrong"),
          answer("H3K27me3", correct = T),
@@ -558,7 +568,7 @@ question("Question 13=5: Which histone mark mediates repression of *ACTA1* in th
          )
 ```
 <br>
-```{r ACTA1_marking_two, eval = F, echo=T}
+```{r ACTA1_marking_two, eval = F, echo=T, exercise = T}
 question("Question 16: Which other observations support that this gene is not active? (Select ALL that apply)",
          answer("Absence of H3K36me3 marking covering the gene body.", message = "H3K36me3 is indeed lacking but other observations are correct as well."),
          answer("Absence of signal in RNA-seq signal", message = "RNA-seq is indeed lacking but other observations are correct as well."),
@@ -567,7 +577,10 @@ question("Question 16: Which other observations support that this gene is not ac
          allow_retry = TRUE
          )
 ```
-<br>
+<br>  
+
+***  
+<br> 
 
 ### 1.4.5 Recognizing blinded genomics data  
 So far you have browsed through ChIP-, DNaseI- and RNA-seq data. These tracks had the correct track names attached to them.   
@@ -575,6 +588,11 @@ So far you have browsed through ChIP-, DNaseI- and RNA-seq data. These tracks ha
 <span style="color: orange; font-family: Arial; font-size:18px;">ACTION: upload the following track hub [URL].</span>   
 <br>
 Our collegue accidently let the tubes fall before the tubes were properly labelled (always label your tubes first before adding your sample!). We know ChIPs were performed for H3K9me3, H3K27me3, H3K4me3, H3K36me3, H3K4me1 and H3K27ac. Which track (labelled a-f) is which?  
+
+<br>  
+
+***  
+<br> 
 
 ### 1.4.6 Summary  
 To summarize, we have seen various marks, finishe the following statements based on your observations in the UCSC genome browser:  
@@ -585,7 +603,7 @@ To summarize, we have seen various marks, finishe the following statements based
 
 ## Old text, ignore please!!  
 
-```{r Q9_ACTB_histone_marks_two, eval = F, echo=T, class.source = "exercise"}
+```{r Q9_ACTB_histone_marks_two, eval = F, echo=T, exercise = T}
 question("Question 9: The DNaseI-seq peak located *upstream* of the *ACTB* could be an enhancer. What observation gives additional supports for this statement?",
   answer("enhancer RNA-seq signal", message = "There is no RNA-seq signal in this region so no."),
   answer("Absence of H3K4me1 signal in this region.", message = "It is not the *absence* of H3K4me1 which is associated with enhancers... "),
@@ -594,6 +612,14 @@ question("Question 9: The DNaseI-seq peak located *upstream* of the *ACTB* could
   allow_retry = TRUE)
 ```
 
+```{r Q9_tough_one_peak_calling, eval = F, echo=T, exercise = T}
+question("Question 9: What determines the width of the *called* peaks? (Select ALL that apply.)",
+         answer("the False Discovery Rate used with peak calling", correct =T ),
+         answer("The local read density"),
+         answer("The signal in the corresponding 'input' dataset at these regions"),
+         answer("The surrounding 'noise' signal"),
+         allow_retry =TRUE)
+```
 Other H3K37me3 marked promoters:  
 
 - MYOD1 gene, encoding tF for muscle cell differentiation   
