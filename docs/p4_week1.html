@@ -629,7 +629,8 @@ The sequencer determines the sequence of the DNA molecules in your sample and pr
 <p>Genome browsers are great tools to display genomics data. You can walk, or <em>browse</em>, through all chromosomes, look at the location of genes, extract DNA sequences, examine pre-loaded data or upload your own data. The latter comes in quite handy when you want to, for example, have a visual (personal) confirmation of data quality, evaluate the effect of different settings for processing the raw reads, and/or confirm as computationally detected associations.<br />
 <br></p>
 <blockquote>
-<p>If you didn’t do so already, watch the following youtube video’s to get familiar with the UCSC Genome Browser:</p>
+<p>If you didn’t do so already, watch the following youtube video’s to get familiar with the UCSC Genome Browser:<br />
+<em>Tip</em>: use right-mouse click to not be directed away from this tutorial</p>
 <ol style="list-style-type: decimal">
 <li><a href="https://www.youtube.com/watch?v=DNXI-M9oQl8">UCSC Genome Browser Basics</a><br />
 </li>
@@ -650,11 +651,8 @@ The sequencer determines the sequence of the DNA molecules in your sample and pr
 <h3>1.4.2 Go to the UCSC Genome browser</h3>
 <p><strong>First, we will familiarize ourselves with browsing through the UCSC genome browser and the recognition of genes, their coding elements and their orientation.</strong></p>
 <p><span style="color: orange; font-family: Arial; font-size:18px;">ACTION: Go to the <a href="genome.ucsc.edu">UCSC Genome Browser</a>.</span><br />
-<br> The starting page has been updated since the video was made but still holds the same blue bar at the top with <strong>Genomes</strong>, <strong>Tools</strong>, etc.:</p>
-<div class="figure">
-<img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_genome_browser_fig1_startpage_topmenubar.png" alt="Top menu bar in UCSC Genome Browser" style="width:100.0%" />
-<p class="caption">Top menu bar in UCSC Genome Browser</p>
-</div>
+<br> The starting page has been updated since the video was made but still holds the same blue bar at the top with <strong>Genomes</strong>, <strong>Tools</strong>, etc.:<br />
+<img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_genome_browser_fig1_startpage_topmenubar.png" style="width:100.0%" /></p>
 <p><br></p>
 <blockquote>
 <p><em>Tip</em>: In case you have been here before, it is wise to reset user settings such that you don’t continue with settings from a previous project. For this, hover over “Genome Browser” and select “Reser All User Settings”.</p>
@@ -672,52 +670,52 @@ The sequencer determines the sequence of the DNA molecules in your sample and pr
 <p><br> On the left you can browse and select the genome you are interested in (not a drop-down menu anymore as in the video). By default, the human genome is selected.<br />
 <br> <span style="color: orange; font-family: Arial; font-size:18px;">ACTION: Ensure that “Human” is selected in the <strong>REPRESENTED SPECIES</strong> tree (left) and “Dec. 2013 (GRCh38/hg38)” is selected under <strong>Human Assembly</strong> (right).</span><br />
 <br> We can go to a position of our choice by entering the gene or chromosomal coordinates under <strong>Position/Search Term</strong> or immediatly go to the ‘Current position’ by clicking on <code>GO</code> on the right-hand side or <strong>Genome Browser</strong> in the menu bar on top.<br />
-<br> <span style="color: orange; font-family: Arial; font-size:18px;">ACTION: Go to <em>ACTB</em> gene (gene coding for non-muscular actin part of cytoskeleton).</span></p>
-<div class="figure">
-<img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_question_startpage.png" alt="Genomes page, ready to go to ACTB gene in Human genome GRCh38" />
-<p class="caption">Genomes page, ready to go to <em>ACTB</em> gene in Human genome GRCh38</p>
-</div>
+<br> <span style="color: orange; font-family: Arial; font-size:18px;">ACTION: Go to <em>ACTB</em> gene (gene coding for non-muscular actin part of cytoskeleton).</span><br />
+<br> Genomes page, ready to go to <em>ACTB</em> gene in Human genome GRCh38:<br />
+<img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_question_startpage.png" /></p>
 <p><br></p>
 <blockquote>
 <p><em>Hint</em> your browser should be showing chr7:5,527,148-5,530,601.</p>
 </blockquote>
-<p>As discussed in the video, in the top of the window we have navigation and zoom bottons. Right below we can read the chromosomal coordinates of and length of the gene and below that we see a miniature chromosome with the characteristic gray/black pattern from karyotyping. A red |-sign gives us an idea of our current positioning in the chromosome.<br />
+<p>As discussed in the video, in the top of the window we have navigation and zoom bottons. Right below we can read the chromosomal coordinates and length of the regions we are currently viewing (in this case the complete <em>ACTB</em> gene). Below that we see a miniature chromosome with the characteristic gray/black pattern from karyotyping. A red <span style="color: red;">|</span>-sign gives us an idea of our current positioning in the chromosome.<br />
 <br></p>
 <blockquote>
-<p>`<span style="color: red;">UCSC GB session for the following exercises (tip: use right-mouse click to not loose this tutorial page): Default should look like (if it doesn’t, I need to adjust the text): <a href="http://genome-euro.ucsc.edu/s/ctoenhake/hg38_default" class="uri">http://genome-euro.ucsc.edu/s/ctoenhake/hg38_default</a></span></p>
+<p><span style="color: red;">UCSC GB session for the following exercises (tip: use right-mouse click to not loose this tutorial page): Default should look like (if it doesn’t, I need to adjust the text): <a href="http://genome-euro.ucsc.edu/s/ctoenhake/hg38_default" class="uri">http://genome-euro.ucsc.edu/s/ctoenhake/hg38_default</a></span></p>
 </blockquote>
-<p><br> <img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_locationinchromosome.png" style="width:100.0%" /> <br />
+<p><br> Figure for Question 1:<br />
+<img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_locationinchromosome.png" style="width:100.0%" /> <br />
 <br></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">     <span class="kw">question</span>(<span class="st">&quot;Question 1: What chromosome is ACTB located on? And is it located on the short or long arm of this chromosome?&quot;</span>,</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">              <span class="kw">answer</span>(<span class="st">&quot;chr7, short arm&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">              <span class="kw">answer</span>(<span class="st">&quot;chr7, long arm&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Where do you see the red |-sign in the miniature chromosome on top?&quot;</span>),</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">              <span class="kw">answer</span>(<span class="st">&quot;chr17, short arm&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Review the UCSC Genome Browser Basics video, or find *chr#* in the browser window&quot;</span>),</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">              <span class="kw">answer</span>(<span class="st">&quot;chr17, long arm&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Review the UCSC Genome Browser Basics video, or find *chr#* in the browser window&quot;</span>),</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">              <span class="dt">allow_retry =</span> <span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">              )</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">question</span>(<span class="st">&quot;Question 1: What chromosome is ACTB located on? And is it located on the short or long arm of this chromosome?&quot;</span>,</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw">answer</span>(<span class="st">&quot;chr7, short arm&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">answer</span>(<span class="st">&quot;chr7, long arm&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Where do you see the red |-sign in the miniature chromosome on top?&quot;</span>),</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">answer</span>(<span class="st">&quot;chr17, short arm&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Review the UCSC Genome Browser Basics video, or find *chr#* in the browser window&quot;</span>),</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">  <span class="kw">answer</span>(<span class="st">&quot;chr17, long arm&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Review the UCSC Genome Browser Basics video, or find *chr#* in the browser window&quot;</span>),</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">  <span class="dt">allow_retry =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><br> The data window displays various <em>tracks</em> or <em>track sets</em>. Tracks runs the complete length of the chromosome. Data includes most often:</p>
 <ul>
 <li><strong>positional information</strong>, of a gene, SNP or cir-regulatory element for example, often displayed as horizontal bars the thickness and color of which can hold additional information depending on the type of track.<br />
 </li>
 <li><strong>signal information</strong>, of gene expression, detection of histone marks or degree of conservation. Often displayed as histograms but can also be summarized in vertical bars with different levels of color intensity encoding the signal intensity.</li>
 </ul>
-<p><br> <span style="color: red;">Question asign what the name of the track with gene locations is or picutre with c/b/c/d/e/f etc. instead of track name and asking which one diplays the chromosomal coordinates and which one the gene locations?</span></p>
-<p><br> The method of display and whether individual tracks are displayed can be changed by:</p>
+<p><br> <span style="color: red;">Add a question like ‘what is the name of the track with gene locations?’ or a picutre with c/b/c/d/e/f etc. instead of track name and asking ‘which one diplays the chromosomal coordinates and which one the gene locations?’</span><br />
+<br> The method of display and whether individual tracks are displayed can be changed by:</p>
 <ol style="list-style-type: decimal">
 <li>Right-mouse click on the grey, vertical bar at the left-most area of the Genome Browser shows you options <code>hide</code>, <code>dense</code>, <code>squish</code>, <code>pack</code> and <code>full</code>. Additional adjustments to the track can be made by selecting <code>Configure [track name]</code> in this menu.<br />
 </li>
 <li>Scroll to the area below the data window, here you see a possibly overwhelming list of potential tracks, most are <code>hidden</code>. Using the pull down menu you can change display settings of multiple tracks at once. Always make sure to hit the <code>refresh</code> button below the browser window to ensure all changes are performed.</li>
 </ol>
 <p><br> <span style="color: orange; font-family: Arial; font-size:18px;">ACTION: hide all tracks and tracksets except for the ruler and GENCODE v32 tracks.</span><br />
-<br> <span style="color: orange; font-family: Arial; font-size:18px;">ACTION: for GENCODE v32, via <code>Configure GENCODE v32</code>, make sure the option “splice variants” is unchecked.</span></p>
-<p><br> Your GB session should look like this: <img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_genetracksonly.png" style="width:100.0%" /> <br />
+<br> <span style="color: orange; font-family: Arial; font-size:18px;">ACTION: for GENCODE v32, via <code>Configure GENCODE v32</code>, make sure the option “splice variants” is unchecked.</span><br />
+<br> Configuration window for GECODE v32 gene track with splice variants <em>unselected</em>:<br />
+<img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_unselectsplicevariants.png" /> <br />
+<br> Your GB session should look like this: <img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_genetracksonly.png" style="width:100.0%" /> <br />
 <br> We see the complete <em>ACTB</em> gene with exons as horizontally stretched rectangles and introns as horintal lines with arrowheads in them indicating the coding direction/strand. The exons have different heights. The highest regions correspond to <em>coding</em> exons, the other regions are the 5- and 3UTR.<br />
 <br></p>
 <blockquote>
 <p><span style="color: red;">UCSC GB session for the following exercises (tip: use right-mouse click to not loose this tutorial page): Genes and ruler only: <a href="http://genome-euro.ucsc.edu/s/ctoenhake/hg38_genesonly" class="uri">http://genome-euro.ucsc.edu/s/ctoenhake/hg38_genesonly</a></span></p>
 </blockquote>
-<p><br> More information about <em>ACTB</em> can be obtained by clicking on the gene in the browser:<br />
-<img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_geneinformation.png" alt="(Top part of the gene information page ACTB)" style="width:100.0%" /> <br />
+<p><br> More information about <em>ACTB</em> can be obtained by clicking on the gene in the browser. Doing that brings you to a gene page like:<br />
+<img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_geneinformation.png" style="width:100.0%" /> <br />
 <br></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">question</span>(<span class="st">&quot;Question 2: How many exons does the *ACTB* gene have?&quot;</span>,</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">          <span class="kw">answer</span>(<span class="st">&quot;5&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;exons are displayed as thicker lines in the gene, introns as lines with arrows in them.&quot;</span>),</a>
@@ -725,22 +723,23 @@ The sequencer determines the sequence of the DNA molecules in your sample and pr
 <a class="sourceLine" id="cb2-4" data-line-number="4">          <span class="kw">answer</span>(<span class="st">&quot;7&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;one exon can contain coding and non-coding (UTR) elements&quot;</span> ),</a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">          <span class="kw">answer</span>(<span class="st">&quot;8&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;one exon can contain coding and non-coding (UTR) elements&quot;</span>),</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6">           <span class="dt">allow_retry =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><br><br />
-<img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_question_TSSquestion.png" alt="ACT locus for question 3" style="width:100.0%" /> <br />
-<br></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">question</span>(<span class="st">&quot;Question 3: Which letter points to the start codon?&quot;</span>,</a>
+<p><br></p>
+<p>Figure for Question 3:<br />
+<img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_question_TSSquestion.png" /></p>
+<p><br></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">question</span>(<span class="st">&quot;Question 3: Which letter points to the TSS?&quot;</span>,</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">              <span class="kw">answer</span>(<span class="st">&quot;A&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Look at the directionality of the gene, this is more likely the end of the gene.&quot;</span>),</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">              <span class="kw">answer</span>(<span class="st">&quot;B&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Look at the directionality of the gene, this is more likely the end of the coding exons.&quot;</span>),</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">              <span class="kw">answer</span>(<span class="st">&quot;C&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">              <span class="kw">answer</span>(<span class="st">&quot;D&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Be aware of the small 5UTR in this exon!&quot;</span>),</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">              <span class="kw">answer</span>(<span class="st">&quot;E&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;This is more likely the TSS.&quot;</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb3-4" data-line-number="4">              <span class="kw">answer</span>(<span class="st">&quot;C&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;This is more likely the start codon&quot;</span>),</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">              <span class="kw">answer</span>(<span class="st">&quot;D&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;This is part of the UTR, close to the start codon, look more upstream.&quot;</span>),</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">              <span class="kw">answer</span>(<span class="st">&quot;E&quot;</span>, <span class="dt">correct =</span> T))</a></code></pre></div>
 <p><br></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">     <span class="kw">question</span>(<span class="st">&quot;Question 4: What statement about the *ACTB* gene is correct? (Select ALL that apply.) &quot;</span>,</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">              <span class="kw">answer</span>(<span class="st">&quot;ACTB gene is encoded on the minus-strand&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">              <span class="kw">answer</span>(<span class="st">&quot;The TTS of ACTB gene has a higher coordinate than its TSS&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Look at the direction of arrows in the introns.&quot;</span>),</a>
 <a class="sourceLine" id="cb4-4" data-line-number="4">              <span class="kw">answer</span>(<span class="st">&quot;The coding size of this gene is appr 2kb&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">              <span class="kw">answer</span>(<span class="st">&quot;If we want to look at the promoter of this gene, we have to move slightly to the left&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">              <span class="kw">answer</span>(<span class="st">&quot;This gene is not transcribed&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;you don&#39;t have data to say this is correct&quot;</span>)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">              <span class="kw">answer</span>(<span class="st">&quot;If we want to look at the promoter of this gene, we have to move slightly to the right&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">              <span class="kw">answer</span>(<span class="st">&quot;The UTRs of this genes are distributed over 3 exons&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb4-7" data-line-number="7">)</a></code></pre></div>
 <p><br></p>
 <p><span style="color: orange; font-family: Arial; font-size:18px;">ACTION: Go to the gene <em>SPI1</em> </span><br />

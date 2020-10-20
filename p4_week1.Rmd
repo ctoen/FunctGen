@@ -195,7 +195,8 @@ Ideas:
 Genome browsers are great tools to display genomics data. You can walk, or *browse*, through all chromosomes, look at the location of genes, extract DNA sequences, examine pre-loaded data or upload your own data. The latter comes in quite handy when you want to, for example, have a visual (personal) confirmation of data quality, evaluate the effect of different settings for processing the raw reads, and/or confirm as computationally detected associations.  
 <br>
 
-> If you didn't do so already, watch the following youtube video's to get familiar with the UCSC Genome Browser:  
+> If you didn't do so already, watch the following youtube video's to get familiar with the UCSC Genome Browser:   
+> *Tip*: use right-mouse click to not be directed away from this tutorial  
 >  
 1. [UCSC Genome Browser Basics](https://www.youtube.com/watch?v=DNXI-M9oQl8)  
 2. [UCSC Genome Browser Tracks](https://www.youtube.com/watch?v=1Kpy5G_MSG8)  
@@ -216,8 +217,7 @@ Genome browsers are great tools to display genomics data. You can walk, or *brow
 <span style="color: orange; font-family: Arial; font-size:18px;">ACTION: Go to the [UCSC Genome Browser](genome.ucsc.edu).</span>   
 <br> 
 The starting page has been updated since the video was made but still holds the same blue bar at the top with **Genomes**, **Tools**, etc.:  
-
-![Top menu bar in UCSC Genome Browser](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_genome_browser_fig1_startpage_topmenubar.png){width=100%}   
+![](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_genome_browser_fig1_startpage_topmenubar.png){width=100%}   
 
 <br>
 
@@ -239,29 +239,30 @@ On the left you can browse and select the genome you are interested in (not a dr
 We can go to a position of our choice by entering the gene or chromosomal coordinates under **Position/Search Term** or immediatly go to the 'Current position' by clicking on `GO` on the right-hand side or **Genome Browser** in the menu bar on top.  
 <br>
 <span style="color: orange; font-family: Arial; font-size:18px;">ACTION: Go to *ACTB* gene (gene coding for non-muscular actin part of cytoskeleton).</span>    
-
-![Genomes page, ready to go to *ACTB* gene in Human genome GRCh38 ](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_question_startpage.png)  
+<br>
+Genomes page, ready to go to *ACTB* gene in Human genome GRCh38:  
+![](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_question_startpage.png)  
 
 <br>
 
 > *Hint* your browser should be showing chr7:5,527,148-5,530,601.     
 
-As discussed in the video, in the top of the window we have navigation and zoom bottons. Right below we can read the chromosomal coordinates of and length of the gene and below that we see a miniature chromosome with the characteristic gray/black pattern from karyotyping. A red |-sign gives us an idea of our current positioning in the chromosome.   
+As discussed in the video, in the top of the window we have navigation and zoom bottons. Right below we can read the chromosomal coordinates and length of the regions we are currently viewing (in this case the complete *ACTB* gene). Below that we see a miniature chromosome with the characteristic gray/black pattern from karyotyping. A red `r colorize("|", "red")`-sign gives us an idea of our current positioning in the chromosome.   
 <br>
 
-> ``r colorize("UCSC GB session for the following exercises (tip: use right-mouse click to not loose this tutorial page): Default should look like (if it doesn't, I need to adjust the text): http://genome-euro.ucsc.edu/s/ctoenhake/hg38_default", "red")`    
+> `r colorize("UCSC GB session for the following exercises (tip: use right-mouse click to not loose this tutorial page): Default should look like (if it doesn't, I need to adjust the text): http://genome-euro.ucsc.edu/s/ctoenhake/hg38_default", "red")`    
 
 <br>
+Figure for Question 1:   
 ![](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_locationinchromosome.png){width=100%}\     
 <br>
 ```{r Q1_actin_location, eval = F, echo=T, exercise = T}
-     question("Question 1: What chromosome is ACTB located on? And is it located on the short or long arm of this chromosome?",
-              answer("chr7, short arm", correct = TRUE),
-              answer("chr7, long arm", message = "Where do you see the red |-sign in the miniature chromosome on top?"),
-              answer("chr17, short arm", message = "Review the UCSC Genome Browser Basics video, or find *chr#* in the browser window"),
-              answer("chr17, long arm", message = "Review the UCSC Genome Browser Basics video, or find *chr#* in the browser window"),
-              allow_retry = TRUE
-              )
+question("Question 1: What chromosome is ACTB located on? And is it located on the short or long arm of this chromosome?",
+  answer("chr7, short arm", correct = TRUE),
+  answer("chr7, long arm", message = "Where do you see the red |-sign in the miniature chromosome on top?"),
+  answer("chr17, short arm", message = "Review the UCSC Genome Browser Basics video, or find *chr#* in the browser window"),
+  answer("chr17, long arm", message = "Review the UCSC Genome Browser Basics video, or find *chr#* in the browser window"),
+  allow_retry = TRUE)
 ```
 <br>
 The data window displays various *tracks* or *track sets*. Tracks runs the complete length of the chromosome. Data includes most often:   
@@ -270,8 +271,7 @@ The data window displays various *tracks* or *track sets*. Tracks runs the compl
 - **signal information**, of gene expression, detection of histone marks or degree of conservation. Often displayed as histograms but can also be summarized in vertical bars with different levels of color intensity encoding the signal intensity.   
 
 <br>
-`r colorize("Question asign what the name of the track with gene locations is or picutre with c/b/c/d/e/f etc. instead of track name and asking which one diplays the chromosomal coordinates and which one the gene locations?", "red")`  
-
+`r colorize("Add a question like 'what is the name of the track with gene locations?' or a picutre with c/b/c/d/e/f etc. instead of track name and asking 'which one diplays the chromosomal coordinates and which one the gene locations?'", "red")`  
 <br>
 The method of display and whether individual tracks are displayed can be changed by:  
 
@@ -282,7 +282,9 @@ The method of display and whether individual tracks are displayed can be changed
 <span style="color: orange; font-family: Arial; font-size:18px;">ACTION: hide all tracks and tracksets except for the ruler and GENCODE v32 tracks.</span>   
 <br>
 <span style="color: orange; font-family: Arial; font-size:18px;">ACTION: for GENCODE v32, via `Configure GENCODE v32`, make sure the option "splice variants" is unchecked.</span>     
-
+<br>
+Configuration window for GECODE v32 gene track with splice variants *unselected*:  
+![](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_unselectsplicevariants.png)\    
 <br>
 Your GB session should look like this: ![](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_genetracksonly.png){width=100%}\      
 <br>
@@ -292,8 +294,8 @@ We see the complete *ACTB* gene with exons as horizontally stretched rectangles 
 > `r colorize("UCSC GB session for the following exercises (tip: use right-mouse click to not loose this tutorial page): Genes and ruler only: http://genome-euro.ucsc.edu/s/ctoenhake/hg38_genesonly", "red")`   
 
 <br>
-More information about *ACTB* can be obtained by clicking on the gene in the browser:  
-![(Top part of the gene information page *ACTB*) ](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_geneinformation.png){width=100%}\    
+More information about *ACTB* can be obtained by clicking on the gene in the browser. Doing that brings you to a gene page like:  
+![](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_geneinformation.png){width=100%}\    
 <br>
 ```{r Q2_ACTB_exons, eval = F, echo=T, exercise = T}
 question("Question 2: How many exons does the *ACTB* gene have?",
@@ -304,15 +306,18 @@ question("Question 2: How many exons does the *ACTB* gene have?",
            allow_retry = TRUE)
 ```
 <br>  
-![ACT locus for question 3](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_question_TSSquestion.png){width=100%}\        
+
+Figure for Question 3:   
+![](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_question_TSSquestion.png)
+
 <br>     
 ```{r Q3_ACTB_start, eval = F, echo=T, exercise = T}
-question("Question 3: Which letter points to the start codon?",
+question("Question 3: Which letter points to the TSS?",
               answer("A", message = "Look at the directionality of the gene, this is more likely the end of the gene."),
               answer("B", message = "Look at the directionality of the gene, this is more likely the end of the coding exons."),
-              answer("C", correct = TRUE),
-              answer("D", message = "Be aware of the small 5UTR in this exon!"),
-              answer("E", message = "This is more likely the TSS."))
+              answer("C", message = "This is more likely the start codon"),
+              answer("D", message = "This is part of the UTR, close to the start codon, look more upstream."),
+              answer("E", correct = T))
 ```
 <br>
 ```{r Q4_ACTB_statements, eval = F, echo=T, exercise = T}
@@ -320,8 +325,8 @@ question("Question 3: Which letter points to the start codon?",
               answer("ACTB gene is encoded on the minus-strand", correct = TRUE),
               answer("The TTS of ACTB gene has a higher coordinate than its TSS", message = "Look at the direction of arrows in the introns."),
               answer("The coding size of this gene is appr 2kb", correct = TRUE),
-              answer("If we want to look at the promoter of this gene, we have to move slightly to the left", correct = TRUE),
-              answer("This gene is not transcribed", message = "you don't have data to say this is correct")
+              answer("If we want to look at the promoter of this gene, we have to move slightly to the right", correct = TRUE),
+              answer("The UTRs of this genes are distributed over 3 exons", correct = TRUE)
 )
 
 ```
