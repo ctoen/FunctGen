@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Christa Toenhake" />
+
+<meta name="date" content="2020-10-21" />
+
+<title>tutorial_p3_DC_chip_in_r</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Functional Genomics 2020</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="p2_learningObjectives.html">Learning Objectives</a>
+</li>
+<li>
+  <a href="p4_week1.html">UCSC Genome Browser</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">tutorial_p3_DC_chip_in_r</h1>
+<h4 class="author">Christa Toenhake</h4>
+<h4 class="date">10/21/2020</h4>
+
+</div>
+
+
+<pre class="r"><code>required_packages &lt;- c(&quot;GenomicRanges&quot;, &quot;rtracklayer&quot;, &quot;plyranges&quot;, &quot;HelloRangesData&quot;, &quot;AnnotationHub&quot;, &quot;GenomicFeatures&quot;, &quot;UpSetR&quot;, &quot;ChIPpeakAnno&quot;, &quot;GenomicAlignments&quot; , &quot;DiffBind&quot;, &quot;DESeq2&quot;)
+
+
+BiocManager::install(required_packages)
+BiocManager::install(&quot;DESeq2&quot;)
+
+library(GenomicRanges) # to store genomics data in GRanges objects, one of the most important data structures in Bioconductor
+library(rtracklayer) # to import bed files in r
+library(plyranges) # grammar that extends dplyr from tidyverse package to work with complexity of genomics data and manipulate GRanges objects
+library(IRanges) # basic ranges infrastructure 
+library(HelloRangesData) # to perform calculations with (mostly) annotation tracks, &#39;mirror&#39; of bedtools “command line” package run on UNIX, LINUX and Apple OS X 
+library(GenomicAlignments) # to import and work with bam files in r
+library(DiffBind) # to compare ChIP-seq samples and find differential binding  
+library(DESeq2)</code></pre>
+<p>Notes from DataCamp course <strong>chip-seq with bioconductor in r</strong></p>
+<ul>
+<li>reads are stores in a GAlignments object. This object is closely realted to GenmicRanges.</li>
+</ul>
+<p><em>Reads are scattered all across the genome, but locations bound by the protein of interest will attract many overlapping reads, leading to peaks in coverage. These peaks are typically recorded with their genomic coordinates as well as a score that indicates the strength of the signal observed for this peak. The peak calls are stored in a GenomicRanges object called peaks. In addition to the usual functions to access the content of GenomicRanges objects, two convenience functions are available for peak calls. You can use the chrom function to obtain the chromosome a peak is located on and the score function to obtain its score.</em></p>
+<div id="ch1-introduction-to-chip-seq" class="section level1">
+<h1>Ch1 Introduction to ChIP-seq</h1>
+<div id="video-intro" class="section level2">
+<h2>1.1 Video: Intro</h2>
+<div id="loading-bam-files" class="section level3">
+<h3>loading BAM files:</h3>
+<p><code>library(GenomicAlignments)</code><br />
+<code>reads &lt;- readGAlignments('file_name')</code></p>
+</div>
+<div id="obtaining-read-coordinates" class="section level3">
+<h3>obtaining read coordinates:</h3>
+<p><code>seqnames(reads)</code> # obtain mapping location<br />
+<code>start(reads)</code> # access start location of where the read is mapped to<br />
+<code>end(reads)</code> # access end location of where the read is mapped to</p>
+</div>
+<div id="compuating-coverage" class="section level3">
+<h3>Compuating coverage:</h3>
+<p><code>coverage(reads)</code> # how many reads cover any given nt in the genome</p>
+</div>
+<div id="main-units-of-interests" class="section level3">
+<h3>Main units of interests:</h3>
+<p>Are the peak calls that highlight regions of the genome with a large number of reads. These peak calls are typically stored in BED files. Each peak is associated with a <em>score</em> that indicates the strength of the peak.</p>
+<ul>
+<li><code>library(rtracklayer)</code><br />
+</li>
+<li><code>peaks &lt;- import.bed('file_name')</code> # load peak BED files<br />
+</li>
+<li><code>chrom(peaks)</code> # Obtain peak coordinates<br />
+</li>
+<li><code>ranges(peaks)</code> # Obtain peak coordinates<br />
+</li>
+<li><code>score(peaks)</code> # Extracting peak scores</li>
+</ul>
+</div>
+</div>
+<div id="questions-chip-seq-recap" class="section level2">
+<h2>1.2 Questions: ChIP seq recap:</h2>
+<p>Let’s quickly recap what you’ve just learned. Consider the statements below: - ChIP-seq is used to measure gene expression. F<br />
+- ChIP-seq is used to identify binding sites of proteins. T<br />
+- Some proteins are involved in regulating gene expression. T<br />
+- Cells in different organs can be distinguished by differences in their genome. F</p>
+</div>
+<div id="analysis-sequencing-data" class="section level2">
+<h2>1.3 Analysis: Sequencing data</h2>
+<p>The basic unit of a ChIP-seq dataset is a sequencing read. In this exercise, we’ll look at how reads are represented in R, using reads from a small region on chromosome 20.</p>
+<p>Reads are stored in a <code>GAlignments</code> object. The <code>GAlignments</code> object is closely related to <code>GenomicRanges</code></p>
+<p>Practice with functions</p>
+<ul>
+<li><code>print(reads)</code> # prints summary of the data<br />
+</li>
+<li><code>start(reads)[1]</code> # to get start postiion of the first read<br />
+</li>
+<li><code>end(reads)[length(reads)]</code> # to get the end position of the last read<br />
+</li>
+<li><code>coverage(reads)</code> # compute number of raeds covering each position in the selected region</li>
+</ul>
+<div id="intermezzo---loading-peaks-in-r" class="section level5">
+<h5>Intermezzo - loading peaks in R?</h5>
+<blockquote>
+<p>How are peaks loaded into R? Into an GRanges object? How to import narrowPeak and broadPeak files into R in a valid GRanges format?</p>
+</blockquote>
+<p><strong>Options:</strong></p>
+<ul>
+<li>ChIPpeakAnno package &amp; <code>toGRanges()</code> function</li>
+<li><p>rtracklayer &amp; <code>import()</code> function, but downside: doesn’t work for narrowPeak/broadPeak files because these have slightly different columns compared to BED (ref: <a href="https://charlesjb.github.io/How_to_import_narrowPeak/" class="uri">https://charlesjb.github.io/How_to_import_narrowPeak/</a> )</p>
+<ul>
+<li><strong>Solution</strong>: use the <code>extraCols</code> parameter and give the name and type of every columns starting at the one that is different from the standard BED format.<br />
+</li>
+<li>for narrowPeak:</li>
+</ul>
+<p><code>extraCols_narrowPeak &lt;- c(singnalValue = &quot;numeric&quot;, pValue = &quot;numeric&quot;, qValue = &quot;numeric&quot;, peak = &quot;integer&quot;)</code><br />
+<code>gr_narrowPeak &lt;- import(narrowPeak_file, format = &quot;BED&quot;, extraCols = extraCols_narrowPeak)</code></p>
+<ul>
+<li>for broadPeak:</li>
+</ul>
+<p><code>extraCols_broadPeak &lt;- c(singnalValue = &quot;numeric&quot;, pValue = &quot;numeric&quot;, qValue = &quot;numeric&quot;, peak = &quot;integer&quot;)</code><br />
+<code>gr_broadPeak &lt;- import(broadPeak_file, format = &quot;BED&quot;,extraCols = extraCols_broadPeak)</code></p></li>
+</ul>
+<blockquote>
+<p><strong>IMPORTANT</strong>: important peaks manually with the <code>read.table</code> function is much more complicated because we need to add the names of all the columns before converting in the GRanges format, but more importantly we need to make sure to convert the <strong>0-based coordinate system of the BED file</strong> to the <strong>1-based coordinate system of the GRanges</strong>!</p>
+</blockquote>
+<pre class="r"><code>### using package ChIPpeakAnno
+#path &lt;- system.file(&quot;extdata&quot;, &quot;Tead4.broadPeak&quot;, package=&quot;ChIPpeakAnno&quot;)
+#peaks &lt;- toGRanges(path, format=&quot;broadPeak&quot;)
+
+### using rtracklayer </code></pre>
+</div>
+</div>
+<div id="analysis-peak-calls" class="section level2">
+<h2>1.4 Analysis: Peak calls</h2>
+<p><em>locations bound by the protein of interest will attract many overlapping reads, leading to peaks in coverage. These peaks are typically recorded with their genomic coordinates as well as a score that indicates the strength of the signal observed for this peak.</em></p>
+<p>Peaks are stored in <code>GenomicRanges</code> object. In addition to the usual functions to access the content of GenomicRanges objects, two convenience functions are available for peak calls. You can use the <code>chrom</code> function to obtain the chromosome a peak is located on and the <code>score</code> function to obtain its score.</p>
+<p>Practice with functions:</p>
+<ul>
+<li><code>print(peaks)</code> # print summary of the ‘peaks’ object<br />
+</li>
+<li><code>score(peaks)</code> # extract the score –&gt; integer vector<br />
+</li>
+<li><code>chrom(peaks)</code> # extract the chromosome where peaks are located –&gt; factor-Rle object<br />
+</li>
+<li><code>ranges(peaks)</code> # extract the start and stop locations –&gt; IRanges object</li>
+</ul>
+</div>
+<div id="video-chip-seq-workflow" class="section level2">
+<h2>1.5 Video: ChIP-seq workflow</h2>
+<p>Typical workflow:</p>
+<ol style="list-style-type: decimal">
+<li>Read mapping; locate their position in the genome. Identifying the best map in a standardized version of the genome, the reference genome.<br />
+</li>
+<li>Combine mapped reads into a coverage profile. Thus for each site in the genome the number or reads mapping is determined. Peaks are identified in this coverage profile. These correspond to the binding sites of a proteion or location of histone mark. It is possible to perform this in R but typical ChIP-seq pipelines use dedicated tools for this step.<br />
+</li>
+<li>Importing mapped reads + peak calls into R<br />
+</li>
+<li>Quality control<br />
+</li>
+<li>Compare samples: identify interesting peaks. It has to be more than just a bindings sites. Eg peaks specific to a certain sample<br />
+</li>
+<li>Interpretation, biological mechanisms using a variaty of data sources</li>
+</ol>
+<p>Useful visualizations:</p>
+<ul>
+<li>Heatmaps to highlight broad similarities and differences between samples. It arranges samples and genomic regions by similarity. The grouping of genomic ranges can emphasize similarities between samples. Function to make these plots: <code>heatmap(read_counts)</code><br />
+</li>
+<li>Bar + table plots to summarize the overlap between peak sets using <code>UpSetR</code> plots: <code>upset(fromList(peak_sets))</code>. Quick view of the similarity between sample sets.</li>
+</ul>
+</div>
+<div id="analysis-heatmap-example" class="section level2">
+<h2>1.6 Analysis: Heatmap example</h2>
+<p>Create a vector of colors to label groups (there are 2 samples per group)<br />
+<code>group &lt;- c(primary = rep(&quot;blue&quot;, 2), TURP = rep(&quot;red&quot;, 2))</code><br />
+Plot the sample correlation matrix <code>sample_cor</code> as a heat map<br />
+Use the group colors to label the rows and columns of the heat map<br />
+<code>heatmap(sample_cor, ColSideColors = group, RowSideColors = group, cexCol = 0.75, cexRow = 0.75, symm = TRUE)</code></p>
+<p>Create a heat map of peak read counts<br />
+Use the group colors to label the columns of the heat map<br />
+<code>heatmap(read_counts, ColSideColors = group, labRow = &quot;&quot;, cexCol = 0.75)</code></p>
+</div>
+<div id="analysis-genes-make-a-difference" class="section level2">
+<h2>1.7 Analysis: Genes make a difference</h2>
+<p>Use genome annotations to make sense of ChIP-seq results. Analyze two sets of genes: (1) all genes associated with peaks and (2) only genes associated with peaks that show differential binding</p>
+<p>Use <code>upset()</code> from <code>UpSetR</code> packages to visualize overlap.</p>
+<ul>
+<li><code>upset(from List(gene_lists))</code> # gene_lists object contains the geneIDs per sample. Bargraph output counts number of unique and overlapping genes. Dot plot below indicates whether these genes were unique or present in multiple gene lists</li>
+</ul>
+<p><a href="http://gehlenborglab.org/research/projects/upsetr/">upsetr package</a><br />
+<a href="https://www.r-bloggers.com/2018/07/hacking-our-way-through-upsetr/">r-bloggers upsetr</a></p>
+</div>
+<div id="video-chipseq-results-summary" class="section level2">
+<h2>1.8 Video: ChIPseq results summary</h2>
+<p>Sample heatmap: is there a difference between groups? Also usefull for assessing sample quality.</p>
+<p>Height peaks per sample: are peaks of same or different intensity between groups?</p>
+<p>upset plot: Overlap in genes associated with peak calls in different samples.</p>
+</div>
+<div id="questions-understanding-chip-seq-data" class="section level2">
+<h2>1.9 Questions: Understanding ChIP-seq data</h2>
+</div>
+</div>
+<div id="ch2-preparing-chip-seq-data" class="section level1">
+<h1>Ch2 Preparing ChIP-seq data</h1>
+<div id="video-importing-data" class="section level2">
+<h2>2.1 video: Importing data</h2>
+<p>The first steps of a ChIP-seq analysis, mapping and peak calling, are generally performed by specialized tools prior to importing data into r. There are a variaty of tools available. These data were mapped with bwa and peaks were identified with macs.</p>
+<p>Aligners output Sequence Alignment Map files, or SAM files. These are TAB-delimited text files and readable for us but are very large and are therefore stored in a compressed version which we call BAM files (for Binary Alginment Map). Dedicated tools are developed as well such that we can manipulate and read the BAM files without needing to convert them back to the large, SAM format.</p>
+<p>The BAM files contain information about the read sequence and how it was mapped to the reference genome. It thus tells you which part of the reference genome is most similar to this read, how the two differ, as well as several indicators that tell you how reliable the alignment between read and genome sequence is. The BAM file format allows the storage of optional tags that allow additional information to be stored with each alignment.</p>
+<p>We can work with these alignment files directly but it is much more convenient to work with dedicated tools for this file format.</p>
+<p>The SAM, VCF, GFF and Wiggle formats are using the 1-based coordinate system.<br />
+The BAM, BCFv2, BED, and PSL formats are using the 0-based coordinate system.</p>
+<p><strong>Fields in a BAM file</strong>:</p>
+<ul>
+<li>The header lines tell you how the alignment was performed, incl. which reference genome was used and the program (or <em>aligner</em>) used to align reads to the reference<br />
+</li>
+<li><p>Following the header are records of read alignments, with 1 line per read. So if we count all the lines, we get the number of reads in the file. These records hold a lot of information:</p>
+<ul>
+<li>Read name similar to name in fastq file line 1<br />
+</li>
+<li>Flag, encodes alignment information of the read in 12 “bits”. It can, for example, tell you whether the corresponding read is mapped, unmapped or a PCR or optical duplicate. This encoding is not the easiest to immediatetely understand, luckily there are webtools to summarize for us what each flag number means: <a href="https://www.samformat.info/sam-format-flag">from samformat</a>, or <a href="https://broadinstitute.github.io/picard/explain-flags.html">Broad Institute</a>.<br />
+</li>
+<li>Position of the alignment (start): Eg. <code>chr20 29803915</code><br />
+</li>
+<li>Mapping quality score, the program adds this score but different programs use different scores, can have value of <code>0</code> to <code>255</code><br />
+</li>
+<li>CIGAR string, gives a summary of the alignment per nt: <code>51M</code>, encodes information about among others the number of matching nt’s, whether there is a deletion<br />
+</li>
+<li>Reference sequence and position of paired read: <code>chr20 29804200</code> (if not used <code>0 0</code>)<br />
+</li>
+<li>Read sequence, similar to line 2 in fastq file.<br />
+</li>
+<li>Phred quality score of the read (ASCII encoded), similar to line 4 of the fastq file, eg: <code>CCCFFFHHJJJAA...</code></li>
+</ul></li>
+</ul>
+<p><a href = "https://gatk.broadinstitute.org/hc/en-us/articles/360035890791-SAM-or-BAM-or-CRAM-Mapped-sequence-data-formats"><img src="images/week1/2_seq2science/wk1_2_BAM_fields_broadinstitute.png" alt="Broad Institute, SAM or BAM or CRAM - Mapped sequence data formats" /> </a></p>
+<p>CIGAR abbreviations:<br />
+[images/week1/2_seq2science/wk1_2_BAM_file_CIGAR_string.png]</p>
+<p>FLAG abbreviations:<br />
+[images/week1/2_seq2science/wk1_2_BAM_file_FLAG_encoding.png]</p>
+<p><br><br />
+<strong>R packages for BAM files</strong></p>
+<ul>
+<li><code>Rsamtoos</code> - package from Bioconductor provides functions for indexing,r eading, filtering and writing of BAM files.<br />
+</li>
+<li>Once BAM files are indexed they can be imported into r using <code>readGAlignments()</code> function from the <code>GenomicAlignments</code> packages, returns a <code>GAlignments</code> object with alignment info for each read.<br />
+</li>
+<li>Limit data import only to regions of interest using <code>bam_views &lt;- BamViews(bam_file, bamRanges=ranges)</code> function from that same package. Followed by <code>reas_sub &lt;- readGAlignments(bam_views)</code><br />
+</li>
+<li>Regions of interest could be a chromosome, the peak calls from a BED file, or specified region eg <code>GRanges(&quot;chr20&quot;, IRanges(start=29805000, end=29820000))</code><br />
+</li>
+<li>Import peak calls from BED file using <code>import.bed(peak.bed, genome = &quot;...&quot;)</code> from the <code>rtracklayer</code> package.</li>
+</ul>
+</div>
+<div id="exercise-reading-bam-files" class="section level2">
+<h2>2.2 Exercise: Reading BAM files</h2>
+<p><em>To get started, … </em><br />
+Load reads form chr20_bam file<br />
+<code>reads &lt;- readGAlignments(chr20_bam)</code><br />
+Create a <code>BamViews</code> object for the range 29805000 - 29820000 on chromosome 20<br />
+<code>bam_views &lt;- BamViews(chr20_bam, bamRanges=GRanges(&quot;chr20&quot;, IRanges(start=29805000, end=29820000)))</code><br />
+Load only the reads in that view<br />
+<code>reads_sub &lt;- readGAlignments(bam_views)</code><br />
+Inspect the <code>reads_sub</code> object using <code>str()</code><br />
+<code>str(reads_sub)</code></p>
+<p><code>reads_sub</code> is a list of <code>GAlignment</code> object, each with 4 slots.</p>
+</div>
+<div id="exercise-reading-bed-files" class="section level2">
+<h2>2.3 Exercise: Reading BED files</h2>
+<p>Load peak calls from chr20_peaks<br />
+<code>peaks &lt;- import.bed(chr20_peaks)</code><br />
+Create a BamViews object<br />
+<code>bam_views &lt;- BamViews(chr20_bam, bamRanges=peaks)</code><br />
+Load the reads<br />
+<code>reads &lt;- readGAlignments(bam_views)</code></p>
+</div>
+<div id="video-closer-look-at-peaks" class="section level2">
+<h2>2.4 Video: Closer look at peaks</h2>
+<p>Using <code>Gviz</code> package<br />
+Plot includes:</p>
+<ul>
+<li>Ideogram - <code>IdeogramTrack(chromosome, reference genome)</code><br />
+</li>
+<li>Coverage per nt, without displaying individual alignments, <code>GRanges</code> object, generated with <code>coverage()</code> argument –&gt; make into track with <code>DataTrack()</code> function, eg <code>cover_track &lt;- plotTracks(cover_ranges, window=10500, type=&quot;polygon&quot;, name=&quot;Coverage&quot;,fill.mountain=c(&quot;lighgrey&quot;, &quot;lightgrey&quot;), col.mountain=&quot;grey&quot;)</code><br />
+</li>
+<li><p>Annotation tracks:</p>
+<ul>
+<li>peaks, eg <code>AnnotationTrack(peak_calls, name=&quot;Peaks&quot;)</code><br />
+</li>
+<li>genes, eg <code>GeneRegionTrack(TxDb.Hsapiens.UCSC.hg19.knownGene, chromosome=&quot;chr12&quot;,                       start=101360000, end=101380000, name=&quot;Genes&quot;)</code><br />
+</li>
+<li>chromosomal position with <code>GenomeAxisTrack()</code></li>
+</ul></li>
+</ul>
+<p>Put together with the <code>plotTracks()</code> fuction:<br />
+<code>plotTracks(list(ideogram, cover_track, peak_track, GenomeAxisTrack()), chromosome=&quot;chr20&quot;, from=start_pos, to=end_pos)</code></p>
+<p>Genes from <code>TxDb.Hsapiens.UCSC.hg19.knownGene</code> package</p>
+<p><strong>We will use the UCSC GB for this</strong></p>
+</div>
+<div id="video-cleaning-chip-seq-data" class="section level2">
+<h2>2.6 Video: Cleaning ChIP-seq data</h2>
+<p>Common problems that may result in increase artefacts and noise, that is accumulation of reads in regions that don’t actually contain binding sites of the protein of interest. Eg.:<br />
+* Genomic repeats; these occur over and over again. The origin of reads coming from these reigons is difficult to pinpoint. Any extra copies in the sample will generate extra coverage in those repeats in the reference<br />
+* Low complexity regions contain lot of sequence simalirty of sequences and the quality of sequence in the reference is low. Making it difficult to accurately pinpoint the true origin of a read in the reference<br />
+* Amplification Bias during the library preperation. It is often needed to produces sufficient DNA for sequencing analysis. But some DNA molecules produce more copies than others, these will use more reads and this may result in a pile-up of reads in your analysis.</p>
+<p>Tools to produce, systematic, summarizations of quality metrics of all samples as tables and plots. In R <code>ChIPQC</code> package. This produces a HTML report from bam and bed file with comma seperated file with sample information to assign sample to bed and bam files. These groupings are used to generate summaries for groups of samples.</p>
+<p>How to deal with potential problems in the data?</p>
+<ul>
+<li>remove additional reads with exactly the same mapping coordinates, ‘remove duplicate reads’, to gurad against amplification bias.<br />
+</li>
+<li>remove reads with multiple hits or have a low mapping quality (indication that alignment is incorrect) prior to peak calling as these are likely incorrectly assiged reads.<br />
+</li>
+<li>Some peakcallers allow the use of placklisted reagions that will not produce any peak calls for these. If this isn’t the case, you should remove peaks in these regions from the peak calls prior to futher analyses. Blacklisted regions are available from the ENCDOE project.</li>
+</ul>
+</div>
+<div id="exercise-removing-blacklisted-regions" class="section level2">
+<h2>2.7 Exercise: Removing blacklisted regions</h2>
+<p><code>ChIPQC</code> package provides blacklist.<br />
+Also available from ENCODE: <a href="http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeMapability/" class="uri">http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeMapability/</a></p>
+<p>Find all overlaps between peaks and blacklisted regions<br />
+<code>blacklisted &lt;- findOverlaps(peaks, blacklist.hg19, type=&quot;within&quot;)</code></p>
+<p>Create a plot to display read coverage together with peak calls and blacklisted regions in the selected region<br />
+<code>cover_track &lt;- DataTrack(cover, window=10500, type=&quot;polygon&quot;, name=&quot;Coverage&quot;, fill.mountain=c(&quot;lighgrey&quot;, &quot;lightgrey&quot;), col.mountain=&quot;grey&quot;)</code></p>
+<p>Calculate peak_track and region_track, plot plotTracks<br />
+<code>peak_track &lt;- AnnotationTrack(peaks, name=&quot;Peaks&quot;, fill=&quot;orange&quot;)</code><br />
+<code>region_track &lt;- AnnotationTrack(region, name=&quot;Blacklist&quot;)</code><br />
+<code>plotTracks(list(ideogram, cover_track, peak_track, region_track, GenomeAxisTrack()), chromosome=&quot;chr21&quot;, from=start(region)-1000, to=end(region)+1000)</code></p>
+<p>Remove all blacklisted peaks<br />
+<code>clean_peaks &lt;- peaks[-from(blacklisted)]</code></p>
+</div>
+<div id="exercise-filtering-reads" class="section level2">
+<h2>2.8 Exercise: Filtering Reads</h2>
+<p>Load reads with mapping qualities by requesting the “mapq” entries <code>reads &lt;- readGAlignments(bam_file, param=ScanBamParam(what=&quot;mapq&quot;))</code></p>
+<p>Identify good quality alignments <code>high_mapq &lt;- mcols(reads)$mapq &gt;= 20</code></p>
+<p>Examine mapping quality distribution for high and low quality alignments <code>boxplot(mcols(reads)$mapq ~ high_mapq, xlab=&quot;good quality alignments&quot;, ylab=&quot;mapping quality&quot;)</code></p>
+<p>Remove low quality alignments <code>reads_good &lt;- subset(reads, high_mapq)</code></p>
+</div>
+<div id="video-assessing-enrichment" class="section level2">
+<h2>2.10 Video: Assessing enrichment</h2>
+<p>Reads are generated by sequencing the ends of DNA fragments. Signal becomes clearer when reads are extended to have the full length of the original fragment.</p>
+<p>See how it looks different in real data, using reads or (mean) fragment length.</p>
+<p><strong>Determine median fragment lengths per smaple</strong>:<br />
+<code>reads &lt;- readGAlignments(bam)</code><br />
+<code>reads_gr &lt;- granges(reads[[1]])</code><br />
+<code>frag_length &lt;- fragmentlength(qc_report)[&quot;sampleid]</code> # function from chipqc package</p>
+<p>Extend reads with <code>resize()</code> function from <code>GenomicRanges</code> package: <code>reads_ext &lt;- resize(reads_gr, width = frag_length)</code><br />
+<code>cover_ext &lt;- coverage(reads_ext)</code></p>
+<p><strong>How does coverage in peaks compare to coverage in other parts of the genome?</strong><br />
+First partition the genome into short windows and then assign each peak to a peak, background or blacklisted region.</p>
+<ol style="list-style-type: decimal">
+<li>make bins with <code>tileGenome(seqinfo(reads), tilewidth = 200, cut.last.tile.in.chrom =T)</code> from <code>GenomicRanges</code> package<br />
+</li>
+<li>find overlap between bins and peaks with <code>peak_bins_overlap &lt;- finOverlaps(bins,peaks)</code> and extract bins located in peaks <code>peak_bins &lt;- bins[from(peak_bins_overlap),]</code>. The <code>from()</code> function helps us obtain the index of each bin that overlaps with a peak.<br />
+</li>
+<li>count reads overlapping each peak bin with <code>peak_bins$score &lt;- countOverlap(peak_bins, reads)</code></li>
+</ol>
+<p>Written as function:<br />
+<code>count_bins &lt;- function(reads, target, bins){overlap &lt;- from(findOverlaps(bins, target)); target_bins &lt;- bins[overlap, ]; target_bins$score &lt;- countOverlaps(target_bins,reads); target_bins }</code></p>
+<p>Call function for peaks, blacklisted regions and rest:</p>
+<ul>
+<li><code>peaks_bins &lt;- count_bins(read_ext, peaks, bins)</code><br />
+</li>
+<li><code>bl_bins &lt;- count_bins(read_ext, blacklist.hg19, bins)</code></li>
+<li><code>bkb_bins$score &lt;- countOverlaps(subset(bins, -peak_bins, -bl_bins), reads_ext)</code></li>
+</ul>
+<p>Plot coverage in each region. Have to zoom in on peaks to see enchrichment.</p>
+</div>
+<div id="exercise-computing-coverage" class="section level2">
+<h2>2.11 Exercise: Computing coverage</h2>
+<p>Extend reads to the average fragment length of 183 bp <code>reads_ext &lt;- resize(reads_gr, width=183)</code><br />
+Compute coverage<br />
+<code>cover &lt;- coverage(reads_ext)</code></p>
+</div>
+<div id="exercise-peaks-vs.background" class="section level2">
+<h2>2.12 Exercise: Peaks vs. background</h2>
+<p>Prepare read counts for plotting by organising them in data frames<br />
+<code>peak_scores &lt;- data.frame(source=&quot;peaks&quot;, fragments=peak_bins$score)</code><br />
+<code>bl_scores &lt;- data.frame(source=&quot;blacklist&quot;, fragments=bl_bins$score)</code><br />
+<code>bkg_scores &lt;- data.frame(source=&quot;background&quot;, fragments=bkg_bins$score)</code><br />
+<code>scores &lt;- rbind(peak_scores, bl_scores, bkg_scores)</code></p>
+<p>Create a boxplot of the read counts by bin type<br />
+<code>ggplot(scores, aes(y=fragments, x=source)) + geom_boxplot()</code></p>
+<p>Control samples can be used to fitler out the high signal in some background regions.</p>
+</div>
+</div>
+<div id="ch3-comparing-chip-seq-samples" class="section level1">
+<h1>Ch3 Comparing ChIP-seq samples</h1>
+<div id="video-intro-diff-binding" class="section level2">
+<h2>3.1 Video: Intro diff binding</h2>
+<p>In this case, look at difference in response between primary and resistant cancers.</p>
+<p>Are samples from the same group generally similar? –&gt; PCA and clustering help with this</p>
+<p>One way is to use PCA. Method to uncover some of the underlying structures in the dataset. It identifies the directions or PCs with most variation between data points.</p>
+<p>Depending how you look at the data, differences between groups become more or less obvious. Using the first two PCs we can define a 2d plane that pases through the cloud of data points, minimizing the distance between points as much as possible. Rotating the data such that we look directly at the plane, we get the PC plot.</p>
+<p><code>ChIPQC</code> makes it very easy to get <em>PCA</em> using <code>plotPrincmp(counts)</code> function. Need a consistent set of peaks for alls amples, <em>consensus peak set</em> with corersponding read counts. Use function <code>dba.count(qc_results, summits = 250)</code> from <code>diff.bind</code> package to get this set. Summits detemines the width of the peaks.</p>
+<p>Another appraoch: <em>clustering samples</em> based on read counts for each peaks.</p>
+<ul>
+<li>Many ways to do this. Here hierarchical clustering. Uses pairwises distances between samples to build a hierarchy or tree of samples, called a dendrogram.<br />
+</li>
+<li>Compute distances with <code>dist()</code> function, computes distance between rows of a matrix. If you want the distance between samples, transpose the matrix <code>dist(t(coverage))</code>.<br />
+</li>
+<li>Create dendrogram with <code>dendro &lt;- hclust(distance)</code><br />
+</li>
+<li>plot dendrogram with <code>plot(dendro)</code></li>
+</ul>
+<p>Heatmap can highlight the differences between samples: Create heatmap with <code>dba.plotHeatmap(peaks, maxSites = peak_count, correlatoins = F)</code>, needs a <code>dba</code> object of peaks.</p>
+<p>‘dba’ object comes from the ‘diffBind’ package.</p>
+</div>
+<div id="questions-do-the-peaks-look-the-same-to-you" class="section level2">
+<h2>3.2 Questions: Do the peaks look the same to you?</h2>
+<ul>
+<li>Exampine example PCA plot and agree or disagree with statments.<br />
+## 3.3 Code: Clustering samples</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>calculate distance between samples based on normalized coverage of peaks using <code>dist()</code><br />
+</li>
+<li>group similar samples with <code>hclust()</code><br />
+</li>
+<li>plot with <code>plot()</code></li>
+</ol>
+<p>How many clusters do you think the samples fall in to?</p>
+</div>
+<div id="code-visualize-differences-in-prot.-binding" class="section level2">
+<h2>3.4 Code: Visualize differences in prot. binding</h2>
+<p>Heatmap compares peak intensity across samples. Can help highlight patters in pretein binding that distinguish between groups of samples.</p>
+</div>
+<div id="video-testing-for-diff-binding" class="section level2">
+<h2>3.5 Video: Testing for diff binding</h2>
+<p>Which difference is enough petween the two gropus that we are confidence to say that they are not due to random fluctuations in the data.</p>
+<p>Use statistical analysis of read counts to dientify significant differences between groups. Two commonly used approaches for this: DESeq2 or edgeR. Default is DESeq2.</p>
+<p>Advantage of <em>DiffBind</em> is that it works hand in hand with ChIPQC and DESeq2.</p>
+<p><strong>Need consistent set of peaks.</strong></p>
+<p>Counting reads in peak set: <code>peak_counts &lt;- dba.count(qc_output, summit = 250)</code>. Summit arguments indicates that peaks should be redefined around the consensus peak with width on either side. Here results in 500bp peaks.</p>
+<p>Need to tell DiffBind how to split/contrast the samples into groupings. Can be on attributes of datasets. Use function <code>dba.contrast(peak_counts, categories = DBA_CONDITION)</code>.</p>
+<p>DiffBind provides predefined groupings based on the attributes:</p>
+<ul>
+<li>DBA_ID<br />
+</li>
+<li>DBA_TISSUE<br />
+</li>
+<li>DBA_FACTOR<br />
+</li>
+<li>DBA_TREATMENT<br />
+</li>
+<li>DBA_REPLICATE<br />
+</li>
+<li>DBA_CALLER</li>
+</ul>
+<p>Attributes are the columnnames of the sample description in the DBA object, shown when you <code>print(dba_object)</code></p>
+<p>Differential binding analysis:<br />
+<code>bind_diff &lt;- dba.analyze(peak_counts)</code> peak_counts is a <code>DBA</code> object.</p>
+<p>Look at the results with:</p>
+<ul>
+<li><code>dba.plotPCA(bind_diff, DBA_Condition, contrast = 1)</code><br />
+</li>
+<li><code>dba.plotHeatmap(bind_diff, DBA_Condition, contrast = 1)</code></li>
+</ul>
+</div>
+<div id="questions-load-read-counts" class="section level2">
+<h2>3.6 Questions: Load read counts</h2>
+<p>Evaluate <code>ar_counts &lt;- dba.count(ar_peaks, summits=200)</code> command<br />
+## 3.7 Code: Setting up the model<br />
+Examine the ar_binding object<br />
+<code>print(ar_binding)</code><br />
+Identify the category corresponding to the tumor type contrast<br />
+<code>contrast &lt;- DBA_CONDITION</code><br />
+Establish the contrast to compare the two tumor types<br />
+<code>dba_peaks &lt;- dba.contrast(ar_binding, categories=contrast, minMembers=2)</code><br />
+Examine the dba_peaks object to confirm that the contrast has been added<br />
+<code>print(dba_peaks)</code></p>
+</div>
+<div id="code-fitting-the-model" class="section level2">
+<h2>3.8 Code: Fitting the model</h2>
+<p>Examine the <code>ar_binding</code> object to confirm that it contains the required contrast<br />
+<code>print(ar_binding)</code><br />
+Run the differential binding analysis<br />
+<code>ar_diff &lt;- dba.analyze(ar_binding)</code><br />
+Examine the result<br />
+<code>print(ar_diff)</code></p>
+</div>
+<div id="code-revisiting-pca-and-heat-map" class="section level2">
+<h2>3.9 Code: Revisiting PCA and Heat map</h2>
+<p>Create a PCA plot using all peaks<br />
+<code>dba.plotPCA(ar_diff, DBA_CONDITION)</code><br />
+Create a PCA plot using only differentially bound peaks <code>dba.plotPCA(ar_diff, DBA_CONDITION, contrast = 1)</code><br />
+Create a heatmap using all peaks<br />
+<code>dba.plotHeatmap(ar_diff, DBA_CONDITION, correlations = FALSE, maxSites = 440)</code><br />
+Create a heatmap using only differentially bound peaks<br />
+<code>dba.plotHeatmap(ar_diff, DBA_CONDITION, contrast=1, correlations = FALSE)</code></p>
+<p><code>contrast</code> parameter directs dba.plotHeatmap to the contrast to use from the <code>dba.analyze()</code> calculation, stored in the ar_diff object. If not specified, all peaks will be used.</p>
+</div>
+<div id="video-closter-look-at-diff-binding" class="section level2">
+<h2>3.10 Video: Closter look at diff binding</h2>
+<p>Detailed look at differential binding results with some plots:</p>
+<p>Plots from DiffBind package:</p>
+<p><strong>MA plot</strong> - visualizes relationship between average peak instensity and change in peak intensity between conditions. Use <code>dba.plotMA</code> function<br />
+- log peak intensity on x-axis<br />
+- log change intensity on y-axis<br />
+- points of diff bounds peaks are highlighed in peaks.<br />
+- highlight diff peaks - highlight also bigger trends in the data. Most dots should correspond to no difference between groups and most dots at horizontal line. If they are not, are systematic bias that should be addressed with appropriate data normalization.</p>
+<p><strong>Volcano plot</strong>:<br />
+- y-axis = negative log p-values or = -log10(FDR)<br />
+- x-axis = log(FC) = log2(resistant) - log2(responsive)<br />
+- function <code>dba.plotVolcano()</code><br />
+- peaks with signficant evidance for differential binding in pink. This shows significance with magnitud of the change<br />
+- highlights extreme or unusual peaks.</p>
+<p><strong>Boxplot</strong><br />
+- summarizes the distribution of peak intensity bewteen groups and facilitates the comparision beetween groups - <code>dba.plotBox(dba_object)</code><br />
+- median peak instensity + first and third quartile. More extreme observations indicated in whiskers and additional points - good indication of the location and spread of peak intensity of the groups.</p>
+</div>
+<div id="code-ma-plot" class="section level2">
+<h2>3.11 Code: MA plot</h2>
+<p>dba.plotMA(ar_diff)</p>
+</div>
+<div id="code-volcano-plot" class="section level2">
+<h2>3.12 Code: Volcano plot</h2>
+<p>dba.plotVolcano(ar_diff)</p>
+</div>
+<div id="code-summarizing-diff-binding" class="section level2">
+<h2>3.13 Code: Summarizing diff binding</h2>
+<p>Create a box plot of the peak intensities<br />
+<code>compare_groups &lt;- dba.plotBox(ar_diff, notch=FALSE)</code></p>
+<p>Inspect the returned p-values<br />
+<code>print(compare_groups)</code></p>
+</div>
+</div>
+<div id="ch4-from-peaks-to-genes-to-function" class="section level1">
+<h1>Ch4 From Peaks to Genes to Function</h1>
+<div id="video-interpreting-chip-seq-peaks" class="section level2">
+<h2>4.1 Video: Interpreting ChIP-seq peaks</h2>
+</div>
+<div id="code-consolidating-peaks" class="section level2">
+<h2>4.2 Code: Consolidating peaks</h2>
+</div>
+<div id="code-using-annotations" class="section level2">
+<h2>4.3 Code: Using annotations</h2>
+</div>
+<div id="code-annotating-peaks" class="section level2">
+<h2>4.4 Code: Annotating peaks</h2>
+</div>
+<div id="code-which-peaks-are-different" class="section level2">
+<h2>4.5 Code: Which peaks are different?</h2>
+</div>
+<div id="video-interpreting-gene-lists" class="section level2">
+<h2>4.6 Video: Interpreting Gene lists</h2>
+</div>
+<div id="code-associating-peaks-with-genes" class="section level2">
+<h2>4.7 Code: Associating peaks with genes</h2>
+</div>
+<div id="code-finding-common-themes" class="section level2">
+<h2>4.8 Code: Finding common themes</h2>
+</div>
+<div id="code-understanding-the-impact-on-pathways" class="section level2">
+<h2>4.9 Code: Understanding the impact on pathways</h2>
+</div>
+<div id="code-a-closer-look-at-pathways" class="section level2">
+<h2>4.10 Code A closer look at pathways</h2>
+</div>
+<div id="video-advanced-chip-seq-analysis" class="section level2">
+<h2>4.11 Video: Advanced ChIP-seq analysis</h2>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
