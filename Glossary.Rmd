@@ -1,0 +1,51 @@
+---
+title: "Glossary"
+output:
+  html_document: 
+    collapsed: no
+    css: custom.css
+    highlight: pygments
+    theme: cerulean
+    toc: no
+editor_options:
+  chunk_output_type: inline
+---
+
+<style type="text/css">
+.title {
+  display: none;
+}
+
+</style>
+
+
+```{r setup, include=FALSE}
+#library(learnr)
+knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
+```
+
+```{r fontcolorfunction, echo = F}
+colorize <- function(x, color) {
+  if (knitr::is_latex_output()) {
+    sprintf("\\textcolor{%s}{%s}", color, x)
+  } else if (knitr::is_html_output()) {
+    sprintf("<span style='color: %s;'>%s</span>", color, 
+      x)
+  } else x
+}
+
+# can be used as inline code, eg: `r colorize("Additional Ideas:", "red")`  
+```
+
+## Glossary:  
+*For now only list with terms that would possibly benefit from definitions or (wikipedia) additional references*:    
+
+- Library prep  
+- Adapters  
+- Library  
+- Reads  
+- ACGTN-alphabet  
+- TSS  
+- Up- & downstream  
+- Orientation  
+- [Idiogram](https://www.nature.com/scitable/topicpage/chromosome-mapping-idiograms-302/)  

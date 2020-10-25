@@ -7,5 +7,7 @@ navbar:
     - text: "Learning Objectives"
       href: p2_learningObjectives.html    
     - text: "UCSC Genome Browser"
-      href: p4_week1.html
+      href: p4_week1.html  
+    - text: "Glossary"
+      href: Glossary.html      
 output_dir: "docs"

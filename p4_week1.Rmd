@@ -110,11 +110,19 @@ These fastq files are what we start our processing with:
 
 1. **Remove adapters and poor-quality nucleotides**: The adapters should be removed, as they were not part of the original sample and low-quality nt's are more likely to be wrong and we therefore remove those as well. This can result in the complete removal of some reads because of their overall low quality or short length.   
 <br>
-2. **Align reads to the genome**: Identify the likely location in the reference genome where the original DNA molecule came from. Since the first publication of the human genome, successive versions (also called *assemblies* or *builds*) have been released with improvements in quality thanks to technological advancements as well as improvements in the representativeness of the genome with respect to the genetic diversity found in the human population, including historically underrepresentated populations. We will work with the (one of the) latests relasese referred to as GRCh38 (Genome Reference Consortium Human Build 38). The alignment procedure often adds flags for reads aligned to a unique region or to multiple regions which you can use to filter.  
+2. **Align reads to the genome**: Identify the likely location in the reference genome where the original DNA molecule came from.   
 <br>
-3. **Filter artefacts and reads aligning to multiple regions**: Remove PCR artefacts and optionally remove reads aligning non-uniquely.   
+Since the first publication of the human genome, successive versions (also called *assemblies* or *builds*) have been released with improvements in quality thanks to technological advancements as well as improvements in the representativeness of the genome with respect to the genetic diversity found in the human population, including historically underrepresentated populations. We will work with the (one of the) latests relasese referred to as GRCh38 (Genome Reference Consortium Human Build 38).   
 <br>
-4. **Visualize the data**: .Bigwig files are created which can be uploaded to the UCSC Genome Browser which we will look at in more detail today as well.  
+There are several alignment tools, or *aligners* out there. Examples include STAR, BWA and bowtie2. These tools output TAB-delimited text Sequence Alignment Map files (SAM files) readable to us but very large. These SAM files are therefore stored in compressed forms, Binary Alginment Map files (BAM files). Dedicated tools are developed as well such that we can manipulate and read the BAM files without needing to convert them back to the large, SAM format.  
+<br>
+The BAM files contain information about the read sequence, how it was mapped to the reference genome, to what extend a reliable match was detected or not.  
+<br>
+3. **Filter artefacts and reads aligning to multiple regions**: Identify and remove PCR artefacts and optionally remove reads aligning non-uniquely.   
+<br>
+4. **Visualize the data**: Files are created that count how many reads align to each nucleotide in the reference genome. Nucleotides with a relative high score pinpoint the likely locations of the histone PTM being studied or protein binding in a ChIP-seq experiment; to a region of accessible chromatin in ATAC-seq; or to the region that was likely transcribed and detected in RNA-seq.  
+<br>
+These files can be uploaded to the UCSC Genome Browser which we will look at in more detail today as well. Various file types can store this kind of data. We wil use `bigwig` files (`.bw` file extension)  
 <br>
 5. **Call peaks**: Computationally identify regions with significantly higher number of reads than expected. There are different tools out there to perform this task MACS2 is one of them and was used to call peaks in the datasets that we will be using. Peak calling is a mathemetical/statistical procedure and never black and white. It depends among others on thresholds used (p-value, false-discovery rate) abnd the control sample. And it is always wise to visually inspect the resulting peaks in the UCSC genome browser.  
 <br>
@@ -161,6 +169,27 @@ It is important to check the quality of your data along the way:
 
 ### <span style="color: red;">1.3.3 Output files: bigwigs, peaks & counts</span>    
 `r colorize("Showing examples of how the output may look like or do this along the way in the numbered list above?", "red")`  
+
+Throughout the workflow, different file types come into play. Although there are 
+
+#### 1.3.3.1 BAM file  
+The BAM file, outputted by the aligner and post-alignment analytical and filtering tools, contains two sections: a header section at the top followed by records of read alignments.  
+<br>
+The header lines tell you how the alignment was performed, incl. which reference genome was used and the program (or *aligner*) used to align reads to the reference. The read alignments contain 1 line per read. So if we count all the lines minus the header section, we get the number of reads in the file.  
+<br>
+Each record holds at least 11 columns (exact number depends on the aligner and post-alignment analytics performed on the file):  
+  
+1. Read name similar to name in fastq file line 1   
+2. Flag, encodes alignment information of the read in 12 "bits". It can, for example, tell you whether the corresponding read is mapped, unmapped or a PCR or optical duplicate. This encoding is not the easiest to immediatetely understand, luckily there are webtools to summarize for us what each flag number means: [from samformat](https://www.samformat.info/sam-format-flag), or [Broad Institute](https://broadinstitute.github.io/picard/explain-flags.html).  
+3. Name of the contig or chromosome in the reference genome the read aligns to: eg. `chr7` for chromosome 7 or `mt` for mitochondrial DNA    
+5. Position within the chromosome the read aligns to: eg. `229418420`   
+5. Mapping quality score, the program adds this score but different programs use different scores, can have value of `0` to `255`    
+6. CIGAR string, gives a summary of the alignment per nt: eg. `51M`, encodes information about among others the number of matching nt's, whether there is a deletion  
+7. Name of the reference genome where the paired read aligns to: eg. `chr7` (if there is no paried read `0`)   
+8. Position within the reference genome where the paried read aligns to: eg. `229418621` 
+9. The length of the complete fragment, from the first mapped base of read 1 to the last mapped base of read 2.  
+10. Read sequence, similar to line 2 in fastq file.   
+11. Phred quality score of the read (ASCII encoded), similar to line 4 of the fastq file, eg: `CCCFFFHHJJJAA...`  
 
 <br>  
 
@@ -214,8 +243,9 @@ Genome browsers are great tools to display genomics data. You can walk, or *brow
 <br>  
 Important topics discussed in Video 1 include:  
 
-- How to access your genome of intrest in the UCSC Genome Browser.
+- How to access your genome+assembly of interest in the UCSC Genome Browser.  
 - Where you can find the chromosomal coordinates of the region currently in view or of a region you just selected (with click+drag).   
+- How to go to a gene or region of interest.  
 - How to move around and zoom in and out.  
 - The gene structure in the UCSC Genome Browser and how you can recognize UTRs, exons, introns, and the coding direction  
 - How to find the length of a region or gene.  
@@ -288,7 +318,7 @@ Figure for Question 1:
 <br>
 ```{r Q1_actin_location, eval = F, echo=T, exercise = T}
 question("Question 1: What chromosome is ACTB located on? And is it located on the short or long arm of this chromosome?",
-  answer("chr7, short arm", correct = TRUE),
+  answer("chr7, short arm", correct = TRUE, message = "The *ACTB* gene is indeed located on the short arm of chromosome 7. In the coordinates bar and in the 'ruler' track we can see that we are looking at chromosome 7. By looking at the red |-sign in the chroosomal idiogram, we see that this gene is located to the left of the centromere (red diabolo within the idiogram) and thus ont the short arm."),
   answer("chr7, long arm", message = "Where do you see the red |-sign in the miniature chromosome on top?"),
   answer("chr17, short arm", message = "Review the UCSC Genome Browser Basics video, or find *chr#* in the browser window"),
   answer("chr17, long arm", message = "Review the UCSC Genome Browser Basics video, or find *chr#* in the browser window"),

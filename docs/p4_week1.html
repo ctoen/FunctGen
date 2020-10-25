@@ -442,6 +442,9 @@ div.tocify {
 <li>
   <a href="p4_week1.html">UCSC Genome Browser</a>
 </li>
+<li>
+  <a href="Glossary.html">Glossary</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -553,11 +556,15 @@ The sequence of the DNA molecules outputted by the sequencer together with their
 <ol style="list-style-type: decimal">
 <li><strong>Remove adapters and poor-quality nucleotides</strong>: The adapters should be removed, as they were not part of the original sample and low-quality nt’s are more likely to be wrong and we therefore remove those as well. This can result in the complete removal of some reads because of their overall low quality or short length.<br />
 <br></li>
-<li><strong>Align reads to the genome</strong>: Identify the likely location in the reference genome where the original DNA molecule came from. Since the first publication of the human genome, successive versions (also called <em>assemblies</em> or <em>builds</em>) have been released with improvements in quality thanks to technological advancements as well as improvements in the representativeness of the genome with respect to the genetic diversity found in the human population, including historically underrepresentated populations. We will work with the (one of the) latests relasese referred to as GRCh38 (Genome Reference Consortium Human Build 38). The alignment procedure often adds flags for reads aligned to a unique region or to multiple regions which you can use to filter.<br />
+<li><strong>Align reads to the genome</strong>: Identify the likely location in the reference genome where the original DNA molecule came from.<br />
+<br> Since the first publication of the human genome, successive versions (also called <em>assemblies</em> or <em>builds</em>) have been released with improvements in quality thanks to technological advancements as well as improvements in the representativeness of the genome with respect to the genetic diversity found in the human population, including historically underrepresentated populations. We will work with the (one of the) latests relasese referred to as GRCh38 (Genome Reference Consortium Human Build 38).<br />
+<br> There are several alignment tools, or <em>aligners</em> out there. Examples include STAR, BWA and bowtie2. These tools output TAB-delimited text Sequence Alignment Map files (SAM files) readable to us but very large. These SAM files are therefore stored in compressed forms, Binary Alginment Map files (BAM files). Dedicated tools are developed as well such that we can manipulate and read the BAM files without needing to convert them back to the large, SAM format.<br />
+<br> The BAM files contain information about the read sequence, how it was mapped to the reference genome, to what extend a reliable match was detected or not.<br />
 <br></li>
-<li><strong>Filter artefacts and reads aligning to multiple regions</strong>: Remove PCR artefacts and optionally remove reads aligning non-uniquely.<br />
+<li><strong>Filter artefacts and reads aligning to multiple regions</strong>: Identify and remove PCR artefacts and optionally remove reads aligning non-uniquely.<br />
 <br></li>
-<li><strong>Visualize the data</strong>: .Bigwig files are created which can be uploaded to the UCSC Genome Browser which we will look at in more detail today as well.<br />
+<li><strong>Visualize the data</strong>: Files are created that count how many reads align to each nucleotide in the reference genome. Nucleotides with a relative high score pinpoint the likely locations of the histone PTM being studied or protein binding in a ChIP-seq experiment; to a region of accessible chromatin in ATAC-seq; or to the region that was likely transcribed and detected in RNA-seq.<br />
+<br> These files can be uploaded to the UCSC Genome Browser which we will look at in more detail today as well. Various file types can store this kind of data. We wil use <code>bigwig</code> files (<code>.bw</code> file extension)<br />
 <br></li>
 <li><strong>Call peaks</strong>: Computationally identify regions with significantly higher number of reads than expected. There are different tools out there to perform this task MACS2 is one of them and was used to call peaks in the datasets that we will be using. Peak calling is a mathemetical/statistical procedure and never black and white. It depends among others on thresholds used (p-value, false-discovery rate) abnd the control sample. And it is always wise to visually inspect the resulting peaks in the UCSC genome browser.<br />
 <br></li>
@@ -606,9 +613,38 @@ The sequence of the DNA molecules outputted by the sequencer together with their
 <div id="output-files-bigwigs-peaks-counts" class="section level3">
 <h3><span style="color: red;">1.3.3 Output files: bigwigs, peaks &amp; counts</span></h3>
 <p><span style="color: red;">Showing examples of how the output may look like or do this along the way in the numbered list above?</span></p>
+<p>Throughout the workflow, different file types come into play. Although there are</p>
+<div id="bam-file" class="section level4">
+<h4>1.3.3.1 BAM file</h4>
+<p>The BAM file, outputted by the aligner and post-alignment analytical and filtering tools, contains two sections: a header section at the top followed by records of read alignments.<br />
+<br> The header lines tell you how the alignment was performed, incl. which reference genome was used and the program (or <em>aligner</em>) used to align reads to the reference. The read alignments contain 1 line per read. So if we count all the lines minus the header section, we get the number of reads in the file.<br />
+<br> Each record holds at least 11 columns (exact number depends on the aligner and post-alignment analytics performed on the file):</p>
+<ol style="list-style-type: decimal">
+<li>Read name similar to name in fastq file line 1<br />
+</li>
+<li>Flag, encodes alignment information of the read in 12 “bits”. It can, for example, tell you whether the corresponding read is mapped, unmapped or a PCR or optical duplicate. This encoding is not the easiest to immediatetely understand, luckily there are webtools to summarize for us what each flag number means: <a href="https://www.samformat.info/sam-format-flag">from samformat</a>, or <a href="https://broadinstitute.github.io/picard/explain-flags.html">Broad Institute</a>.<br />
+</li>
+<li>Name of the contig or chromosome in the reference genome the read aligns to: eg. <code>chr7</code> for chromosome 7 or <code>mt</code> for mitochondrial DNA<br />
+</li>
+<li>Position within the chromosome the read aligns to: eg. <code>229418420</code><br />
+</li>
+<li>Mapping quality score, the program adds this score but different programs use different scores, can have value of <code>0</code> to <code>255</code><br />
+</li>
+<li>CIGAR string, gives a summary of the alignment per nt: eg. <code>51M</code>, encodes information about among others the number of matching nt’s, whether there is a deletion<br />
+</li>
+<li>Name of the reference genome where the paired read aligns to: eg. <code>chr7</code> (if there is no paried read <code>0</code>)<br />
+</li>
+<li>Position within the reference genome where the paried read aligns to: eg. <code>229418621</code></li>
+<li>The length of the complete fragment, from the first mapped base of read 1 to the last mapped base of read 2.<br />
+</li>
+<li>Read sequence, similar to line 2 in fastq file.<br />
+</li>
+<li>Phred quality score of the read (ASCII encoded), similar to line 4 of the fastq file, eg: <code>CCCFFFHHJJJAA...</code></li>
+</ol>
 <p><br></p>
 <hr />
 <p><br></p>
+</div>
 </div>
 <div id="alternatively-use-fair-data" class="section level3">
 <h3><span style="color: red;">1.3.4 Alternatively: use FAIR data</h3>
@@ -668,8 +704,11 @@ The sequence of the DNA molecules outputted by the sequencer together with their
 <p><br><br />
 Important topics discussed in Video 1 include:</p>
 <ul>
-<li>How to access your genome of intrest in the UCSC Genome Browser.</li>
+<li>How to access your genome+assembly of interest in the UCSC Genome Browser.<br />
+</li>
 <li>Where you can find the chromosomal coordinates of the region currently in view or of a region you just selected (with click+drag).<br />
+</li>
+<li>How to go to a gene or region of interest.<br />
 </li>
 <li>How to move around and zoom in and out.<br />
 </li>
@@ -737,7 +776,7 @@ Important topics discussed in Video 1 include:</p>
 <img src="images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_locationinchromosome.png" style="width:100.0%" /> <br />
 <br></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">question</span>(<span class="st">&quot;Question 1: What chromosome is ACTB located on? And is it located on the short or long arm of this chromosome?&quot;</span>,</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw">answer</span>(<span class="st">&quot;chr7, short arm&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw">answer</span>(<span class="st">&quot;chr7, short arm&quot;</span>, <span class="dt">correct =</span> <span class="ot">TRUE</span>, <span class="dt">message =</span> <span class="st">&quot;The *ACTB* gene is indeed located on the short arm of chromosome 7. In the coordinates bar and in the &#39;ruler&#39; track we can see that we are looking at chromosome 7. By looking at the red |-sign in the chroosomal idiogram, we see that this gene is located to the left of the centromere (red diabolo within the idiogram) and thus ont the short arm.&quot;</span>),</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">answer</span>(<span class="st">&quot;chr7, long arm&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Where do you see the red |-sign in the miniature chromosome on top?&quot;</span>),</a>
 <a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">answer</span>(<span class="st">&quot;chr17, short arm&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Review the UCSC Genome Browser Basics video, or find *chr#* in the browser window&quot;</span>),</a>
 <a class="sourceLine" id="cb1-5" data-line-number="5">  <span class="kw">answer</span>(<span class="st">&quot;chr17, long arm&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Review the UCSC Genome Browser Basics video, or find *chr#* in the browser window&quot;</span>),</a>
