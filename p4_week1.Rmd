@@ -106,7 +106,7 @@ Fastq files have the extension `.fq` or `.fastq`, or are compressed as `.fq.gz` 
 
 <br> 
 
-These fastq files are what the processing with.  
+These fastq files are what we start our processing with:  
 
 1. **Remove adapters and poor-quality nucleotides**: The adapters should be removed, as they were not part of the original sample and low-quality nt's are more likely to be wrong and we therefore remove those as well. This can result in the complete removal of some reads because of their overall low quality or short length.   
 <br>
@@ -124,10 +124,12 @@ These fastq files are what the processing with.
 <br>
 
 `r colorize("Additional Ideas but I do not know whether we have time for them:", "red")`    
+
 - Mention specific softwares/tools?  
 - Show examples of the files? Might help students understand how "the data" looks like. Could be in this numbered list or in section below (1.3.4).    
 - Elaborate on important/often-applied settings and their rationale?  
 - Add an asignment here: to put steps in the right order with quality checks in between? Like in:  
+
 <br>
 <!-- ![](images/week1/2_seq2science/seq2science_siebrenspptx.png){width=70%}\    
 [Sec2science / adapted from Siebrens presentation / shows RNA-seq pipeline ](https://vanheeringen-lab.github.io/seq2science/content/workflows.html)      
@@ -145,7 +147,7 @@ These fastq files are what the processing with.
 ***  
 <br> 
 
-### 1.3.3 Quality evaluation    
+### 1.3.2 Quality evaluation    
 It is important to check the quality of your data along the way:   
 
 - FASTQC (Qualty Check) software visaully summarizes the attached Phred quality scores.  
@@ -157,7 +159,7 @@ It is important to check the quality of your data along the way:
 ***  
 <br>  
 
-### <span style="color: red;">1.3.4 Output files: bigwigs, peaks & counts</span>    
+### <span style="color: red;">1.3.3 Output files: bigwigs, peaks & counts</span>    
 `r colorize("Showing examples of how the output may look like or do this along the way in the numbered list above?", "red")`  
 
 <br>  
@@ -165,7 +167,7 @@ It is important to check the quality of your data along the way:
 ***  
 <br> 
 
-### <span style="color: red;">1.3.5 Alternatively: use FAIR data   
+### <span style="color: red;">1.3.4 Alternatively: use FAIR data   
 `r colorize("Add section discussion FAIR data and referring to several platforms where it can be found? Several reserach consortia provide easy access and clear description of their data through data portals. These files can be downloaded or immediately uploaded to the UCSC Genome browser using the URL", "red")`
 
 <br>  
@@ -173,7 +175,7 @@ It is important to check the quality of your data along the way:
 ***  
 <br> 
 
-### 1.3.6 Exercises   
+### 1.3.5 Exercises   
 Ideas:  
 
 - Put steps in right order with options for quality checks.  
