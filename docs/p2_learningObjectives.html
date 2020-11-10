@@ -455,7 +455,7 @@ $(document).ready(function () {
 </li>
 <li>Global objectives #4-5.</li>
 </ul>
-<p>In week 1 we have estimated which mark is enriched in promoters, gene bodies or other intergenic regions. This week we will put a number to these estimates. More specifically,..<br />
+<p>In week 1 we have estimated which mark is enriched in promoters, gene bodies or enhancers. This week we will put numbers to these estimates. More specifically,..<br />
 <br></p>
 <p>Question from my side, what would be a good first step to look at for students?:<br />
 - Count the occurrences of a histone PTM per genomic element and then state something about the enrichment of that mark in a particular genomic element?<br />
@@ -493,6 +493,48 @@ $(document).ready(function () {
 </blockquote>
 <p>The bar graph or heatmap we made for question 4 does not take along peak height (signal strength) which could hold additional information does not allow a locus-specific comparison among different cell types. For that we would need to, somehow, include the genomic location int he plot.</p>
 <p>Luckily, we have another option to plot the occurrences and co-occurrences of histone marks around a chosen genomic landmark (eg TSS) that <em>does</em> take along the genomic locus and signal strength: a heatmap. We will do so next week.</p>
+<p><br> #### Alternative workflow<br />
+Based on</p>
+<ul>
+<li>Computational Genomics with R Book from Altuna Akalin,creative commons license, chapters 6 and 9 <a href="http://compgenomr.github.io/book/">booklink</a> -<br />
+</li>
+<li>Bioconductor 2018 conference, workshop GenomicRanges <a href="https://bioconductor.github.io/BiocWorkshops/solving-common-bioinformatic-challenges-using-genomicranges.html">workshop link</a><br />
+</li>
+<li>Bioconductor 2020 conference, workshop Integrated ChIP-seq Data Analysis <a href="http://integratedchipseqanalysis-workshop-kqumrdos.bioc.cancerdatasci.org/files/vignettes/IntegratedChIPseqAnalysisWorkshop.html#Load_required_libraries">workshop link</a><br />
+</li>
+<li>ChIPpeakAnno tutorial/vignette <a href="https://bioconductor.org/packages/release/bioc/vignettes/ChIPpeakAnno/inst/doc/ChIPpeakAnno.html">vignette link</a></li>
+</ul>
+<p><strong>Required packages</strong>:</p>
+<ul>
+<li>ChIPpeakAnno<br />
+</li>
+<li>GenomicRanges<br />
+</li>
+<li>rtracklayer<br />
+</li>
+<li>UpSetR</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li><p>Familiarize with *Ranges structure and language and GRanges and GRangesList objects<br />
+Functions:</p></li>
+<li><p>Import MACS2 peaks into R<br />
+Functions: <code>toGRanges()</code></p></li>
+<li>Optionally: find overlap between replicates<br />
+</li>
+<li>Count and visualize distribution of peaks over genomic different marks in exon, intron, enhancer, proximal promoter, 5’ UTR and 3’ UTR</li>
+<li>Annotate peaks to genes<br />
+</li>
+<li><p>Determine and visualize the distance of a peak to a genomic feature</p></li>
+<li>How many promoters are active in monocytes? And what about CD4 T cells<br />
+</li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li>Familiarize with GRanges object<br />
+</li>
+<li>Import peaks data into R<br />
+</li>
+<li>Identify the condfident peaks among two replicates, plot in venn diagram, continue with these for the analysis</li>
+</ol>
 <hr />
 </div>
 <div id="week-3" class="section level2">

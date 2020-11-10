@@ -47,7 +47,7 @@ For this practical, we will use **data for white blood cells** from the [the BLU
   
   
 <a href = "https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1001046">
-![](images/plosbiol_2011_ENCODE_userguid_fig1a.png){width=80%}
+![](images/index_fig1_plosbiol_2011_ENCODE_userguid_fig1a.png){width=80%}
 </a>  
 [The ENCODE Project Consortium, 2011, PLoS Biology](https://doi.org/10.1371/journal.pbio.1001046)  
 <br>    
@@ -127,7 +127,7 @@ Cell | Marker | Localization and/or function | Gene(s) |  Also found on | Ref
 
 ### Hematopoiesis scheme  
 <a href = "https://www.blueprint-epigenome.eu/UserFiles/File/cell%20types%20images%20etc/Haematopoiesis_original.pdf">
-![](images/BP_Haematopoiesis_original.png)
+![](images/index_fig2_BP_Haematopoiesis_original.png)
 </a>
 [BLUEPRINT, hematopoiesis](https://www.blueprint-epigenome.eu/UserFiles/File/cell%20types%20images%20etc/Haematopoiesis_original.pdf)  
 <br> 

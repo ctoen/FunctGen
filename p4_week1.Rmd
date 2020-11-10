@@ -47,7 +47,7 @@ colorize <- function(x, color) {
 2. Understand how to move in the UCSC genome browser and know how to go to regions and genes of interest.  
 3. Recognize the following elements/regions in the UCSC genome browser: chromosome, centromere, telomere, gene, exon, intron, utr, promoter, and (candidate) enhancer/repressors.   
 4. Tell apart UCSC genome browser tracks of H3K27ac, H3K27me3, H3K36me3, H3K4me1, H3K4me3 and H3K9me3 histone ChIP-seq and DNaseI-seq signal (and ChIP-seq input) based on their coverage profile and their location with respect to genes and other annotated genomic/chromosomal elements. 
-5. Can interpret - and thus understand - ChIP- and DNaseI-seq signal in the UCSC genome browser.   
+5. colorize("Can interpret - and thus understand - ChIP- and DNaseI-seq signal in the UCSC genome browser.", "red")     
 - These refer to Global learning objectives #1-3.   
 
 <br>  
@@ -70,7 +70,7 @@ colorize <- function(x, color) {
 
 ## 1.3 From raw data to science   
 <center>  
-![](images/week1/2_seq2science/whatbioinformaticiancsdo.png){width=60%}  
+![](images/wk1_3_intro_whatbioinformaticiancsdo.png){width=60%}  
 </center>  
 
 <br><br>  
@@ -93,7 +93,7 @@ All these aspects need to be taken into account while processing the raw reads t
 The sequence of the DNA molecules outputted by the sequencer together with their quality scorese are stored in `fastq` files that show 4 lines per DNA sequence. This is an example with 2 DNA sequences (8 lines):  
 <br>
 </center>  
-![](images/week1/2_seq2science/fastq_example3.png)   
+![](images/wk1_3_fastq_example3.png)   
 </center>  
 <br>
 
@@ -124,8 +124,11 @@ The BAM files contain information about the read sequence, how it was mapped to 
 <br>
 These files can be uploaded to the UCSC Genome Browser which we will look at in more detail today as well. Various file types can store this kind of data. We wil use `bigwig` files (`.bw` file extension)  
 <br>
-5. **Call peaks**: Computationally identify regions with significantly higher number of reads than expected. There are different tools out there to perform this task MACS2 is one of them and was used to call peaks in the datasets that we will be using. Peak calling is a mathemetical/statistical procedure and never black and white. It depends among others on thresholds used (p-value, false-discovery rate) abnd the control sample. And it is always wise to visually inspect the resulting peaks in the UCSC genome browser.  
+5. **Call peaks**: Reads are scattered through the genome but locations where the used antibody recognizes its target (eg. DNA-binding TF, histone, histone variant or histone PTM) will collect more reads. Peak calling is the computational process to identify these regions, often with respect to a control, 'input' dataset where no antibody or no specific antibody was used. Verious tools can perform this task. MACS2 is one of them and was used to call peaks in the datasets that we will be using.  
+<br>  
+Peak calling is a mathemetical/statistical procedure and never black and white. It depends among others on thresholds used (p-value, false-discovery rate) abnd the control sample. And it is always wise to visually inspect the resulting peaks in the UCSC genome browser.  
 <br>
+Peaks are repored as regions, or *genomic intervals* with their genomic coordinates: *chr start end*. As well as a *score* that indicates the strength of the signal observed for this peak. 
 6. **Read counting**: Count reads that fall within genes, other genomic elements or peak regions. These counts and the actual peak locations are used for eg. differential gene expression analyses (differentiated vs undifferentiated or control vs treatment). A well-known, widely used tool for this purpose is DESeq2.  
 <br>
 7. Optionally **DNaseI footprinting**, **variant calling**, **novel gene identification**: Depending on your experimental set up ... For DNaseI-seq, we can identify small depleted regions within peaks that correspond to the nucleotides that interact with the TF. This interaction protects these nucleotides from DNaseI attacks. These so-called footprints can be used to identify TF motifs and predict the likely TF bound. Although this sounds simple, and for a stable binding factor like CTCF it may be the case, it is not always that simple in reality.    
@@ -139,15 +142,15 @@ These files can be uploaded to the UCSC Genome Browser which we will look at in 
 - Add an asignment here: to put steps in the right order with quality checks in between? Like in:  
 
 <br>
-<!-- ![](images/week1/2_seq2science/seq2science_siebrenspptx.png){width=70%}\    
+<!-- ![](images/wk1_3_seq2science_siebrenspptx.png){width=70%}\    
 [Sec2science / adapted from Siebrens presentation / shows RNA-seq pipeline ](https://vanheeringen-lab.github.io/seq2science/content/workflows.html)      
 <br>
 
-![](images/week1/2_seq2science/encode_chipseq_readmapping.png){width=50%}\   
+![](images/wk1_3_encode_chipseq_readmapping.png){width=50%}\   
 [The ENCODE Project, ChIP-seq read mapping ](https://www.encodeproject.org/pipelines/ENCPL220NBH/)   
 <br>  -->  
 
-![](images/week1/2_seq2science/Furay_2012_naturereviews_fig2_chipseqanalysis.png){width=70%}\   
+![](images/wk1_3_Furay_2012_naturereviews_fig2_chipseqanalysis.png){width=70%}\   
 [Furay, 2012, Nat Rev](https://pubmed.ncbi.nlm.nih.gov/23090257/)  
 
 <br>  
@@ -210,6 +213,8 @@ Ideas:
 - Put steps in right order with options for quality checks.  
 - Recognize a type of file?  
 - Evaluate good/bad fastqc output?  
+- print head one of the blueprint fastq files --> mc about read length,   
+- where can we find information about how fastq files were mapped?  
 
 <br>  
 
@@ -277,7 +282,7 @@ Some actions and terms that were not explicitly discussed:
 <span style="color: orange; font-family: Arial; font-size:18px;">ACTION: Go to the [UCSC Genome Browser](genome.ucsc.edu).</span>   
 <br> 
 The starting page has been updated since the video was made but still holds the same blue bar at the top with **Genomes**, **Tools**, etc.:  
-![](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_genome_browser_fig1_startpage_topmenubar.png){width=100%}   
+![](images/wk1_4b_ucsc_genome_browser_topmenubar.png){width=100%}   
 
 <br>
 
@@ -301,7 +306,7 @@ We can go to a position of our choice by entering the gene or chromosomal coordi
 <span style="color: orange; font-family: Arial; font-size:18px;">ACTION: Go to *ACTB* gene (gene coding for non-muscular actin part of cytoskeleton).</span>    
 <br>
 Genomes page, ready to go to *ACTB* gene in Human genome GRCh38:  
-![](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_question_startpage.png)  
+![](images/wk1_4b_ucsc_gb_actb_question_startpage.png)  
 
 <br>
 
@@ -314,7 +319,7 @@ As discussed in the video, in the top of the window we have navigation and zoom 
 
 <br>
 Figure for Question 1:   
-![](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_locationinchromosome.png){width=100%}\     
+![](images/wk1_4b_ucsc_gb_actb_locationinchromosome.png){width=100%}\     
 <br>
 ```{r Q1_actin_location, eval = F, echo=T, exercise = T}
 question("Question 1: What chromosome is ACTB located on? And is it located on the short or long arm of this chromosome?",
@@ -344,9 +349,9 @@ The method of display and whether individual tracks are displayed can be changed
 <span style="color: orange; font-family: Arial; font-size:18px;">ACTION: for GENCODE v32, via `Configure GENCODE v32`, make sure the option "splice variants" is unchecked.</span>     
 <br>
 Configuration window for GECODE v32 gene track with splice variants *unselected*:  
-![](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_unselectsplicevariants.png)\    
+![](images/wk1_4b_ucsc_gb_unselectsplicevariants.png)\    
 <br>
-Your GB session should look like this: ![](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_genetracksonly.png){width=100%}\      
+Your GB session should look like this: ![](images/wk1_4b_ucsc_gb_actb_genetracksonly.png){width=100%}\      
 <br>
 We see the complete *ACTB* gene with exons as horizontally stretched rectangles and introns as horintal lines with arrowheads in them  indicating the coding direction/strand. The exons have different heights. The highest regions correspond to  *coding* exons, the other regions are the 5- and 3UTR.  
 <br>
@@ -355,7 +360,7 @@ We see the complete *ACTB* gene with exons as horizontally stretched rectangles 
 
 <br>
 More information about *ACTB* can be obtained by clicking on the gene in the browser. Doing that brings you to a gene page like:  
-![](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_geneinformation.png){width=100%}\    
+![](images/wk1_4b_ucsc_gb_actb_geneinformation.png){width=100%}\    
 <br>
 ```{r Q2_ACTB_exons, eval = F, echo=T, exercise = T}
 question("Question 2: How many exons does the *ACTB* gene have?",
@@ -368,7 +373,7 @@ question("Question 2: How many exons does the *ACTB* gene have?",
 <br>  
 
 Figure for Question 3:   
-![](images/week1/3b_ucsc_gb_looking_at_genes/ucsc_gb_actb_question_TSSquestion.png)
+![](images/wk1_4b_ucsc_gb_actb_question_TSSquestion.png)
 
 <br>     
 ```{r Q3_ACTB_start, eval = F, echo=T, exercise = T}
@@ -426,9 +431,9 @@ SPI1 gene is located on chr ...  . It spans ... bp and is encoded on the [plus/m
 To upload the data we have already put them together in a so-called track hub, hosted by our own server. We can add this to our browser session by going to the tab "My Data" in the top menu and select "Track Hubs". In the "My hubs" tab you can paste a URL that directs to the data you want to upload.  
 <br>
 
-![Go to Track Hubs](images/week1/3c_ucsc_gb_looking_at_data/ucsc_gb_encode_fig1_gototrackhub.png){width=100%}\    
+![Go to Track Hubs](images/wk1_4c_ucsc_gb_encode_fig1_gototrackhub.png){width=100%}\    
 
-![My Hubs window](images/week1/3c_ucsc_gb_looking_at_data/ucsc_gb_encode_fig2_trackhub.png){width=100%}\    
+![My Hubs window](images/wk1_4c_ucsc_gb_encode_fig2_trackhub.png){width=100%}\    
 
 <br>
 <span style="color: orange; font-family: Arial; font-size:18px;">ACTION: Upload the required data using the following URL [...].</span>     
@@ -743,7 +748,19 @@ question("Question 22: Active enhancers are marked by ...",
 ```{r Q23_summary, eval = F, echo=T, exercise = T}
 question("Question 23: H3K9me3-mediated silencing often spans ...",
   answer("small domain, single genes"),
-  answer("broad domain, multple genes"),
+  answer("broad domain, multple genes", correct = T),
+  allow_retry = TRUE
+)
+```
+<br>
+```{r Q24_summary, eval = F, echo=T, exercise = T}
+question("Question 24: The gene body of a transcribed gene (eg *ACTB* or *CD14* gene in  monocytes) is covered by ...",
+  answer("H3K9me3"),
+  answer("H3K27me3"),
+  answer("H3K4me3"),
+  answer("H3K4me1"),
+  answer("H3K27ac"),
+  answer("H3K36me3", correct = T, message = "Indeed, H3K36me3 is generally associated active chromatin. Depending on where in the gene and when in the transcriptional prociess H3K36 is methylated (and to what degree), this modification has been found to have distinct roles, ranging from preventing aberrant transcriptional initiation within coding sequences to recruitment of splicing factors, dosage compensation and more. The first occrus in yeast, by recruitment of the deactylase complex enforcing a deacetylated chromatin state in the wake of transcribing RNAPII [Wagner and Carpenter, 2014, Nat Rev Mol Cell Biol](https://doi.org/10.1038/nrm3274))."),
   allow_retry = TRUE
 )
 ```

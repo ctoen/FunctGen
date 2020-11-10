@@ -59,7 +59,7 @@ knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
 
 > #### Global learning objectives  
   1. Understand how we come from a ChIP-sequencing experiment to useful data. 
-  2. Know how to display and browse through genomics data in the UCSC Genome Browser and formulate some basic hypotheses using this tool.  
+  2. Know how to display and browse through genomics data in the UCSC Genome Browser and formulate some basic hypotheses using this tool.
   3. Tell apart different genomics datasets based on their pattern int he UCSC Genome Browser.   
 4. Quantify and visually summarize the genomic distribution of histone ChIP-seq peaks and signal strength in r.   
 5. Statistically test for enrichment of histone marks in functional genomic elements.  
@@ -110,7 +110,7 @@ knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
 - *Bioconductor, count peak distribution and compare marks among regions*  
 - Global objectives #4-5.  
 
-In week 1 we have estimated which mark is enriched in promoters, gene bodies or other intergenic regions. This week we will put a number to these estimates. More specifically,..   
+In week 1 we have estimated which mark is enriched in promoters, gene bodies or enhancers. This week we will put numbers to these estimates. More specifically,..   
 <br>
 
 Question from my side, what would be a good first step to look at for students?:  
@@ -131,14 +131,110 @@ Question from my side, what would be a good first step to look at for students?:
 > #### Working questions  
 1. Look in the benome browser for the H3K4me3 in monocytes or look back at your answer of question 5 in week 1. This time we will count all the overlap between H3K4me3 peaks and different genomic elements to find out in which region most of the H3K4me3 peaks occur? 
 2. Is this enrichment in promoters more than you would expect by chance?  
-2. And what if we look at H3K27ac or H3K36me3?  
+2. And what if we look at H3K27ac or H3K4me1?  
 3. Do these numbers differ (significantly?) when we look at T cells instead of monocytes?   
 4. Now we will count the overlap among histone marks in monocytes. What genomic elements are associated with each combination? (one question but will take some time for students)
 
 The bar graph or heatmap we made for question 4 does not take along peak height (signal strength) which could hold additional information does not allow a locus-specific comparison among different cell types. For that we would need to, somehow, include the genomic location int he plot.  
 
 Luckily, we have another option to plot the occurrences and co-occurrences of histone marks around a chosen genomic landmark (eg TSS) that *does* take along the genomic locus and signal strength: a heatmap. We will do so next week.  
+
+<br>
+#### Alternative workflow  
+Based on:   
+
+- Computational Genomics with R Book from Altuna Akalin,creative commons license, chapters 6 and 9 [booklink](http://compgenomr.github.io/book/) -  
+- Bioconductor 2018 conference, workshop GenomicRanges [workshop link](https://bioconductor.github.io/BiocWorkshops/solving-common-bioinformatic-challenges-using-genomicranges.html)    
+- Bioconductor 2020 conference, workshop Integrated ChIP-seq Data Analysis [workshop link](http://integratedchipseqanalysis-workshop-kqumrdos.bioc.cancerdatasci.org/files/vignettes/IntegratedChIPseqAnalysisWorkshop.html#Load_required_libraries)  
+- ChIPpeakAnno tutorial/vignette [vignette link](https://bioconductor.org/packages/release/bioc/vignettes/ChIPpeakAnno/inst/doc/ChIPpeakAnno.html)  
+- ChIP-seq data analysis in R, Jonas Ibn-Salem, JGU/IMB Mains [tutorial link](http://cbdm-01.zdv.uni-mainz.de/~jibnsale/teaching/chip-seq_exercises.html#requirements)  
+
+**Required packages**:  
+
+- GenomicRanges  
+- GenomicFeatures  
+- rtracklayer   
+- TxDb.Hsapiens.UCSC.hg38.knownGene  
+- ChIPpeakAnno  
+- UpSetR  
+
+
+1. Introduce Bioconductor  
+
+  * bioconductor set up, reference site, objects and packagage rely on each other, several handy functions `class()`, `print()` and `methods(class = "...")`
+
+2. Familiarize with (basics of) *Ranges structure and language and GRanges and GRangesList objects  
+
+  * You already know the r data structures: vector, dataframe, matrix, Lists. In genomics often perform manipulations and calculations using genomic intervals (mention examples). IRanges data structure  
+  * simple example of GRanges object  
+  * Metadata, show schamatic overview of objects with metadata, what is it, how is it displayed (right of the `|` when object is printed ), obtain columsn
+
+- convert dataframe to GRanges object with `as()`  
+  + dataframe minimally requires `start` `end` and `chr`  
+  + `gr <- as(dataframe, "GRanges")`  
+- minimally requires chr, start and end column from dataframe in input  
+- also has metadata, `seqnames` and `seqinfo`  
+- see ist of available accessors use: `methods(class = "GRanges")`  
+  + `seqnames(gr)` - chromosome names  
+  + `ranges(gr)` - returns IRanges object  
+  + `mcols(gr)` - display metadata per range  
+  + `seqinfo(gr)` - to store sequence information  
+  + `genome(gr)`- genome name   
+  + both are **setter** and **getter** functions  
+  + can be inherited by other S4 objects  
  
+- for GRangesList:   
+  + `GRangesList(myGranges1, myGranges2, ...)`
+- convert back with `unlist()`  
+
+Overlap functions  
+
+- `countOverlaps(query, subject)`  
+- `findOverlaps(query, subject)`  
+- `subsetByOverlap(query, subject)`  
+- `overlapsAny()`  
+- query and subject can be GRanges and GRangesList  
+
+3. Import custom data/MACS2 peaks into R  
+
+  a. review how MACS2 output looks like. "The first lines starting with # indicate parameter and input data for the peak calling. The rows bellow are peak coordinates. Each peak is recorded on one row with the chromosome name, start and end coordinate, peak length, summit coordinate, number of reads (tags), a −log10() transformation of the p-value, fold enrichment over input, and the FDR."  
+  b. import .bed file into r
+
+  * option 1: convert data.frame into GRanges object  
+  * option 2: use `toGRanges()` from `ChIPpeakAnno` package.  
+
+4. Perform basic operations on imported peaks as GRanges object:  
+
+  * What is the number of peaks?  `length(imported_peaks)`  
+  * What is the genome we worked in?  `genome(imported_peaks)`  
+  * How many different chromosomes contain a peak?  `length(seqnames(imported_peaks))`  
+  * What is the mean, median and max size of the peaks `summary(width(imported_peaks))`  
+  * What is the distribution of peak sizes?   `hist(width(imported_peaks), xlab = "peak size")`  
+  * What is the distribution of ChIP-seq peak p-values (score column gives -log10(pvalues), obtain with `score()` function)? `hist(score(imported_peaks), xlab = "-log_10(p-value)")`    
+  * Remove all peaks that are larger than 3kb in size --> use index [ ] operator  on GRanges object, similar to vectors `imported_peaks <- imported_peaks[width(imported_peaks) <= 3000]`  
+
+5. Compare imported peaks with promoters  
+
+  * import promoters.bed file with `toGRanges()` (ChIPpeakAnno) or  `readPeakFile()` (ChIPseeker)  
+  * make barplots of the number of the number of promoters and the number of peaks in `imported_peaks`  
+  * Calculate the overlaps between two sets of regions using `GenomicRanges` functions:  
+  
+    - `subsetByOverlaps(query, subject)` returns the peaks that overlap with the regions in `subject`
+    - `countOverlaps(query, subject)` returns the number of peaks that overlap with a given region in `subject`  
+    - `findOverlaps(query, subject)`, returns a matrix, showing which peaks from `query` overlap which regions from `subject`.  
+
+6. Use custom ChIPs-eq analysis packages eg `ChIPpeakAnno` or `ChIPSeeker` package to count and visualize distribution of peaks  
+  
+  * overview of ChIP-seq analysis with candidate r/Bioconductor packages  
+  * `ChIPSeeker` works on BED files. `ChIPpeakAnno`
+  * Example 1: overlap/occurence in genomic regions: in exon, intron, enhancer, proximal promoter, 5’ UTR and 3’ UTR  
+  * Statistics: is mark enriched in a particular region compared to background/genomic distribution?  
+  * Repeat this for another mark.  
+  * Example 2: distance to TSS and annotate peaks to genes (with limit on distance to TSS)  
+  * Example 3: 
+  
+7. 
+
 ***  
 
 ## Week 3   

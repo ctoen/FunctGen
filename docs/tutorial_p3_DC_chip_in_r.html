@@ -526,9 +526,9 @@ The BAM, BCFv2, BED, and PSL formats are using the 0-based coordinate system.</p
 </ul>
 <p><a href = "https://gatk.broadinstitute.org/hc/en-us/articles/360035890791-SAM-or-BAM-or-CRAM-Mapped-sequence-data-formats"><img src="images/week1/2_seq2science/wk1_2_BAM_fields_broadinstitute.png" alt="Broad Institute, SAM or BAM or CRAM - Mapped sequence data formats" /> </a></p>
 <p>CIGAR abbreviations:<br />
-[images/week1/2_seq2science/wk1_2_BAM_file_CIGAR_string.png]</p>
+<img src="images/week1/2_seq2science/wk1_2_BAM_file_CIGAR_string.png" /></p>
 <p>FLAG abbreviations:<br />
-[images/week1/2_seq2science/wk1_2_BAM_file_FLAG_encoding.png]</p>
+<img src="images/week1/2_seq2science/wk1_2_BAM_file_FLAG_encoding.png" /></p>
 <p><br><br />
 <strong>R packages for BAM files</strong></p>
 <ul>
@@ -809,6 +809,12 @@ Create a heatmap using only differentially bound peaks<br />
 </div>
 <div id="code-summarizing-diff-binding" class="section level2">
 <h2>3.13 Code: Summarizing diff binding</h2>
+<p><code>dba.plotBox()</code> returns several insights:</p>
+<ul>
+<li>boxplot showing the log2 normalized reads in binding sites present in both samples but also for sites with increased reads in either of the conditions, so where differential binding occurs.<br />
+</li>
+<li>p-values for the pairwise comparisions between these two groups</li>
+</ul>
 <p>Create a box plot of the peak intensities<br />
 <code>compare_groups &lt;- dba.plotBox(ar_diff, notch=FALSE)</code></p>
 <p>Inspect the returned p-values<br />
@@ -819,36 +825,152 @@ Create a heatmap using only differentially bound peaks<br />
 <h1>Ch4 From Peaks to Genes to Function</h1>
 <div id="video-interpreting-chip-seq-peaks" class="section level2">
 <h2>4.1 Video: Interpreting ChIP-seq peaks</h2>
+<p>Here: what does it mean that this set of peaks is more pronounced in one sample compared to the other? How can we use this to understand the different phenotypes and the different responses to treatment?<br />
+Remember, what wer are eventually actually interested in are the effects on gene regulation.</p>
+<p>Which gene is affected by a given binding site?<br />
+- Impossible to know for sure - Commonly used heuristic is assignmetn to closest gene</p>
+<div id="acquire-gene-location-information" class="section level4">
+<h4>Acquire gene location information</h4>
+<p>For this need information about gene location. –&gt; From annotation packages in <code>TxDb</code> packages.</p>
+<ul>
+<li>uses entrez geneIDs</li>
+</ul>
+<p>Aditional packages to translate these IDs to perhaps more usefull names, eg gene sympols: <code>org.Hs.eg.db</code><br />
+<code>select(org.Hs.eg.db, keys = gene_id, columns = &quot;SYMBOL&quot;, keytype = &quot;ENTREZID&quot;)</code></p>
+<p>But as some genes have mutliple symbols. Is is advised to work as long as possible with the unque entrezIDs.</p>
+</div>
+<div id="annotating-peaks" class="section level4">
+<h4>Annotating peaks</h4>
+<p><code>ChIPpeakAnno</code> package<br />
+<code>annoPeaks(peaks, human_genes, bindingType = &quot;StartSizte&quot;, bindingRegion = c(-5000,5000))</code></p>
+<ul>
+<li><p>2 GRanges objects: peak coordinates and annotations.</p></li>
+<li><p>match them by other criteria’s: bindingtype and bindingregion. bindingRegion indicates what region around the bindingtype, the peak should fall in to</p></li>
+</ul>
+</div>
+<div id="visualizing-similarities-and-differences" class="section level4">
+<h4>Visualizing similarities and differences</h4>
+<p>Venndiagram from <code>DiffBind</code> pckage</p>
+<p><code>dba.plotVenn(peaks, mask = 1:2)</code> — only for small sample size</p>
+<p>Use <code>UpSet</code> package for multiple sample comparison<br />
+<code>called_peaks &lt;- as.data.frame(peaks$called)</code><br />
+<code>upset(called_peaks, sets = colnames(peaks$called), order.by = 'freq')</code></p>
+<p>Need dataframe with indicated for each peak in which samples it was present. DBA object gives this in the “called” object.</p>
+</div>
 </div>
 <div id="code-consolidating-peaks" class="section level2">
 <h2>4.2 Code: Consolidating peaks</h2>
+<p>How to obtain a merged peak set that incorporates calls from all samples..</p>
+<p><code>ChIPpeakAnno</code> package –&gt; <code>findOverlapsOfPeaks()</code> function can merge peak sets as GRagnes from up to five samples</p>
+<ol style="list-style-type: decimal">
+<li>Extract peaks from the ChIPQCexperiment object: <code>peak_calls &lt;- peaks(ar_calls)</code> using <code>peaks()</code> argument, returns GRangesList object.<br />
+</li>
+<li>Discard alls amples that failed QC <code>peak_passed &lt;- peak_calls[qc_pass]</code> – don’t know where <code>qc_pass</code> comes from. It selects 4 samples from the original list of 9.<br />
+</li>
+<li>Find overlaps between peak sets using <code>findOverlapsOfPeaks()</code> function <code>peaks_combined &lt;- findOverlapsOfPeaks(peak_passed[[1]], peak_passed[[2]], peak_passed[[3]], peak_passed[[4]], maxgap=50)</code><br />
+</li>
+<li>Examine the merged peak set <code>mergedPeaks</code></li>
+</ol>
+<p>In mergedPeaks have first element with venn counts.</p>
 </div>
 <div id="code-using-annotations" class="section level2">
 <h2>4.3 Code: Using annotations</h2>
+<p><code>TxDb.Hsapiens.UCSC.hg19.knownGene</code> package provides the coordinates of all known human genes.</p>
+<p><code>org.Hs.eg.db</code> package provides mappings between different sets of gene identifiers.</p>
+<ol style="list-style-type: decimal">
+<li><p>Obtain gene symbols from the SYMBOL column of org.Hs.eg.db. <code>gene_symbol &lt;- select(org.Hs.eg.db, keys=human_genes$gene_id, columns=&quot;SYMBOL&quot;, keytype=&quot;ENTREZID&quot;)</code></p></li>
+<li><p>Examine the structure of the returned annotations.<br />
+<code>str(gene_symbol)</code></p></li>
+<li><p>Add gene symbols to human_genes.<br />
+<code>human_genes$symbol &lt;- gene_symbol</code></p></li>
+<li><p>Examine the result.<br />
+<code>print(human_genes)</code></p></li>
+</ol>
 </div>
 <div id="code-annotating-peaks" class="section level2">
 <h2>4.4 Code: Annotating peaks</h2>
+<p>Combine information from the <code>human_genes</code> table and the <code>peaks_merged</code> table using <code>annoPeaks()</code> function. –&gt; returns data frame per gene in question inclduign a column <code>insideFeature</code> indicated where the peak is located realtive to the gene.</p>
+<ol style="list-style-type: decimal">
+<li>Annotate peaks with the closest gene.<br />
+<code>peak_anno &lt;- annoPeaks(peaks_merged, human_genes, bindingType=&quot;startSite&quot;, bindingRegion=c(-5000,5000))</code><br />
+</li>
+<li>Determine the number of peaks that were annotated with genes.<br />
+<code>length(peak_anno)</code><br />
+</li>
+<li>Create a summary table indicating where peaks were located relative to genes.<br />
+<code>table(peak_anno$insideFeature)</code></li>
+</ol>
+<p>Most peaks are inside gene.</p>
 </div>
 <div id="code-which-peaks-are-different" class="section level2">
 <h2>4.5 Code: Which peaks are different?</h2>
+<p>Comparing samples in venndiagram: <code>dba.plotVenn(ar_diff, mask = 1:4)</code><br />
+<br> The <code>upset()</code> function requires you to provide a data frame with one column for each set, i.e. sample, indicating set membership for each peak. The required data is contained in the <code>called</code> field of the <code>ar_diff</code> object.<br />
+<code>called_peaks &lt;- as.data.frame(ar_diff$called)</code><br />
+<code>upset(called_peaks, keep.order = TRUE, sets=colnames(ar_diff$called), order.by=&quot;freq&quot;)</code></p>
 </div>
 <div id="video-interpreting-gene-lists" class="section level2">
 <h2>4.6 Video: Interpreting Gene lists</h2>
+<p>From gene lists to molecular mechanisms</p>
+<p>–&gt; use gene set enrichment approach. How manyu of the genes in each set are associated with peaks of interests. Genes set with high proportion are likely to be of particular relevance</p>
+<p>package: <code>chipenrich</code></p>
+<ul>
+<li>annotatioin happens automatically during enrichment analysis<br />
+</li>
+<li><p><code>chipenrich(peaks, genome = 'hg19', genesets = 'hallmark', locusdef = 'nearest')</code></p>
+<ul>
+<li>genesets = to select one of several supported gene sets</li>
+<li>locusdef = how to genes should be associated with genes, eg closest TSS but can also use windows of varying size</li>
+</ul></li>
+</ul>
 </div>
 <div id="code-associating-peaks-with-genes" class="section level2">
 <h2>4.7 Code: Associating peaks with genes</h2>
+<p>Explore how peak locations relate to to genes <br> <code>plot_dist_to_tss()</code> function from <code>chipenrich</code> package. Creates plot of the distribution of distances between peak locations and the TSS of genes. <br> <code>plot_dist_to_tss(peaks, genome = &quot;hg19&quot;)</code> –&gt; barplot with proportion of peaks. Most peaks occur 10-50 kb from the TSS<br />
+<br> <code>plot_chipenrich_spline()</code> gives the frequency of peaks relative to the length of genes. In addition to the observed frequencies, it also plots the expected distribution for Fisher’s exact test, a binomial model, and the model used by the <code>chipenrich()</code> function.<br />
+<br> <code>plot_chipenrich_spline(peaks, genome = &quot;hg19&quot;, mappability=50)</code><br />
+<strong>I don’t really understand the plot</strong></p>
 </div>
 <div id="code-finding-common-themes" class="section level2">
 <h2>4.8 Code: Finding common themes</h2>
+<p><code>chipenrich()</code> function: finding groups of genes that are more frequently associated with ChIPseq peaks than would be expected by chance.<br />
+<br> need to determine how genes are grouped together, use <strong>Hallmark genesets</strong> from Broad Institute <a href="https://www.gsea-msigdb.org/gsea/msigdb/collections.jsp">ref</a><br />
+<br> Usually only look at the differentially bound peaks. But in this case, only chr20 and thus small dataset, look at peaks with stronger signal in resistant sample.<br />
+<br></p>
+<ol style="list-style-type: decimal">
+<li><p>Select all peaks with higher intensity in treatment resistant samples<br />
+<code>turp_peaks &lt;- peaks_binding[, &quot;GSM1598218&quot;] + peaks_binding[, &quot;GSM1598219&quot;] &lt; peaks_binding[, &quot;GSM1598223&quot;] + peaks_binding[, &quot;GSM1598225&quot;]</code></p></li>
+<li><p>Run enrichment analysis<br />
+<code>enrich_turp &lt;- chipenrich(peaks_comb[turp_peaks, ], genome=&quot;hg19&quot;, genesets = &quot;hallmark&quot;, out_name = NULL, locusdef = &quot;nearest_tss&quot;, qc_plots=FALSE)</code></p></li>
+<li><p>Print the results of the analysis<br />
+<code>print(enrich_turp$results)</code> –&gt; sort by p-value to find most relevant gene sets</p></li>
+</ol>
 </div>
 <div id="code-understanding-the-impact-on-pathways" class="section level2">
 <h2>4.9 Code: Understanding the impact on pathways</h2>
 </div>
 <div id="code-a-closer-look-at-pathways" class="section level2">
 <h2>4.10 Code A closer look at pathways</h2>
+<p>Create a URL that links to the KEGG pathway that came up in the analysis.<br />
+General format of this URL is:<code>https://www.kegg.jp/pathway/pathway/&lt;pathway_id&gt;+&lt;gene_id&gt;+...+&lt;gene_id&gt;</code> <br></p>
+<ol style="list-style-type: decimal">
+<li>create the base url:<br />
+<code>base_url &lt;- &quot;https://www.kegg.jp/pathway/&quot;</code><br />
+</li>
+<li>Add pathway ID to URL:<br />
+<code>path_url &lt;- paste0(base_url, top_path)</code><br />
+</li>
+<li>Collapse gene IDs into selection string<br />
+<code>gene_select &lt;- paste(genes, collapse=&quot;+&quot;)</code></li>
+</ol>
 </div>
+</div>
+<div id="add-gene-ids-to-url" class="section level1">
+<h1>Add gene IDs to URL</h1>
+<p>path_url &lt;- paste(path_url, gene_select, sep=“+”)</p>
 <div id="video-advanced-chip-seq-analysis" class="section level2">
 <h2>4.11 Video: Advanced ChIP-seq analysis</h2>
+<p>Review</p>
 </div>
 </div>
 
