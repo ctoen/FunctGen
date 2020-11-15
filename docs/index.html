@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Written by: Klaas, Simon, Siebren, Christa …" />
@@ -26,17 +26,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -99,6 +88,7 @@ code {
 }
 img {
   max-width:100%;
+  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -247,7 +237,6 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -260,9 +249,48 @@ $(document).ready(function () {
 }
 </style>
 
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
 <!-- code folding -->
 
 
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <style type="text/css">
 
@@ -276,12 +304,6 @@ $(document).ready(function () {
 }
 }
 
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
 
 .toc-content {
   padding-left: 30px;
@@ -317,6 +339,8 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -367,10 +391,16 @@ div.tocify {
   <a href="p2_learningObjectives.html">Learning Objectives</a>
 </li>
 <li>
-  <a href="p4_week1.html">UCSC Genome Browser</a>
+  <a href="p3_week1.html">1: UCSC Genome Browser</a>
+</li>
+<li>
+  <a href="p4_week2_v4.html">2: Annotation</a>
 </li>
 <li>
   <a href="Glossary.html">Glossary</a>
+</li>
+<li>
+  <a href="prepdata.html">Appendix</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -398,44 +428,36 @@ div.tocify {
 <h2>Introduction</h2>
 <p>This is the computer practical for the <a href="https://www.ru.nl/courseguides/science/vm/osirislinks/bb/nwi-bb064b/">Functional Genomics 1</a> course. It builds upon R programming skills taught in the first year during <a href="https://www.ru.nl/courseguides/science/vm/osirislinks/bp/nwi-bp031/">Genomics and Big Data</a> and a basic understanding of the R programming language is required. We will also use statistics from the course <a href="https://www.ru.nl/courseguides/science/vm/osirislinks/bp/nwi-bp012c/">Statistics 1</a>.</p>
 <p>The <strong>purpose</strong> of this practical is to teach you common bio-informatics analyses performed to analyse epigenomics data. You may already be familiar with the output of these analyses from scientific publications or lectures. We will focus on <strong>how to detect, quantify, annotate and visualise epigenetic marks</strong>. At the end of our analyses, we will also relate epigenetic markings to gene activity as well as candidate TFs that might establish them.</p>
-<p>For this practical, we will use <strong>data for white blood cells</strong> from the <a href="http://dcc.blueprint-epigenome.eu/#/home">the BLUEPRINT project</a>, namely: monocytes, T cells, B cells and natural killer cells. BLUEPRINT is a <em>FP7 project aiming to produce a blueprint of haemopoetic epigenomes.</em> We have chosen these datasets because they are well-documenten and easy to find through the BLUEPRINT data portal, and not because we want to teach you the hematopoietic system.<br />
+<p>For this practical, we will use <strong>data of white blood cells</strong> from the <a href="http://dcc.blueprint-epigenome.eu/#/home">the BLUEPRINT project</a>, namely: monocytes, T cells, B cells and natural killer cells. BLUEPRINT is a <em>collaborative project aiming to produce a blueprint of haemopoetic epigenomes</em>. We have chosen these datasets because they are well-documented and easy to find through the BLUEPRINT data portal, and not because we want to teach you the hematopoietic system.<br />
 <br></p>
-<blockquote>
-<h3 id="research-goals">Research goals</h3>
-<ol style="list-style-type: decimal">
-<li>Use combinations of histone PTM data and chromatin accessibility to identify functional genomic elements (eg promoter, enhancers etc) and predict gene activity (active or repressed).<br />
-</li>
-<li>Check obove mentioned predictions on gene activity in single-cell RNA-seq data.<br />
-</li>
-<li>Vice versa, use the epigenetic data to explain gene expression differences detected in a single-cell RNA-seq experiment.<br />
-</li>
-<li>Predict TFs that could mediate cell-specific gene expression.</li>
-</ol>
-</blockquote>
-<p><br></p>
 <blockquote>
 <h3 id="global-learning-objectives">Global learning objectives</h3>
 <ol style="list-style-type: decimal">
-<li>Understand how useful data is obtained from a ChIP-sequencing experiment.<br />
+<li>Explain how to process raw reads from a ChIP-sequencing experiment.<br />
 </li>
-<li>Know how to display and browse through genomics data in the UCSC Genome Browser and formulate some basic hypotheses using this tool.<br />
+<li>Display and browse through genomics data in the UCSC Genome Browser.<br />
 </li>
-<li>Tell apart different genomic datasets based on their pattern int he UCSC Genome Browser.<br />
+<li>Distinguish different genomic datasets based on their pattern in the UCSC Genome Browser.<br />
 </li>
-<li>Quantify and visually summarize the genomic distribution of histone ChIP-seq peaks and signal strength in r.<br />
+<li>Quantify the overlap among histone ChIP-seq peaks and genomic features in r.<br />
 </li>
-<li>Statistically test for enrichment of histone marks in functional genomic elements.<br />
+<li>Visually summarize this quantification in bar- and pieplots in r.<br />
 </li>
-<li>Summarize genome-wide ChIP-seq signal in a heatmap and use this heatmap to identify identify functional genomic elements and predict gene activity.<br />
+<li>Statistically test for enrichment of histone marks in functional genomic elements.</li>
+<li>Identify the nearest TSS to a histone ChIP-seq peak.<br />
 </li>
-<li>Check hypotheses about the epigenetic landscape based on single-cell RNA-seq data with actual epigenomics data, and vice versa (check hypotheses on gene activity in single-cel RNA-seq data).<br />
+<li>Plot the distribution of distances to the TSS.<br />
 </li>
-<li>Formulate hypotheses about (cell-specific) TF function using histone ChIP-seq and ATAC-seq data.</li>
+<li>Summarize the signal signal strength of a histone ChIP-seq dataset around a genomic feature like the TSS or across gene body.<br />
+</li>
+<li>Visualize the distribution of signal strength in a density plot.<br />
+</li>
+<li>Visualize the signal strength around the TSS in a clustered heatmap.<br />
+</li>
+<li>Check hypotheses about the epigenetic landscape based on single-cell RNA-seq data with actual epigenomics data, and vice versa (check hypotheses on gene activity in single-cel RNA-seq data).</li>
 </ol>
 </blockquote>
-<p><a href = "https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1001046"> <img src="images/plosbiol_2011_ENCODE_userguid_fig1a.png" style="width:80.0%" /> </a><br />
-<a href="https://doi.org/10.1371/journal.pbio.1001046">The ENCODE Project Consortium, 2011, PLoS Biology</a><br />
-<br></p>
+<p><br></p>
 </div>
 <div id="structure-of-this-practical" class="section level2">
 <h2>Structure of this practical</h2>
@@ -445,8 +467,8 @@ Global learning objectives #1-3.</p>
 Global learning objectives #4-5.</p>
 <p><strong>Week 3</strong>: Compare epigenetic profiles among different cell types.<br />
 Global learning objectives #5-6.</p>
-<p><strong>Week 4</strong>: Synthesis: epigenomics, scRNA-seq and motif finding.<br />
-Global learning objectives #7-8.<br />
+<p><strong>Week 4</strong>: Synthesis: epigenomics and scRNA-seq.<br />
+Global learning objectives #12.<br />
 <br></p>
 </div>
 <div id="need-help" class="section level2">
@@ -464,35 +486,11 @@ Global learning objectives #7-8.<br />
 </div>
 <div id="background-info" class="section level2">
 <h2>Background info</h2>
-<div id="using-r" class="section level3">
-<h3>Using R</h3>
-<p>We will code in R, which you have already familiarized yourself with during the Genomics &amp; Big Data course.</p>
-<div id="what-does-an-r-package-or-function-do" class="section level5">
-<h5>What does an R package or function do?</h5>
-<ul>
-<li>Use the built-in RStudio help interface to find a particular function<br />
-</li>
-<li>Googling <em>[function or package name] ‘r’</em><br />
-</li>
-<li>Go to the ‘Packages’ tab to find user guides and other documentation on the package<br />
-</li>
-<li>Look into the ‘Help’ tab of the function</li>
-</ul>
-</div>
-<div id="i-get-an-error" class="section level5">
-<h5>I get an error?</h5>
-<ul>
-<li>Read the error, might give you hints</li>
-<li>Google the error + r<br />
-</li>
-<li><a href="https://stackoverflow.com">Stackoverflow</a> is great, Google will often take you there because someone has already asked your question, and someone else has answered, usually many people have answered your question many ways.<br />
-<br></li>
-</ul>
-</div>
-</div>
-<div id="table-with-cell-markers-and-tfs" class="section level3">
-<h3>Table with cell markers and TFs</h3>
-<p>Here’s a table with cell surface proteins, cytokines and TFs that are specific to certain cell types.</p>
+<div id="hematopoiesis-scheme" class="section level3">
+<h3>Hematopoiesis scheme</h3>
+<p>T <a href = "https://www.blueprint-epigenome.eu/UserFiles/File/cell%20types%20images%20etc/Haematopoiesis_original.pdf"> <img src="images/index_fig2_BP_Haematopoiesis_original.png" /> </a> <a href="https://www.blueprint-epigenome.eu/UserFiles/File/cell%20types%20images%20etc/Haematopoiesis_original.pdf">BLUEPRINT, hematopoiesis</a><br />
+<br> ### Table with cell markers and TFs<br />
+Here???s a table with cell surface proteins, cytokines and TFs that are specific to certain cell types.</p>
 <p>Some of the cell surface markers were used to isolate these cells from the bulk using (MACS and) FACS.</p>
 <table style="width:100%;">
 <colgroup>
@@ -686,16 +684,11 @@ Global learning objectives #7-8.<br />
 </table>
 <p><br></p>
 </div>
-<div id="hematopoiesis-scheme" class="section level3">
-<h3>Hematopoiesis scheme</h3>
-<p><a href = "https://www.blueprint-epigenome.eu/UserFiles/File/cell%20types%20images%20etc/Haematopoiesis_original.pdf"> <img src="images/BP_Haematopoiesis_original.png" /> </a> <a href="https://www.blueprint-epigenome.eu/UserFiles/File/cell%20types%20images%20etc/Haematopoiesis_original.pdf">BLUEPRINT, hematopoiesis</a><br />
-<br></p>
-</div>
 <div id="white-blood-cells-in-current-dataset" class="section level3">
 <h3>White blood cells in current dataset</h3>
 <p>Blood cells originate from common, multipotent hemopoietic stem cells in the bone marrow which divide to keep their population stocked or differentiate into more specific progenitors of the myeloid or lymphoid lineages. These progenitors undergo a limited number of divisions and differentiate along the way into mature blood cells: white blood cells, red blood cells and platelets.</p>
 <p>White blood cells encompass a varied group of cells. Each type has its own developmental process controlled by cytokines, cytokine receptors, transcription factors and chromatin remodellers and with distinct morphologies and functions at maturity. Of all the different white blood cells, we will focus on monocytes, NK cells, T cells and B cells in our analyses.</p>
-<p><strong>Monocytes</strong> make up 2-8% of the white blood cells, derive from the myeloid lineage and are part of the innate immune system (first line of defense, limited/general specificity to particular antigens and can’t multiply furhter). They can enter peripheral tissue and differentiate into macrophages which are good at engulfing larger particles but also in dendritic cells which are highly adapted to present foreign antigens to cells of the adaptive immune system.</p>
+<p><strong>Monocytes</strong> make up 2-8% of the white blood cells, derive from the myeloid lineage and are part of the innate immune system (first line of defense, limited/general specificity to particular antigens and can???t multiply furhter). They can enter peripheral tissue and differentiate into macrophages which are good at engulfing larger particles but also in dendritic cells which are highly adapted to present foreign antigens to cells of the adaptive immune system.</p>
 <p><strong>Natural killer cells</strong> or <strong>NK lymphocytes</strong> come from the lymphoid lineage. They are part of the innate immune system with high cytotoxic capabilities and an important first line of defense against virus infections and the formation of abnormal tissues such as cancers.</p>
 <p><strong>T cells</strong> or <strong>T lymphocytes</strong> come from the lymphoid lineage as well and can recognize antigens presented by infected cells or special-antigen presenting cells using their T cell receptor. They can either kill the infected cell immediately - cytotoxic activity - or recruit and/or activate other immune cells including B cells - helper activity. These cytotoxic T lymphocytes are recognized by CD8 molecule on their membrane and helper T lymphocytes by CD4.</p>
 <p><strong>B cells</strong> or <strong>B lymphocytes</strong> also come from the lymphoid lineage and are part of the adaptive (second line, cells differentiated to target specific antigens). Upon activation they differentiate into an antibody-producing plasma cell or a memory B cell.</p>
@@ -715,6 +708,21 @@ Global learning objectives #7-8.<br />
 </ul>
 </div>
 </div>
+<div id="old-text" class="section level2">
+<h2>OLD text</h2>
+<blockquote>
+<h3 id="at-the-end-of-the-practical-you-are-able-to..">At the end of the practical you are able to..</h3>
+<ol style="list-style-type: decimal">
+<li>Use combinations of histone PTM data and chromatin accessibility to identify functional genomic elements (eg promoter, enhancers etc) and predict gene activity (active or repressed).<br />
+</li>
+<li>Check above mentioned predictions on gene activity in single-cell RNA-seq data.<br />
+</li>
+<li>Vice versa, use the epigenetic data to explain gene expression differences detected in a single-cell RNA-seq experiment.<br />
+</li>
+<li>Predict TFs that could mediate cell-specific gene expression.</li>
+</ol>
+</blockquote>
+</div>
 
 
 
@@ -727,56 +735,13 @@ Global learning objectives #7-8.<br />
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
 
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
-<!-- code folding -->
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3,h4",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

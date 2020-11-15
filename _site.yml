@@ -5,11 +5,13 @@ navbar:
     - text: "Home"
       href: index.html
     - text: "Learning Objectives"
-      href: p2_learningObjectives.html
+      href: p2_learningObjectives.html    
     - text: "1: UCSC Genome Browser"
-      href: p4_week1.html
-    - text: "2: bioconductor"
-      href: p5_week2.html
+      href: p3_week1.html  
+    - text: "2: Annotation"
+      href: p4_week2_v4.html
     - text: "Glossary"
-      href: Glossary.html
+      href: Glossary.html   
+    - text: "Appendix"  
+      href: prepdata.html  
 output_dir: "docs"

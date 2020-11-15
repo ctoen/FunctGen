@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Christa Toenhake" />
+
+
+<title>Prepare files for week 2</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Functional Genomics 2020</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="p2_learningObjectives.html">Learning Objectives</a>
+</li>
+<li>
+  <a href="p3_week1.html">1: UCSC Genome Browser</a>
+</li>
+<li>
+  <a href="p4_week2_v4.html">2: Annotation</a>
+</li>
+<li>
+  <a href="Glossary.html">Glossary</a>
+</li>
+<li>
+  <a href="prepdata.html">Appendix</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Prepare files for week 2</h1>
+<h4 class="author">Christa Toenhake</h4>
+<h4 class="date">13/11/2020</h4>
+
+</div>
+
+
+<pre class="r"><code>library(tidyverse)
+library(GenomicRanges)
+library(rtracklayer)
+library(org.Hs.eg.db)
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+txdb &lt;- TxDb.Hsapiens.UCSC.hg38.knownGene </code></pre>
+<pre class="r"><code># this is a preperatory chunk 
+# add  exercise.setup = &quot;mono-data&quot; to chunks that require this data to be evailable
+# H3k4me1 
+mono_h3k4me1 &lt;- rtracklayer::import(&quot;data/blueprint/bed/C000S5H2.ERX547981.H3K4me1.bwa.GRCh38.broad.20150527.chr19.bed&quot;, format = &quot;broadPeak&quot;)
+# H3K4me3  
+mono_h3k4me3 &lt;- rtracklayer::import(&quot;data/blueprint/bed/C000S5H2.ERX547984.H3K4me3.bwa.GRCh38.20150527.chr19.bed&quot;, format = &quot;narrowPeak&quot;)
+# H3K9me3 
+mono_h3k9me3 &lt;- rtracklayer::import(&quot;data/blueprint/bed/C000S5H2.ERX547982.H3K9me3.bwa.GRCh38.broad.20150527.chr19.bed&quot;, format = &quot;broadPeak&quot;)
+# H3K27ac 
+mono_h3k27ac &lt;- rtracklayer::import(&quot;data/blueprint/bed/C000S5H2.ERX547980.H3K27ac.bwa.GRCh38.20150527.chr19.bed&quot;, format = &quot;narrowPeak&quot;)
+# H3K27me3   
+mono_h3k27me3 &lt;- rtracklayer::import(&quot;data/blueprint/bed/C000S5H2.ERX547983.H3K27me3.bwa.GRCh38.broad.20150527.chr19.bed&quot;, format = &quot;broadPeak&quot;)
+# H3K36me3
+mono_h3k36me3 &lt;- rtracklayer::import(&quot;data/blueprint/bed/C000S5H2.ERX547979.H3K36me3.bwa.GRCh38.broad.20150527.chr19.bed&quot;, format = &quot;broadPeak&quot;)
+# create list
+mono_list  &lt;- GRangesList(mono_h3k4me1, mono_h3k4me3, mono_h3k9me3, mono_h3k27ac, mono_h3k27me3, mono_h3k36me3)
+# add names to each element in the list
+names(mono_list) &lt;- c(&quot;h3k4me1&quot;, &quot;h3k4me3&quot;, &quot;h3k9me3&quot;, &quot;h3k27ac&quot;, &quot;h3k27me3&quot;, &quot;h3k36me3&quot;)
+save(mono_h3k4me1, mono_h3k4me3, mono_h3k9me3, mono_h3k27ac, mono_h3k27me3, mono_h3k36me3, mono_list, file =  &quot;data/prepared_rds/blueprint_monocyte_chr19_granges.RData&quot;)</code></pre>
+<pre class="r"><code>genes &lt;- unique(genes(txdb, filter = list(tx_chrom = &quot;chr19&quot;)))
+transcripts&lt;-  unique(transcripts(txdb, filter = list(tx_chrom = &quot;chr19&quot;)))
+promoters_def &lt;- unique(promoters(txdb, filter = list(tx_chrom = &quot;chr19&quot;))) # upstream=2000, downstream=200
+promoters_3k &lt;- unique(promoters(txdb, filter = list(tx_chrom = &quot;chr19&quot;), upstream = 3000, downstream = 3000)) 
+
+# save above GRanges objects in RData file
+save(genes, transcripts, promoters_def, promoters_3k, file =  &quot;data/prepared_rds/txdb_annotation_chr19_genes_tx_pr_tss_granges.RData&quot;)
+
+# map ENTREZ gene id to gene SYMBOL
+entrezid_symbols &lt;- AnnotationDbi::select(org.Hs.eg.db, keys = genes$gene_id, columns = c(&quot;ENTREZID&quot;, &quot;SYMBOL&quot;), keytype = &quot;ENTREZID&quot;)</code></pre>
+<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
+<pre class="r"><code># save the final GRangesList object
+saveRDS(entrezid_symbols, file = &quot;data/prepared_rds/gene_entrezids_genesymbols_df.rds&quot;)</code></pre>
+<pre class="r"><code>library(plyr)</code></pre>
+<pre><code>## -------------------------------------------------------------------------</code></pre>
+<pre><code>## You have loaded plyr after dplyr - this is likely to cause problems.
+## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+## library(plyr); library(dplyr)</code></pre>
+<pre><code>## -------------------------------------------------------------------------</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plyr&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:XVector&#39;:
+## 
+##     compact</code></pre>
+<pre><code>## The following objects are masked from &#39;package:plyranges&#39;:
+## 
+##     arrange, mutate, summarise, summarize</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     arrange, count, desc, failwith, id, mutate, rename, summarise,
+##     summarize</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     compact</code></pre>
+<pre><code>## The following object is masked from &#39;package:IRanges&#39;:
+## 
+##     desc</code></pre>
+<pre><code>## The following object is masked from &#39;package:S4Vectors&#39;:
+## 
+##     rename</code></pre>
+<pre class="r"><code># Supplementary Table 10 from &#39;The ENCODE consortium, 2020, nature&#39;
+# https://www.nature.com/articles/s41586-020-2493-4#MOESM12
+# table has same format as .bed file so probably 0-based
+# r works 1-based, therefore have to set &#39;start.in.df.are.0based = T&#39; 
+encode &lt;- makeGRangesFromDataFrame(read.delim(&quot;data/encode/encode_nature2020_supldata10_chr19.txt&quot;, stringsAsFactors = F, header = T), keep.extra.columns = T, starts.in.df.are.0based=T)
+names(encode) &lt;- encode$cCRE_accession
+
+encode_ucsc &lt;- rtracklayer::import(&quot;data/encode/encode_cCREs_ucscgenomebrowser_chr19.bed&quot;)
+names(encode_ucsc) &lt;- encode_ucsc$name
+
+# add itemRBG from ucsc file to encode publication file
+encode$ucsc_rgb &lt;- encode_ucsc[match(encode$cCRE_accession, encode_ucsc$name),]$itemRgb
+
+# check that each name as the right itemRGB
+encode_labels &lt;- arrange(as.data.frame(mcols(encode[, c(&quot;cCRE_accession&quot;, &quot;ucsc_rgb&quot;)])), desc(cCRE_accession))
+encodeucsc_labels &lt;- arrange(as.data.frame(mcols(encode_ucsc[, c(&quot;name&quot;, &quot;itemRgb&quot;)])), desc(name))
+all(encode_labels$cCRE_accession == encodeucsc_labels$name)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>all(encode_labels$ucsc_rgb == encodeucsc_labels$itemRgb)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>head(encodeucsc_labels)</code></pre>
+<pre><code>##           name itemRgb
+## 1 EH38E1966500 #FFA700
+## 2 EH38E1966499 #FFA700
+## 3 EH38E1966498 #FFA700
+## 4 EH38E1966495 #FFA700
+## 5 EH38E1966494 #FFCD00
+## 6 EH38E1966492 #FFA700</code></pre>
+<pre class="r"><code>head(encode_labels)</code></pre>
+<pre><code>##   cCRE_accession ucsc_rgb
+## 1   EH38E1966500  #FFA700
+## 2   EH38E1966499  #FFA700
+## 3   EH38E1966498  #FFA700
+## 4   EH38E1966495  #FFA700
+## 5   EH38E1966494  #FFCD00
+## 6   EH38E1966492  #FFA700</code></pre>
+<pre class="r"><code>all_labels &lt;- merge(encode_labels, encodeucsc_labels, by.x = &quot;cCRE_accession&quot;, by.y = &quot;name&quot;, all.x = T, all.y = T)
+identical(all_labels$ucsc_rgb,all_labels$itemRgb)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>rm(all_labels, encode_labels, encodeucsc_labels)
+
+# translate itemRGB into a categorie 
+# ref: http://genome.ucsc.edu/cgi-bin/hgTrackUi?db=hg38&amp;g=encodeCcreCombined
+itemRGBs &lt;- data.frame(names(table(encode_ucsc$itemRgb)))
+colnames(itemRGBs) &lt;- &quot;hex&quot;
+itemRGBs$hex &lt;- as.character(itemRGBs$hex)
+itemRGBs$color &lt;- c(&quot;blue&quot;, &quot;red&quot;, &quot;orange&quot;, &quot;pink&quot;, &quot;yellow&quot;)
+itemRGBs$ucsc_labels &lt;- c(&quot;CTCF&quot;, &quot;prom&quot;, &quot;enhP&quot;, &quot;K4m3&quot;, &quot;enhD&quot;)
+#itemRGBs
+
+# add categorie from ucsc website to encode publication file
+# based on reported itemRGB
+encode$ucsc_label &lt;- as.factor(encode$ucsc_rgb)
+encode$ucsc_label &lt;- as.character(mapvalues(encode$ucsc_label, from = c(&quot;#00B0F0&quot;, &quot;#FF0000&quot;, &quot;#FFA700&quot;, &quot;#FFAAAA&quot;, &quot;#FFCD00&quot;), to = c(&quot;CTCF&quot;, &quot;prom&quot;, &quot;enhP&quot;, &quot;K4m3&quot;, &quot;enhD&quot;)))
+encode</code></pre>
+<pre><code>## GRanges object with 26322 ranges and 5 metadata columns:
+##                seqnames            ranges strand | rDHS_accession
+##                   &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;character&gt;
+##   EH38E1929820    chr19     246842-247054      * |   EH38D3030298
+##   EH38E1929821    chr19     247094-247443      * |   EH38D3030299
+##   EH38E1929826    chr19     266736-266899      * |   EH38D3030305
+##   EH38E1929827    chr19     266947-267110      * |   EH38D3030306
+##   EH38E1929828    chr19     267118-267414      * |   EH38D3030307
+##            ...      ...               ...    ... .            ...
+##   EH38E1966262    chr19 58345946-58346125      * |   EH38D3077319
+##   EH38E1966270    chr19 58355116-58355351      * |   EH38D3077332
+##   EH38E1966302    chr19 58383534-58383786      * |   EH38D3077378
+##   EH38E1966345    chr19 58416697-58416857      * |   EH38D3077428
+##   EH38E1966346    chr19 58417101-58417448      * |   EH38D3077429
+##                cCRE_accession                    group    ucsc_rgb
+##                   &lt;character&gt;              &lt;character&gt; &lt;character&gt;
+##   EH38E1929820   EH38E1929820 DNase-H3K4me3,CTCF-bound     #FFAAAA
+##   EH38E1929821   EH38E1929821 DNase-H3K4me3,CTCF-bound     #FFAAAA
+##   EH38E1929826   EH38E1929826          dELS,CTCF-bound     #FFCD00
+##   EH38E1929827   EH38E1929827          dELS,CTCF-bound     #FFCD00
+##   EH38E1929828   EH38E1929828          dELS,CTCF-bound     #FFCD00
+##            ...            ...                      ...         ...
+##   EH38E1966262   EH38E1966262          pELS,CTCF-bound     #FFA700
+##   EH38E1966270   EH38E1966270          pELS,CTCF-bound     #FFA700
+##   EH38E1966302   EH38E1966302                     dELS     #FFCD00
+##   EH38E1966345   EH38E1966345                     pELS     #FFA700
+##   EH38E1966346   EH38E1966346                     pELS     #FFA700
+##                 ucsc_label
+##                &lt;character&gt;
+##   EH38E1929820        K4m3
+##   EH38E1929821        K4m3
+##   EH38E1929826        enhD
+##   EH38E1929827        enhD
+##   EH38E1929828        enhD
+##            ...         ...
+##   EH38E1966262        enhP
+##   EH38E1966270        enhP
+##   EH38E1966302        enhD
+##   EH38E1966345        enhP
+##   EH38E1966346        enhP
+##   -------
+##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
+<pre class="r"><code>table(encode$group, encode$ucsc_label)</code></pre>
+<pre><code>##                           
+##                            CTCF K4m3 enhD enhP prom
+##   CTCF-only,CTCF-bound      776    0    0    0    0
+##   DNase-H3K4me3               0  323    0    0    0
+##   DNase-H3K4me3,CTCF-bound    0  288    0    0    0
+##   PLS                         0    0    0    0  430
+##   PLS,CTCF-bound              0    0    0    0 1819
+##   dELS                        0    0 8097    0    0
+##   dELS,CTCF-bound             0    0 6776    0    0
+##   pELS                        0    0    0 3078    0
+##   pELS,CTCF-bound             0    0    0 4735    0</code></pre>
+<pre class="r"><code># make simplfied object for tutorial
+encode_chr19 &lt;- encode[, c(&quot;cCRE_accession&quot;, &quot;ucsc_label&quot;)]
+show(encode_chr19)</code></pre>
+<pre><code>## GRanges object with 26322 ranges and 2 metadata columns:
+##                seqnames            ranges strand | cCRE_accession
+##                   &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;character&gt;
+##   EH38E1929820    chr19     246842-247054      * |   EH38E1929820
+##   EH38E1929821    chr19     247094-247443      * |   EH38E1929821
+##   EH38E1929826    chr19     266736-266899      * |   EH38E1929826
+##   EH38E1929827    chr19     266947-267110      * |   EH38E1929827
+##   EH38E1929828    chr19     267118-267414      * |   EH38E1929828
+##            ...      ...               ...    ... .            ...
+##   EH38E1966262    chr19 58345946-58346125      * |   EH38E1966262
+##   EH38E1966270    chr19 58355116-58355351      * |   EH38E1966270
+##   EH38E1966302    chr19 58383534-58383786      * |   EH38E1966302
+##   EH38E1966345    chr19 58416697-58416857      * |   EH38E1966345
+##   EH38E1966346    chr19 58417101-58417448      * |   EH38E1966346
+##                 ucsc_label
+##                &lt;character&gt;
+##   EH38E1929820        K4m3
+##   EH38E1929821        K4m3
+##   EH38E1929826        enhD
+##   EH38E1929827        enhD
+##   EH38E1929828        enhD
+##            ...         ...
+##   EH38E1966262        enhP
+##   EH38E1966270        enhP
+##   EH38E1966302        enhD
+##   EH38E1966345        enhP
+##   EH38E1966346        enhP
+##   -------
+##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
+<pre class="r"><code># save this object
+saveRDS(encode_chr19, file = &quot;data/prepared_rds/encode_ccres_chr19.rds&quot;)</code></pre>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

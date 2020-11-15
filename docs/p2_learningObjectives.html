@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Written by: Klaas, Simon, Siebren, Christa …" />
@@ -23,17 +23,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -96,6 +85,7 @@ code {
 }
 img {
   max-width:100%;
+  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -244,7 +234,6 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -256,6 +245,18 @@ $(document).ready(function () {
   display: none;
 }
 </style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
 
 <!-- code folding -->
 
@@ -291,10 +292,16 @@ $(document).ready(function () {
   <a href="p2_learningObjectives.html">Learning Objectives</a>
 </li>
 <li>
-  <a href="p4_week1.html">UCSC Genome Browser</a>
+  <a href="p3_week1.html">1: UCSC Genome Browser</a>
+</li>
+<li>
+  <a href="p4_week2_v4.html">2: Annotation</a>
 </li>
 <li>
   <a href="Glossary.html">Glossary</a>
+</li>
+<li>
+  <a href="prepdata.html">Appendix</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -372,8 +379,7 @@ $(document).ready(function () {
 <h4 id="global-learning-objectives">Global learning objectives</h4>
 <ol style="list-style-type: decimal">
 <li>Understand how we come from a ChIP-sequencing experiment to useful data.</li>
-<li>Know how to display and browse through genomics data in the UCSC Genome Browser and formulate some basic hypotheses using this tool.<br />
-</li>
+<li>Know how to display and browse through genomics data in the UCSC Genome Browser and formulate some basic hypotheses using this tool.</li>
 <li>Tell apart different genomics datasets based on their pattern int he UCSC Genome Browser.<br />
 </li>
 <li>Quantify and visually summarize the genomic distribution of histone ChIP-seq peaks and signal strength in r.<br />
@@ -404,18 +410,18 @@ $(document).ready(function () {
 <div id="week-1" class="section level2">
 <h2>Week 1</h2>
 <ul>
-<li>Focus: how we make data out of a ChIP-seq experiment, how to use the UCSC Genome Browser, and familiarize ourselves with the UCSC Genome Browser visualization.<br />
-</li>
-<li><em>seq2science, UCSC Genome browser</em><br />
-</li>
-<li>Global objectives #1-3.<br />
-</li>
+<li><p>Focus: how we make data out of a ChIP-seq experiment, how to use the UCSC Genome Browser, and familiarize ourselves with the UCSC Genome Browser visualization.<br />
+</p></li>
+<li><p><em>seq2science, UCSC Genome browser</em><br />
+</p></li>
+<li><p>Global objectives #1-3.<br />
+</p></li>
 <li><p>Perform in H5P?<br />
 <br></p></li>
-<li>Discuss ChIP-seq in presentation<br />
-</li>
-<li>Follow seq2science workflow<br />
-</li>
+<li><p>Discuss ChIP-seq in presentation<br />
+</p></li>
+<li><p>Follow seq2science workflow<br />
+</p></li>
 <li><p>Peakcalling: note that it is not black/white, not absolute, thresholds are set. NOT into technicalities and mathematics of read piling/peak models, narrow-wide peaks<br />
 <br></p></li>
 </ul>
@@ -484,7 +490,7 @@ $(document).ready(function () {
 <li>Look in the benome browser for the H3K4me3 in monocytes or look back at your answer of question 5 in week 1. This time we will count all the overlap between H3K4me3 peaks and different genomic elements to find out in which region most of the H3K4me3 peaks occur?</li>
 <li>Is this enrichment in promoters more than you would expect by chance?<br />
 </li>
-<li>And what if we look at H3K27ac or H3K36me3?<br />
+<li>And what if we look at H3K27ac or H3K4me1?<br />
 </li>
 <li>Do these numbers differ (significantly?) when we look at T cells instead of monocytes?<br />
 </li>
@@ -494,7 +500,7 @@ $(document).ready(function () {
 <p>The bar graph or heatmap we made for question 4 does not take along peak height (signal strength) which could hold additional information does not allow a locus-specific comparison among different cell types. For that we would need to, somehow, include the genomic location int he plot.</p>
 <p>Luckily, we have another option to plot the occurrences and co-occurrences of histone marks around a chosen genomic landmark (eg TSS) that <em>does</em> take along the genomic locus and signal strength: a heatmap. We will do so next week.</p>
 <p><br> #### Alternative workflow<br />
-Based on</p>
+Based on:</p>
 <ul>
 <li>Computational Genomics with R Book from Altuna Akalin,creative commons license, chapters 6 and 9 <a href="http://compgenomr.github.io/book/">booklink</a> -<br />
 </li>
@@ -502,38 +508,150 @@ Based on</p>
 </li>
 <li>Bioconductor 2020 conference, workshop Integrated ChIP-seq Data Analysis <a href="http://integratedchipseqanalysis-workshop-kqumrdos.bioc.cancerdatasci.org/files/vignettes/IntegratedChIPseqAnalysisWorkshop.html#Load_required_libraries">workshop link</a><br />
 </li>
-<li>ChIPpeakAnno tutorial/vignette <a href="https://bioconductor.org/packages/release/bioc/vignettes/ChIPpeakAnno/inst/doc/ChIPpeakAnno.html">vignette link</a></li>
+<li>ChIPpeakAnno tutorial/vignette <a href="https://bioconductor.org/packages/release/bioc/vignettes/ChIPpeakAnno/inst/doc/ChIPpeakAnno.html">vignette link</a><br />
+</li>
+<li>ChIP-seq data analysis in R, Jonas Ibn-Salem, JGU/IMB Mains <a href="http://cbdm-01.zdv.uni-mainz.de/~jibnsale/teaching/chip-seq_exercises.html#requirements">tutorial link</a></li>
 </ul>
 <p><strong>Required packages</strong>:</p>
 <ul>
-<li>ChIPpeakAnno<br />
-</li>
 <li>GenomicRanges<br />
 </li>
+<li>GenomicFeatures<br />
+</li>
 <li>rtracklayer<br />
+</li>
+<li>TxDb.Hsapiens.UCSC.hg38.knownGene<br />
+</li>
+<li>ChIPpeakAnno<br />
 </li>
 <li>UpSetR</li>
 </ul>
 <ol style="list-style-type: decimal">
-<li><p>Familiarize with *Ranges structure and language and GRanges and GRangesList objects<br />
-Functions:</p></li>
-<li><p>Import MACS2 peaks into R<br />
-Functions: <code>toGRanges()</code></p></li>
-<li>Optionally: find overlap between replicates<br />
+<li>Introduce Bioconductor</li>
+</ol>
+<ul>
+<li>bioconductor set up, reference site, objects and packagage rely on each other, several handy functions <code>class()</code>, <code>print()</code> and <code>methods(class = "...")</code></li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Familiarize with (basics of) *Ranges structure and language and GRanges and GRangesList objects</li>
+</ol>
+<ul>
+<li><p>You already know the r data structures: vector, dataframe, matrix, Lists. In genomics often perform manipulations and calculations using genomic intervals (mention examples). IRanges data structure<br />
+</p></li>
+<li><p>simple example of GRanges object<br />
+</p></li>
+<li><p>Metadata, show schamatic overview of objects with metadata, what is it, how is it displayed (right of the <code>|</code> when object is printed ), obtain columsn</p></li>
+<li><p>convert dataframe to GRanges object with <code>as()</code></p>
+<ul>
+<li>dataframe minimally requires <code>start</code> <code>end</code> and <code>chr</code><br />
 </li>
-<li>Count and visualize distribution of peaks over genomic different marks in exon, intron, enhancer, proximal promoter, 5’ UTR and 3’ UTR</li>
-<li>Annotate peaks to genes<br />
+<li><code>gr &lt;- as(dataframe, "GRanges")</code><br />
 </li>
-<li><p>Determine and visualize the distance of a peak to a genomic feature</p></li>
-<li>How many promoters are active in monocytes? And what about CD4 T cells<br />
+</ul></li>
+<li><p>minimally requires chr, start and end column from dataframe in input<br />
+</p></li>
+<li><p>also has metadata, <code>seqnames</code> and <code>seqinfo</code><br />
+</p></li>
+<li><p>see ist of available accessors use: <code>methods(class = "GRanges")</code></p>
+<ul>
+<li><code>seqnames(gr)</code> - chromosome names<br />
 </li>
+<li><code>ranges(gr)</code> - returns IRanges object<br />
+</li>
+<li><code>mcols(gr)</code> - display metadata per range<br />
+</li>
+<li><code>seqinfo(gr)</code> - to store sequence information<br />
+</li>
+<li><code>genome(gr)</code>- genome name<br />
+</li>
+<li>both are <strong>setter</strong> and <strong>getter</strong> functions<br />
+</li>
+<li>can be inherited by other S4 objects</li>
+</ul></li>
+<li><p>for GRangesList:</p>
+<ul>
+<li><code>GRangesList(myGranges1, myGranges2, ...)</code></li>
+</ul></li>
+<li><p>convert back with <code>unlist()</code></p></li>
+</ul>
+<p>Overlap functions</p>
+<ul>
+<li><code>countOverlaps(query, subject)</code><br />
+</li>
+<li><code>findOverlaps(query, subject)</code><br />
+</li>
+<li><code>subsetByOverlap(query, subject)</code><br />
+</li>
+<li><code>overlapsAny()</code><br />
+</li>
+<li>query and subject can be GRanges and GRangesList</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Import custom data/MACS2 peaks into R</li>
 </ol>
 <ol style="list-style-type: lower-alpha">
-<li>Familiarize with GRanges object<br />
+<li>review how MACS2 output looks like. “The first lines starting with # indicate parameter and input data for the peak calling. The rows bellow are peak coordinates. Each peak is recorded on one row with the chromosome name, start and end coordinate, peak length, summit coordinate, number of reads (tags), a −log10() transformation of the p-value, fold enrichment over input, and the FDR.”<br />
 </li>
-<li>Import peaks data into R<br />
+<li>import .bed file into r</li>
+</ol>
+<ul>
+<li>option 1: convert data.frame into GRanges object<br />
 </li>
-<li>Identify the condfident peaks among two replicates, plot in venn diagram, continue with these for the analysis</li>
+<li>option 2: use <code>toGRanges()</code> from <code>ChIPpeakAnno</code> package.</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>Perform basic operations on imported peaks as GRanges object:</li>
+</ol>
+<ul>
+<li>What is the number of peaks? <code>length(imported_peaks)</code><br />
+</li>
+<li>What is the genome we worked in? <code>genome(imported_peaks)</code><br />
+</li>
+<li>How many different chromosomes contain a peak? <code>length(seqnames(imported_peaks))</code><br />
+</li>
+<li>What is the mean, median and max size of the peaks <code>summary(width(imported_peaks))</code><br />
+</li>
+<li>What is the distribution of peak sizes? <code>hist(width(imported_peaks), xlab = "peak size")</code><br />
+</li>
+<li>What is the distribution of ChIP-seq peak p-values (score column gives -log10(pvalues), obtain with <code>score()</code> function)? <code>hist(score(imported_peaks), xlab = "-log_10(p-value)")</code><br />
+</li>
+<li>Remove all peaks that are larger than 3kb in size –&gt; use index [ ] operator on GRanges object, similar to vectors <code>imported_peaks &lt;- imported_peaks[width(imported_peaks) &lt;= 3000]</code></li>
+</ul>
+<ol start="5" style="list-style-type: decimal">
+<li>Compare imported peaks with promoters</li>
+</ol>
+<ul>
+<li><p>import promoters.bed file with <code>toGRanges()</code> (ChIPpeakAnno) or <code>readPeakFile()</code> (ChIPseeker)<br />
+</p></li>
+<li><p>make barplots of the number of the number of promoters and the number of peaks in <code>imported_peaks</code><br />
+</p></li>
+<li><p>Calculate the overlaps between two sets of regions using <code>GenomicRanges</code> functions:</p>
+<ul>
+<li><code>subsetByOverlaps(query, subject)</code> returns the peaks that overlap with the regions in <code>subject</code></li>
+<li><code>countOverlaps(query, subject)</code> returns the number of peaks that overlap with a given region in <code>subject</code><br />
+</li>
+<li><code>findOverlaps(query, subject)</code>, returns a matrix, showing which peaks from <code>query</code> overlap which regions from <code>subject</code>.</li>
+</ul></li>
+</ul>
+<ol start="6" style="list-style-type: decimal">
+<li>Use custom ChIPs-eq analysis packages eg <code>ChIPpeakAnno</code> or <code>ChIPSeeker</code> package to count and visualize distribution of peaks</li>
+</ol>
+<ul>
+<li>overview of ChIP-seq analysis with candidate r/Bioconductor packages<br />
+</li>
+<li><code>ChIPSeeker</code> works on BED files. <code>ChIPpeakAnno</code></li>
+<li>Example 1: overlap/occurence in genomic regions: in exon, intron, enhancer, proximal promoter, 5’ UTR and 3’ UTR<br />
+</li>
+<li>Statistics: is mark enriched in a particular region compared to background/genomic distribution?<br />
+</li>
+<li>Repeat this for another mark.<br />
+</li>
+<li>Example 2: distance to TSS and annotate peaks to genes (with limit on distance to TSS)<br />
+</li>
+<li>Example 3:</li>
+</ul>
+<ol start="7" style="list-style-type: decimal">
+<li></li>
 </ol>
 <hr />
 </div>
@@ -584,16 +702,16 @@ Functions: <code>toGRanges()</code></p></li>
 <div id="week-4" class="section level2">
 <h2>Week 4</h2>
 <ul>
-<li>Focus: <em>Interpret single-cell RNA-seq data, formulate hypotheses about epigenome and test hypothesis by plotting the data for these genes</em><br />
-</li>
-<li>or <em>find or count motif occurrences using pattern matching from GRanges</em><br />
-</li>
+<li><p>Focus: <em>Interpret single-cell RNA-seq data, formulate hypotheses about epigenome and test hypothesis by plotting the data for these genes</em><br />
+</p></li>
+<li><p>or <em>find or count motif occurrences using pattern matching from GRanges</em><br />
+</p></li>
 <li><p>Use PBMC3k dataset, get UMAP and top marker genes per cluster/cell type from Satija lab.<br />
 <br></p></li>
-<li>We continue with clusters that differentially mark T cells from monoyctes [..] and assign them to closest gene.<br />
-</li>
-<li>Open/active regions only?<br />
-</li>
+<li><p>We continue with clusters that differentially mark T cells from monoyctes [..] and assign them to closest gene.<br />
+</p></li>
+<li><p>Open/active regions only?<br />
+</p></li>
 <li><p>Compare these to + and - marker genes from scRNA-seq<br />
 <br></p></li>
 </ul>
@@ -634,7 +752,7 @@ Functions: <code>toGRanges()</code></p></li>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -642,23 +760,6 @@ $(document).ready(function () {
 
 
 </script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
-<!-- code folding -->
-
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

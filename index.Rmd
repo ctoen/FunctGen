@@ -24,33 +24,24 @@ This is the computer practical for the [Functional Genomics 1](https://www.ru.nl
 
 The **purpose** of this practical is to teach you common bio-informatics analyses performed to analyse epigenomics data. You may already be familiar with the output of these analyses from scientific publications or lectures. We will focus on **how to detect, quantify, annotate and visualise epigenetic marks**. At the end of our analyses, we will also relate epigenetic markings to gene activity as well as candidate TFs that might establish them.  
 
-For this practical, we will use **data for white blood cells** from the [the BLUEPRINT project](http://dcc.blueprint-epigenome.eu/#/home), namely: monocytes, T cells, B cells and natural killer cells. BLUEPRINT is a *FP7 project aiming to produce a blueprint of haemopoetic epigenomes.* We have chosen these datasets because they are well-documenten and easy to find through the BLUEPRINT data portal, and not because we want to teach you the hematopoietic system.  
-<br>  
-
-> ### Research goals  
-  1. Use  combinations of histone PTM data and chromatin accessibility to identify functional genomic elements (eg promoter, enhancers etc) and predict gene activity (active or repressed).    
-  2. Check obove mentioned predictions on gene activity in single-cell RNA-seq data.  
-  3. Vice versa, use the epigenetic data to explain gene expression differences detected in a single-cell RNA-seq experiment.  
-  4. Predict TFs that could mediate cell-specific gene expression.   
-
+For this practical, we will use **data of white blood cells** from the [the BLUEPRINT project](http://dcc.blueprint-epigenome.eu/#/home), namely: monocytes, T cells, B cells and natural killer cells. BLUEPRINT is a *collaborative project aiming to produce a blueprint of haemopoetic epigenomes*. We have chosen these datasets because they are well-documented and easy to find through the BLUEPRINT data portal, and not because we want to teach you the hematopoietic system.  
 <br>  
 
 > ### Global learning objectives  
-  1. Understand how useful data is obtained from a ChIP-sequencing experiment.   
-  2. Know how to display and browse through genomics data in the UCSC Genome Browser and formulate some basic hypotheses using this tool.  
-  3. Tell apart different genomic datasets based on their pattern int he UCSC Genome Browser.   
-  4. Quantify and visually summarize the genomic distribution of histone ChIP-seq peaks and signal strength in r.   
-  5. Statistically test for enrichment of histone marks in functional genomic elements.  
-  6. Summarize genome-wide ChIP-seq signal in a heatmap and use this heatmap to identify identify functional genomic elements and predict gene activity.  
-  7. Check hypotheses about the epigenetic landscape based on single-cell RNA-seq data with actual epigenomics data, and vice versa (check hypotheses on gene activity in single-cel RNA-seq data).   
-  8. Formulate hypotheses about (cell-specific) TF function using histone ChIP-seq and ATAC-seq data.  
+  1. Explain how to process raw reads from a ChIP-sequencing experiment.   
+  2. Display and browse through genomics data in the UCSC Genome Browser.  
+  3. Distinguish different genomic datasets based on their pattern in the UCSC Genome Browser.   
+  4. Quantify the overlap among histone ChIP-seq peaks and genomic features in r.  
+  5. Visually summarize this quantification in bar- and pieplots in r.  
+  6. Statistically test for enrichment of histone marks in functional genomic elements. 
+  7. Identify the nearest TSS to a histone ChIP-seq peak.  
+  8. Plot the distribution of distances to the TSS.  
+  9. Summarize the signal signal strength of a histone ChIP-seq dataset around a genomic feature like the TSS or across gene body.  
+  10. Visualize the distribution of signal strength in a density plot.  
+  11. Visualize the signal strength around the TSS in a clustered heatmap.   
+  12. Check hypotheses about the epigenetic landscape based on single-cell RNA-seq data with actual epigenomics data, and vice versa (check hypotheses on gene activity in single-cel RNA-seq data).   
   
-  
-<a href = "https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1001046">
-![](images/index_fig1_plosbiol_2011_ENCODE_userguid_fig1a.png){width=80%}
-</a>  
-[The ENCODE Project Consortium, 2011, PLoS Biology](https://doi.org/10.1371/journal.pbio.1001046)  
-<br>    
+<br>  
 
 ## Structure of this practical  
 **Week 1**: Raw ChIP-seq data processing and visualize epigenomics data in the UCSC Genome browser.  
@@ -62,8 +53,8 @@ Global learning objectives #4-5.
 **Week 3**: Compare epigenetic profiles among different cell types.   
 Global learning objectives #5-6.  
   
-**Week 4**: Synthesis: epigenomics, scRNA-seq and motif finding.   
-Global learning objectives #7-8.  
+**Week 4**: Synthesis: epigenomics and scRNA-seq.  
+Global learning objectives #12.  
 <br>  
 
 ## Need help?  
@@ -80,23 +71,15 @@ For this practical it is not required to install R and R studio. Instead, we pro
 <br> 
 
 ## Background info    
-### Using R  
-We will code in R, which you have already familiarized yourself with during the Genomics & Big Data course. 
-
-##### What does an R package or function do?  
-- Use the built-in RStudio help interface to find a particular function  
-- Googling *[function or package name] 'r'*  
-- Go to the 'Packages' tab to find user guides and other documentation on the package    
-- Look into the 'Help' tab of the function  
-
-##### I get an error?  
-- Read the error, might give you hints 
-- Google the error + r  
-- [Stackoverflow](https://stackoverflow.com) is great, Google will often take you there because someone has already asked your question, and someone else has answered, usually many people have answered your question many ways.  
+### Hematopoiesis scheme  
+T
+<a href = "https://www.blueprint-epigenome.eu/UserFiles/File/cell%20types%20images%20etc/Haematopoiesis_original.pdf">
+![](images/index_fig2_BP_Haematopoiesis_original.png)
+</a>
+[BLUEPRINT, hematopoiesis](https://www.blueprint-epigenome.eu/UserFiles/File/cell%20types%20images%20etc/Haematopoiesis_original.pdf)  
 <br> 
-
 ### Table with cell markers and TFs  
-Here’s a table with cell surface proteins, cytokines and TFs that are specific to certain cell types.  
+Here???s a table with cell surface proteins, cytokines and TFs that are specific to certain cell types. 
 
 Some of the cell surface markers were used to isolate these cells from the bulk using (MACS and) FACS.   
 
@@ -125,19 +108,14 @@ Cell | Marker | Localization and/or function | Gene(s) |  Also found on | Ref
 **B cells** | PU.1 | nucleus, transcription factor | [SPI1](https://www.genecards.org/cgi-bin/carddisp.pl?gene=SPI1&keywords=SPI1) | myeloid cells and B cells  
 <br> 
 
-### Hematopoiesis scheme  
-<a href = "https://www.blueprint-epigenome.eu/UserFiles/File/cell%20types%20images%20etc/Haematopoiesis_original.pdf">
-![](images/index_fig2_BP_Haematopoiesis_original.png)
-</a>
-[BLUEPRINT, hematopoiesis](https://www.blueprint-epigenome.eu/UserFiles/File/cell%20types%20images%20etc/Haematopoiesis_original.pdf)  
-<br> 
+
 
 ### White blood cells in current dataset  
 Blood cells originate from common, multipotent hemopoietic stem cells in the bone marrow which divide to keep their population stocked or differentiate into more specific progenitors of the myeloid or lymphoid lineages. These progenitors undergo a limited number of divisions and differentiate along the way into mature blood cells: white blood cells, red blood cells and platelets. 
 
 White blood cells encompass a varied group of cells. Each type has its own developmental process controlled by cytokines, cytokine receptors, transcription factors and chromatin remodellers and with distinct morphologies and functions at maturity. Of all the different white blood cells, we will focus on monocytes, NK cells, T cells and B cells in our analyses. 
 
-**Monocytes** make up 2-8% of the white blood cells, derive from the myeloid lineage and are part of the innate immune system (first line of defense, limited/general specificity to particular antigens and can’t multiply furhter). They can enter peripheral tissue and differentiate into macrophages which are good at engulfing larger particles but also in dendritic cells which are highly adapted to present foreign antigens to cells of the adaptive immune system.    
+**Monocytes** make up 2-8% of the white blood cells, derive from the myeloid lineage and are part of the innate immune system (first line of defense, limited/general specificity to particular antigens and can???t multiply furhter). They can enter peripheral tissue and differentiate into macrophages which are good at engulfing larger particles but also in dendritic cells which are highly adapted to present foreign antigens to cells of the adaptive immune system.    
 
 **Natural killer cells** or **NK lymphocytes** come from the lymphoid lineage. They are part of the innate immune system with high cytotoxic capabilities and an important first line of defense against virus infections and the formation of abnormal tissues such as cancers. 
 
@@ -154,3 +132,11 @@ Besides white blood cells we also find **red blood cells** and **platelets** in 
 - BLUEPRINT project  
 - ...  
 <br> 
+
+## OLD text
+
+> ### At the end of the practical you are able to.. 
+  1. Use  combinations of histone PTM data and chromatin accessibility to identify functional genomic elements (eg promoter, enhancers etc) and predict gene activity (active or repressed).    
+  2. Check above mentioned predictions on gene activity in single-cell RNA-seq data.  
+  3. Vice versa, use the epigenetic data to explain gene expression differences detected in a single-cell RNA-seq experiment.  
+  4. Predict TFs that could mediate cell-specific gene expression.   
