@@ -327,9 +327,7 @@ library(rtracklayer)
 library(org.Hs.eg.db)
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 txdb &lt;- TxDb.Hsapiens.UCSC.hg38.knownGene </code></pre>
-<pre class="r"><code># this is a preperatory chunk 
-# add  exercise.setup = &quot;mono-data&quot; to chunks that require this data to be evailable
-# H3k4me1 
+<pre class="r"><code># H3k4me1 
 mono_h3k4me1 &lt;- rtracklayer::import(&quot;data/blueprint/bed/C000S5H2.ERX547981.H3K4me1.bwa.GRCh38.broad.20150527.chr19.bed&quot;, format = &quot;broadPeak&quot;)
 # H3K4me3  
 mono_h3k4me3 &lt;- rtracklayer::import(&quot;data/blueprint/bed/C000S5H2.ERX547984.H3K4me3.bwa.GRCh38.20150527.chr19.bed&quot;, format = &quot;narrowPeak&quot;)
@@ -346,6 +344,52 @@ mono_list  &lt;- GRangesList(mono_h3k4me1, mono_h3k4me3, mono_h3k9me3, mono_h3k2
 # add names to each element in the list
 names(mono_list) &lt;- c(&quot;h3k4me1&quot;, &quot;h3k4me3&quot;, &quot;h3k9me3&quot;, &quot;h3k27ac&quot;, &quot;h3k27me3&quot;, &quot;h3k36me3&quot;)
 save(mono_h3k4me1, mono_h3k4me3, mono_h3k9me3, mono_h3k27ac, mono_h3k27me3, mono_h3k36me3, mono_list, file =  &quot;data/prepared_rds/blueprint_monocyte_chr19_granges.RData&quot;)</code></pre>
+<pre class="r"><code># make my own list of GRanges objects of differnt genomic features (transcript-centered)
+
+seqlevels(txdb) &lt;- &quot;chr19&quot; 
+
+# generate list of genomic annotations
+proximal.promoter.cutoff=1000L # Specify the cutoff in bases to classify proximal promoter or enhencer. Peaks that reside within proximal.promoter.cutoff upstream from or overlap with transcription start site are classified as proximal promoters. The default is 1000 bases.
+immediate.downstream.cutoff=1000L # Specify the cutoff in bases to classify immediate downstream region or enhancer region. Peaks that reside within immediate.downstream.cutoff downstream of gene end but not overlap 3 prime UTR are classified as immediate downstream. 
+#&#39; The default is 1000 bases.
+
+transcripts_chr19 &lt;-  unique(transcripts(txdb, columns=NULL))
+exons_chr19 &lt;- exons(txdb, columns=NULL)
+introns_chr19 &lt;- unique(unlist(intronsByTranscript(txdb)))
+fiveUTRs_chr19 &lt;- unique(unlist(fiveUTRsByTranscript(txdb)))
+threeUTRs_chr19 &lt;- unique(unlist(threeUTRsByTranscript(txdb)))
+promoters_chr19 &lt;- unique(promoters(txdb, upstream=proximal.promoter.cutoff, downstream=0))
+immediateDownstream_chr19 &lt;- unique(flank(transcripts_chr19, width=immediate.downstream.cutoff, start=FALSE, use.names=FALSE))
+
+# make list of annotations
+annotation_chr19 &lt;- list(exons_chr19, introns_chr19, fiveUTRs_chr19, threeUTRs_chr19, promoters_chr19, immediateDownstream_chr19)
+
+# remove all metadata information
+annotation_chr19 &lt;- lapply(annotation_chr19, function(.anno){mcols(.anno)&lt;-NULL; .anno})
+
+# add names
+names(annotation_chr19)[1:6] &lt;- c(&quot;Exons&quot;, &quot;Introns&quot;, &quot;fiveUTRs&quot;, &quot;threeUTRs&quot;, &quot;Promoters&quot;, &quot;immediateDownstream&quot;)
+
+# convert to GRangeslist
+annotation_chr19_gr &lt;- GRangesList(annotation_chr19)
+
+# to make &#39;intergenicRegions&#39;, add up all above annotated regions and identify the remaining gaps
+# we ignore strand of the annotations because peaks are unstranded
+newAnno &lt;- c(unlist(annotation_chr19_gr))
+newAnno.rd &lt;- newAnno
+strand(newAnno.rd) &lt;- &quot;*&quot;
+newAnno.rd &lt;- reduce(trim(newAnno.rd))
+intergenicRegions_chr19 &lt;- gaps(newAnno.rd, end=seqlengths(txdb))
+intergenicRegions_chr19 &lt;- intergenicRegions_chr19[strand(intergenicRegions_chr19)==&quot;*&quot;]
+names(intergenicRegions_chr19) &lt;- NULL
+
+# add intergenicRegions to annotation list
+annotation_chr19_gr$intergenicRegions &lt;- intergenicRegions_chr19
+
+rm(newAnno.rd, newAnno, annotation_chr19, transcripts_chr19)
+
+# save the final GRangesList object
+saveRDS(annotation_chr19_gr, file = &quot;data/prepared_rds/txdb_annotation_chr19_grangeslist.rds&quot;)</code></pre>
 <pre class="r"><code>genes &lt;- unique(genes(txdb, filter = list(tx_chrom = &quot;chr19&quot;)))
 transcripts&lt;-  unique(transcripts(txdb, filter = list(tx_chrom = &quot;chr19&quot;)))
 promoters_def &lt;- unique(promoters(txdb, filter = list(tx_chrom = &quot;chr19&quot;))) # upstream=2000, downstream=200

@@ -21,8 +21,6 @@ txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
 ```
 
 ```{r prepare monocyt data}
-# this is a preperatory chunk 
-# add  exercise.setup = "mono-data" to chunks that require this data to be evailable
 # H3k4me1 
 mono_h3k4me1 <- rtracklayer::import("data/blueprint/bed/C000S5H2.ERX547981.H3K4me1.bwa.GRCh38.broad.20150527.chr19.bed", format = "broadPeak")
 # H3K4me3  
@@ -42,7 +40,9 @@ names(mono_list) <- c("h3k4me1", "h3k4me3", "h3k9me3", "h3k27ac", "h3k27me3", "h
 save(mono_h3k4me1, mono_h3k4me3, mono_h3k9me3, mono_h3k27ac, mono_h3k27me3, mono_h3k36me3, mono_list, file =  "data/prepared_rds/blueprint_monocyte_chr19_granges.RData")
 ```
 
-```{r prepare-anno, include = F}
+```{r prepare-anno}
+# make my own list of GRanges objects of differnt genomic features (transcript-centered)
+
 seqlevels(txdb) <- "chr19" 
 
 # generate list of genomic annotations
