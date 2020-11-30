@@ -151,7 +151,7 @@ The **Per base sequence quality** plot is one of the most important plots genera
  <br>
 ![](images/wk1_3_fastqc_per_base_quality_vb1.png){width=80%}  
 
-This exmaple shows the average Phred quality for a library sequenced to 72 bp. The majority of bases have a good quality, the quality drops for the last two bases and we should (in this case) remove these from the end of the read. 
+This example shows the average Phred quality for a library sequenced to 72 bp. The majority of bases have a good quality, the quality drops for the last two bases and we should (in this case) remove these from the end of the read. 
 
 For most runs, quality should be good for most reads through the whole run. If quality is low, we can use the other plots and tables to try to understand why this is.
 
