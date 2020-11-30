@@ -507,207 +507,418 @@ div.tocify {
 </style>
 <div id="learning-objectives" class="section level2">
 <h2>1.1 Learning Objectives</h2>
-<p><br> <strong>This week’s focus will be on how sequencing data is processed and familiarize ourselves with the UCSC Genome browser as a tool to visually inspect (epi-)genomics data.</strong><br />
+<p><br> <strong>This week’s focus will be on how sequencing data is processed and acquint ourselves with the UCSC Genome browser as a tool to visually inspect (epi-)genomics data.</strong><br />
 <br></p>
 <blockquote>
+<p>At the end of week 1 you are able to</p>
 <ol style="list-style-type: decimal">
-<li>Understand the steps taken to go from raw to useable data in a genomics experiment.<br />
+<li>Explain the steps taken to go from a ChIP-seq experiment, to raw data, and finally to data usable for analysis.<br />
 </li>
-<li>Understand how to move in the UCSC genome browser and know how to go to regions and genes of interest.<br />
+<li>Recognize the following elements in the UCSC genome browser: chromosome, centromere, telomere, gene, exon, intron, utr, promoter, and (candidate) enhancer/repressors.<br />
 </li>
-<li>Recognize the following elements/regions in the UCSC genome browser: chromosome, centromere, telomere, gene, exon, intron, utr, promoter, and (candidate) enhancer/repressors.<br />
+<li>Go to regions of interest in the genome browser.<br />
 </li>
-<li>Tell apart UCSC genome browser tracks of H3K27ac, H3K27me3, H3K36me3, H3K4me1, H3K4me3 and H3K9me3 histone ChIP-seq and DNaseI-seq signal (and ChIP-seq input) based on their coverage profile and their location with respect to genes and other annotated genomic/chromosomal elements.</li>
-<li>colorize(“Can interpret - and thus understand - ChIP- and DNaseI-seq signal in the UCSC genome browser.”, “red”)<br />
+<li>Explain the difference between ‘uptream’ and ‘downstream’.<br />
+</li>
+<li>Identify peaks in the coverage tracks of a histone ChIP-seq experiment in the genome browser.<br />
+</li>
+<li>Identify tracks of H3K27ac, H3K27me3, H3K36me3, H3K4me1, H3K4me3 and H3K9me3 histone ChIP-seq and DNaseI-seq signal (and ChIP-seq input) based on their coverage profile and their location with respect to genes and other annotated genomic/chromosomal elements.<br />
 </li>
 </ol>
 <ul>
 <li>These refer to Global learning objectives #1-3.</li>
 </ul>
 </blockquote>
-<p><br></p>
-<hr />
-<p><br></p>
 </div>
-<div id="genomic-methods-recap" class="section level2">
-<h2>1.2 Genomic methods recap</h2>
+<div id="sample----raw-data" class="section level2" data-progressive="TRUE">
+<h2 data-progressive="TRUE">1.2 Sample --&gt; raw data</h2>
+<p>Briefly review ChIP-seq, library preperation for next-generation sequencing and analysis of the resulting data with the following video:<br />
+<br> <strong>ChIP-seq by Statquest</strong>, duration of 8:30:<br />
+<img src="https://www.youtube.com/watch?v=nkWGmaYRues&amp;ab_channel=StatQuestwithJoshStarmer" /><br />
+<br></p>
+<details>
+<summary>
+Click here for additional information about Illumina sequencing.
+</summary>
+<blockquote>
+<p><em>Background</em>: There are several manufacturers of sequencing machines and reagents. <strong>Illumina</strong> is a common one. The Illumina technology is summarized in the following videos (optional):</p>
 <ul>
-<li>What is ChIP-seq? What is DNaseI-seq? Presentation with ChIP-seq steps? Refer to book?<br />
+<li><a href="https://www.youtube.com/watch?v=mLZqS0RYqCk&amp;ab_channel=RobEdwards">Introduction to Illumina Sequencing, Rob Edwards, duration 2:45</a><br />
 </li>
-<li>What is a library and what do we mean with ‘library preparation’? What’s the use of adapters?<br />
-</li>
-<li>Sequencing samples. What happens in sequencer? What is the output?<br />
-</li>
-<li>Illumina sequencing slides<br />
-</li>
-<li>Brief genomics recap/pre-quiz?</li>
+<li><a href="https://www.youtube.com/watch?reload=9&amp;v=womKfikWlxM&amp;ab_channel=Illumina">Illumina Sequencing Technology, Illumina, duration 5:03</a></li>
 </ul>
-<p><br></p>
-<hr />
-<p><br></p>
-</div>
-<div id="from-raw-data-to-science" class="section level2">
-<h2>1.3 From raw data to science</h2>
-<center>
-<img src="images/wk1_3_intro_whatbioinformaticiancsdo.png" style="width:60.0%" />
-</center>
-<p><br><br></p>
-<p>The sequencer determines the sequence of the DNA molecules in your sample and produces massive amounts of data. In an ideal world, these data would 100% reflect reality but.. it doesn’t and it is often your or a bio-informaticians task to discriminate valuable signal from artefacts and noise, that is an accumulation of reads in regions that don’t actually contain binding sites of the protein of interest.</p>
-<p>Common origins of noise &amp; artefacs include:</p>
-<ul>
-<li><p><strong>Amplification Bias during the library preperation:</strong> The amount of nucleic acids you generally obtain from your cells is often too low to be directly analyzed and one or more steps of PCR are not uncommon (unless you use special, amplification-free protocols and sequencing methods). Not all DNA or RNA molecules behave the same in this reaction. Some are amplified more than others and this generates a bias that you should control for.<br />
-</p></li>
-<li><p><strong>Synthetic DNA sequence:</strong> These include adapters ligated to the DNA molecules to allow their amplification with uniform primers during library prep and in the sequencer. These adapter sequences come with the kit or are designed by the researcher self. Whether they are custom or commercial, they should be removed because they were not part of the original DNA or RNA material.<br />
-</p></li>
-<li><p><strong>Base call accuracy:</strong> The chemical reaction and quality of the optical measurement that occur in the sequencer are not perfect and depend among others on the nucleotide composition of all samples, the length of the DNA molecules and the concentration of the samples. Each nt is therefore given a quality score that reflects the accuracy of the measurement or base call accuracyas it is also called.<br />
-</p></li>
-<li><p>Lastly, when trying to pinpoint the location in the reference genome where the DNA mo lececule most likely was derived off, we are confronted with:</p>
-<ul>
-<li>Genomic repeats. The origin of reads coming from these reigons is difficult to pinpoint. But also, the reference genome might contain more or less number of repeats than the original sample.<br />
-</li>
-<li>Low complexity regions. These are regions that contain a lot of sequence similarity, eg telomeres. Because of this the quality of the reference genome is generally low in these regions.</li>
-</ul></li>
-</ul>
-<p>All these aspects need to be taken into account while processing the raw reads to usefull data.</p>
-<div id="post-sequencer-processing-steps" class="section level3">
-<h3>1.3.1 Post-sequencer processing steps</h3>
-The sequence of the DNA molecules outputted by the sequencer together with their quality scorese are stored in <code>fastq</code> files that show 4 lines per DNA sequence. This is an example with 2 DNA sequences (8 lines):<br />
-<br>
-</center>
-<img src="images/wk1_3_fastq_example3.png" /><br />
-
-</center>
-<p><br></p>
-<p>Fastq files have the extension <code>.fq</code> or <code>.fastq</code>, or are compressed as <code>.fq.gz</code> or <code>.fastq.gz</code> and are always organized in the same manner. For each DNA sequence, 4 lines are printed:</p>
-<ul>
-<li>line 1: start with ‘@’-sign and contains sequence ID given by the sequencer including sequencer id, flowcell id and sample barcode<br />
-</li>
-<li>line 2: the DNA sequence in ACGTN-alphabet<br />
-</li>
-<li>line 3: ‘+’ (originally reported the sequence ID again)<br />
-</li>
-<li>line 4: quality score for each nucleotide</li>
-</ul>
-<p><br></p>
-<p>These fastq files are what we start our processing with:</p>
+<p>In summary, Illumina sequencing involves:</p>
 <ol style="list-style-type: decimal">
-<li><strong>Remove adapters and poor-quality nucleotides</strong>: The adapters should be removed, as they were not part of the original sample and low-quality nt’s are more likely to be wrong and we therefore remove those as well. This can result in the complete removal of some reads because of their overall low quality or short length.<br />
-<br></li>
-<li><strong>Align reads to the genome</strong>: Identify the likely location in the reference genome where the original DNA molecule came from.<br />
-<br> Since the first publication of the human genome, successive versions (also called <em>assemblies</em> or <em>builds</em>) have been released with improvements in quality thanks to technological advancements as well as improvements in the representativeness of the genome with respect to the genetic diversity found in the human population, including historically underrepresentated populations. We will work with the (one of the) latests relasese referred to as GRCh38 (Genome Reference Consortium Human Build 38).<br />
-<br> There are several alignment tools, or <em>aligners</em> out there. Examples include STAR, BWA and bowtie2. These tools output TAB-delimited text Sequence Alignment Map files (SAM files) readable to us but very large. These SAM files are therefore stored in compressed forms, Binary Alginment Map files (BAM files). Dedicated tools are developed as well such that we can manipulate and read the BAM files without needing to convert them back to the large, SAM format.<br />
-<br> The BAM files contain information about the read sequence, how it was mapped to the reference genome, to what extend a reliable match was detected or not.<br />
-<br></li>
-<li><strong>Filter artefacts and reads aligning to multiple regions</strong>: Identify and remove PCR artefacts and optionally remove reads aligning non-uniquely.<br />
-<br></li>
-<li><strong>Visualize the data</strong>: Files are created that count how many reads align to each nucleotide in the reference genome. Nucleotides with a relative high score pinpoint the likely locations of the histone PTM being studied or protein binding in a ChIP-seq experiment; to a region of accessible chromatin in ATAC-seq; or to the region that was likely transcribed and detected in RNA-seq.<br />
-<br> These files can be uploaded to the UCSC Genome Browser which we will look at in more detail today as well. Various file types can store this kind of data. We wil use <code>bigwig</code> files (<code>.bw</code> file extension)<br />
-<br></li>
-<li><strong>Call peaks</strong>: Reads are scattered through the genome but locations where the used antibody recognizes its target (eg. DNA-binding TF, histone, histone variant or histone PTM) will collect more reads. Peak calling is the computational process to identify these regions, often with respect to a control, ‘input’ dataset where no antibody or no specific antibody was used. Verious tools can perform this task. MACS2 is one of them and was used to call peaks in the datasets that we will be using.<br />
-<br><br />
-Peak calling is a mathemetical/statistical procedure and never black and white. It depends among others on thresholds used (p-value, false-discovery rate) abnd the control sample. And it is always wise to visually inspect the resulting peaks in the UCSC genome browser.<br />
-<br> Peaks are repored as regions, or <em>genomic intervals</em> with their genomic coordinates: <em>chr start end</em>. As well as a <em>score</em> that indicates the strength of the signal observed for this peak.</li>
-<li><strong>Read counting</strong>: Count reads that fall within genes, other genomic elements or peak regions. These counts and the actual peak locations are used for eg. differential gene expression analyses (differentiated vs undifferentiated or control vs treatment). A well-known, widely used tool for this purpose is DESeq2.<br />
-<br></li>
-<li>Optionally <strong>DNaseI footprinting</strong>, <strong>variant calling</strong>, <strong>novel gene identification</strong>: Depending on your experimental set up … For DNaseI-seq, we can identify small depleted regions within peaks that correspond to the nucleotides that interact with the TF. This interaction protects these nucleotides from DNaseI attacks. These so-called footprints can be used to identify TF motifs and predict the likely TF bound. Although this sounds simple, and for a stable binding factor like CTCF it may be the case, it is not always that simple in reality.<br />
-<br></li>
+<li>Library preperation (also called sample preperation):
+<ol style="list-style-type: lower-roman">
+<li>Extract DNA from your sample.<br />
+</li>
+<li>Fragment this DNA.<br />
+</li>
+<li>Ligate <strong>adapters</strong> to the fragment these contain a sample specific sequence (= <strong>barcod</strong> or <strong>index</strong>), regions complementary to oligo’s that are found on the flow cell (these oligo’s are called P5 and P7) and primer bindings sites for sequencing (Rd1 SP and Rd2 SP):<br />
+<img src="images/wk1_1_illuminalibrary.png" style="width:80.0%" /><br />
+</li>
+</ol></li>
+<li>Load library on the <strong>flow cell</strong>:
+<ol style="list-style-type: lower-roman">
+<li>The flow cell is a glass slide with P5 and P7 oligo’s attached to the surface.<br />
+</li>
+<li>The DNA fragments are denatures and single stranded fragments anneal to P5 and P7 oligo’s present on the flow cell.<br />
+</li>
+</ol></li>
+<li><strong>Cluster</strong> growth:
+<ol style="list-style-type: lower-roman">
+<li>Fragments are amplified, the P5 and P7 oligo’s are used as the primer for this process ensuring that the final molecule is attached to the flow cell.<br />
+</li>
+<li>Multiple amplification cycles result in a cluster of fragments.<br />
+</li>
+<li>This procedure occurs for millions of fragments resulting in millions of clusters.<br />
+</li>
+<li>The reverse strands are cleaved, ensuring that the same strand is used for sequencing within each cluster.<br />
+</li>
+</ol></li>
+<li>Sequencing by synthesis:
+<ol style="list-style-type: lower-roman">
+<li>Sequencing primer (Rd1 SP) is added and 4 fluorescently labelled nucleotides compete for incorporation in the growing strand.<br />
+</li>
+<li>Image acquisition: A laser excites the clusters and the signal from the incorporated nt is measured.<br />
+</li>
+<li>The emmission wave length and signal intensity determine the <strong>base call</strong> and the <strong>quality</strong> of the reading.<br />
+</li>
+<li>A special index read primer is used to sequence the barcode.<br />
+</li>
+<li>For paired-end sequencing, the above procedure is repeated with the reverse strand.<br />
+<a href = "https://hbctraining.github.io/Intro-to-ChIPseq/lessons/02_QC_FASTQC.html"> <img src="images/wk1_1_illuminasequencing.png" style="width:80.0%" alt="Intro-to-ChIPseq, hbctraining" /><br />
+</a></li>
+</ol></li>
 </ol>
-<p><span style="color: red;">Additional Ideas but I do not know whether we have time for them:</span></p>
+</blockquote>
+</details>
+<p><br> <!--Currently Illumina also has the nextSeq 500 series (besides MiSeq and HiSeq mentioned in the video). One of the main difference being that the MiSeq and HiSeq use four fluorescent colors (G = blue ,C = green, A = yellow and T = red) while the nextSeq series use 2-color chemistry (green and red). The effect being that with each cycle for the NextSeq, only two images need to be taken, As ar read as clusters appearing in both images and Gs are read as clusters that are not present in either of the two.--></p>
+<p><br> The <strong>sequencer</strong> analyzes a set number of bases, eg 42, 50 or 100 bp, called a <strong>read</strong>. The resulting <strong>base calls</strong> and their <strong>quality scores</strong> are stored in <strong>fastq files</strong> which have the .fq or .fastq extension (or compressed as .fq.gz or .fastq.gz). These are always organized in the same manner with 4 lines per read. This is an example with 2 DNA sequences (8 lines):<br />
+<br> <img src="images/wk1_2_fastq_layout.png" style="width:100.0%" /><br />
+<br></p>
+<ol style="list-style-type: decimal">
+<li>Header starts with ‘@’-sign and contains a unique sequence ID (the element up to the fist space). This header often follows a set substructure. Element after the space often includes the sample barcode.<br />
+</li>
+<li>Called bases in ACGTN-alphabet<br />
+</li>
+<li>Midline, can be empty or hold ‘+’<br />
+</li>
+<li>Quality score for each nucleotide, also called <strong>Phred score</strong>.</li>
+</ol>
+<p><br> The Phred scores represents the probability (p) that the reported call is incorrect. You do not need to learn this encoding by heart but they will come back in the Quality Control step of our analysis, therefore we discuss briefly how they are encoded:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Phred quality score</th>
+<th align="center">Probability of incorrect base call</th>
+<th align="center">Accuracy</th>
+<th align="center">Characterer</th>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">0</td>
+<td align="center">1 in 1</td>
+<td align="center">0%</td>
+<td align="center">!</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="center">10</td>
+<td align="center">1 in 10</td>
+<td align="center">90%</td>
+<td align="center">+</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="center">20</td>
+<td align="center">1 in 100</td>
+<td align="center">99%</td>
+<td align="center">5</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="center">30</td>
+<td align="center">1 in 1000</td>
+<td align="center">99.9%</td>
+<td align="center">?</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="center">40</td>
+<td align="center">1 in 10000</td>
+<td align="center">99.99%</td>
+<td align="center">J</td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<p>Here’s another visualization of how Phred scores are encoded :<br />
+<img src="images/wk1_2_phred_quality_scores_TorstenSeemannpresentation.png" style="width:80.0%" /></p>
+<details>
+<summary>
+Here’s the complete encoding of Phred scrores 0-40.
+</summary>
+<blockquote>
+<p><em>Background</em>:<br />
+<img src="images/wk1_1_phred_ascii.png" style="width:80.0%" /><br />
+<!--ref: Amixon TRAINING, Bioinformatics for beginners - File formats Part 2. - Short reads, written on 01/07/2013, visited on 29/11/2020, through: https://www.omixon.com/bioinformatics-for-beginners-file-formats-part-2-short-reads/--></p>
+</blockquote>
+</details>
+<p><br> Before we can start our data analysis and identify for example regions marked by activating and repressing histone marks, we need to process the raw data. This includes cleaning up, mapping, visualizing the sequenced reads and identifying genomic regions where reads tend to pile up (in other words “peaks”). Which is what we will discuss next.<br />
+<br></p>
+</div>
+<div id="raw-data----science" class="section level2" data-progressive="TRUE">
+<h2 data-progressive="TRUE">1.3 Raw data --&gt; science</h2>
+<div id="post-sequencer-processing" class="section level3">
+<h3>1.3.1 Post-sequencer processing</h3>
+<p>The sequencer determines the sequence of the DNA molecules in your sample and produces massive amounts of data. In an ideal world, these data would 100% reflect reality. But….. It doesn’t and it is often your or a bio-informaticians task to discriminate valuable signal from artefacts and noise, the latter being accumulations of reads in regions that don’t actually contain binding sites of the protein or mofidified histone of interest.<br />
+<br> <img src="images/wk1_3_intro_whatbioinformaticiancsdo.png" style="width:60.0%" /> <br />
+<br> A general pipeline for ChIP sequencing data involves several following steps. In theory, all of them can be performed in R but the first steps are commonly performed by tools outside R (often on Linux server). The resulting peakfiles, files with read depth and/or read counts are then imported in R.</p>
+<p><br> Here we will discuss the steps that are necessary to turn the raw before we can start our analyses in R:<br />
+<br></p>
+<div id="run-a-quality-check-on-the-raw-data" class="section level4">
+<h4>1. Run a quality check on the raw data</h4>
+<p>We run the raw fastq files through <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FASTQC</a> software to get a quick impression of whether our data has any technical problems of which we should be aware before doing any further analysis. This tools outputs a HTML report with graphs and tables summarizing, among others the base call accuracy, library base composition, duplication levels and the presence of overrepresented sequences.</p>
+<p>The <strong>Per base sequence quality</strong> plot is one of the most important plots generated. It summarizes the base call accuracy (Y-axis) for each cycle (X-axis) across the library. See this example:<br />
+<br> <img src="images/wk1_3_fastqc_per_base_quality_vb1.png" style="width:80.0%" /></p>
+<p>This exmaple shows the average Phred quality for a library sequenced to 72 bp. The majority of bases have a good quality, the quality drops for the last two bases and we should (in this case) remove these from the end of the read.</p>
+<p>For most runs, quality should be good for most reads through the whole run. If quality is low, we can use the other plots and tables to try to understand why this is.</p>
 <ul>
-<li>Mention specific softwares/tools?<br />
+<li>Good (Illumina) quality is generally Phred &gt; 28 - 30<br />
 </li>
-<li>Show examples of the files? Might help students understand how “the data” looks like. Could be in this numbered list or in section below (1.3.4).<br />
-</li>
-<li>Elaborate on important/often-applied settings and their rationale?<br />
-</li>
-<li>Add an asignment here: to put steps in the right order with quality checks in between? Like in:</li>
+<li>Concerning (Illumina) quality is Phred &lt; 20</li>
 </ul>
-<p><br> <!-- ![](images/wk1_3_seq2science_siebrenspptx.png){width=70%}\    
-[Sec2science / adapted from Siebrens presentation / shows RNA-seq pipeline ](https://vanheeringen-lab.github.io/seq2science/content/workflows.html)      
+<p>If the QC does not support major technical problems like a systematic base bias that occured during sequencing or contamination during sample prep with foreign DNA, we can continue.</p>
+<blockquote>
+<p><strong>Exercise 1</strong><br />
+Use the following two FASTQC reports to answer the following questions.</p>
+<ul>
+<li><a href="https://ctoen.github.io/FunctGen/example1_sequence_short_fastqc.html">FASTQC report 1</a><br />
+</li>
+<li><a href="https://ctoen.github.io/FunctGen/example2_sequence_short_fastqc.html">FASTQC report 2</a></li>
+</ul>
+</blockquote>
+<p><br></p>
+<blockquote>
+<p><em>Background</em>: For detailed discussion on FASTQC reports see the FASTQC website of the Babraham institute, and their tutorial on Quality Control in Sequencing Experiments <a href="https://www.bioinformatics.babraham.ac.uk/training.html#sequenceqc">ref</a>.</p>
+</blockquote>
+<p><br></p>
+</div>
+<div id="trim-and-quality-filter-reads" class="section level4">
+<h4>2. Trim and quality-filter reads</h4>
+<p>In this cleaning step we predominantly:</p>
+<ul>
+<li>Remove reads composed solely of adapters without insert.<br />
+</li>
+<li>Remove reads with an overall low-quality.<br />
+</li>
+<li>Remove or mask low-quality bases within predominantly high quality reads (if these occur, they are often the last one or two bases for Illumina sequencing). This can result in the complete removal of some reads because of their overall low quality or short length.</li>
+</ul>
+<p><br></p>
+</div>
+<div id="align-reads-to-the-genome" class="section level4">
+<h4>3. Align reads to the genome</h4>
+<p>Next Generation Sequence (NGS) alignment means that we identify the likely location in the reference genome where the original DNA molecule came from. This process is called <strong>aligning</strong> and is performed by <strong>alignment tools</strong>, also called <strong>read mappers</strong>. Well known examples include STAR, BWA and bowtie2. In essence, these tools perform the same tasks but with different algorithms/strategies.<br />
+<br> Since the publication of the human genome, successive versions have been released (also called <strong>assemblies</strong> or <strong>builds</strong>). The improvements in quality are thanks to technological advancements as well as improvements in the representativeness of the genome with respect to the genetic diversity found in the human population. We will work with (one of) the latests relaese referred to as <strong>GRCh38</strong> or <strong>hg38</strong> (Genome Reference Consortium Human Build 38).<br />
+<br> The aligner thus requires as input the quality-filtered and trimmed fastq files together with the reference genome.<br />
+<br> The outputted alignment is stored in (<em>huge!</em> ) TAB-delimited text Sequence Alignment Map files, <strong>SAM files</strong>. The compressed version of SAM files are called <strong>BAM files</strong> (Binary Alginment Map).<br />
+<br></p>
+<details>
+<summary>
+Click here for additional information about SAM/BAM file format.
+</summary>
+<blockquote>
+<p><em>Background</em>: The SAM/BAM files contains a header with information about the mapping procedure. This is followed by the read alignments with 1 line per read. The latter contains information about the read sequence, how much of it was mapped to the reference genome (eg. the whole read or only part of it), how well it alinged, and lots of other information, dependent on the aligner.<br />
+<br> To give you a feel for how SAM files looks like, here’s an example of the header and one record:<br />
+<img src="images/wk1_3_bam_header_example_sandrews_tutorial201911.png" style="width:100.0%" /><br />
+<!-- ref: Simon Andrews, Babraham Bioinformatics, Quality control for Sequencing Experiments pdf, v2019-11 --> <img src="images/wk1_3_bam_record_example_sandrews_tutorial201911.png" style="width:100.0%" /><br />
+<!-- ref: Simon Andrews, Babraham Bioinformatics, Quality control for Sequencing Experiments pdf, v2019-11 --> This example tells you among others that the library was mapped with <a href="http://daehwankimlab.github.io/hisat2/manual/">hisat2</a> to the mouse reference genome GRCm38 with certain additional settings. The single displayed read is mapping to chr18, starting at position 57944851.<br />
+<br> In summary:<br />
+<img src="images/wk1_3_BAM_fields_broadinstitute.png" style="width:100.0%" /><br />
+Each record holds at least 11 columns (exact number depends on the aligner and post-alignment analytics performed on the file):</p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">ColumnNR</th>
+<th align="left">Description</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1.</td>
+<td align="left">Read name</td>
+<td align="left">HWI-D00436:394:CBGLBANXX:1:1101:1222:1861</td>
+</tr>
+<tr class="even">
+<td align="left">2.</td>
+<td align="left">12 “bits” flag summarizing of the alignment. Webtools to explain the meaning of each flag: <a href="https://www.samformat.info/sam-format-flag">samformat</a>, or <a href="https://broadinstitute.github.io/picard/explain-flags.html">Broad Institute</a></td>
+<td align="left">16</td>
+</tr>
+<tr class="odd">
+<td align="left">3.</td>
+<td align="left">Chromosome in the reference genome the read aligns</td>
+<td align="left">chr18</td>
+</tr>
+<tr class="even">
+<td align="left">4.</td>
+<td align="left">Position within the chromosome the read aligns</td>
+<td align="left">5794485</td>
+</tr>
+<tr class="odd">
+<td align="left">5.</td>
+<td align="left">Mapping quality score, different programs use different scores</td>
+<td align="left">60</td>
+</tr>
+<tr class="even">
+<td align="left">6.</td>
+<td align="left">CIGAR string, is a summary of the alignment per nt</td>
+<td align="left">50M</td>
+</tr>
+<tr class="odd">
+<td align="left">7.</td>
+<td align="left">Chromosome where the paired read aligns</td>
+<td align="left">chr18 (if there is no paired read 0 or *)</td>
+</tr>
+<tr class="even">
+<td align="left">8.</td>
+<td align="left">Position within where the paried read aligns</td>
+<td align="left">5794685 (or 0 if there is no paired read)</td>
+</tr>
+<tr class="odd">
+<td align="left">9.</td>
+<td align="left">Length of the complete fragment, from the first mapped base of read 1 to the last mapped base of read 2.</td>
+<td align="left">200 (0 if there is no pair)</td>
+</tr>
+<tr class="even">
+<td align="left">10.</td>
+<td align="left">Called bases</td>
+<td align="left">AAAAGATCTCTTGAT…</td>
+</tr>
+<tr class="odd">
+<td align="left">11.</td>
+<td align="left">Phred quality score of the read</td>
+<td align="left">GGGGGGGGGGGGGGG…</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</details>
+<p><br></p>
+</div>
+<div id="filter-artefacts-and-reads-aligning-to-multiple-regions" class="section level4">
+<h4>4. Filter artefacts and reads aligning to multiple regions</h4>
+<p>From the initial alignment we often identify and remove PCR artefacts, reads aligning with a low mapping quality (column 5) and optionally remove reads aligning non-uniquely. These actions can be performed with various tools. Commonly used ones are <a href="http://samtools.sourceforge.net/">SAMtools</a> and <a href="https://broadinstitute.github.io/picard/">Picard tools</a>. The input and output of these steps are both BAM files.<br />
+<br></p>
+</div>
+<div id="visualize-read-depth" class="section level4">
+<h4>5. Visualize read depth</h4>
+Files are created that count how many reads align to each nucleotide in the reference genome. Nucleotides with a relative high score pinpoint the likely locations of the ChIPped factor or histone PTM; to a region of accessible chromatin in ATAC-seq; or to the region that was likely transcribed and detected in RNA-seq.<br />
+<br> These files can be uploaded to the UCSC Genome Browser which we will look at in more detail today as well. Various file types can store this kind of data. We wil use bigwig files (.bw file extension), these are fast and relatively small but we can’t view them.<br />
 <br>
-
-![](images/wk1_3_encode_chipseq_readmapping.png){width=50%}\   
-[The ENCODE Project, ChIP-seq read mapping ](https://www.encodeproject.org/pipelines/ENCPL220NBH/)   
-<br>  --></p>
-<p><img src="images/wk1_3_Furay_2012_naturereviews_fig2_chipseqanalysis.png" style="width:70.0%" /> <br />
+<details>
+<summary>
+A fictional example of alignment and a read depth graph
+</summary>
+<img src="images/wk1_3_read_depth_Pavlopoulos2018.png" style="width:80.0%" /><br />
+<!-- ref: Pavlopoulos et al (2013) BioData Mining 6, Article number: 13 (2013), figure 6 -->
+</details>
+<p><br></p>
+</div>
+<div id="call-peaks" class="section level4">
+<h4>6. Call peaks</h4>
+<p>Reads are scattered through the genome but locations where the used antibody recognizes its target (eg. DNA-binding TF, histone, histone variant or histone PTM) will collect more reads. <strong>Peak calling</strong> is the computational process to identify these regions, often with respect to a control dataset where no antibody or no specific antibody was used, resp. <strong>input control</strong> and <strong>IgG control</strong> . A commonly used tool for this step is <a href="10.1186/gb-2008-9-9-r137">MACS2</a>. MACS2 was also used to call peaks in the datasets that we will be using.<br />
+<br> Peak calling is a statistical procedure and never black and white. It depends among others on thresholds used (p-value, false-discovery rate) and the control sample. It is always wise to visually inspect the resulting peaks in the UCSC genome browser. If the called peaks do not correspond to the sites with high read coverage, you may need to adjust the settings for peak calling.<br />
+<br> Peaks are repored as regions, or <strong>genomic intervals</strong> with their genomic coordinates: <strong>chr start end</strong>. As well as a <strong>score</strong> that indicates the strength of the signal observed for this peak. We will look at these files more closesly in week 2.<br />
+<br></p>
+</div>
+<div id="read-counting" class="section level4">
+<h4>7. Read counting</h4>
+<p>Count reads that fall within genes, other genomic elements or peak regions. These counts and the actual peak locations are used for eg. differential gene expression analyses in RNA-seq or differential TF-binding in ChIP-seq (comparing differentiated vs undifferentiated or control vs treatment). A well-known, widely used tool for this purpose is DESeq2.<br />
+<br> Sample clustering can be included here as additional QC. It should identify which samples are closely related and if they don’t, this might point to a label swap or more severe issue like not-working stimulus in one of the replicates.<br />
+<br> Here’s an example of such a clustering, showing how different each sample is. Samples 15754-56 should be moslty similar and different from 15757-59, and vice versa:<br />
+<span style="color: red;">Siebren: what’s the color legend representing?</span><br />
+<img src="images/wk1_3_sample_clustering_siebrenspptx.svg" style="width:60.0%" /></p>
+<blockquote>
+<h4 id="optionally-dnasei-footprinting-variant-calling-novel-gene-identification-and-more">8. Optionally: DNaseI footprinting, variant calling, novel gene identification and more</h4>
+<p>Depending on your experimental set up additional steps are performed outside R. For DNaseI-seq, we can identify small depleted regions within peaks that correspond to the nucleotides that interact with the TF. This interaction protects these nucleotides from DNaseI attacks. These so-called footprints can be used to identify TF motifs and predict the likely TF bound. Although this sounds simple, and for a stable binding factor like CTCF it may be the case, it is not always that simple in reality.</p>
+</blockquote>
+<p><br></p>
+</div>
+</div>
+<div id="common-causes-of-noise-and-artefacts" class="section level3">
+<h3>1.3.2 Common causes of noise and artefacts</h3>
+<p>Artefact and noise in your data can arise from various causes. Here’s a list of common <strong>causes</strong>:</p>
+<ol style="list-style-type: decimal">
+<li>Synthetic DNA sequences<br />
+</li>
+<li>Poor base call accuracy<br />
+</li>
+<li>Amplification bias during library preparation<br />
+</li>
+<li>Genomic repeats and Low complexity regions</li>
+</ol>
+<blockquote>
+<p><strong>Exercise 2</strong>: Below is a list of descriptions and methods to handle these arefacts. Read these carefully and combine what you think is the most likely description and method to handle the above mentioned artefacts.</p>
+</blockquote>
+<p><strong>Descriptions</strong>:</p>
+<ol style="list-style-type: upper-alpha">
+<li>The amount of nucleic acids you generally obtain from your cells is often too low to be directly analyzed and one or more steps of PCR are needed (unless you use special, amplification-free protocols and sequencing methods). Not all DNA or RNA molecules behave the same in this reaction. Some are amplified more than others.<br />
+</li>
+<li>These include adapters ligated to the DNA molecules to allow their amplification with uniform primers during library prep and in the sequencer. These adapter sequences come with the kit or are designed by the researcher self.<br />
+</li>
+<li>The chemical reaction and quality of the optical measurement that occur in the sequencer are not perfect and depend among others on the nucleotide composition of all samples, the length of the DNA molecules and the concentration of the samples. Each nt is therefore given a quality score that reflects the accuracy of the measurement.</li>
+</ol>
+<p><strong>Methods</strong>:</p>
+<ol style="list-style-type: lower-alpha">
+<li>We can control for this by using the input sample as the control during peak calling, paired-end sequencing and remove all fragments with exactly the same coordinates for read 1 and read 2, and/or the use of a unique molecular identifier (UMI) appended to our adapters that labels each unique DNA fragment.<br />
+</li>
+<li>Remove low-quality nt’s from reads or remove reads altoghether if all their nt’s are of low quality.<br />
+</li>
+<li>Filter these out of our dataset right after we get our data from the sequencer.</li>
+</ol>
+<p><br></p>
+<p>Lastly, when trying to pinpoint the location in the reference genome where the DNA molecule most likely was derived off, we are confronted with <strong>Genomic repeats and Low complexity regions</strong>. Repetitive sequences such as short tandem repeats and interspersed repeats make up roughly 50% of the human genome. Reads produced by sequencers are generally shorter than the repeats, thus mapping them becomes ambiguous. When dealing with a read that maps to multiple places, there are usually 3 choices: (1) Discard them; (2) Take the best alignment, if there are multiple best hits take one randomly; (3) Report all alignments or report up to a certain number. The strategy you choose depends on the sample, the technology, your research question and the reference species you work with.</p>
+<p><span style="color: red;">Exercise 2: Choose the right order of steps that is used for ChIP-seq data analysis from the following list of options</span></p>
+<p><img src="images/wk1_3_Furay_2012_naturereviews_fig2_chipseqanalysis.png" style="width:80.0%" /> <br />
 <a href="https://pubmed.ncbi.nlm.nih.gov/23090257/">Furay, 2012, Nat Rev</a></p>
+<!--
+- **Amplification bias during the library preparation:** The amount of nucleic acids you generally obtain from your cells is often too low to be directly analyzed and one or more steps of PCR are needed (unless you use special, amplification-free protocols and sequencing methods). Not all DNA or RNA molecules behave the same in this reaction. Some are amplified more than others and this can generate a bias. We can control for amplification bias with:  
+  
+  + Use input sample, for example as control in peak calling  
+  + Paired-end sequencing 
+  + Add a Unique Molecular Identifier, UMI, to the barcodes, to 
+
+  
+- **Synthetic DNA sequence:** These include adapters ligated to the DNA molecules to allow their amplification with uniform primers during library prep and in the sequencer. These adapter sequences come with the kit or are designed by the researcher self. Whether they are custom or commercial, they should be removed because they were not part of the original DNA or RNA material.    
+- **Base call accuracy:** The chemical reaction and quality of the optical measurement that occur in the sequencer are not perfect and depend among others on the nucleotide composition of all samples, the length of the DNA molecules and the concentration of the samples. Each nt is therefore given a quality score that reflects the accuracy of the measurement or base call accuracyas it is also called.  
+- Lastly, when trying to pinpoint the location in the reference genome where the DNA mo lececule most likely was derived off, we are confronted with:  
+  
+  * **Genomic repeats.** The origin of reads coming from these reigons is difficult to pinpoint. But also, the reference genome might contain more or less number of repeats than the original sample.  
+  * **Low complexity regions**. These are regions that contain a lot of sequence similarity, eg telomeres. Because of this the quality of the reference genome is generally low in these regions. -->
 <p><br></p>
-<hr />
-<p><br></p>
-</div>
-<div id="quality-evaluation" class="section level3">
-<h3>1.3.2 Quality evaluation</h3>
-<p>It is important to check the quality of your data along the way:</p>
-<ul>
-<li>FASTQC (Qualty Check) software visaully summarizes the attached Phred quality scores.<br />
-</li>
-<li>Evaluate the data yourself in the genome browser and compare replicate samples, samples of different histone marks, compare to a reference dataset or compare to the input material.<br />
-</li>
-<li>Clustering of samples; can reveal label swaps, failed experiments or contaminations.</li>
-</ul>
-<p><br></p>
-<hr />
-<p><br></p>
-</div>
-<div id="output-files-bigwigs-peaks-counts" class="section level3">
-<h3><span style="color: red;">1.3.3 Output files: bigwigs, peaks &amp; counts</span></h3>
-<p><span style="color: red;">Showing examples of how the output may look like or do this along the way in the numbered list above?</span></p>
-<p>Throughout the workflow, different file types come into play. Although there are</p>
-<div id="bam-file" class="section level4">
-<h4>1.3.3.1 BAM file</h4>
-<p>The BAM file, outputted by the aligner and post-alignment analytical and filtering tools, contains two sections: a header section at the top followed by records of read alignments.<br />
-<br> The header lines tell you how the alignment was performed, incl. which reference genome was used and the program (or <em>aligner</em>) used to align reads to the reference. The read alignments contain 1 line per read. So if we count all the lines minus the header section, we get the number of reads in the file.<br />
-<br> Each record holds at least 11 columns (exact number depends on the aligner and post-alignment analytics performed on the file):</p>
-<ol style="list-style-type: decimal">
-<li>Read name similar to name in fastq file line 1<br />
-</li>
-<li>Flag, encodes alignment information of the read in 12 “bits”. It can, for example, tell you whether the corresponding read is mapped, unmapped or a PCR or optical duplicate. This encoding is not the easiest to immediatetely understand, luckily there are webtools to summarize for us what each flag number means: <a href="https://www.samformat.info/sam-format-flag">from samformat</a>, or <a href="https://broadinstitute.github.io/picard/explain-flags.html">Broad Institute</a>.<br />
-</li>
-<li>Name of the contig or chromosome in the reference genome the read aligns to: eg. <code>chr7</code> for chromosome 7 or <code>mt</code> for mitochondrial DNA<br />
-</li>
-<li>Position within the chromosome the read aligns to: eg. <code>229418420</code><br />
-</li>
-<li>Mapping quality score, the program adds this score but different programs use different scores, can have value of <code>0</code> to <code>255</code><br />
-</li>
-<li>CIGAR string, gives a summary of the alignment per nt: eg. <code>51M</code>, encodes information about among others the number of matching nt’s, whether there is a deletion<br />
-</li>
-<li>Name of the reference genome where the paired read aligns to: eg. <code>chr7</code> (if there is no paried read <code>0</code>)<br />
-</li>
-<li>Position within the reference genome where the paried read aligns to: eg. <code>229418621</code></li>
-<li>The length of the complete fragment, from the first mapped base of read 1 to the last mapped base of read 2.<br />
-</li>
-<li>Read sequence, similar to line 2 in fastq file.<br />
-</li>
-<li>Phred quality score of the read (ASCII encoded), similar to line 4 of the fastq file, eg: <code>CCCFFFHHJJJAA...</code></li>
-</ol>
-<p><br></p>
-<hr />
-<p><br></p>
-</div>
 </div>
 <div id="alternatively-use-fair-data" class="section level3">
-<h3><span style="color: red;">1.3.4 Alternatively: use FAIR data</h3>
-<p><span style="color: red;">Add section discussion FAIR data and referring to several platforms where it can be found? Several reserach consortia provide easy access and clear description of their data through data portals. These files can be downloaded or immediately uploaded to the UCSC Genome browser using the URL</span></p>
-<p><br></p>
-<hr />
-<p><br></p>
-</div>
-<div id="exercises" class="section level3">
-<h3>1.3.5 Exercises</h3>
-<p>Ideas:</p>
+<h3>1.3.3 Alternatively: use FAIR data</h3>
+<p>In 2014 a core set of principles were drafted in order to optimize the reusability of research data, the resulting <strong>FAIR principles</strong> were <a href="https://www.nature.com/articles/sdata201618">published</a> in 2016. They represent a set of guidelines and best practices to ensure that data or any digital object are <strong>Findable</strong>, <strong>Accessible</strong>, <strong>Interoperable</strong> and <strong>Re-usable</strong> with special emphasis on enhancing the ability of machines to automatically find and use data.</p>
+<p><img src="images/wk1_3_fairdata_fosteropenscience.png" style="width:80.0%" /><br />
+<!--The Open Science Training Handbook, via https://book.fosteropenscience.eu/en/,--></p>
 <ul>
-<li>Put steps in right order with options for quality checks.<br />
-</li>
-<li>Recognize a type of file?<br />
-</li>
-<li>Evaluate good/bad fastqc output?<br />
-</li>
-<li>print head one of the blueprint fastq files –&gt; mc about read length,<br />
-</li>
-<li>where can we find information about how fastq files were mapped?</li>
+<li><p><strong>Findable</strong>: The first thing to be in place to make data reusable is the possibility to find them. It should be easy to find the data and the metadata for both humans and computers. Automatic and reliable discovery of datasets and services depends on machine-readable persistent identifiers and metadata.</p></li>
+<li><p><strong>Accessible</strong>: The (meta)data should be retrievable by their identifier using a standardized and open communications protocol, possibly including authentication and authorisation. Also, metadata should be available even when the data are no longer available.</p></li>
+<li><p><strong>Interoperable</strong>: The data should be able to be combined with and used with other data or tools. The format of the data should therefore be open and interpretable for various tools, including other data records. The concept of interoperability applies both at the data and metadata level. For instance, the (meta)data should use vocabularies that follow FAIR principles.</p></li>
+<li><p><strong>Re-usable</strong>: Ultimately, FAIR aims at optimizing the reuse of data. To achieve this, metadata and data should be well-described so that they can be replicated and/or combined in different settings. Also, the reuse of the (meta)data should be stated with (a) clear and accessible license(s).</p></li>
 </ul>
-<p><br></p>
-<hr />
+<p>An extensive list of databases for genomics research can be found <a href="https://sites.google.com/site/anshulkundaje/idataset">here</a>.</p>
 <p><br></p>
 </div>
 </div>

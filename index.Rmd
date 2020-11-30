@@ -24,16 +24,16 @@ This is the computer practical for the [Functional Genomics 1](https://www.ru.nl
 
 The **purpose** of this practical is to teach you common bio-informatics analyses performed to analyse epigenomics data. You may already be familiar with the output of these analyses from scientific publications or lectures. We will focus on **how to detect, quantify, annotate and visualise epigenetic marks**. At the end of our analyses, we will also relate epigenetic markings to gene activity as well as candidate TFs that might establish them.  
 
-For this practical, we will use **data of white blood cells** from the [the BLUEPRINT project](http://dcc.blueprint-epigenome.eu/#/home), namely: monocytes, T cells, B cells and natural killer cells. BLUEPRINT is a *collaborative project aiming to produce a blueprint of haemopoetic epigenomes*. We have chosen these datasets because they are well-documented and easy to find through the BLUEPRINT data portal, and not because we want to teach you the hematopoietic system.  
+For this practical, we will use **data of white blood cells** from the [the BLUEPRINT project](http://dcc.blueprint-epigenome.eu/#/home), namely: monocytes, T cells, B cells and natural killer cells. We have chosen these datasets because they are well-documented and easy to find through the BLUEPRINT data portal, and not because we want to teach you the hematopoietic system.  
 <br>  
 
 > ### Global learning objectives  
   1. Explain how to process raw reads from a ChIP-sequencing experiment.   
-  2. Display and browse through genomics data in the UCSC Genome Browser.  
-  3. Distinguish different genomic datasets based on their pattern in the UCSC Genome Browser.   
-  4. Quantify the overlap among histone ChIP-seq peaks and genomic features in r.  
-  5. Visually summarize this quantification in bar- and pieplots in r.  
-  6. Statistically test for enrichment of histone marks in functional genomic elements. 
+  2. Display and browse genomics data in the UCSC Genome Browser.  
+  3. Distinguish different genomic datasets based on their coverage profile in the UCSC Genome Browser.   
+  4. Quantify the overlap among histone ChIP-seq peaks and promoters.    
+  5. Visually summarize this quantification in a venn diagram.  
+  6. Statistically test for enrichment of this histone marks in promoters.   
   7. Identify the nearest TSS to a histone ChIP-seq peak.  
   8. Plot the distribution of distances to the TSS.  
   9. Summarize the signal signal strength of a histone ChIP-seq dataset around a genomic feature like the TSS or across gene body.  
@@ -43,7 +43,9 @@ For this practical, we will use **data of white blood cells** from the [the BLUE
   
 <br>  
 
-## Structure of this practical  
+### Structure of this practical  
+We have divided these global learning objectives into 4 parts:  
+
 **Week 1**: Raw ChIP-seq data processing and visualize epigenomics data in the UCSC Genome browser.  
 Global learning objectives #1-3.  
   
@@ -57,86 +59,15 @@ Global learning objectives #5-6.
 Global learning objectives #12.  
 <br>  
 
-## Need help?  
+#### Tutorial specs  
+
+- For each week you will run a different tutorial.  
+- Answers should be saved for each of your sessions.  
+- Background information and tips are formatted in gray boxes and are not obligatory. Background information can also be collapsed and recognized by black arrowheads.  
+
+
+#### Need help?  
 Use the virtual classroom space in Brightspace/Zoom meeting when you need advice. A lecturer will be present there during practical hours.  
 
 Additional links to resoures can be found under [links](#Resources) 
-<br>  
-
-## Computational environment    
-For this practical it is not required to install R and R studio. Instead, we provide you with the correct environment and required packages. In case you want to repeat the practical at home/on your own computer you should make sure you install the following packages:   
-
-* tidyverse ..
-* blabla
-<br> 
-
-## Background info    
-### Hematopoiesis scheme  
-T
-<a href = "https://www.blueprint-epigenome.eu/UserFiles/File/cell%20types%20images%20etc/Haematopoiesis_original.pdf">
-![](images/index_fig2_BP_Haematopoiesis_original.png)
-</a>
-[BLUEPRINT, hematopoiesis](https://www.blueprint-epigenome.eu/UserFiles/File/cell%20types%20images%20etc/Haematopoiesis_original.pdf)  
-<br> 
-### Table with cell markers and TFs  
-Here???s a table with cell surface proteins, cytokines and TFs that are specific to certain cell types. 
-
-Some of the cell surface markers were used to isolate these cells from the bulk using (MACS and) FACS.   
-
-Cell | Marker | Localization and/or function | Gene(s) |  Also found on | Ref  
----|---|---|---|---|---         
-**Monocytes** | CD14 | plasma membrane | [CD14](https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD14) | macrophages | [Schidl 2014 Blood](https://pubmed.ncbi.nlm.nih.gov/24671955/)  
-  ,,  | CCR2 | plasma membrane | [CCR2](https://www.genecards.org/cgi-bin/carddisp.pl?gene=CCR2) | ?? | [Schidl 2014 Blood](https://pubmed.ncbi.nlm.nih.gov/24671955/)   
-  ,,  | CD163 | plasma membrane | [CD163](https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD163) | ?? | [Schidl 2014 Blood](https://pubmed.ncbi.nlm.nih.gov/24671955/)   
-  ,,  | VCAN |  extracellular space | [VCAN](https://www.genecards.org/cgi-bin/carddisp.pl?gene=VCAN) | ?? | [Schidl 2014 Blood](https://pubmed.ncbi.nlm.nih.gov/24671955/)   
-  ,,  | S100A8 | ?? | ?? | ?? | [Schidl 2014 Blood](https://pubmed.ncbi.nlm.nih.gov/24671955/)   
-  ,,  | S100A9 | ?? | ?? | ?? | [Schidl 2014 Blood](https://pubmed.ncbi.nlm.nih.gov/24671955/)   
-  ,,  | S100A12 | ?? | ?? | ?? | [Schidl 2014 Blood](https://pubmed.ncbi.nlm.nih.gov/24671955/)   
-  ,, | CEBPb | ?? | ?? | ?? | [Schidl 2014 Blood](https://pubmed.ncbi.nlm.nih.gov/24671955/)   
-  ,, | PU.1 | nucleus, transcription factor | [SPI1](https://www.genecards.org/cgi-bin/carddisp.pl?gene=SPI1&keywords=SPI1) | myeloid cells and B cells  
-**NK cells**  | CD16 | plasma membrane | ?? | macrophages, neutrophils  
-**T cells** (CD4+ and CD8+) | CD3 | plasma membrane | [CD3-delta](https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD3D), [-gamma](https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD3G), [-epsilon](https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD3E) | ??
-  ,,  | CD45RA | plasma membrane | [PTPRC](https://www.genecards.org/cgi-bin/carddisp.pl?gene=PTPRC) | B cells, NK cells, neutrophils, monocytes, ...  
-**CD4+ T cells** | CD4 | plasma membrane | [CD4 gene](https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD4) | monocytes, macrophages, dendritic cells  
- ,, | ThPOK | nucleus, transcription factor | [ZBTB7B](https://www.genecards.org/cgi-bin/carddisp.pl?gene=ZBTB7B) | CD4+ T cells and B cells |  [Taniuchi 2018 Ann Rev Immunology](https://pubmed.ncbi.nlm.nih.gov/29677476/)  
- ,, | T-bet | nucleus, transcription factor | [TBX21](https://www.genecards.org/cgi-bin/carddisp.pl?gene=TBX21) | .. | ..  
- ,, | GATA-3 | nucleus, transcription factor | [GATA3](https://www.genecards.org/cgi-bin/carddisp.pl?gene=GATA3) | **CD8 T cells??** | ..  
- ,, | RunX3 | nucleus, transcription factor |  
- ,, | INF-gamma | cytokine, secreted | [INFG](https://www.genecards.org/cgi-bin/carddisp.pl?gene=IFNG) | .. | ..   
- ,, | IL-4 | cytokine, secreted | [IL4](https://www.genecards.org/cgi-bin/carddisp.pl?gene=IL4) | .. | .. |  
-**CD8+ T cells** | CD8A | plasma membrane | [CD8A](https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD8A) | CD8+ T cells, B cells, NK cells  | ..scRNA-seq marker    
-**B cells** | PU.1 | nucleus, transcription factor | [SPI1](https://www.genecards.org/cgi-bin/carddisp.pl?gene=SPI1&keywords=SPI1) | myeloid cells and B cells  
-<br> 
-
-
-
-### White blood cells in current dataset  
-Blood cells originate from common, multipotent hemopoietic stem cells in the bone marrow which divide to keep their population stocked or differentiate into more specific progenitors of the myeloid or lymphoid lineages. These progenitors undergo a limited number of divisions and differentiate along the way into mature blood cells: white blood cells, red blood cells and platelets. 
-
-White blood cells encompass a varied group of cells. Each type has its own developmental process controlled by cytokines, cytokine receptors, transcription factors and chromatin remodellers and with distinct morphologies and functions at maturity. Of all the different white blood cells, we will focus on monocytes, NK cells, T cells and B cells in our analyses. 
-
-**Monocytes** make up 2-8% of the white blood cells, derive from the myeloid lineage and are part of the innate immune system (first line of defense, limited/general specificity to particular antigens and can???t multiply furhter). They can enter peripheral tissue and differentiate into macrophages which are good at engulfing larger particles but also in dendritic cells which are highly adapted to present foreign antigens to cells of the adaptive immune system.    
-
-**Natural killer cells** or **NK lymphocytes** come from the lymphoid lineage. They are part of the innate immune system with high cytotoxic capabilities and an important first line of defense against virus infections and the formation of abnormal tissues such as cancers. 
-
-**T cells** or **T lymphocytes** come from the lymphoid lineage as well and can recognize antigens presented by infected cells or special-antigen presenting cells using their T cell receptor. They can either kill the infected cell immediately - cytotoxic activity - or recruit and/or activate other immune cells including B cells - helper activity. These cytotoxic T lymphocytes are recognized by CD8 molecule on their membrane and helper T lymphocytes by CD4. 
-
-**B cells** or **B lymphocytes** also come from the lymphoid lineage and are part of the adaptive (second line, cells differentiated to target specific antigens). Upon activation they differentiate into an antibody-producing plasma cell or a memory B cell. 
-
-Besides white blood cells we also find **red blood cells** and **platelets** in the blood. Both originate from the myeloid lineage and have lost their nucleus during development but contain RNA including mRNA. Mature red blood cells mediate transport of O2 and CO2 in the blood. Platelets originate from megakaryocytes in the bone marrow and release coagulation factors in response to a bleeding or injury of the blood vessel wall. 
-<br> 
-
-## References  
-### Resources used to compile this practical/tutorial  
-- [seq2science](https://vanheeringen-lab.github.io/seq2science/index.html)
-- BLUEPRINT project  
-- ...  
-<br> 
-
-## OLD text
-
-> ### At the end of the practical you are able to.. 
-  1. Use  combinations of histone PTM data and chromatin accessibility to identify functional genomic elements (eg promoter, enhancers etc) and predict gene activity (active or repressed).    
-  2. Check above mentioned predictions on gene activity in single-cell RNA-seq data.  
-  3. Vice versa, use the epigenetic data to explain gene expression differences detected in a single-cell RNA-seq experiment.  
-  4. Predict TFs that could mediate cell-specific gene expression.   
+<br>    

@@ -434,22 +434,23 @@ div.tocify {
 <h2>Introduction</h2>
 <p>This is the computer practical for the <a href="https://www.ru.nl/courseguides/science/vm/osirislinks/bb/nwi-bb064b/">Functional Genomics 1</a> course. It builds upon R programming skills taught in the first year during <a href="https://www.ru.nl/courseguides/science/vm/osirislinks/bp/nwi-bp031/">Genomics and Big Data</a> and a basic understanding of the R programming language is required. We will also use statistics from the course <a href="https://www.ru.nl/courseguides/science/vm/osirislinks/bp/nwi-bp012c/">Statistics 1</a>.</p>
 <p>The <strong>purpose</strong> of this practical is to teach you common bio-informatics analyses performed to analyse epigenomics data. You may already be familiar with the output of these analyses from scientific publications or lectures. We will focus on <strong>how to detect, quantify, annotate and visualise epigenetic marks</strong>. At the end of our analyses, we will also relate epigenetic markings to gene activity as well as candidate TFs that might establish them.</p>
-<p>For this practical, we will use <strong>data of white blood cells</strong> from the <a href="http://dcc.blueprint-epigenome.eu/#/home">the BLUEPRINT project</a>, namely: monocytes, T cells, B cells and natural killer cells. BLUEPRINT is a <em>collaborative project aiming to produce a blueprint of haemopoetic epigenomes</em>. We have chosen these datasets because they are well-documented and easy to find through the BLUEPRINT data portal, and not because we want to teach you the hematopoietic system.<br />
+<p>For this practical, we will use <strong>data of white blood cells</strong> from the <a href="http://dcc.blueprint-epigenome.eu/#/home">the BLUEPRINT project</a>, namely: monocytes, T cells, B cells and natural killer cells. We have chosen these datasets because they are well-documented and easy to find through the BLUEPRINT data portal, and not because we want to teach you the hematopoietic system.<br />
 <br></p>
 <blockquote>
 <h3 id="global-learning-objectives">Global learning objectives</h3>
 <ol style="list-style-type: decimal">
 <li>Explain how to process raw reads from a ChIP-sequencing experiment.<br />
 </li>
-<li>Display and browse through genomics data in the UCSC Genome Browser.<br />
+<li>Display and browse genomics data in the UCSC Genome Browser.<br />
 </li>
-<li>Distinguish different genomic datasets based on their pattern in the UCSC Genome Browser.<br />
+<li>Distinguish different genomic datasets based on their coverage profile in the UCSC Genome Browser.<br />
 </li>
-<li>Quantify the overlap among histone ChIP-seq peaks and genomic features in r.<br />
+<li>Quantify the overlap among histone ChIP-seq peaks and promoters.<br />
 </li>
-<li>Visually summarize this quantification in bar- and pieplots in r.<br />
+<li>Visually summarize this quantification in a venn diagram.<br />
 </li>
-<li>Statistically test for enrichment of histone marks in functional genomic elements.</li>
+<li>Statistically test for enrichment of this histone marks in promoters.<br />
+</li>
 <li>Identify the nearest TSS to a histone ChIP-seq peak.<br />
 </li>
 <li>Plot the distribution of distances to the TSS.<br />
@@ -464,9 +465,9 @@ div.tocify {
 </ol>
 </blockquote>
 <p><br></p>
-</div>
-<div id="structure-of-this-practical" class="section level2">
-<h2>Structure of this practical</h2>
+<div id="structure-of-this-practical" class="section level3">
+<h3>Structure of this practical</h3>
+<p>We have divided these global learning objectives into 4 parts:</p>
 <p><strong>Week 1</strong>: Raw ChIP-seq data processing and visualize epigenomics data in the UCSC Genome browser.<br />
 Global learning objectives #1-3.</p>
 <p><strong>Week 2</strong>: Quantify the (co-)occurrences of epigenetic marks and use this to annotate genomic regions.<br />
@@ -476,258 +477,22 @@ Global learning objectives #5-6.</p>
 <p><strong>Week 4</strong>: Synthesis: epigenomics and scRNA-seq.<br />
 Global learning objectives #12.<br />
 <br></p>
+<div id="tutorial-specs" class="section level4">
+<h4>Tutorial specs</h4>
+<ul>
+<li>For each week you will run a different tutorial.<br />
+</li>
+<li>Answers should be saved for each of your sessions.<br />
+</li>
+<li>Background information and tips are formatted in gray boxes and are not obligatory. Background information can also be collapsed and recognized by black arrowheads.</li>
+</ul>
 </div>
-<div id="need-help" class="section level2">
-<h2>Need help?</h2>
+<div id="need-help" class="section level4">
+<h4>Need help?</h4>
 <p>Use the virtual classroom space in Brightspace/Zoom meeting when you need advice. A lecturer will be present there during practical hours.</p>
 <p>Additional links to resoures can be found under <a href="#Resources">links</a> <br></p>
 </div>
-<div id="computational-environment" class="section level2">
-<h2>Computational environment</h2>
-<p>For this practical it is not required to install R and R studio. Instead, we provide you with the correct environment and required packages. In case you want to repeat the practical at home/on your own computer you should make sure you install the following packages:</p>
-<ul>
-<li>tidyverse ..</li>
-<li>blabla <br></li>
-</ul>
 </div>
-<div id="background-info" class="section level2">
-<h2>Background info</h2>
-<div id="hematopoiesis-scheme" class="section level3">
-<h3>Hematopoiesis scheme</h3>
-<p>T <a href = "https://www.blueprint-epigenome.eu/UserFiles/File/cell%20types%20images%20etc/Haematopoiesis_original.pdf"> <img src="images/index_fig2_BP_Haematopoiesis_original.png" /> </a> <a href="https://www.blueprint-epigenome.eu/UserFiles/File/cell%20types%20images%20etc/Haematopoiesis_original.pdf">BLUEPRINT, hematopoiesis</a><br />
-<br> ### Table with cell markers and TFs<br />
-Here???s a table with cell surface proteins, cytokines and TFs that are specific to certain cell types.</p>
-<p>Some of the cell surface markers were used to isolate these cells from the bulk using (MACS and) FACS.</p>
-<table style="width:100%;">
-<colgroup>
-<col width="16%" />
-<col width="16%" />
-<col width="16%" />
-<col width="16%" />
-<col width="16%" />
-<col width="16%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Cell</th>
-<th>Marker</th>
-<th>Localization and/or function</th>
-<th>Gene(s)</th>
-<th>Also found on</th>
-<th>Ref</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Monocytes</strong></td>
-<td>CD14</td>
-<td>plasma membrane</td>
-<td><a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD14">CD14</a></td>
-<td>macrophages</td>
-<td><a href="https://pubmed.ncbi.nlm.nih.gov/24671955/">Schidl 2014 Blood</a></td>
-</tr>
-<tr class="even">
-<td>,,</td>
-<td>CCR2</td>
-<td>plasma membrane</td>
-<td><a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=CCR2">CCR2</a></td>
-<td>??</td>
-<td><a href="https://pubmed.ncbi.nlm.nih.gov/24671955/">Schidl 2014 Blood</a></td>
-</tr>
-<tr class="odd">
-<td>,,</td>
-<td>CD163</td>
-<td>plasma membrane</td>
-<td><a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD163">CD163</a></td>
-<td>??</td>
-<td><a href="https://pubmed.ncbi.nlm.nih.gov/24671955/">Schidl 2014 Blood</a></td>
-</tr>
-<tr class="even">
-<td>,,</td>
-<td>VCAN</td>
-<td>extracellular space</td>
-<td><a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=VCAN">VCAN</a></td>
-<td>??</td>
-<td><a href="https://pubmed.ncbi.nlm.nih.gov/24671955/">Schidl 2014 Blood</a></td>
-</tr>
-<tr class="odd">
-<td>,,</td>
-<td>S100A8</td>
-<td>??</td>
-<td>??</td>
-<td>??</td>
-<td><a href="https://pubmed.ncbi.nlm.nih.gov/24671955/">Schidl 2014 Blood</a></td>
-</tr>
-<tr class="even">
-<td>,,</td>
-<td>S100A9</td>
-<td>??</td>
-<td>??</td>
-<td>??</td>
-<td><a href="https://pubmed.ncbi.nlm.nih.gov/24671955/">Schidl 2014 Blood</a></td>
-</tr>
-<tr class="odd">
-<td>,,</td>
-<td>S100A12</td>
-<td>??</td>
-<td>??</td>
-<td>??</td>
-<td><a href="https://pubmed.ncbi.nlm.nih.gov/24671955/">Schidl 2014 Blood</a></td>
-</tr>
-<tr class="even">
-<td>,,</td>
-<td>CEBPb</td>
-<td>??</td>
-<td>??</td>
-<td>??</td>
-<td><a href="https://pubmed.ncbi.nlm.nih.gov/24671955/">Schidl 2014 Blood</a></td>
-</tr>
-<tr class="odd">
-<td>,,</td>
-<td>PU.1</td>
-<td>nucleus, transcription factor</td>
-<td><a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=SPI1&amp;keywords=SPI1">SPI1</a></td>
-<td>myeloid cells and B cells</td>
-<td></td>
-</tr>
-<tr class="even">
-<td><strong>NK cells</strong></td>
-<td>CD16</td>
-<td>plasma membrane</td>
-<td>??</td>
-<td>macrophages, neutrophils</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><strong>T cells</strong> (CD4+ and CD8+)</td>
-<td>CD3</td>
-<td>plasma membrane</td>
-<td><a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD3D">CD3-delta</a>, <a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD3G">-gamma</a>, <a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD3E">-epsilon</a></td>
-<td>??</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>,,</td>
-<td>CD45RA</td>
-<td>plasma membrane</td>
-<td><a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=PTPRC">PTPRC</a></td>
-<td>B cells, NK cells, neutrophils, monocytes, …</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><strong>CD4+ T cells</strong></td>
-<td>CD4</td>
-<td>plasma membrane</td>
-<td><a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD4">CD4 gene</a></td>
-<td>monocytes, macrophages, dendritic cells</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>,,</td>
-<td>ThPOK</td>
-<td>nucleus, transcription factor</td>
-<td><a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=ZBTB7B">ZBTB7B</a></td>
-<td>CD4+ T cells and B cells</td>
-<td><a href="https://pubmed.ncbi.nlm.nih.gov/29677476/">Taniuchi 2018 Ann Rev Immunology</a></td>
-</tr>
-<tr class="odd">
-<td>,,</td>
-<td>T-bet</td>
-<td>nucleus, transcription factor</td>
-<td><a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=TBX21">TBX21</a></td>
-<td>..</td>
-<td>..</td>
-</tr>
-<tr class="even">
-<td>,,</td>
-<td>GATA-3</td>
-<td>nucleus, transcription factor</td>
-<td><a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=GATA3">GATA3</a></td>
-<td><strong>CD8 T cells??</strong></td>
-<td>..</td>
-</tr>
-<tr class="odd">
-<td>,,</td>
-<td>RunX3</td>
-<td>nucleus, transcription factor</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>,,</td>
-<td>INF-gamma</td>
-<td>cytokine, secreted</td>
-<td><a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=IFNG">INFG</a></td>
-<td>..</td>
-<td>..</td>
-</tr>
-<tr class="odd">
-<td>,,</td>
-<td>IL-4</td>
-<td>cytokine, secreted</td>
-<td><a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=IL4">IL4</a></td>
-<td>..</td>
-<td>..</td>
-</tr>
-<tr class="even">
-<td><strong>CD8+ T cells</strong></td>
-<td>CD8A</td>
-<td>plasma membrane</td>
-<td><a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=CD8A">CD8A</a></td>
-<td>CD8+ T cells, B cells, NK cells</td>
-<td>..scRNA-seq marker</td>
-</tr>
-<tr class="odd">
-<td><strong>B cells</strong></td>
-<td>PU.1</td>
-<td>nucleus, transcription factor</td>
-<td><a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=SPI1&amp;keywords=SPI1">SPI1</a></td>
-<td>myeloid cells and B cells</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
-</div>
-<div id="white-blood-cells-in-current-dataset" class="section level3">
-<h3>White blood cells in current dataset</h3>
-<p>Blood cells originate from common, multipotent hemopoietic stem cells in the bone marrow which divide to keep their population stocked or differentiate into more specific progenitors of the myeloid or lymphoid lineages. These progenitors undergo a limited number of divisions and differentiate along the way into mature blood cells: white blood cells, red blood cells and platelets.</p>
-<p>White blood cells encompass a varied group of cells. Each type has its own developmental process controlled by cytokines, cytokine receptors, transcription factors and chromatin remodellers and with distinct morphologies and functions at maturity. Of all the different white blood cells, we will focus on monocytes, NK cells, T cells and B cells in our analyses.</p>
-<p><strong>Monocytes</strong> make up 2-8% of the white blood cells, derive from the myeloid lineage and are part of the innate immune system (first line of defense, limited/general specificity to particular antigens and can???t multiply furhter). They can enter peripheral tissue and differentiate into macrophages which are good at engulfing larger particles but also in dendritic cells which are highly adapted to present foreign antigens to cells of the adaptive immune system.</p>
-<p><strong>Natural killer cells</strong> or <strong>NK lymphocytes</strong> come from the lymphoid lineage. They are part of the innate immune system with high cytotoxic capabilities and an important first line of defense against virus infections and the formation of abnormal tissues such as cancers.</p>
-<p><strong>T cells</strong> or <strong>T lymphocytes</strong> come from the lymphoid lineage as well and can recognize antigens presented by infected cells or special-antigen presenting cells using their T cell receptor. They can either kill the infected cell immediately - cytotoxic activity - or recruit and/or activate other immune cells including B cells - helper activity. These cytotoxic T lymphocytes are recognized by CD8 molecule on their membrane and helper T lymphocytes by CD4.</p>
-<p><strong>B cells</strong> or <strong>B lymphocytes</strong> also come from the lymphoid lineage and are part of the adaptive (second line, cells differentiated to target specific antigens). Upon activation they differentiate into an antibody-producing plasma cell or a memory B cell.</p>
-<p>Besides white blood cells we also find <strong>red blood cells</strong> and <strong>platelets</strong> in the blood. Both originate from the myeloid lineage and have lost their nucleus during development but contain RNA including mRNA. Mature red blood cells mediate transport of O2 and CO2 in the blood. Platelets originate from megakaryocytes in the bone marrow and release coagulation factors in response to a bleeding or injury of the blood vessel wall. <br></p>
-</div>
-</div>
-<div id="references" class="section level2">
-<h2>References</h2>
-<div id="resources-used-to-compile-this-practicaltutorial" class="section level3">
-<h3>Resources used to compile this practical/tutorial</h3>
-<ul>
-<li><a href="https://vanheeringen-lab.github.io/seq2science/index.html">seq2science</a></li>
-<li>BLUEPRINT project<br />
-</li>
-<li>…<br />
-<br></li>
-</ul>
-</div>
-</div>
-<div id="old-text" class="section level2">
-<h2>OLD text</h2>
-<blockquote>
-<h3 id="at-the-end-of-the-practical-you-are-able-to..">At the end of the practical you are able to..</h3>
-<ol style="list-style-type: decimal">
-<li>Use combinations of histone PTM data and chromatin accessibility to identify functional genomic elements (eg promoter, enhancers etc) and predict gene activity (active or repressed).<br />
-</li>
-<li>Check above mentioned predictions on gene activity in single-cell RNA-seq data.<br />
-</li>
-<li>Vice versa, use the epigenetic data to explain gene expression differences detected in a single-cell RNA-seq experiment.<br />
-</li>
-<li>Predict TFs that could mediate cell-specific gene expression.</li>
-</ol>
-</blockquote>
 </div>
 
 
