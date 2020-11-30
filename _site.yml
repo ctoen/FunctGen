@@ -1,17 +1,13 @@
-name: "Functional Genomics 2020"
+name: "FG 2020"
 navbar:
-  title: "Functional Genomics 2020"
+  title: "FG 2020"
   left:
     - text: "Home"
       href: index.html
-    - text: "Learning Objectives"
-      href: p2_learningObjectives.html    
-    - text: "1: UCSC Genome Browser"
+    - text: "Week 1"
       href: p3_week1.html  
-    - text: "2: Annotation"
+    - text: "Week 2"
       href: p4_week2_v4.html
-    - text: "Glossary"
-      href: Glossary.html   
     - text: "Appendix"  
       href: prepdata.html  
     - text: "FASTQC_exmpl1"
