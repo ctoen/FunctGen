@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Christa Toenhake" />
@@ -23,6 +23,17 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -84,7 +95,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -233,6 +243,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -244,18 +255,6 @@ $(document).ready(function () {
   display: none;
 }
 </style>
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
 
 <!-- code folding -->
 
@@ -349,7 +348,7 @@ save(mono_h3k4me1, mono_h3k4me3, mono_h3k9me3, mono_h3k27ac, mono_h3k27me3, mono
 seqlevels(txdb) &lt;- &quot;chr19&quot; 
 
 # generate list of genomic annotations
-proximal.promoter.cutoff=1000L # Specify the cutoff in bases to classify proximal promoter or enhencer. Peaks that reside within proximal.promoter.cutoff upstream from or overlap with transcription start site are classified as proximal promoters. The default is 1000 bases.
+proximal.promoter.cutoff=1000L # Specify the cutoff in bases to classify proximal promoter or enhancer. Peaks that reside within proximal.promoter.cutoff upstream from or overlap with transcription start site are classified as proximal promoters. The default is 1000 bases.
 immediate.downstream.cutoff=1000L # Specify the cutoff in bases to classify immediate downstream region or enhancer region. Peaks that reside within immediate.downstream.cutoff downstream of gene end but not overlap 3 prime UTR are classified as immediate downstream. 
 #&#39; The default is 1000 bases.
 
@@ -404,13 +403,16 @@ entrezid_symbols &lt;- AnnotationDbi::select(org.Hs.eg.db, keys = genes$gene_id,
 <pre class="r"><code># save the final GRangesList object
 saveRDS(entrezid_symbols, file = &quot;data/prepared_rds/gene_entrezids_genesymbols_df.rds&quot;)</code></pre>
 <pre class="r"><code>library(plyr)</code></pre>
-<pre><code>## -------------------------------------------------------------------------</code></pre>
+<pre><code>## ------------------------------------------------------------------------------</code></pre>
 <pre><code>## You have loaded plyr after dplyr - this is likely to cause problems.
 ## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
 ## library(plyr); library(dplyr)</code></pre>
-<pre><code>## -------------------------------------------------------------------------</code></pre>
+<pre><code>## ------------------------------------------------------------------------------</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;plyr&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:XVector&#39;:
+## 
+##     compact</code></pre>
 <pre><code>## The following objects are masked from &#39;package:plyranges&#39;:
 ## 
 ##     arrange, mutate, summarise, summarize</code></pre>
@@ -496,80 +498,99 @@ encode</code></pre>
 ##   EH38E1966302    chr19 58383534-58383786      * |   EH38D3077378
 ##   EH38E1966345    chr19 58416697-58416857      * |   EH38D3077428
 ##   EH38E1966346    chr19 58417101-58417448      * |   EH38D3077429
-##                cCRE_accession                    group    ucsc_rgb
-##                   &lt;character&gt;              &lt;character&gt; &lt;character&gt;
-##   EH38E1929820   EH38E1929820 DNase-H3K4me3,CTCF-bound     #FFAAAA
-##   EH38E1929821   EH38E1929821 DNase-H3K4me3,CTCF-bound     #FFAAAA
-##   EH38E1929826   EH38E1929826          dELS,CTCF-bound     #FFCD00
-##   EH38E1929827   EH38E1929827          dELS,CTCF-bound     #FFCD00
-##   EH38E1929828   EH38E1929828          dELS,CTCF-bound     #FFCD00
-##            ...            ...                      ...         ...
-##   EH38E1966262   EH38E1966262          pELS,CTCF-bound     #FFA700
-##   EH38E1966270   EH38E1966270          pELS,CTCF-bound     #FFA700
-##   EH38E1966302   EH38E1966302                     dELS     #FFCD00
-##   EH38E1966345   EH38E1966345                     pELS     #FFA700
-##   EH38E1966346   EH38E1966346                     pELS     #FFA700
-##                 ucsc_label
-##                &lt;character&gt;
-##   EH38E1929820        K4m3
-##   EH38E1929821        K4m3
-##   EH38E1929826        enhD
-##   EH38E1929827        enhD
-##   EH38E1929828        enhD
-##            ...         ...
-##   EH38E1966262        enhP
-##   EH38E1966270        enhP
-##   EH38E1966302        enhD
-##   EH38E1966345        enhP
-##   EH38E1966346        enhP
+##                cCRE_accession                    group    ucsc_rgb  ucsc_label
+##                   &lt;character&gt;              &lt;character&gt; &lt;character&gt; &lt;character&gt;
+##   EH38E1929820   EH38E1929820 DNase-H3K4me3,CTCF-bound     #FFAAAA        K4m3
+##   EH38E1929821   EH38E1929821 DNase-H3K4me3,CTCF-bound     #FFAAAA        K4m3
+##   EH38E1929826   EH38E1929826          dELS,CTCF-bound     #FFCD00        enhD
+##   EH38E1929827   EH38E1929827          dELS,CTCF-bound     #FFCD00        enhD
+##   EH38E1929828   EH38E1929828          dELS,CTCF-bound     #FFCD00        enhD
+##            ...            ...                      ...         ...         ...
+##   EH38E1966262   EH38E1966262          pELS,CTCF-bound     #FFA700        enhP
+##   EH38E1966270   EH38E1966270          pELS,CTCF-bound     #FFA700        enhP
+##   EH38E1966302   EH38E1966302                     dELS     #FFCD00        enhD
+##   EH38E1966345   EH38E1966345                     pELS     #FFA700        enhP
+##   EH38E1966346   EH38E1966346                     pELS     #FFA700        enhP
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <pre class="r"><code>table(encode$group, encode$ucsc_label)</code></pre>
 <pre><code>##                           
-##                            CTCF K4m3 enhD enhP prom
+##                            CTCF enhD enhP K4m3 prom
 ##   CTCF-only,CTCF-bound      776    0    0    0    0
-##   DNase-H3K4me3               0  323    0    0    0
-##   DNase-H3K4me3,CTCF-bound    0  288    0    0    0
+##   dELS                        0 8097    0    0    0
+##   dELS,CTCF-bound             0 6776    0    0    0
+##   DNase-H3K4me3               0    0    0  323    0
+##   DNase-H3K4me3,CTCF-bound    0    0    0  288    0
+##   pELS                        0    0 3078    0    0
+##   pELS,CTCF-bound             0    0 4735    0    0
 ##   PLS                         0    0    0    0  430
-##   PLS,CTCF-bound              0    0    0    0 1819
-##   dELS                        0    0 8097    0    0
-##   dELS,CTCF-bound             0    0 6776    0    0
-##   pELS                        0    0    0 3078    0
-##   pELS,CTCF-bound             0    0    0 4735    0</code></pre>
+##   PLS,CTCF-bound              0    0    0    0 1819</code></pre>
 <pre class="r"><code># make simplfied object for tutorial
 encode_chr19 &lt;- encode[, c(&quot;cCRE_accession&quot;, &quot;ucsc_label&quot;)]
 show(encode_chr19)</code></pre>
 <pre><code>## GRanges object with 26322 ranges and 2 metadata columns:
-##                seqnames            ranges strand | cCRE_accession
-##                   &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;character&gt;
-##   EH38E1929820    chr19     246842-247054      * |   EH38E1929820
-##   EH38E1929821    chr19     247094-247443      * |   EH38E1929821
-##   EH38E1929826    chr19     266736-266899      * |   EH38E1929826
-##   EH38E1929827    chr19     266947-267110      * |   EH38E1929827
-##   EH38E1929828    chr19     267118-267414      * |   EH38E1929828
-##            ...      ...               ...    ... .            ...
-##   EH38E1966262    chr19 58345946-58346125      * |   EH38E1966262
-##   EH38E1966270    chr19 58355116-58355351      * |   EH38E1966270
-##   EH38E1966302    chr19 58383534-58383786      * |   EH38E1966302
-##   EH38E1966345    chr19 58416697-58416857      * |   EH38E1966345
-##   EH38E1966346    chr19 58417101-58417448      * |   EH38E1966346
-##                 ucsc_label
-##                &lt;character&gt;
-##   EH38E1929820        K4m3
-##   EH38E1929821        K4m3
-##   EH38E1929826        enhD
-##   EH38E1929827        enhD
-##   EH38E1929828        enhD
-##            ...         ...
-##   EH38E1966262        enhP
-##   EH38E1966270        enhP
-##   EH38E1966302        enhD
-##   EH38E1966345        enhP
-##   EH38E1966346        enhP
+##                seqnames            ranges strand | cCRE_accession  ucsc_label
+##                   &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;character&gt; &lt;character&gt;
+##   EH38E1929820    chr19     246842-247054      * |   EH38E1929820        K4m3
+##   EH38E1929821    chr19     247094-247443      * |   EH38E1929821        K4m3
+##   EH38E1929826    chr19     266736-266899      * |   EH38E1929826        enhD
+##   EH38E1929827    chr19     266947-267110      * |   EH38E1929827        enhD
+##   EH38E1929828    chr19     267118-267414      * |   EH38E1929828        enhD
+##            ...      ...               ...    ... .            ...         ...
+##   EH38E1966262    chr19 58345946-58346125      * |   EH38E1966262        enhP
+##   EH38E1966270    chr19 58355116-58355351      * |   EH38E1966270        enhP
+##   EH38E1966302    chr19 58383534-58383786      * |   EH38E1966302        enhD
+##   EH38E1966345    chr19 58416697-58416857      * |   EH38E1966345        enhP
+##   EH38E1966346    chr19 58417101-58417448      * |   EH38E1966346        enhP
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <pre class="r"><code># save this object
 saveRDS(encode_chr19, file = &quot;data/prepared_rds/encode_ccres_chr19.rds&quot;)</code></pre>
+<div id="transcript-quantification" class="section level3">
+<h3>transcript quantification</h3>
+<pre class="r"><code>#BiocManager::install(&quot;org.Hs.eg.db&quot;)
+library(org.Hs.eg.db)
+
+all_results &lt;- read.table(&quot;/Users/christatoenhake/GitHub/FunctGen/data/blueprint/quantification/C000S5B1.gene_quantification.rsem_grape2_crg.GRCh38.20150622.results&quot;, header =T)
+
+# remove version from ensemble gene id 
+all_results$gene_id &lt;- sapply(all_results$gene_id,  sub, pattern = &quot;\\.\\d+$&quot;, replacement = &quot;&quot;)
+
+# map entrez id to ensemble id
+all_results$entrez_id = mapIds(org.Hs.eg.db,
+                    keys=all_results$gene_id, 
+                    column=&quot;ENTREZID&quot;,
+                    keytype=&quot;ENSEMBL&quot;,
+                    multiVals=&quot;first&quot;)</code></pre>
+<pre><code>## &#39;select()&#39; returned 1:many mapping between keys and columns</code></pre>
+<pre class="r"><code># vector of entrez ids for genes on chr19 
+genes_chr19 &lt;- genes(txdb)
+geneids_genes_chr19 &lt;- mcols(genes_chr19)[,1]
+
+# subset all_results for genes on chr19
+quantification_chr19 &lt;- all_results %&gt;% filter(entrez_id %in% geneids_genes_chr19)
+# write quantification_chr19 to rds
+saveRDS(quantification_chr19, file = &quot;data/prepared_rds/blueprint_c000s5_gene_quantification_chr19.rds&quot;)</code></pre>
+<pre class="r"><code># prepare objects for upset plot in week 2
+# BiocManager::install(&quot;ComplexHeatmap&quot;)
+library(ComplexHeatmap)</code></pre>
+<pre><code>## ========================================
+## ComplexHeatmap version 2.4.3
+## Bioconductor page: http://bioconductor.org/packages/ComplexHeatmap/
+## Github page: https://github.com/jokergoo/ComplexHeatmap
+## Documentation: http://jokergoo.github.io/ComplexHeatmap-reference
+## 
+## If you use it in published research, please cite:
+## Gu, Z. Complex heatmaps reveal patterns and correlations in multidimensional 
+##   genomic data. Bioinformatics 2016.
+## 
+## This message can be suppressed by:
+##   suppressPackageStartupMessages(library(ComplexHeatmap))
+## ========================================</code></pre>
+<pre class="r"><code>monocytes_combinationmatrix &lt;- make_comb_mat(mono_list) # takes a while! 
+
+saveRDS(monocytes_combinationmatrix, file =  &quot;data/prepared_rds/blueprint_monocyte_chr19_complexheatmap_combmatrix.rds&quot;)</code></pre>
+</div>
 
 
 
@@ -580,7 +601,7 @@ saveRDS(encode_chr19, file = &quot;data/prepared_rds/encode_ccres_chr19.rds&quot
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -588,6 +609,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

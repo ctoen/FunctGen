@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Written by: Klaas, Simon, Siebren, Christa …" />
@@ -23,6 +23,17 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -85,7 +96,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -234,6 +244,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -245,18 +256,6 @@ $(document).ready(function () {
   display: none;
 }
 </style>
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
 
 <!-- code folding -->
 
@@ -410,18 +409,18 @@ $(document).ready(function () {
 <div id="week-1" class="section level2">
 <h2>Week 1</h2>
 <ul>
-<li><p>Focus: how we make data out of a ChIP-seq experiment, how to use the UCSC Genome Browser, and familiarize ourselves with the UCSC Genome Browser visualization.<br />
-</p></li>
-<li><p><em>seq2science, UCSC Genome browser</em><br />
-</p></li>
-<li><p>Global objectives #1-3.<br />
-</p></li>
+<li>Focus: how we make data out of a ChIP-seq experiment, how to use the UCSC Genome Browser, and familiarize ourselves with the UCSC Genome Browser visualization.<br />
+</li>
+<li><em>seq2science, UCSC Genome browser</em><br />
+</li>
+<li>Global objectives #1-3.<br />
+</li>
 <li><p>Perform in H5P?<br />
 <br></p></li>
-<li><p>Discuss ChIP-seq in presentation<br />
-</p></li>
-<li><p>Follow seq2science workflow<br />
-</p></li>
+<li>Discuss ChIP-seq in presentation<br />
+</li>
+<li>Follow seq2science workflow<br />
+</li>
 <li><p>Peakcalling: note that it is not black/white, not absolute, thresholds are set. NOT into technicalities and mathematics of read piling/peak models, narrow-wide peaks<br />
 <br></p></li>
 </ul>
@@ -530,29 +529,29 @@ Based on:</p>
 <li>Introduce Bioconductor</li>
 </ol>
 <ul>
-<li>bioconductor set up, reference site, objects and packagage rely on each other, several handy functions <code>class()</code>, <code>print()</code> and <code>methods(class = "...")</code></li>
+<li>bioconductor set up, reference site, objects and packagage rely on each other, several handy functions <code>class()</code>, <code>print()</code> and <code>methods(class = &quot;...&quot;)</code></li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
 <li>Familiarize with (basics of) *Ranges structure and language and GRanges and GRangesList objects</li>
 </ol>
 <ul>
-<li><p>You already know the r data structures: vector, dataframe, matrix, Lists. In genomics often perform manipulations and calculations using genomic intervals (mention examples). IRanges data structure<br />
-</p></li>
-<li><p>simple example of GRanges object<br />
-</p></li>
+<li>You already know the r data structures: vector, dataframe, matrix, Lists. In genomics often perform manipulations and calculations using genomic intervals (mention examples). IRanges data structure<br />
+</li>
+<li>simple example of GRanges object<br />
+</li>
 <li><p>Metadata, show schamatic overview of objects with metadata, what is it, how is it displayed (right of the <code>|</code> when object is printed ), obtain columsn</p></li>
-<li><p>convert dataframe to GRanges object with <code>as()</code></p>
+<li>convert dataframe to GRanges object with <code>as()</code>
 <ul>
 <li>dataframe minimally requires <code>start</code> <code>end</code> and <code>chr</code><br />
 </li>
-<li><code>gr &lt;- as(dataframe, "GRanges")</code><br />
+<li><code>gr &lt;- as(dataframe, &quot;GRanges&quot;)</code><br />
 </li>
 </ul></li>
-<li><p>minimally requires chr, start and end column from dataframe in input<br />
-</p></li>
-<li><p>also has metadata, <code>seqnames</code> and <code>seqinfo</code><br />
-</p></li>
-<li><p>see ist of available accessors use: <code>methods(class = "GRanges")</code></p>
+<li>minimally requires chr, start and end column from dataframe in input<br />
+</li>
+<li>also has metadata, <code>seqnames</code> and <code>seqinfo</code><br />
+</li>
+<li>see ist of available accessors use: <code>methods(class = &quot;GRanges&quot;)</code>
 <ul>
 <li><code>seqnames(gr)</code> - chromosome names<br />
 </li>
@@ -568,7 +567,7 @@ Based on:</p>
 </li>
 <li>can be inherited by other S4 objects</li>
 </ul></li>
-<li><p>for GRangesList:</p>
+<li>for GRangesList:
 <ul>
 <li><code>GRangesList(myGranges1, myGranges2, ...)</code></li>
 </ul></li>
@@ -611,9 +610,9 @@ Based on:</p>
 </li>
 <li>What is the mean, median and max size of the peaks <code>summary(width(imported_peaks))</code><br />
 </li>
-<li>What is the distribution of peak sizes? <code>hist(width(imported_peaks), xlab = "peak size")</code><br />
+<li>What is the distribution of peak sizes? <code>hist(width(imported_peaks), xlab = &quot;peak size&quot;)</code><br />
 </li>
-<li>What is the distribution of ChIP-seq peak p-values (score column gives -log10(pvalues), obtain with <code>score()</code> function)? <code>hist(score(imported_peaks), xlab = "-log_10(p-value)")</code><br />
+<li>What is the distribution of ChIP-seq peak p-values (score column gives -log10(pvalues), obtain with <code>score()</code> function)? <code>hist(score(imported_peaks), xlab = &quot;-log_10(p-value)&quot;)</code><br />
 </li>
 <li>Remove all peaks that are larger than 3kb in size –&gt; use index [ ] operator on GRanges object, similar to vectors <code>imported_peaks &lt;- imported_peaks[width(imported_peaks) &lt;= 3000]</code></li>
 </ul>
@@ -621,10 +620,10 @@ Based on:</p>
 <li>Compare imported peaks with promoters</li>
 </ol>
 <ul>
-<li><p>import promoters.bed file with <code>toGRanges()</code> (ChIPpeakAnno) or <code>readPeakFile()</code> (ChIPseeker)<br />
-</p></li>
-<li><p>make barplots of the number of the number of promoters and the number of peaks in <code>imported_peaks</code><br />
-</p></li>
+<li>import promoters.bed file with <code>toGRanges()</code> (ChIPpeakAnno) or <code>readPeakFile()</code> (ChIPseeker)<br />
+</li>
+<li>make barplots of the number of the number of promoters and the number of peaks in <code>imported_peaks</code><br />
+</li>
 <li><p>Calculate the overlaps between two sets of regions using <code>GenomicRanges</code> functions:</p>
 <ul>
 <li><code>subsetByOverlaps(query, subject)</code> returns the peaks that overlap with the regions in <code>subject</code></li>
@@ -702,16 +701,16 @@ Based on:</p>
 <div id="week-4" class="section level2">
 <h2>Week 4</h2>
 <ul>
-<li><p>Focus: <em>Interpret single-cell RNA-seq data, formulate hypotheses about epigenome and test hypothesis by plotting the data for these genes</em><br />
-</p></li>
-<li><p>or <em>find or count motif occurrences using pattern matching from GRanges</em><br />
-</p></li>
+<li>Focus: <em>Interpret single-cell RNA-seq data, formulate hypotheses about epigenome and test hypothesis by plotting the data for these genes</em><br />
+</li>
+<li>or <em>find or count motif occurrences using pattern matching from GRanges</em><br />
+</li>
 <li><p>Use PBMC3k dataset, get UMAP and top marker genes per cluster/cell type from Satija lab.<br />
 <br></p></li>
-<li><p>We continue with clusters that differentially mark T cells from monoyctes [..] and assign them to closest gene.<br />
-</p></li>
-<li><p>Open/active regions only?<br />
-</p></li>
+<li>We continue with clusters that differentially mark T cells from monoyctes [..] and assign them to closest gene.<br />
+</li>
+<li>Open/active regions only?<br />
+</li>
 <li><p>Compare these to + and - marker genes from scRNA-seq<br />
 <br></p></li>
 </ul>
@@ -752,7 +751,7 @@ Based on:</p>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -760,6 +759,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

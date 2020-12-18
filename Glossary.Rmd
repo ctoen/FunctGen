@@ -21,7 +21,7 @@ editor_options:
 
 ```{r setup, include=FALSE}
 #library(learnr)
-knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
+knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=FALSE)
 ```
 
 ```{r fontcolorfunction, echo = F}

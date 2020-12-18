@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -23,31 +23,41 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -56,9 +66,9 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  {  }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+a.sourceLine::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -104,7 +114,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -162,7 +172,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -311,6 +320,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -323,48 +333,9 @@ $(document).ready(function () {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -378,6 +349,12 @@ $(document).ready(function ()  {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -413,8 +390,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -586,16 +561,16 @@ These refer to global learning objectives #4-#7.</li>
 </tbody>
 </table>
 <p><br> Bioconductor packages can use <strong>data structures</strong> different from <code>vectors</code>,<code>matrices</code> or <code>data.frames</code>. The <code>GRanges</code> data structure provided by the <code>GenomicRanges</code> package is an example and is used by many. We will come to those shortly.<br />
-<br> These “Bioconductor-specific-objects”, like <code>GRanges</code>, generally have their own set of functions or methods that you can explore using <code>methods(class = "...")</code>. To find out the <code>class</code>, use <code>class(object_name)</code>.<br />
+<br> These “Bioconductor-specific-objects”, like <code>GRanges</code>, generally have their own set of functions or methods that you can explore using <code>methods(class = &quot;...&quot;)</code>. To find out the <code>class</code>, use <code>class(object_name)</code>.<br />
 <br> Here’s a list of basic functions to explore objects and/or call the help on packages or functions:</p>
 <ul>
 <li>Use <code>class()</code> to found out what kind of data structure you are dealing with<br />
 </li>
 <li>Use <code>show()</code> or <code>print()</code> to have r print a summary of your data<br />
 </li>
-<li>use <code>methods(class = "...")</code> to get a list of (default) methods or functions you can use to extract and manipulate the data, also called <em>assessor</em> functions or <em>getter</em> and <em>setter</em> functions<br />
+<li>use <code>methods(class = &quot;...&quot;)</code> to get a list of (default) methods or functions you can use to extract and manipulate the data, also called <em>assessor</em> functions or <em>getter</em> and <em>setter</em> functions<br />
 </li>
-<li>use <code>help(package = "[packageName]")</code> to display the help page</li>
+<li>use <code>help(package = &quot;[packageName]&quot;)</code> to display the help page</li>
 </ul>
 <p><br></p>
 <hr />
@@ -608,8 +583,8 @@ These refer to global learning objectives #4-#7.</li>
 <br> Interval data can be more efficiently handled with the <code>IRanges</code> package which works with a data structure especially developed for <strong>ranges of integers</strong>: <code>IRanges</code> objects.<br />
 <br> To construct an <code>IRanges</code> object we require at least two of the following three values: a starting coordinate, a finishing coordinate or the width of the interval.<br />
 <br> Here we create <code>IRranges</code> object <code>ir</code> with three intervals, starting at positions <code>3</code>, <code>5</code> and <code>17</code>, and ending at positions <code>10</code>, <code>20</code> and <code>30</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ir <span class="ot">&lt;-</span> <span class="fu">IRanges</span>(<span class="at">start=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">17</span>), <span class="at">end=</span><span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>))</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ir)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">ir &lt;-<span class="st"> </span><span class="kw">IRanges</span>(<span class="dt">start=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">17</span>), <span class="dt">end=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>))</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">print</span>(ir)</a></code></pre></div>
 <pre><code>## IRanges object with 3 ranges and 0 metadata columns:
 ##           start       end     width
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
@@ -619,16 +594,16 @@ These refer to global learning objectives #4-#7.</li>
 <p>Depicting <code>ir</code> visually we see blocks representing the intervals along the horizontal axis:<br />
 <img src="p4_week2_v4_files/figure-html/IRanges%20plot-1.png" width="480" /> <br> The <code>GRanges</code> objects of the <code>GenomicRanges</code> package are very similar but require a additional <code>sequence name</code> (in other words a chromosome) for every interval. <br> Here we reate a <code>GRanges</code> object using <code>ir</code> and call for it’s <code>class</code> and summary (as this prints 6 lines by default, the whole object is printed in this case):<br />
 <br></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create gr object: </span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>gr <span class="ot">&lt;-</span> <span class="fu">GRanges</span>(<span class="at">seqnames =</span> <span class="fu">c</span>(<span class="st">&quot;chr1&quot;</span>, <span class="st">&quot;chr1&quot;</span>, <span class="st">&quot;chr2&quot;</span>), <span class="at">ranges=</span>ir)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># find out the class:  </span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gr)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># create gr object: </span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">gr &lt;-<span class="st"> </span><span class="kw">GRanges</span>(<span class="dt">seqnames =</span> <span class="kw">c</span>(<span class="st">&quot;chr1&quot;</span>, <span class="st">&quot;chr1&quot;</span>, <span class="st">&quot;chr2&quot;</span>), <span class="dt">ranges=</span>ir)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co"># find out the class:  </span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw">class</span>(gr)</a></code></pre></div>
 <pre><code>## [1] &quot;GRanges&quot;
 ## attr(,&quot;package&quot;)
 ## [1] &quot;GenomicRanges&quot;</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print a summary:</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(gr)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># print a summary:</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">print</span>(gr)</a></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 0 metadata columns:
 ##       seqnames    ranges strand
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
@@ -639,11 +614,11 @@ These refer to global learning objectives #4-#7.</li>
 ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
 <p><br> The <code>strand</code> column holds <code>*</code>, meaning the intervals are <em>unstranded</em>.<br />
 <br> Here we create <code>gr</code> again but define the strand for every interval with <code>strand =</code></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create gr object with strandinfo: </span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>gr <span class="ot">&lt;-</span> <span class="fu">GRanges</span>(<span class="at">seqnames =</span> <span class="fu">c</span>(<span class="st">&quot;chr1&quot;</span>, <span class="st">&quot;chr1&quot;</span>, <span class="st">&quot;chr2&quot;</span>), </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">ranges=</span>ir, </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">strand =</span> <span class="fu">c</span>(<span class="st">&quot;+&quot;</span>, <span class="st">&quot;-&quot;</span>, <span class="st">&quot;-&quot;</span>))</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>gr</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># create gr object with strandinfo: </span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">gr &lt;-<span class="st"> </span><span class="kw">GRanges</span>(<span class="dt">seqnames =</span> <span class="kw">c</span>(<span class="st">&quot;chr1&quot;</span>, <span class="st">&quot;chr1&quot;</span>, <span class="st">&quot;chr2&quot;</span>), </a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">              <span class="dt">ranges=</span>ir, </a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">              <span class="dt">strand =</span> <span class="kw">c</span>(<span class="st">&quot;+&quot;</span>, <span class="st">&quot;-&quot;</span>, <span class="st">&quot;-&quot;</span>))</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">gr</a></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 0 metadata columns:
 ##       seqnames    ranges strand
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
@@ -654,21 +629,21 @@ These refer to global learning objectives #4-#7.</li>
 ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
 <p><br> We can add scores and names to these intervals with <code>score(object_name) &lt;-</code> and <code>names(object_name) &lt;-</code>. The names will replace the row idnentifiers. Additional custom columns can be defined with the <code>$</code>-sign.<br />
 <br> Here we add names, scores and a gc% to each interval:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>) <span class="co"># set.seed to ensure that with the random number generation, we each time generate the same sequence of numbers</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># add names to `my_gr`</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(gr) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;peak&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># add a custom score</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">score</span>(gr) <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">106</span>), <span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># add custom GC content</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>gr<span class="sc">$</span>gc <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">3</span>, <span class="fl">0.35</span>, <span class="fl">0.60</span>), <span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># print the result</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(gr)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1234</span>) <span class="co"># set.seed to ensure that with the random number generation, we each time generate the same sequence of numbers</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co"># add names to `my_gr`</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw">names</span>(gr) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;peak&quot;</span>, LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co"># add a custom score</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="kw">score</span>(gr) &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">runif</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">106</span>), <span class="dt">digits =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co"># add custom GC content</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">gr<span class="op">$</span>gc &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">runif</span>(<span class="dv">3</span>, <span class="fl">0.35</span>, <span class="fl">0.60</span>), <span class="dt">digits =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co"># print the result</span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="kw">print</span>(gr)</a></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 2 metadata columns:
 ##          seqnames    ranges strand |     score        gc
 ##             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt; &lt;numeric&gt;
 ##   peak_A     chr1      3-10      + |    12.053     0.506
 ##   peak_B     chr1      5-20      - |    65.964     0.565
-##   peak_C     chr2     17-30      - |    64.583      0.51
+##   peak_C     chr2     17-30      - |    64.583     0.510
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
 <p><br> <code>GRanges</code> objects follow the <strong>tidy data principle</strong>: each row of a <code>Ranges</code> object corresponds to an interval, and each column will represent a variable about that interval, and generally each object will represent a single unit of an observation (like gene annotations). <br> Notice that the names replace the rowIDs and that this object now holds 2 <strong>metadata columns</strong> besides the genomic coordinates. Metadata is <strong>data about the data</strong>:<br />
@@ -699,7 +674,7 @@ These refer to global learning objectives #4-#7.</li>
 </tr>
 </tbody>
 </table>
-<p><br> Information about the genome and sequences is stored in <code>seqinfo</code>. This currently tells us that the intervals are from 2 sequences of a unknown genome. Genome information can be appended using <code>seqinfo(my_gr) &lt;- Seqinfo(genome="hg38")</code>. This automatically loads the sequence information specified by <code>genome</code> by querying the UCSC database. We skip this step to limit the size of the object.<br />
+<p><br> Information about the genome and sequences is stored in <code>seqinfo</code>. This currently tells us that the intervals are from 2 sequences of a unknown genome. Genome information can be appended using <code>seqinfo(my_gr) &lt;- Seqinfo(genome=&quot;hg38&quot;)</code>. This automatically loads the sequence information specified by <code>genome</code> by querying the UCSC database. We skip this step to limit the size of the object.<br />
 <br></p>
 <blockquote>
 <p><strong>Exercise 1 - Finish the following code, creating <code>my_gr2</code> with:</strong></p>
@@ -720,47 +695,47 @@ These refer to global learning objectives #4-#7.</li>
 Finish by printing the summary of <code>my_gr</code> using the <code>print()</code> function.</li>
 </ul>
 </blockquote>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>) <span class="co"># set.seed to ensure that with the random number generation, we each time generate the same sequence of numbers.  </span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create GRanges object &#39;my_gr&#39; intervals A-C: </span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>my_gr <span class="ot">&lt;-</span> <span class="fu">....</span>(<span class="at">.. =</span> <span class="fu">c</span>(<span class="st">&quot;...&quot;</span>), </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">.... =</span> <span class="fu">IRanges</span>(<span class="at">start =</span> <span class="fu">c</span>(..), <span class="at">... =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">11</span>)),</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">.. =</span> <span class="fu">c</span>(<span class="st">&quot;-&quot;</span>, <span class="st">&quot;-&quot;</span>, ..)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">.. =</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">106</span>), <span class="at">digits =</span> <span class="dv">3</span>),</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">gc =</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">5</span>, <span class="fl">0.35</span>, <span class="fl">0.60</span>), <span class="at">digits =</span> <span class="dv">3</span>) </span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>              )</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># add names to `my_gr`</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="fu">..</span>(my_gr) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;peak&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># print summary of my_gr</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="fu">..</span>(my_gr)</span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>) <span class="co"># set.seed to ensure that with the random number generation, we each time generate the same sequence of numbers.  </span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create GRanges object &#39;my_gr&#39; intervals A-C: </span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>my_gr <span class="ot">&lt;-</span> <span class="fu">GRanges</span>(<span class="at">seqnames =</span> <span class="fu">c</span>(<span class="st">&quot;chr1&quot;</span>, <span class="st">&quot;chr2&quot;</span>, <span class="st">&quot;chr3&quot;</span>, <span class="st">&quot;chr4&quot;</span>, <span class="st">&quot;chr5&quot;</span>), </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">ranges =</span> <span class="fu">IRanges</span>(<span class="at">start=</span><span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">13</span>, <span class="dv">18</span>, <span class="dv">20</span>), <span class="at">width =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">11</span>)),</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">strand =</span> <span class="fu">c</span>(<span class="st">&quot;-&quot;</span>, <span class="st">&quot;-&quot;</span>, <span class="st">&quot;-&quot;</span>,<span class="st">&quot;+&quot;</span>, <span class="st">&quot;+&quot;</span>),</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">score =</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">106</span>), <span class="at">digits =</span> <span class="dv">3</span>),</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>              <span class="at">gc =</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">5</span>, <span class="fl">0.35</span>, <span class="fl">0.60</span>), <span class="at">digits =</span> <span class="dv">3</span>) </span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>              )</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># add names to `my_gr`</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(my_gr) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;peak&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co"># print summary of my_gr</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(my_gr)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1234</span>) <span class="co"># set.seed to ensure that with the random number generation, we each time generate the same sequence of numbers.  </span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="co"># create GRanges object &#39;my_gr&#39; intervals A-C: </span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">my_gr &lt;-<span class="st"> </span><span class="kw">....</span>(<span class="dt">.. =</span> <span class="kw">c</span>(<span class="st">&quot;...&quot;</span>), </a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">              <span class="dt">.... =</span> <span class="kw">IRanges</span>(<span class="dt">start =</span> <span class="kw">c</span>(..), <span class="dt">... =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">11</span>)),</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">              <span class="dt">.. =</span> <span class="kw">c</span>(<span class="st">&quot;-&quot;</span>, <span class="st">&quot;-&quot;</span>, ..)</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">              <span class="dt">.. =</span> <span class="kw">round</span>(<span class="kw">runif</span>(<span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">106</span>), <span class="dt">digits =</span> <span class="dv">3</span>),</a>
+<a class="sourceLine" id="cb11-8" data-line-number="8">              <span class="dt">gc =</span> <span class="kw">round</span>(<span class="kw">runif</span>(<span class="dv">5</span>, <span class="fl">0.35</span>, <span class="fl">0.60</span>), <span class="dt">digits =</span> <span class="dv">3</span>) </a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">              )</a>
+<a class="sourceLine" id="cb11-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co"># add names to `my_gr`</span></a>
+<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="kw">..</span>(my_gr) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;peak&quot;</span>, LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)</a>
+<a class="sourceLine" id="cb11-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co"># print summary of my_gr</span></a>
+<a class="sourceLine" id="cb11-15" data-line-number="15"><span class="kw">..</span>(my_gr)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1234</span>) <span class="co"># set.seed to ensure that with the random number generation, we each time generate the same sequence of numbers.  </span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co"># create GRanges object &#39;my_gr&#39; intervals A-C: </span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">my_gr &lt;-<span class="st"> </span><span class="kw">GRanges</span>(<span class="dt">seqnames =</span> <span class="kw">c</span>(<span class="st">&quot;chr1&quot;</span>, <span class="st">&quot;chr2&quot;</span>, <span class="st">&quot;chr3&quot;</span>, <span class="st">&quot;chr4&quot;</span>, <span class="st">&quot;chr5&quot;</span>), </a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">              <span class="dt">ranges =</span> <span class="kw">IRanges</span>(<span class="dt">start=</span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">13</span>, <span class="dv">18</span>, <span class="dv">20</span>), <span class="dt">width =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">11</span>)),</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">              <span class="dt">strand =</span> <span class="kw">c</span>(<span class="st">&quot;-&quot;</span>, <span class="st">&quot;-&quot;</span>, <span class="st">&quot;-&quot;</span>,<span class="st">&quot;+&quot;</span>, <span class="st">&quot;+&quot;</span>),</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">              <span class="dt">score =</span> <span class="kw">round</span>(<span class="kw">runif</span>(<span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">106</span>), <span class="dt">digits =</span> <span class="dv">3</span>),</a>
+<a class="sourceLine" id="cb12-8" data-line-number="8">              <span class="dt">gc =</span> <span class="kw">round</span>(<span class="kw">runif</span>(<span class="dv">5</span>, <span class="fl">0.35</span>, <span class="fl">0.60</span>), <span class="dt">digits =</span> <span class="dv">3</span>) </a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">              )</a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co"># add names to `my_gr`</span></a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="kw">names</span>(my_gr) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;peak&quot;</span>, LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)</a>
+<a class="sourceLine" id="cb12-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co"># print summary of my_gr</span></a>
+<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="kw">print</span>(my_gr)</a></code></pre></div>
 <pre><code>## GRanges object with 5 ranges and 2 metadata columns:
 ##          seqnames    ranges strand |     score        gc
 ##             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt; &lt;numeric&gt;
-##   peak_A     chr1       3-7      - |    12.053      0.51
+##   peak_A     chr1       3-7      - |    12.053     0.510
 ##   peak_B     chr2      5-11      - |    65.964     0.352
 ##   peak_C     chr3     13-21      - |    64.583     0.408
 ##   peak_D     chr4     18-28      + |    66.078     0.517
 ##   peak_E     chr5     20-24      + |    91.257     0.479
 ##   -------
 ##   seqinfo: 5 sequences from an unspecified genome; no seqlengths</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">grade_code</span>()</a></code></pre></div>
 </div>
 <div id="working-with-granges" class="section level3">
 <h3>2.3.2 Working with <code>GRanges</code></h3>
@@ -780,7 +755,7 @@ Finish by printing the summary of <code>my_gr</code> using the <code>print()</co
 <li><code>length()</code> prints the number of stored intervals.</li>
 <li><code>head(object_name, n = ...)</code> and <code>tail(object_name, n = ...)</code> print <code>n</code> number of intervals in the head or tail of the object. Can be usefull for checking that the dataset is complete.<br />
 </li>
-<li>GRanges behave like vectors of ranges and can be subsetted using <code>[subset range, metadata columns]</code>. E.g. <code>my_gr[3:5, "GC"]</code> will print only rows 3 to 5 and of the metadata only the <code>GC</code>-column.</li>
+<li>GRanges behave like vectors of ranges and can be subsetted using <code>[subset range, metadata columns]</code>. E.g. <code>my_gr[3:5, &quot;GC&quot;]</code> will print only rows 3 to 5 and of the metadata only the <code>GC</code>-column.</li>
 </ul>
 <p><br> <strong>dplyr-related functions</strong> are available for <code>GRanges</code> through the <code>plyranges</code> package. (The <code>dplyr</code> package it self is not compatable with <code>GRanges</code>.) As the function names of <code>dplyr</code> and <code>plyranges</code> overlap, we sometimes use the formulation <code>package::function</code> to clarify to you the package we are using.<br />
 <br> A brief reminder of common <code>dplyr</code> functions and examples of <code>plyranges</code>-relatives on <code>GRanges</code> objects:</p>
@@ -831,7 +806,7 @@ Finish by printing the summary of <code>my_gr</code> using the <code>print()</co
 <h2>2.3 Peak files in R</h2>
 <div id="data-import" class="section level3">
 <h3>2.3.1 Data import</h3>
-<p>Most genomic interval data comes in a tabular format that has the basic information about the location of the interval and some other information. Common file formats include BED, GFF or BigWig files. These can be imported with the base <code>object_name &lt;- read.table("location/of/file.bed")</code> function and converted to a <code>GRanges</code> object using <code>gr_object &lt;- as(object_name, "GRanges")</code>.<br />
+<p>Most genomic interval data comes in a tabular format that has the basic information about the location of the interval and some other information. Common file formats include BED, GFF or BigWig files. These can be imported with the base <code>object_name &lt;- read.table(&quot;location/of/file.bed&quot;)</code> function and converted to a <code>GRanges</code> object using <code>gr_object &lt;- as(object_name, &quot;GRanges&quot;)</code>.<br />
 <br> A quicker method is to use the <code>import()</code> function from the <code>rtracklayer</code> package. This function parses the files directly into <code>GRanges</code> objects with genomic ranges and metadata.<br />
 <br> You will import BED files with the genomic locations of the peaks from the histone ChIP-seq experiment in monocytes we looked at in week 1. On the <a href="http://dcc.blueprint-epigenome.eu/#/md/chip_seq_grch38">BLUEPRINT methods page</a> we can read that peak calling was performed with MACS2 software. We also note that for 4 ChIPs, the <code>-broad</code> option was included resulting in so-called <code>broadPeak</code> files. The others follow the <code>narrowPeak</code> file format. This is important because we need to specify this file format in our <code>import()</code> function.</p>
 <table>
@@ -945,44 +920,44 @@ Finish by printing the summary of <code>my_gr</code> using the <code>print()</co
 <ul>
 <li>Read in the following peak files wih the <code>import()</code> function from the <code>rtracklayer</code> package.<br />
 </li>
-<li>Define the appropriate file format, i.e. “narrowPeak” or “broadPeak”.</li>
+<li>Define the appropriate file format, i.e. “narrowPeak” or “broadPeak”.</li>
 </ul>
 </blockquote>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># H3k4me1 </span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>mono_h3k4me1 <span class="ot">&lt;-</span> rtracklayer<span class="sc">::</span><span class="fu">import</span>(<span class="st">&quot;data/blueprint/bed/C000S5H2.ERX547981.H3K4me1.bwa.GRCh38.broad.20150527.chr19.bed&quot;</span>, <span class="at">format =</span> <span class="st">&quot;...&quot;</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># h3k4me3  </span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>mono_h3k4me3 <span class="ot">&lt;-</span> rtracklayer<span class="sc">::</span><span class="fu">...</span>(<span class="st">&quot;data/blueprint/bed/C000S5H2.ERX547984.h3k4me3.bwa.GRCh38.20150527.chr19.bed&quot;</span>, <span class="at">format =</span> <span class="st">&quot;...&quot;</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># H3K9me3 </span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>mono_h3k9me3 <span class="ot">&lt;-</span> rtracklayer<span class="sc">::</span><span class="fu">...</span>(<span class="st">&quot;data/blueprint/bed/C000S5H2.ERX547982.H3K9me3.bwa.GRCh38.broad.20150527.chr19.bed&quot;</span>, <span class="at">format =</span> <span class="st">&quot;...&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># H3k4me1 </span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>mono_h3k4me1 <span class="ot">&lt;-</span> rtracklayer<span class="sc">::</span><span class="fu">import</span>(<span class="st">&quot;data/blueprint/bed/C000S5H2.ERX547981.H3K4me1.bwa.GRCh38.broad.20150527.chr19.bed&quot;</span>, <span class="at">format =</span> <span class="st">&quot;broadPeak&quot;</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># h3k4me3  </span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>mono_h3k4me3 <span class="ot">&lt;-</span> rtracklayer<span class="sc">::</span><span class="fu">import</span>(<span class="st">&quot;data/blueprint/bed/C000S5H2.ERX547984.h3k4me3.bwa.GRCh38.20150527.chr19.bed&quot;</span>, <span class="at">format =</span> <span class="st">&quot;narrowPeak&quot;</span>)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># H3K9me3 </span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>mono_h3k9me3 <span class="ot">&lt;-</span> rtracklayer<span class="sc">::</span><span class="fu">import</span>(<span class="st">&quot;data/blueprint/bed/C000S5H2.ERX547982.H3K9me3.bwa.GRCh38.broad.20150527.chr19.bed&quot;</span>, <span class="at">format =</span> <span class="st">&quot;broadPeak&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># H3k4me1 </span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">mono_h3k4me1 &lt;-<span class="st"> </span>rtracklayer<span class="op">::</span><span class="kw">import</span>(<span class="st">&quot;data/blueprint/bed/C000S5H2.ERX547981.H3K4me1.bwa.GRCh38.broad.20150527.chr19.bed&quot;</span>, <span class="dt">format =</span> <span class="st">&quot;...&quot;</span>)</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co"># h3k4me3  </span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">mono_h3k4me3 &lt;-<span class="st"> </span>rtracklayer<span class="op">::</span><span class="kw">...</span>(<span class="st">&quot;data/blueprint/bed/C000S5H2.ERX547984.h3k4me3.bwa.GRCh38.20150527.chr19.bed&quot;</span>, <span class="dt">format =</span> <span class="st">&quot;...&quot;</span>)</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co"># H3K9me3 </span></a>
+<a class="sourceLine" id="cb15-8" data-line-number="8">mono_h3k9me3 &lt;-<span class="st"> </span>rtracklayer<span class="op">::</span><span class="kw">...</span>(<span class="st">&quot;data/blueprint/bed/C000S5H2.ERX547982.H3K9me3.bwa.GRCh38.broad.20150527.chr19.bed&quot;</span>, <span class="dt">format =</span> <span class="st">&quot;...&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># H3k4me1 </span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">mono_h3k4me1 &lt;-<span class="st"> </span>rtracklayer<span class="op">::</span><span class="kw">import</span>(<span class="st">&quot;data/blueprint/bed/C000S5H2.ERX547981.H3K4me1.bwa.GRCh38.broad.20150527.chr19.bed&quot;</span>, <span class="dt">format =</span> <span class="st">&quot;broadPeak&quot;</span>)</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="co"># h3k4me3  </span></a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">mono_h3k4me3 &lt;-<span class="st"> </span>rtracklayer<span class="op">::</span><span class="kw">import</span>(<span class="st">&quot;data/blueprint/bed/C000S5H2.ERX547984.h3k4me3.bwa.GRCh38.20150527.chr19.bed&quot;</span>, <span class="dt">format =</span> <span class="st">&quot;narrowPeak&quot;</span>)</a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="co"># H3K9me3 </span></a>
+<a class="sourceLine" id="cb16-8" data-line-number="8">mono_h3k9me3 &lt;-<span class="st"> </span>rtracklayer<span class="op">::</span><span class="kw">import</span>(<span class="st">&quot;data/blueprint/bed/C000S5H2.ERX547982.H3K9me3.bwa.GRCh38.broad.20150527.chr19.bed&quot;</span>, <span class="dt">format =</span> <span class="st">&quot;broadPeak&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">grade_code</span>()</a></code></pre></div>
 <p><br> Awesome! Let’s take a quick look at one of these files.</p>
 <blockquote>
 <p><strong>Exercise 3:</strong><br />
 Print the head 2 lines of <code>mono_h3k4me3</code> using the function <code>head()</code>.</p>
 </blockquote>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mono_h3k4me3, <span class="at">n =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">head</span>(mono_h3k4me3, <span class="dt">n =</span> <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## GRanges object with 2 ranges and 6 metadata columns:
-##       seqnames        ranges strand |                            name
-##          &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; |                     &lt;character&gt;
-##   [1]    chr19 245884-246269      * | 3337.macs2_peak_call_peak_22416
-##   [2]    chr19 266835-267653      * | 3337.macs2_peak_call_peak_22417
-##           score signalValue    pValue    qValue      peak
-##       &lt;numeric&gt;   &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;integer&gt;
-##   [1]       317    14.05594    33.902  31.78678       190
-##   [2]      1805    50.02259  183.1329 180.54498       544
+##       seqnames        ranges strand |                            name     score
+##          &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; |                     &lt;character&gt; &lt;numeric&gt;
+##   [1]    chr19 245884-246269      * | 3337.macs2_peak_call_peak_22416       317
+##   [2]    chr19 266835-267653      * | 3337.macs2_peak_call_peak_22417      1805
+##       signalValue    pValue    qValue      peak
+##         &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;integer&gt;
+##   [1]     14.0559    33.902   31.7868       190
+##   [2]     50.0226   183.133  180.5450       544
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">grade_code</span>()</a></code></pre></div>
 <p><br> The original .BED files lacked column headers. The <code>rtracklayer::import()</code> function appendended variable names and converted the data to the data type (eg numeric, integer, character etc.) according to the file format we defined.<br />
 <br> <strong>Let’s do some exploratory analyses on these data.</strong>.<br />
 <br></p>
@@ -1000,26 +975,26 @@ Print the head 2 lines of <code>mono_h3k4me3</code> using the function <code>hea
 <li>What is the distribution of peak sizes and scores? Use <code>summary()</code>, <code>width()</code> and <code>score()</code>.</li>
 </ul>
 </blockquote>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How many peaks do we have?  </span></span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How many peaks do we have?  </span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(mono_h3k4me3)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co"># How many peaks do we have?  </span></a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="co"># How many peaks do we have?  </span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="kw">length</span>(mono_h3k4me3)</a></code></pre></div>
 <pre><code>## [1] 2838</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_result</span>(</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pass_if</span>(<span class="sc">~</span><span class="fu">identical</span>(.result, <span class="dv">2838</span>))</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the distribution of peak sizes?   </span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">...</span>(...))</span></code></pre></div>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the distribution of peak sizes?   </span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">width</span>(mono_h3k4me3))</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">grade_result</span>(</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2">  <span class="kw">pass_if</span>(<span class="op">~</span><span class="kw">identical</span>(.result, <span class="dv">2838</span>))</a>
+<a class="sourceLine" id="cb24-3" data-line-number="3">)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="co"># What is the distribution of peak sizes?   </span></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="kw">summary</span>(<span class="kw">...</span>(...))</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="co"># What is the distribution of peak sizes?   </span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="kw">summary</span>(<span class="kw">width</span>(mono_h3k4me3))</a></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   200.0   389.2   879.5  1198.6  1661.2 12705.0</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>()</span></code></pre></div>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the distribution of peak scores?</span></span></code></pre></div>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the distribution of peak scores?</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">score</span>(mono_h3k4me3))</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">grade_code</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="co"># What is the distribution of peak scores?</span></a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="co"># What is the distribution of peak scores?</span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="kw">summary</span>(<span class="kw">score</span>(mono_h3k4me3))</a></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##      15      84     374    1212    2415    5228</code></pre>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">grade_code</span>()</a></code></pre></div>
 <p><br></p>
 </div>
 <div id="exploratory-plotting" class="section level3">
@@ -1029,18 +1004,18 @@ Print the head 2 lines of <code>mono_h3k4me3</code> using the function <code>hea
 <p><strong>Exercise 5:</strong><br />
 Plot the h3k4me3 peaksizes as a histogram and as a boxplot using the base <code>hist()</code> and <code>boxplot()</code> functions.</p>
 </blockquote>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the distribution of peak sizes for h3k4me3 as histogram</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">..</span>(<span class="fu">..</span>(mono_h3k4me3), <span class="at">main =</span> <span class="st">&quot;Monocytes h3k4me3 ChIP-seq, chr19&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;peak size&quot;</span>, <span class="at">col =</span> <span class="st">&quot;gray&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the distribution of peak sizes for h3k4me3 as histogram </span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">width</span>(mono_h3k4me3), <span class="at">main =</span> <span class="st">&quot;Monocytes h3k4me3 ChIP-seq, chr19&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;peak size&quot;</span>, <span class="at">col =</span> <span class="st">&quot;gray&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="co"># plot the distribution of peak sizes for h3k4me3 as histogram</span></a>
+<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="kw">..</span>(<span class="kw">..</span>(mono_h3k4me3), <span class="dt">main =</span> <span class="st">&quot;Monocytes h3k4me3 ChIP-seq, chr19&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;peak size&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;gray&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="co"># plot the distribution of peak sizes for h3k4me3 as histogram </span></a>
+<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="kw">hist</span>(<span class="kw">width</span>(mono_h3k4me3), <span class="dt">main =</span> <span class="st">&quot;Monocytes h3k4me3 ChIP-seq, chr19&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;peak size&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;gray&quot;</span>)</a></code></pre></div>
 <p><img src="p4_week2_v4_files/figure-html/q5a_exploreplot-solution-1.png" width="672" /></p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>()</span></code></pre></div>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the same data as boxplot, ensue that &quot;peak size&quot; labels the right axis (x or y)</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">..</span>(..., <span class="at">main =</span> <span class="st">&quot;Monocytes h3k4me3 ChIP-seq, chr19&quot;</span>, <span class="at">... =</span> <span class="st">&quot;peak size&quot;</span>, <span class="at">col =</span> <span class="st">&quot;gray&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the same data as boxplot, ensue that &quot;peak size&quot; labels the right axis (x or y)</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">width</span>(mono_h3k4me3), <span class="at">main =</span> <span class="st">&quot;Monocytes h3k4me3 ChIP-seq, chr19&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;peak size&quot;</span>, <span class="at">col =</span> <span class="st">&quot;gray&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">grade_code</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="co"># plot the same data as boxplot, ensue that &quot;peak size&quot; labels the right axis (x or y)</span></a>
+<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="kw">..</span>(..., <span class="dt">main =</span> <span class="st">&quot;Monocytes h3k4me3 ChIP-seq, chr19&quot;</span>, <span class="dt">... =</span> <span class="st">&quot;peak size&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;gray&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="co"># plot the same data as boxplot, ensue that &quot;peak size&quot; labels the right axis (x or y)</span></a>
+<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="kw">boxplot</span>(<span class="kw">width</span>(mono_h3k4me3), <span class="dt">main =</span> <span class="st">&quot;Monocytes h3k4me3 ChIP-seq, chr19&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;peak size&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;gray&quot;</span>)</a></code></pre></div>
 <p><img src="p4_week2_v4_files/figure-html/q5b_exploreplot-solution-1.png" width="672" /></p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">grade_code</span>()</a></code></pre></div>
 <p><br> &gt; <em>Note</em>: plotting with the <code>ggplots</code> packages is also possible, as long as we convert the data we are interested to <code>data.frame</code> objects by running for example: <code>meta_h3k4me3 &lt;- as.data.frame(mcols(mono_h3k4me3))</code>.</p>
 <p><br> Several peaks have a width of &gt;10000 bp. You retrieve these peaks with: <code>mono_h3k4me3[width(mono_h3k4me3)&gt; 10000,]</code> or using <code>filter()</code> from <code>plyranges</code>.<br />
 <br></p>
@@ -1048,20 +1023,20 @@ Plot the h3k4me3 peaksizes as a histogram and as a boxplot using the base <code>
 <p><strong>Exercise 6:</strong><br />
 Use [ ]-subsetting and <code>length()</code> to find the number of peaks with width &gt; 10kb.</p>
 </blockquote>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How many mono_h3k4me3 peaks have width &gt; 10kb&gt;</span></span></code></pre></div>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using [ ]-subsetting</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(mono_h3k4me3[<span class="fu">width</span>(mono_h3k4me3) <span class="sc">&gt;</span> <span class="dv">10000</span>,])</span></code></pre></div>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_result</span>(</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pass_if</span>(<span class="sc">~</span><span class="fu">identical</span>(.result, <span class="dv">4</span>))</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="co"># How many mono_h3k4me3 peaks have width &gt; 10kb&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="co"># using [ ]-subsetting</span></a>
+<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="kw">length</span>(mono_h3k4me3[<span class="kw">width</span>(mono_h3k4me3) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10000</span>,])</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">grade_result</span>(</a>
+<a class="sourceLine" id="cb41-2" data-line-number="2">  <span class="kw">pass_if</span>(<span class="op">~</span><span class="kw">identical</span>(.result, <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb41-3" data-line-number="3">)</a></code></pre></div>
 <blockquote>
 <p><strong>Exercise 7:</strong><br />
 Filter <code>mono_h3k4me3</code> for peaks with width &gt; 10kb using <code>filter()</code> from <code>plyranges</code></p>
 </blockquote>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter mono_h3k4me3 for peaks with size above 10kb</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>.. <span class="sc">%&gt;%</span> plyranges<span class="sc">::</span><span class="fu">..</span>(.. <span class="sc">&gt;</span> ..)</span></code></pre></div>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter mono_h3k4me3 for peaks with size above 10kb</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>mono_h3k4me3 <span class="sc">%&gt;%</span> plyranges<span class="sc">::</span><span class="fu">filter</span>(width <span class="sc">&gt;</span> <span class="dv">10000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="co"># filter mono_h3k4me3 for peaks with size above 10kb</span></a>
+<a class="sourceLine" id="cb42-2" data-line-number="2">.. <span class="op">%&gt;%</span><span class="st"> </span>plyranges<span class="op">::</span><span class="kw">..</span>(.. <span class="op">&gt;</span><span class="st"> </span>..)</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="co"># filter mono_h3k4me3 for peaks with size above 10kb</span></a>
+<a class="sourceLine" id="cb43-2" data-line-number="2">mono_h3k4me3 <span class="op">%&gt;%</span><span class="st"> </span>plyranges<span class="op">::</span><span class="kw">filter</span>(width <span class="op">&gt;</span><span class="st"> </span><span class="dv">10000</span>)</a></code></pre></div>
 <pre><code>## GRanges object with 4 ranges and 6 metadata columns:
 ##       seqnames            ranges strand |                            name
 ##          &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |                     &lt;character&gt;
@@ -1071,13 +1046,13 @@ Filter <code>mono_h3k4me3</code> for peaks with width &gt; 10kb using <code>filt
 ##   [4]    chr19 39404035-39414347      * | 3337.macs2_peak_call_peak_24149
 ##           score signalValue    pValue    qValue      peak
 ##       &lt;numeric&gt;   &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;integer&gt;
-##   [1]      4368   100.87201 441.68515 436.88461      8901
-##   [2]      3267    79.78811  330.1217 326.78381      8268
-##   [3]      3088     46.5275 312.01044 308.81287     11185
-##   [4]      4273    97.90211 431.89682  427.3089      4278
+##   [1]      4368    100.8720   441.685   436.885      8901
+##   [2]      3267     79.7881   330.122   326.784      8268
+##   [3]      3088     46.5275   312.010   308.813     11185
+##   [4]      4273     97.9021   431.897   427.309      4278
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw">grade_code</span>()</a></code></pre></div>
 <p><br></p>
 <blockquote>
 <p><strong>Exercise 8</strong><br />
@@ -1087,23 +1062,23 @@ Use the <code>plyranges::filter</code> and the UCSC genome browser to find the g
 <p>hints:</p>
 <p>1: condition on <code>score == max(score)</code></p>
 </blockquote>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find the peak peak with highest score</span></span></code></pre></div>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find the peak peak with highest score</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>mono_h3k4me3 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(score <span class="sc">==</span> <span class="fu">max</span>(score))</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="co"># find the peak peak with highest score</span></a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="co"># find the peak peak with highest score</span></a>
+<a class="sourceLine" id="cb47-2" data-line-number="2">mono_h3k4me3 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(score <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(score))</a></code></pre></div>
 <pre><code>## GRanges object with 1 range and 6 metadata columns:
 ##       seqnames            ranges strand |                            name
 ##          &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |                     &lt;character&gt;
 ##   [1]    chr19 15377793-15380841      * | 3337.macs2_peak_call_peak_23451
 ##           score signalValue    pValue    qValue      peak
 ##       &lt;numeric&gt;   &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;integer&gt;
-##   [1]      5228     116.995  530.1864 522.80273      1381
+##   [1]      5228     116.995   530.186   522.803      1381
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">question</span>(<span class="st">&quot;The promoters of which gene(s) are covered by the h3k4me3 peak with the highest score&quot;</span>?,</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">answer</span>(<span class="st">&quot;*AKAP8*&quot;</span>, <span class="at">correct =</span> T, <span class="at">message =</span> <span class="st">&quot;While this peak spans parts of both genes, it covers the promoter of *AKAP8* but the 3&#39;UTR of *AKAP8L*.&quot;</span> ),</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">answer</span>(<span class="st">&quot;*AKAP8L*&quot;</span>, <span class="at">message =</span> <span class="st">&quot;Incorrect. Be aware of the directionaility of this gene by looking at the arrowsheads in the introns.&quot;</span>),</span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">answer</span>(<span class="st">&quot;Both&quot;</span>, <span class="at">message =</span> <span class="st">&quot;Only one of the genes listed here. Look at the direction of transcription indicated by the arrowheads in the introns of the genes.&quot;</span>)</span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="kw">question</span>(<span class="st">&quot;The promoters of which gene(s) are covered by the h3k4me3 peak with the highest score&quot;</span>?,</a>
+<a class="sourceLine" id="cb49-2" data-line-number="2">         <span class="kw">answer</span>(<span class="st">&quot;*AKAP8*&quot;</span>, <span class="dt">correct =</span> T, <span class="dt">message =</span> <span class="st">&quot;While this peak spans parts of both genes, it covers the promoter of *AKAP8* but the 3&#39;UTR of *AKAP8L*.&quot;</span> ),</a>
+<a class="sourceLine" id="cb49-3" data-line-number="3">         <span class="kw">answer</span>(<span class="st">&quot;*AKAP8L*&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Incorrect. Be aware of the directionaility of this gene by looking at the arrowsheads in the introns.&quot;</span>),</a>
+<a class="sourceLine" id="cb49-4" data-line-number="4">         <span class="kw">answer</span>(<span class="st">&quot;Both&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Only one of the genes listed here. Look at the direction of transcription indicated by the arrowheads in the introns of the genes.&quot;</span>)</a>
+<a class="sourceLine" id="cb49-5" data-line-number="5">)</a></code></pre></div>
 <p><br> <strong>Later on in this tutorial we will learn how to annotate peaks with the gene that they most likely control. First we will calculate the fraction of overlap among two <code>GRanges</code> objects. </strong><br />
 <br></p>
 <hr />
@@ -1123,11 +1098,11 @@ The <code>GenomicRanges</code> package has a family of functions to count and id
 We have used the package <code>TxDb.Hsapiens.UCSC.hg38.knownGene</code> to retrieve the genomic coordinates of all genes on human chromosome 19. This object, <code>genes</code>, thus contains all the coordinates of the outermost UTR boundaries and the Entrez gene identifier of each gene.<br />
 <br> We define the promoter region as 1kb upstream and 200bp downstream the TSS as follows:<br />
 <br></p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># identify TSS (in this case 1 per gene even though we know that genes have multiple TSSs)</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>tss <span class="ot">&lt;-</span> <span class="fu">resize</span>(genes, <span class="at">width =</span> <span class="dv">1</span>, <span class="at">fix =</span> <span class="st">&quot;start&quot;</span>)</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co"># view TSS object</span></span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tss, <span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="co"># identify TSS (in this case 1 per gene even though we know that genes have multiple TSSs)</span></a>
+<a class="sourceLine" id="cb50-2" data-line-number="2">tss &lt;-<span class="st"> </span><span class="kw">resize</span>(genes, <span class="dt">width =</span> <span class="dv">1</span>, <span class="dt">fix =</span> <span class="st">&quot;start&quot;</span>)</a>
+<a class="sourceLine" id="cb50-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb50-4" data-line-number="4"><span class="co"># view TSS object</span></a>
+<a class="sourceLine" id="cb50-5" data-line-number="5"><span class="kw">head</span>(tss, <span class="dt">n =</span> <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 1 metadata column:
 ##             seqnames    ranges strand |     gene_id
 ##                &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
@@ -1136,12 +1111,12 @@ We have used the package <code>TxDb.Hsapiens.UCSC.hg38.knownGene</code> to retri
 ##   100073347    chr19  56840866      + |   100073347
 ##   -------
 ##   seqinfo: 1 sequence from hg38 genome</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># consider 1kb upstream and 200bp downstream the TSS as promoter</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>promoters <span class="ot">&lt;-</span> <span class="fu">resize</span>(tss, <span class="at">width =</span> <span class="dv">1000</span>, <span class="at">fix =</span> <span class="st">&quot;end&quot;</span>)</span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>promoters <span class="ot">&lt;-</span> <span class="fu">resize</span>(promoters, <span class="at">width =</span> <span class="dv">1200</span>, <span class="at">fix =</span> <span class="st">&quot;start&quot;</span>)</span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="co"># show promoters object</span></span>
-<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(promoters, <span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="co"># consider 1kb upstream and 200bp downstream the TSS as promoter</span></a>
+<a class="sourceLine" id="cb52-2" data-line-number="2">promoters &lt;-<span class="st"> </span><span class="kw">resize</span>(tss, <span class="dt">width =</span> <span class="dv">1000</span>, <span class="dt">fix =</span> <span class="st">&quot;end&quot;</span>)</a>
+<a class="sourceLine" id="cb52-3" data-line-number="3">promoters &lt;-<span class="st"> </span><span class="kw">resize</span>(promoters, <span class="dt">width =</span> <span class="dv">1200</span>, <span class="dt">fix =</span> <span class="st">&quot;start&quot;</span>)</a>
+<a class="sourceLine" id="cb52-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb52-5" data-line-number="5"><span class="co"># show promoters object</span></a>
+<a class="sourceLine" id="cb52-6" data-line-number="6"><span class="kw">head</span>(promoters, <span class="dt">n =</span> <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 1 metadata column:
 ##             seqnames            ranges strand |     gene_id
 ##                &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
@@ -1156,16 +1131,16 @@ We have used the package <code>TxDb.Hsapiens.UCSC.hg38.knownGene</code> to retri
 <p><strong>Exercise 10:</strong><br />
 Use <code>findOverlaps()</code> to determine the overlap between (query) <code>mono_h3k4me3</code> and (subject) <code>promoters</code>.</p>
 </blockquote>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find overlap between mono_h3k4me3 peaks and promoters</span></span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>ovl <span class="ot">&lt;-</span> <span class="fu">..</span>(<span class="at">query =</span> .., <span class="at">subject =</span> ..)</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co"># print the overlap output</span></span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(..)</span></code></pre></div>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find overlap between mono_h3k4me3 peaks and promoters</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>ovl <span class="ot">&lt;-</span> <span class="fu">findOverlaps</span>(<span class="at">query =</span> mono_h3k4me3, <span class="at">subject =</span> promoters)</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="co"># print the overlap output</span></span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(ovl)</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="co"># Find overlap between mono_h3k4me3 peaks and promoters</span></a>
+<a class="sourceLine" id="cb54-2" data-line-number="2">ovl &lt;-<span class="st"> </span><span class="kw">..</span>(<span class="dt">query =</span> .., <span class="dt">subject =</span> ..)</a>
+<a class="sourceLine" id="cb54-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb54-4" data-line-number="4"><span class="co"># print the overlap output</span></a>
+<a class="sourceLine" id="cb54-5" data-line-number="5"><span class="kw">show</span>(..)</a></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="co"># Find overlap between mono_h3k4me3 peaks and promoters</span></a>
+<a class="sourceLine" id="cb55-2" data-line-number="2">ovl &lt;-<span class="st"> </span><span class="kw">findOverlaps</span>(<span class="dt">query =</span> mono_h3k4me3, <span class="dt">subject =</span> promoters)</a>
+<a class="sourceLine" id="cb55-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb55-4" data-line-number="4"><span class="co"># print the overlap output</span></a>
+<a class="sourceLine" id="cb55-5" data-line-number="5"><span class="kw">show</span>(ovl)</a></code></pre></div>
 <pre><code>## Hits object with 1256 hits and 0 metadata columns:
 ##          queryHits subjectHits
 ##          &lt;integer&gt;   &lt;integer&gt;
@@ -1182,7 +1157,7 @@ Use <code>findOverlaps()</code> to determine the overlap between (query) <code>m
 ##   [1256]      2837        1416
 ##   -------
 ##   queryLength: 2838 / subjectLength: 1729</code></pre>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="kw">grade_code</span>()</a></code></pre></div>
 <p><br> ‘ovl’ gives you the indices of <code>mono_h3k4me3</code> and <code>promoters</code> that overlap. If a peak or a promoter overlaps several times, each overlap will be reported on a new row.<br />
 <br></p>
 <blockquote>
@@ -1196,46 +1171,46 @@ How many of the promoters are part of the overlap? And how many of the h3k4me3 p
 <li>Use <code>length()</code> to count the number of unique intervals of the query and the subject.</li>
 </ul>
 </blockquote>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the number of unique h3k4me3 peaks reported in &#39;ovl&#39;?</span></span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">..</span>(..))) </span></code></pre></div>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the number of unique h3k4me3 peaks reported in &#39;ovl&#39;?</span></span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">queryHits</span>(ovl)))</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="co"># What is the number of unique h3k4me3 peaks reported in &#39;ovl&#39;?</span></a>
+<a class="sourceLine" id="cb58-2" data-line-number="2"><span class="kw">length</span>(<span class="kw">unique</span>(<span class="kw">..</span>(..))) </a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="co"># What is the number of unique h3k4me3 peaks reported in &#39;ovl&#39;?</span></a>
+<a class="sourceLine" id="cb59-2" data-line-number="2"><span class="kw">length</span>(<span class="kw">unique</span>(<span class="kw">queryHits</span>(ovl)))</a></code></pre></div>
 <pre><code>## [1] 1008</code></pre>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_result</span>(</span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pass_if</span>(<span class="sc">~</span><span class="fu">identical</span>(.result, <span class="dv">1008</span>))</span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the proportion of h3k4me3 peaks that overlap?</span></span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">..</span>(..)))<span class="sc">/</span><span class="fu">length</span>(..)</span></code></pre></div>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">queryHits</span>(ovl)))<span class="sc">/</span><span class="fu">length</span>(mono_h3k4me3)</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1"><span class="kw">grade_result</span>(</a>
+<a class="sourceLine" id="cb61-2" data-line-number="2">  <span class="kw">pass_if</span>(<span class="op">~</span><span class="kw">identical</span>(.result, <span class="dv">1008</span>))</a>
+<a class="sourceLine" id="cb61-3" data-line-number="3">)</a></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="co"># What is the proportion of h3k4me3 peaks that overlap?</span></a>
+<a class="sourceLine" id="cb62-2" data-line-number="2"><span class="kw">length</span>(<span class="kw">unique</span>(<span class="kw">..</span>(..)))<span class="op">/</span><span class="kw">length</span>(..)</a></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1"><span class="kw">length</span>(<span class="kw">unique</span>(<span class="kw">queryHits</span>(ovl)))<span class="op">/</span><span class="kw">length</span>(mono_h3k4me3)</a></code></pre></div>
 <pre><code>## [1] 0.3551797</code></pre>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_result</span>(</span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pass_if</span>(<span class="sc">~</span><span class="fu">identical</span>(<span class="fu">round</span>(.result, <span class="at">digits=</span> <span class="dv">3</span>), <span class="fu">round</span>(<span class="fl">0.3551797</span>, <span class="at">digits =</span> <span class="dv">3</span>)))</span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the proportion of promoters that overlap?</span></span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">..</span>(..)))<span class="sc">/</span><span class="fu">length</span>(..)</span></code></pre></div>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">subjectHits</span>(ovl)))<span class="sc">/</span><span class="fu">length</span>(promoters)</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1"><span class="kw">grade_result</span>(</a>
+<a class="sourceLine" id="cb65-2" data-line-number="2">  <span class="kw">pass_if</span>(<span class="op">~</span><span class="kw">identical</span>(<span class="kw">round</span>(.result, <span class="dt">digits=</span> <span class="dv">3</span>), <span class="kw">round</span>(<span class="fl">0.3551797</span>, <span class="dt">digits =</span> <span class="dv">3</span>)))</a>
+<a class="sourceLine" id="cb65-3" data-line-number="3">)</a></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="co"># What is the proportion of promoters that overlap?</span></a>
+<a class="sourceLine" id="cb66-2" data-line-number="2"><span class="kw">length</span>(<span class="kw">unique</span>(<span class="kw">..</span>(..)))<span class="op">/</span><span class="kw">length</span>(..)</a></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="kw">length</span>(<span class="kw">unique</span>(<span class="kw">subjectHits</span>(ovl)))<span class="op">/</span><span class="kw">length</span>(promoters)</a></code></pre></div>
 <pre><code>## [1] 0.6495084</code></pre>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_result</span>(</span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pass_if</span>(<span class="sc">~</span><span class="fu">identical</span>(<span class="fu">round</span>(.result, <span class="at">digits=</span> <span class="dv">3</span>), <span class="fu">round</span>(<span class="fl">0.6495084</span>, <span class="at">digits =</span> <span class="dv">3</span>)))</span>
-<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1"><span class="kw">grade_result</span>(</a>
+<a class="sourceLine" id="cb69-2" data-line-number="2">  <span class="kw">pass_if</span>(<span class="op">~</span><span class="kw">identical</span>(<span class="kw">round</span>(.result, <span class="dt">digits=</span> <span class="dv">3</span>), <span class="kw">round</span>(<span class="fl">0.6495084</span>, <span class="dt">digits =</span> <span class="dv">3</span>)))</a>
+<a class="sourceLine" id="cb69-3" data-line-number="3">)</a></code></pre></div>
 <p><br> Let’s plot this overlap in a venn diagram with the <code>plot.pairwise.venn()</code> function of the <code>VennDiagram</code> package.</p>
 <ul>
 <li>Use the minimum of the two ‘unique counts’ as the number of ‘common peaks’ for our venn diagram.</li>
 </ul>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify the minimum of the two numbers of unique intervals among h3k4me3 peaks and promoters</span></span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>common_intervals <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="fu">c</span>(<span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">queryHits</span>(ovl))), <span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">subjectHits</span>(ovl)))))</span>
-<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a><span class="co"># call a new plotting area</span></span>
-<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.newpage</span>()</span>
-<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the overlap in a venn diagram</span></span>
-<span id="cb70-8"><a href="#cb70-8" aria-hidden="true" tabindex="-1"></a><span class="fu">draw.pairwise.venn</span>( </span>
-<span id="cb70-9"><a href="#cb70-9" aria-hidden="true" tabindex="-1"></a>   <span class="at">area1=</span><span class="fu">length</span>(mono_h3k4me3),</span>
-<span id="cb70-10"><a href="#cb70-10" aria-hidden="true" tabindex="-1"></a>   <span class="at">area2=</span><span class="fu">length</span>(promoters), </span>
-<span id="cb70-11"><a href="#cb70-11" aria-hidden="true" tabindex="-1"></a>   <span class="at">cross.area=</span>common_intervals, </span>
-<span id="cb70-12"><a href="#cb70-12" aria-hidden="true" tabindex="-1"></a>   <span class="at">category=</span><span class="fu">c</span>(<span class="st">&quot;h3k4me3&quot;</span>, <span class="st">&quot;Promoters&quot;</span>), </span>
-<span id="cb70-13"><a href="#cb70-13" aria-hidden="true" tabindex="-1"></a>   <span class="at">fill=</span><span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;gray&quot;</span>), </span>
-<span id="cb70-14"><a href="#cb70-14" aria-hidden="true" tabindex="-1"></a>   <span class="at">cat.cex=</span><span class="fl">1.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="co"># Identify the minimum of the two numbers of unique intervals among h3k4me3 peaks and promoters</span></a>
+<a class="sourceLine" id="cb70-2" data-line-number="2">common_intervals &lt;-<span class="st"> </span><span class="kw">min</span>(<span class="kw">c</span>(<span class="kw">length</span>(<span class="kw">unique</span>(<span class="kw">queryHits</span>(ovl))), <span class="kw">length</span>(<span class="kw">unique</span>(<span class="kw">subjectHits</span>(ovl)))))</a>
+<a class="sourceLine" id="cb70-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb70-4" data-line-number="4"><span class="co"># call a new plotting area</span></a>
+<a class="sourceLine" id="cb70-5" data-line-number="5"><span class="kw">grid.newpage</span>()</a>
+<a class="sourceLine" id="cb70-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb70-7" data-line-number="7"><span class="co"># Plot the overlap in a venn diagram</span></a>
+<a class="sourceLine" id="cb70-8" data-line-number="8"><span class="kw">draw.pairwise.venn</span>( </a>
+<a class="sourceLine" id="cb70-9" data-line-number="9">   <span class="dt">area1=</span><span class="kw">length</span>(mono_h3k4me3),</a>
+<a class="sourceLine" id="cb70-10" data-line-number="10">   <span class="dt">area2=</span><span class="kw">length</span>(promoters), </a>
+<a class="sourceLine" id="cb70-11" data-line-number="11">   <span class="dt">cross.area=</span>common_intervals, </a>
+<a class="sourceLine" id="cb70-12" data-line-number="12">   <span class="dt">category=</span><span class="kw">c</span>(<span class="st">&quot;h3k4me3&quot;</span>, <span class="st">&quot;Promoters&quot;</span>), </a>
+<a class="sourceLine" id="cb70-13" data-line-number="13">   <span class="dt">fill=</span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;gray&quot;</span>), </a>
+<a class="sourceLine" id="cb70-14" data-line-number="14">   <span class="dt">cat.cex=</span><span class="fl">1.2</span>)</a></code></pre></div>
 <p><img src="p4_week2_v4_files/figure-html/venndiagram-1.png" width="672" /></p>
 <pre><code>## (polygon[GRID.polygon.11], polygon[GRID.polygon.12], polygon[GRID.polygon.13], polygon[GRID.polygon.14], text[GRID.text.15], text[GRID.text.16], text[GRID.text.17], text[GRID.text.18], text[GRID.text.19])</code></pre>
 <p><br> Is there a significant enrichment of h3k4me3 in promoters?<br />
@@ -1243,10 +1218,10 @@ How many of the promoters are part of the overlap? And how many of the h3k4me3 p
 <br> If h3k4me3 is not enriched at promoters, we would expect that the fraction of promoters with a h3k4me3 peak is in the same range as the fraction of promoters on chromosome 19. (=This is our null hypothesis of no enrichment.<br />
 <br> To calculate the chromosome 19-wide fraction of promoters we identify the total number of bps covered by a promoter. As some promoters may overlap we first <em>reduce</em> <code>promoters</code> to non-overlapping intervals. Visually, <code>reduce()</code> works like this: <img src="images/wk2_4_reduce_rockefelleruniversity.png" /> <br />
 <br></p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># total number of bps covered by promoters</span></span>
-<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>total_bp_prom <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">width</span>(GenomicRanges<span class="sc">::</span><span class="fu">reduce</span>(promoters)))</span>
-<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="co"># chromosome 19-wide fraction of promoters </span></span>
-<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>(prom_fraction_chr19 <span class="ot">&lt;-</span> total_bp_prom<span class="sc">/</span><span class="fu">seqlengths</span>(promoters)[<span class="st">&quot;chr19&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="co"># total number of bps covered by promoters</span></a>
+<a class="sourceLine" id="cb72-2" data-line-number="2">total_bp_prom &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">width</span>(GenomicRanges<span class="op">::</span><span class="kw">reduce</span>(promoters)))</a>
+<a class="sourceLine" id="cb72-3" data-line-number="3"><span class="co"># chromosome 19-wide fraction of promoters </span></a>
+<a class="sourceLine" id="cb72-4" data-line-number="4">(prom_fraction_chr19 &lt;-<span class="st"> </span>total_bp_prom<span class="op">/</span><span class="kw">seqlengths</span>(promoters)[<span class="st">&quot;chr19&quot;</span>])</a></code></pre></div>
 <pre><code>##      chr19 
 ## 0.03404707</code></pre>
 <p><br> Promoters make up 3.4% of this chromosome but nearly 65% of all promoters overlap with h3k4me3 peaks. This looks like a strong enrichment. We can test whether the observed fraction is indeed larger than expected with a binomial test, in r we use the function <code>binom.test(x, n, p)</code> for this:</p>
@@ -1265,28 +1240,27 @@ How many of the promoters are part of the overlap? And how many of the h3k4me3 p
 <p><strong>Exercise 12</strong><br />
 Use a binomial test to test for enrichment of h3k4me3 at promoters.</p>
 <ul>
-<li>Use the function <code>binom.test(x, n, p, alternative = "greater")</code> to call the test<br />
+<li>Use the function <code>binom.test(x, n, p, alternative = &quot;greater&quot;)</code> to call the test<br />
 </li>
-<li>We set <code>alternative = "greater"</code> because we test for <em>enrichment</em> and our alternative hypothesis is that the true probability is <em>larger</em> than the expected probability.</li>
+<li>We set <code>alternative = &quot;greater&quot;</code> because we test for <em>enrichment</em> and our alternative hypothesis is that the true probability is <em>larger</em> than the expected probability.</li>
 </ul>
 </blockquote>
 <p><br></p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># binomial test for enrichment of h3k4me3 peaks in promoters:  </span></span>
-<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(<span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">..</span>(ovl))), <span class="fu">length</span>(..), prom_fraction_chr19, <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span> )</span></code></pre></div>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(<span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">subjectHits</span>(ovl))), <span class="fu">length</span>(mono_h3k4me3), prom_fraction_chr19, <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span> )</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="co"># binomial test for enrichment of h3k4me3 peaks in promoters:  </span></a>
+<a class="sourceLine" id="cb74-2" data-line-number="2"><span class="kw">binom.test</span>(<span class="kw">length</span>(<span class="kw">unique</span>(<span class="kw">..</span>(ovl))), <span class="kw">length</span>(..), prom_fraction_chr19, <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span> )</a></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="kw">binom.test</span>(<span class="kw">length</span>(<span class="kw">unique</span>(<span class="kw">subjectHits</span>(ovl))), <span class="kw">length</span>(mono_h3k4me3), prom_fraction_chr19, <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span> )</a></code></pre></div>
 <pre><code>## 
 ##  Exact binomial test
 ## 
 ## data:  length(unique(subjectHits(ovl))) and length(mono_h3k4me3)
-## number of successes = 1123, number of trials = 2838, p-value &lt;
-## 2.2e-16
+## number of successes = 1123, number of trials = 2838, p-value &lt; 2.2e-16
 ## alternative hypothesis: true probability of success is greater than 0.03404707
 ## 95 percent confidence interval:
 ##  0.3805112 1.0000000
 ## sample estimates:
 ## probability of success 
 ##              0.3957012</code></pre>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="kw">grade_code</span>()</a></code></pre></div>
 <p><br> The binomial test shows a p-value &lt; 2.2e-16 and a confidence interval that excludes the expected 0.034. We therefore reject the H0 of no enrichment.<br />
 <br> In the genome browser we also observed H3K27ac often at promoters. Is this mark enriched in these regions?</p>
 <blockquote>
@@ -1294,71 +1268,66 @@ Use a binomial test to test for enrichment of h3k4me3 at promoters.</p>
 Use a binomial test to test for enrichment of H3K27ac at promoters.</p>
 <ul>
 <li>First, use findOverlaps to detect the overlap between intervals reported in mono_h3k37 and promoters</li>
-<li>Use the function <code>binom.test(x, n, p, alternative = "greater")</code> to call the test<br />
+<li>Use the function <code>binom.test(x, n, p, alternative = &quot;greater&quot;)</code> to call the test<br />
 </li>
-<li>We set <code>alternative = "greater"</code> because we test for <em>enrichment</em> and our alternative hypothesis is that the true probability is <em>larger</em> than the expected probability.</li>
+<li>We set <code>alternative = &quot;greater&quot;</code> because we test for <em>enrichment</em> and our alternative hypothesis is that the true probability is <em>larger</em> than the expected probability.</li>
 </ul>
 </blockquote>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find overlap between mono_h3k27ac and promoters</span></span>
-<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>ovl2 <span class="ot">&lt;-</span> ...</span></code></pre></div>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>ovl2 <span class="ot">&lt;-</span> <span class="fu">findOverlaps</span>(<span class="at">query =</span> mono_h3k27ac, <span class="at">subject =</span> promoters)</span></code></pre></div>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># binomial test for enrichment of H3K27ac peaks in promoters</span></span>
-<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="co"># `prom_fraction_chr19` holds the fractio of promoters in chromosome 19</span></span>
-<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="fu">..</span>(<span class="fu">..</span>(<span class="fu">..</span>(<span class="fu">..</span>(..))), <span class="fu">..</span>(..), prom_fraction_chr19, <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span> )</span></code></pre></div>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># binomial test for enrichment of H3K27ac peaks in promoters:  </span></span>
-<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">binom.test</span>(<span class="fu">length</span>(<span class="fu">unique</span>(<span class="fu">subjectHits</span>(ovl2))), <span class="fu">length</span>(mono_h3k27ac), prom_fraction_chr19, <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span> )</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="co"># find overlap between mono_h3k27ac and promoters</span></a>
+<a class="sourceLine" id="cb78-2" data-line-number="2">ovl2 &lt;-<span class="st"> </span>...</a></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1">ovl2 &lt;-<span class="st"> </span><span class="kw">findOverlaps</span>(<span class="dt">query =</span> mono_h3k27ac, <span class="dt">subject =</span> promoters)</a></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1"><span class="co"># binomial test for enrichment of H3K27ac peaks in promoters</span></a>
+<a class="sourceLine" id="cb80-2" data-line-number="2"><span class="co"># `prom_fraction_chr19` holds the fractio of promoters in chromosome 19</span></a>
+<a class="sourceLine" id="cb80-3" data-line-number="3"><span class="kw">..</span>(<span class="kw">..</span>(<span class="kw">..</span>(<span class="kw">..</span>(..))), <span class="kw">..</span>(..), prom_fraction_chr19, <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span> )</a></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1"><span class="co"># binomial test for enrichment of H3K27ac peaks in promoters:  </span></a>
+<a class="sourceLine" id="cb81-2" data-line-number="2"><span class="kw">binom.test</span>(<span class="kw">length</span>(<span class="kw">unique</span>(<span class="kw">subjectHits</span>(ovl2))), <span class="kw">length</span>(mono_h3k27ac), prom_fraction_chr19, <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span> )</a></code></pre></div>
 <pre><code>## 
 ##  Exact binomial test
 ## 
 ## data:  length(unique(subjectHits(ovl2))) and length(mono_h3k27ac)
-## number of successes = 865, number of trials = 3793, p-value &lt;
-## 2.2e-16
+## number of successes = 865, number of trials = 3793, p-value &lt; 2.2e-16
 ## alternative hypothesis: true probability of success is greater than 0.03404707
 ## 95 percent confidence interval:
 ##  0.2168716 1.0000000
 ## sample estimates:
 ## probability of success 
 ##              0.2280517</code></pre>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1"><span class="kw">grade_code</span>()</a></code></pre></div>
 <p><br> &gt;<strong>Exercise 14:</strong><br />
 Do you conclude that H3K27ac is enriched at promoters?</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">question</span>(<span class="st">&quot;Is H3K27ac enriched at promoters?&quot;</span>,</span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">answer</span>(<span class="st">&quot;*Yes*&quot;</span>, <span class="at">correct =</span> T),</span>
-<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">answer</span>(<span class="st">&quot;*No*&quot;</span>, <span class="at">message =</span> <span class="st">&quot;Incorrect. Look at the p-value of the previous test.&quot;</span>)</span>
-<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1"><span class="kw">question</span>(<span class="st">&quot;Is H3K27ac enriched at promoters?&quot;</span>,</a>
+<a class="sourceLine" id="cb84-2" data-line-number="2">         <span class="kw">answer</span>(<span class="st">&quot;*Yes*&quot;</span>, <span class="dt">correct =</span> T),</a>
+<a class="sourceLine" id="cb84-3" data-line-number="3">         <span class="kw">answer</span>(<span class="st">&quot;*No*&quot;</span>, <span class="dt">message =</span> <span class="st">&quot;Incorrect. Look at the p-value of the previous test.&quot;</span>)</a>
+<a class="sourceLine" id="cb84-4" data-line-number="4">)</a></code></pre></div>
 </div>
 <div id="overlap-with-genomic-features" class="section level3">
 <h3>2.4.4 Overlap with genomic features</h3>
 <p><span style="color: red;">remove?</span><br />
-To understand the function of a ChIPped mark or factor we often want to know to which genes and genomic features it binds. <br> We will use a <code>TxDb</code> objects. Such an object is an R interface to prefabricated databases contained by specific annotation packages. The package TxDb.Hsapiens.UCSC.hg18.knownGene includes all human genes and transcripts from UCSC with coordinates for the hg18 genome assembly.</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we need the `TxDb` object and limits its active chromosomes to chromosome 19</span></span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(TxDb.Hsapiens.UCSC.hg19.knownGene)</span>
-<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>txdb <span class="ot">&lt;-</span> TxDb.Hsapiens.UCSC.hg19.knownGene</span>
-<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a><span class="fu">seqlevels</span>(txdb) <span class="ot">&lt;-</span> <span class="st">&quot;chr19&quot;</span></span>
-<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb85-6"><a href="#cb85-6" aria-hidden="true" tabindex="-1"></a><span class="co"># laod package to annotate peaks with genes</span></span>
-<span id="cb85-7"><a href="#cb85-7" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ChIPpeakAnno)   </span>
-<span id="cb85-8"><a href="#cb85-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb85-9"><a href="#cb85-9" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the overlap with features</span></span>
-<span id="cb85-10"><a href="#cb85-10" aria-hidden="true" tabindex="-1"></a>h3k4me3_features <span class="ot">&lt;-</span> <span class="fu">assignChromosomeRegion</span>(mono_h3k4me3, <span class="at">TxDb=</span>txdb, <span class="at">nucleotideLevel=</span><span class="cn">FALSE</span>)</span>
-<span id="cb85-11"><a href="#cb85-11" aria-hidden="true" tabindex="-1"></a><span class="co"># show the results</span></span>
-<span id="cb85-12"><a href="#cb85-12" aria-hidden="true" tabindex="-1"></a>h3k4me3_features</span></code></pre></div>
+To understand the function of a ChIPped mark or factor we often want to know to which genes and genomic features it binds. <br> We will use a <code>TxDb</code> objects. Such an object is an R interface to prefabricated databases contained by specific annotation packages. The package TxDb.Hsapiens.UCSC.hg38.knownGene includes all human genes and transcripts from UCSC with coordinates for the hg18 genome assembly.</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1"><span class="co"># we need the `TxDb` object and limits its active chromosomes to chromosome 19</span></a>
+<a class="sourceLine" id="cb85-2" data-line-number="2"><span class="kw">library</span>(TxDb.Hsapiens.UCSC.hg38.knownGene)</a>
+<a class="sourceLine" id="cb85-3" data-line-number="3">txdb &lt;-<span class="st"> </span>TxDb.Hsapiens.UCSC.hg38.knownGene</a>
+<a class="sourceLine" id="cb85-4" data-line-number="4"><span class="kw">seqlevels</span>(txdb) &lt;-<span class="st"> &quot;chr19&quot;</span></a>
+<a class="sourceLine" id="cb85-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb85-6" data-line-number="6"><span class="co"># laod package to annotate peaks with genes</span></a>
+<a class="sourceLine" id="cb85-7" data-line-number="7"><span class="kw">require</span>(ChIPpeakAnno)   </a>
+<a class="sourceLine" id="cb85-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb85-9" data-line-number="9"><span class="co"># calculate the overlap with features</span></a>
+<a class="sourceLine" id="cb85-10" data-line-number="10">h3k4me3_features &lt;-<span class="st"> </span><span class="kw">assignChromosomeRegion</span>(mono_h3k4me3, <span class="dt">TxDb=</span>txdb, <span class="dt">nucleotideLevel=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb85-11" data-line-number="11"><span class="co"># show the results</span></a>
+<a class="sourceLine" id="cb85-12" data-line-number="12">h3k4me3_features</a></code></pre></div>
 <pre><code>## $percentage
 ## subjectHits
-##               Exons             Introns            fiveUTRs 
-##            31.53629            62.75546            12.43834 
-##           threeUTRs           Promoters immediateDownstream 
-##             7.64623            15.85624            10.07752 
-##   Intergenic.Region 
-##            28.50599 
+##               Exons             Introns            fiveUTRs           threeUTRs 
+##            59.65469            79.21071            40.16913            13.42495 
+##           Promoters immediateDownstream   Intergenic.Region 
+##            53.52361            24.06624            13.03735 
 ## 
 ## $jaccard
-##               Exons             Introns            fiveUTRs 
-##          0.05347753          0.12508779          0.05285222 
-##           threeUTRs           Promoters immediateDownstream 
-##          0.04532164          0.08682230          0.05611144 
-##   Intergenic.Region 
-##          0.27787406</code></pre>
+##               Exons             Introns            fiveUTRs           threeUTRs 
+##          0.05531595          0.12477798          0.19041256          0.03819932 
+##           Promoters immediateDownstream   Intergenic.Region 
+##          0.18327703          0.05151607          0.13049339</code></pre>
 <blockquote>
 <p><strong>Exercise 13</strong><br />
 Plot the percentage of features with the mark as barplot and as piechart</p>
@@ -1368,21 +1337,21 @@ Plot the percentage of features with the mark as barplot and as piechart</p>
 <li>For plotting use <code>pie()</code> and <code>barplot()</code>.</li>
 </ul>
 </blockquote>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make pie-chart</span></span></code></pre></div>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make pie-chart</span></span>
-<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(h3k4me3_features<span class="sc">$</span>percentage)</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1"><span class="co"># make pie-chart</span></a></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1"><span class="co"># make pie-chart</span></a>
+<a class="sourceLine" id="cb88-2" data-line-number="2"><span class="kw">pie</span>(h3k4me3_features<span class="op">$</span>percentage)</a></code></pre></div>
 <p><img src="p4_week2_v4_files/figure-html/q13a_anno-solution-1.png" width="672" /></p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>()</span></code></pre></div>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make barplot</span></span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>bp <span class="ot">&lt;-</span> <span class="fu">..</span>(..<span class="sc">$</span>.., <span class="at">ylab=</span><span class="st">&quot;%&quot;</span>)</span>
-<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="co"># add percentages to the bars with text()  </span></span>
-<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(bp, h3k4me3_features<span class="sc">$</span>percentage, <span class="fu">signif</span>(h3k4me3_features<span class="sc">$</span>percentage, <span class="dv">4</span>), <span class="at">pos=</span><span class="dv">1</span>, <span class="at">main =</span> <span class="st">&quot;Mono h3k4me3 in features&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make barplot</span></span>
-<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>bp <span class="ot">&lt;-</span> <span class="fu">barplot</span>(h3k4me3_features<span class="sc">$</span>percentage, <span class="at">ylab=</span><span class="st">&quot;%&quot;</span>)</span>
-<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="co"># add percentages to the bars with text()  </span></span>
-<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(bp, h3k4me3_features<span class="sc">$</span>percentage, <span class="fu">signif</span>(h3k4me3_features<span class="sc">$</span>percentage, <span class="dv">4</span>), <span class="at">pos=</span><span class="dv">1</span>, <span class="at">main =</span> <span class="st">&quot;Mono h3k4me3 in features&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="kw">grade_code</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1"><span class="co"># make barplot</span></a>
+<a class="sourceLine" id="cb90-2" data-line-number="2">bp &lt;-<span class="st"> </span><span class="kw">..</span>(..<span class="op">$</span>.., <span class="dt">ylab=</span><span class="st">&quot;%&quot;</span>)</a>
+<a class="sourceLine" id="cb90-3" data-line-number="3"><span class="co"># add percentages to the bars with text()  </span></a>
+<a class="sourceLine" id="cb90-4" data-line-number="4"><span class="kw">text</span>(bp, h3k4me3_features<span class="op">$</span>percentage, <span class="kw">signif</span>(h3k4me3_features<span class="op">$</span>percentage, <span class="dv">4</span>), <span class="dt">pos=</span><span class="dv">1</span>, <span class="dt">main =</span> <span class="st">&quot;Mono h3k4me3 in features&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1"><span class="co"># make barplot</span></a>
+<a class="sourceLine" id="cb91-2" data-line-number="2">bp &lt;-<span class="st"> </span><span class="kw">barplot</span>(h3k4me3_features<span class="op">$</span>percentage, <span class="dt">ylab=</span><span class="st">&quot;%&quot;</span>)</a>
+<a class="sourceLine" id="cb91-3" data-line-number="3"><span class="co"># add percentages to the bars with text()  </span></a>
+<a class="sourceLine" id="cb91-4" data-line-number="4"><span class="kw">text</span>(bp, h3k4me3_features<span class="op">$</span>percentage, <span class="kw">signif</span>(h3k4me3_features<span class="op">$</span>percentage, <span class="dv">4</span>), <span class="dt">pos=</span><span class="dv">1</span>, <span class="dt">main =</span> <span class="st">&quot;Mono h3k4me3 in features&quot;</span>)</a></code></pre></div>
 <p><img src="p4_week2_v4_files/figure-html/q13anno-solution-1.png" width="672" /></p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1"><span class="kw">grade_code</span>()</a></code></pre></div>
 </div>
 <div id="overlap-with-grangeslist" class="section level3">
 <h3>2.4.5 Overlap with GRangesList</h3>
@@ -1390,26 +1359,26 @@ Plot the percentage of features with the mark as barplot and as piechart</p>
 So far we looked at h3k4me3 marking. How do the other marks overlap with genomic features? Instead of rerunning the above code for each mark individually, we combine the individual peak objects into a list of <code>GRanges</code> objects with the function <code>GRangesList()</code>.<br />
 <br><br />
 We have created a <code>GRangesList</code> <code>mono_list</code> by:</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a list of your GRanges objects</span></span>
-<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>mono_list  <span class="ot">&lt;-</span> <span class="fu">GRangesList</span>(mono_h3k4me1, mono_h3k4me3, mono_h3k9me3, mono_h3k27ac, mono_h3k27me3, mono_h3k36me3)</span>
-<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="co"># add names to each element in the list</span></span>
-<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mono_list) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;h3k4me1&quot;</span>, <span class="st">&quot;h3k4me3&quot;</span>, <span class="st">&quot;h3k9me3&quot;</span>, <span class="st">&quot;h3k27ac&quot;</span>, <span class="st">&quot;h3k27me3&quot;</span>, <span class="st">&quot;h3k36me3&quot;</span>)</span>
-<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a><span class="co"># print the length of your list  </span></span>
-<span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(mono_list)</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1"><span class="co"># make a list of your GRanges objects</span></a>
+<a class="sourceLine" id="cb93-2" data-line-number="2">mono_list  &lt;-<span class="st"> </span><span class="kw">GRangesList</span>(mono_h3k4me1, mono_h3k4me3, mono_h3k9me3, mono_h3k27ac, mono_h3k27me3, mono_h3k36me3)</a>
+<a class="sourceLine" id="cb93-3" data-line-number="3"><span class="co"># add names to each element in the list</span></a>
+<a class="sourceLine" id="cb93-4" data-line-number="4"><span class="kw">names</span>(mono_list) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;h3k4me1&quot;</span>, <span class="st">&quot;h3k4me3&quot;</span>, <span class="st">&quot;h3k9me3&quot;</span>, <span class="st">&quot;h3k27ac&quot;</span>, <span class="st">&quot;h3k27me3&quot;</span>, <span class="st">&quot;h3k36me3&quot;</span>)</a>
+<a class="sourceLine" id="cb93-5" data-line-number="5"><span class="co"># print the length of your list  </span></a>
+<a class="sourceLine" id="cb93-6" data-line-number="6"><span class="kw">length</span>(mono_list)</a></code></pre></div>
 <pre><code>## [1] 6</code></pre>
 <p><br> The <code>length</code> function now applies to the list and not to the individual items any more.<br />
 <br> We can access elements in the list using <code>[[]]</code> or <code>$</code>-sign.</p>
 <ul>
 <li>Use <code>[[]]</code> and the <em>index</em>: eg. <code>mono_list[[1]]</code> will extract the first item in the list.</li>
-<li>Use <code>[[]]</code> and the name: eg <code>mono_list[["h3k36me3"]]</code> will extract the item with this name.<br />
+<li>Use <code>[[]]</code> and the name: eg <code>mono_list[[&quot;h3k36me3&quot;]]</code> will extract the item with this name.<br />
 </li>
 <li>Use <code>$item_name</code> to extract the item with that name.</li>
 </ul>
 <p>To calculate the length of individual items in the list use <code>lapply()</code>, which applies a function to each item in the list.<br />
 <br> With the fuction <code>lapply(list_object, function)</code> we can apply or <em>loop</em> a function to each element in the list and returns the results as a list.<br />
 <br> Here we apply <code>length()</code> to each item in <code>mono_list</code></p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print the length of each element at once with apply</span></span>
-<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(mono_list, length) </span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1"><span class="co"># print the length of each element at once with apply</span></a>
+<a class="sourceLine" id="cb95-2" data-line-number="2"><span class="kw">lapply</span>(mono_list, length) </a></code></pre></div>
 <pre><code>## $h3k4me1
 ## [1] 3282
 ## 
@@ -1441,158 +1410,134 @@ Make a barplot of peak numbers per ChIP:**</p>
 <li>Use the <code>length</code> within <code>lapply()</code></li>
 </ul>
 </blockquote>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print the length of each element at once with apply</span></span>
-<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>counts_list <span class="ot">&lt;-</span> <span class="fu">..</span> ( .. , .. )</span>
-<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a><span class="co"># unlist the resulting output</span></span>
-<span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a>counts_vector <span class="ot">&lt;-</span> <span class="fu">..</span>(..)</span>
-<span id="cb97-6"><a href="#cb97-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-7"><a href="#cb97-7" aria-hidden="true" tabindex="-1"></a><span class="co"># make barplot of the number of peaks, store this in &#39;bp&#39;:  </span></span>
-<span id="cb97-8"><a href="#cb97-8" aria-hidden="true" tabindex="-1"></a>bp <span class="ot">&lt;-</span> <span class="fu">..</span>(.., <span class="at">ylab =</span> <span class="st">&quot;Number of peaks&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Monocytes ChIP-seq; chr19&quot;</span>)</span>
-<span id="cb97-9"><a href="#cb97-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-10"><a href="#cb97-10" aria-hidden="true" tabindex="-1"></a><span class="co"># add actual values as text lables to the plot</span></span>
-<span id="cb97-11"><a href="#cb97-11" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(bp, counts_vector, <span class="at">labels=</span><span class="fu">names</span>(counts_vector), <span class="at">pos=</span><span class="dv">1</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print the length of each element at once with apply</span></span>
-<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>counts_list <span class="ot">&lt;-</span> <span class="fu">lapply</span>(mono_list, length)</span>
-<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="co"># unlist the resulting output</span></span>
-<span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a>counts_vector <span class="ot">&lt;-</span> <span class="fu">unlist</span>(counts_list)</span>
-<span id="cb98-6"><a href="#cb98-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb98-7"><a href="#cb98-7" aria-hidden="true" tabindex="-1"></a><span class="co"># barplot of the number of peaks, store this in &#39;bp&#39;:   </span></span>
-<span id="cb98-8"><a href="#cb98-8" aria-hidden="true" tabindex="-1"></a>bp <span class="ot">&lt;-</span><span class="fu">barplot</span>(counts_vector, <span class="at">ylab =</span> <span class="st">&quot;Number of peaks&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Monocytes ChIP-seq; chr19&quot;</span>)</span>
-<span id="cb98-9"><a href="#cb98-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb98-10"><a href="#cb98-10" aria-hidden="true" tabindex="-1"></a><span class="co"># add actual values as text lables to the plot</span></span>
-<span id="cb98-11"><a href="#cb98-11" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(bp, counts_vector, <span class="at">labels =</span> counts_vector, <span class="at">pos=</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1"><span class="co"># print the length of each element at once with apply</span></a>
+<a class="sourceLine" id="cb97-2" data-line-number="2">counts_list &lt;-<span class="st"> </span><span class="kw">..</span> ( .. , .. )</a>
+<a class="sourceLine" id="cb97-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb97-4" data-line-number="4"><span class="co"># unlist the resulting output</span></a>
+<a class="sourceLine" id="cb97-5" data-line-number="5">counts_vector &lt;-<span class="st"> </span><span class="kw">..</span>(..)</a>
+<a class="sourceLine" id="cb97-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb97-7" data-line-number="7"><span class="co"># make barplot of the number of peaks, store this in &#39;bp&#39;:  </span></a>
+<a class="sourceLine" id="cb97-8" data-line-number="8">bp &lt;-<span class="st"> </span><span class="kw">..</span>(.., <span class="dt">ylab =</span> <span class="st">&quot;Number of peaks&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Monocytes ChIP-seq; chr19&quot;</span>)</a>
+<a class="sourceLine" id="cb97-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb97-10" data-line-number="10"><span class="co"># add actual values as text lables to the plot</span></a>
+<a class="sourceLine" id="cb97-11" data-line-number="11"><span class="kw">text</span>(bp, counts_vector, <span class="dt">labels=</span><span class="kw">names</span>(counts_vector), <span class="dt">pos=</span><span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1"><span class="co"># print the length of each element at once with apply</span></a>
+<a class="sourceLine" id="cb98-2" data-line-number="2">counts_list &lt;-<span class="st"> </span><span class="kw">lapply</span>(mono_list, length)</a>
+<a class="sourceLine" id="cb98-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb98-4" data-line-number="4"><span class="co"># unlist the resulting output</span></a>
+<a class="sourceLine" id="cb98-5" data-line-number="5">counts_vector &lt;-<span class="st"> </span><span class="kw">unlist</span>(counts_list)</a>
+<a class="sourceLine" id="cb98-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb98-7" data-line-number="7"><span class="co"># barplot of the number of peaks, store this in &#39;bp&#39;:   </span></a>
+<a class="sourceLine" id="cb98-8" data-line-number="8">bp &lt;-<span class="kw">barplot</span>(counts_vector, <span class="dt">ylab =</span> <span class="st">&quot;Number of peaks&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Monocytes ChIP-seq; chr19&quot;</span>)</a>
+<a class="sourceLine" id="cb98-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb98-10" data-line-number="10"><span class="co"># add actual values as text lables to the plot</span></a>
+<a class="sourceLine" id="cb98-11" data-line-number="11"><span class="kw">text</span>(bp, counts_vector, <span class="dt">labels =</span> counts_vector, <span class="dt">pos=</span><span class="dv">1</span>)</a></code></pre></div>
 <p><img src="p4_week2_v4_files/figure-html/q14_barplot-solution-1.png" width="672" /></p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1"><span class="kw">grade_code</span>()</a></code></pre></div>
 <p><br> Instead of the length, let’s look at the distribution of these peaks among features, as in section 2.4.3.<br />
 <br></p>
 <blockquote>
 <p><strong>Exercise 15</strong></p>
 <p>For each item in <code>mono_list</code> determine the overlap with genomic features. Use the <code>assignChromosomeRegion(object,TxDb=txdb, nucleotideLevel=FALSE)</code> to assign peaks to features.</p>
 </blockquote>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co"># laod package to annotate peaks with genes</span></span>
-<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ChIPpeakAnno)   </span>
-<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a><span class="co"># calucluate the overlap with features</span></span>
-<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a><span class="co"># this code takes rather long to run!!!!</span></span>
-<span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a>allmarks_features <span class="ot">&lt;-</span> <span class="fu">lapply</span>(mono_list, <span class="cf">function</span>(.object) <span class="fu">assignChromosomeRegion</span>(.object, <span class="at">TxDb=</span>txdb, <span class="at">nucleotideLevel=</span><span class="cn">FALSE</span>))</span>
-<span id="cb100-7"><a href="#cb100-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(allmarks_features) <span class="ot">&lt;-</span> <span class="fu">names</span>(mono_list)</span>
-<span id="cb100-8"><a href="#cb100-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb100-9"><a href="#cb100-9" aria-hidden="true" tabindex="-1"></a><span class="co"># show the results</span></span>
-<span id="cb100-10"><a href="#cb100-10" aria-hidden="true" tabindex="-1"></a>allmarks_features</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1"><span class="co"># laod package to annotate peaks with genes</span></a>
+<a class="sourceLine" id="cb100-2" data-line-number="2"><span class="kw">require</span>(ChIPpeakAnno)   </a>
+<a class="sourceLine" id="cb100-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb100-4" data-line-number="4"><span class="co"># calucluate the overlap with features</span></a>
+<a class="sourceLine" id="cb100-5" data-line-number="5"><span class="co"># this code takes rather long to run!!!!</span></a>
+<a class="sourceLine" id="cb100-6" data-line-number="6">allmarks_features &lt;-<span class="st"> </span><span class="kw">lapply</span>(mono_list, <span class="cf">function</span>(.object) <span class="kw">assignChromosomeRegion</span>(.object, <span class="dt">TxDb=</span>txdb, <span class="dt">nucleotideLevel=</span><span class="ot">FALSE</span>))</a>
+<a class="sourceLine" id="cb100-7" data-line-number="7"><span class="kw">names</span>(allmarks_features) &lt;-<span class="st"> </span><span class="kw">names</span>(mono_list)</a>
+<a class="sourceLine" id="cb100-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb100-9" data-line-number="9"><span class="co"># show the results</span></a>
+<a class="sourceLine" id="cb100-10" data-line-number="10">allmarks_features</a></code></pre></div>
 <pre><code>## $h3k4me1
 ## $h3k4me1$percentage
 ## subjectHits
-##               Exons             Introns            fiveUTRs 
-##            37.99512            64.04631            15.66118 
-##           threeUTRs           Promoters immediateDownstream 
-##            11.63924            18.46435            14.68617 
-##   Intergenic.Region 
-##            27.11761 
+##               Exons             Introns            fiveUTRs           threeUTRs 
+##            59.59781            79.95125            34.06459            18.19013 
+##           Promoters immediateDownstream   Intergenic.Region 
+##            50.03047            30.37782            13.04083 
 ## 
 ## $h3k4me1$jaccard
-##               Exons             Introns            fiveUTRs 
-##          0.08055035          0.16283213          0.07648810 
-##           threeUTRs           Promoters immediateDownstream 
-##          0.07698509          0.11468584          0.09312210 
-##   Intergenic.Region 
-##          0.33093717 
+##               Exons             Introns            fiveUTRs           threeUTRs 
+##          0.06975003          0.16409230          0.17245103          0.06382979 
+##           Promoters immediateDownstream   Intergenic.Region 
+##          0.20771664          0.08202386          0.20336821 
 ## 
 ## 
 ## $h3k4me3
 ## $h3k4me3$percentage
 ## subjectHits
-##               Exons             Introns            fiveUTRs 
-##            31.53629            62.75546            12.43834 
-##           threeUTRs           Promoters immediateDownstream 
-##             7.64623            15.85624            10.07752 
-##   Intergenic.Region 
-##            28.50599 
+##               Exons             Introns            fiveUTRs           threeUTRs 
+##            59.65469            79.21071            40.16913            13.42495 
+##           Promoters immediateDownstream   Intergenic.Region 
+##            53.52361            24.06624            13.03735 
 ## 
 ## $h3k4me3$jaccard
-##               Exons             Introns            fiveUTRs 
-##          0.05347753          0.12508779          0.05285222 
-##           threeUTRs           Promoters immediateDownstream 
-##          0.04532164          0.08682230          0.05611144 
-##   Intergenic.Region 
-##          0.27787406 
+##               Exons             Introns            fiveUTRs           threeUTRs 
+##          0.05531595          0.12477798          0.19041256          0.03819932 
+##           Promoters immediateDownstream   Intergenic.Region 
+##          0.18327703          0.05151607          0.13049339 
 ## 
 ## 
 ## $h3k9me3
 ## $h3k9me3$percentage
 ## subjectHits
-##               Exons             Introns            fiveUTRs 
-##            33.59746            54.67512            15.79503 
-##           threeUTRs           Promoters immediateDownstream 
-##            13.89329            16.58743            16.69308 
-##   Intergenic.Region 
-##            37.82356 
+##               Exons             Introns            fiveUTRs           threeUTRs 
+##            41.94400            65.61014            13.99894            17.27417 
+##           Promoters immediateDownstream   Intergenic.Region 
+##            28.73745            30.26941            26.36027 
 ## 
 ## $h3k9me3$jaccard
-##               Exons             Introns            fiveUTRs 
-##          0.04180360          0.07841503          0.05498345 
-##           threeUTRs           Promoters immediateDownstream 
-##          0.07170120          0.07358800          0.07933718 
-##   Intergenic.Region 
-##          0.38971161 
+##               Exons             Introns            fiveUTRs           threeUTRs 
+##          0.02346613          0.06555819          0.03029264          0.03765112 
+##           Promoters immediateDownstream   Intergenic.Region 
+##          0.04463773          0.05019711          0.27578391 
 ## 
 ## 
 ## $h3k27ac
 ## $h3k27ac$percentage
 ## subjectHits
-##               Exons             Introns            fiveUTRs 
-##           22.462431           63.828104            7.487477 
-##           threeUTRs           Promoters immediateDownstream 
-##            4.877406           11.468495            7.592934 
-##   Intergenic.Region 
-##           27.339837 
+##               Exons             Introns            fiveUTRs           threeUTRs 
+##           43.606644           80.859478           25.388874            8.700237 
+##           Promoters immediateDownstream   Intergenic.Region 
+##           42.209333           18.876878           10.123912 
 ## 
 ## $h3k27ac$jaccard
-##               Exons             Introns            fiveUTRs 
-##          0.04691888          0.15459770          0.03645700 
-##           threeUTRs           Promoters immediateDownstream 
-##          0.03188006          0.06926752          0.04707421 
-##   Intergenic.Region 
-##          0.25216619 
+##               Exons             Introns            fiveUTRs           threeUTRs 
+##          0.04843906          0.15092019          0.11776935          0.02947218 
+##           Promoters immediateDownstream   Intergenic.Region 
+##          0.14806252          0.04912521          0.09429594 
 ## 
 ## 
 ## $h3k27me3
 ## $h3k27me3$percentage
 ## subjectHits
-##               Exons             Introns            fiveUTRs 
-##           28.146453           56.652501            9.774436 
-##           threeUTRs           Promoters immediateDownstream 
-##            8.695652           12.389670           10.526316 
-##   Intergenic.Region 
-##           35.436417 
+##               Exons             Introns            fiveUTRs           threeUTRs 
+##            41.41876            62.99444            14.22033            14.22033 
+##           Promoters immediateDownstream   Intergenic.Region 
+##            25.95619            24.91010            26.93691 
 ## 
 ## $h3k27me3$jaccard
-##               Exons             Introns            fiveUTRs 
-##          0.05198961          0.12309113          0.04308357 
-##           threeUTRs           Promoters immediateDownstream 
-##          0.05431897          0.06942663          0.06166220 
-##   Intergenic.Region 
-##          0.36268575 
+##               Exons             Introns            fiveUTRs           threeUTRs 
+##          0.03662167          0.09786694          0.04599281          0.04346089 
+##           Promoters immediateDownstream   Intergenic.Region 
+##          0.06257881          0.05769668          0.30443055 
 ## 
 ## 
 ## $h3k36me3
 ## $h3k36me3$percentage
 ## subjectHits
-##               Exons             Introns            fiveUTRs 
-##            45.72937            69.28983            21.54511 
-##           threeUTRs           Promoters immediateDownstream 
-##            18.61804            20.96929            21.11324 
-##   Intergenic.Region 
-##            24.42418 
+##               Exons             Introns            fiveUTRs           threeUTRs 
+##           68.570058           96.017274           27.927063           39.635317 
+##           Promoters immediateDownstream   Intergenic.Region 
+##           41.218810           51.919386            1.103647 
 ## 
 ## $h3k36me3$jaccard
-##               Exons             Introns            fiveUTRs 
-##          0.07177286          0.12766334          0.08331787 
-##           threeUTRs           Promoters immediateDownstream 
-##          0.10703448          0.10323648          0.11210191 
-##   Intergenic.Region 
-##          0.28888081</code></pre>
+##               Exons             Introns            fiveUTRs           threeUTRs 
+##          0.05958636          0.15607207          0.06879433          0.14721084 
+##           Promoters immediateDownstream   Intergenic.Region 
+##          0.07550321          0.13397722          0.04495472</code></pre>
 </div>
 </div>
 <div id="annotation-of-chip-seq-peaks" class="section level2">
@@ -1606,15 +1551,15 @@ Make a barplot of peak numbers per ChIP:**</p>
 <p><strong>Exercise 15</strong><br />
 Use <code>distanceToNearest()</code> to get the distance between h3k4me3 peaks and the nearest TSS.</p>
 </blockquote>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the distances from peaks to tss</span></span>
-<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>h3k4me3_to_tss <span class="ot">&lt;-</span> <span class="fu">..</span>(.., ..)</span></code></pre></div>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the distances from peaks to tss</span></span>
-<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>h3k4me3_to_tss <span class="ot">&lt;-</span> <span class="fu">distanceToNearest</span>(mono_h3k4me3, tss)</span></code></pre></div>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1"><span class="co"># calculate the distances from peaks to tss</span></a>
+<a class="sourceLine" id="cb102-2" data-line-number="2">h3k4me3_to_tss &lt;-<span class="st"> </span><span class="kw">..</span>(.., ..)</a></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1"><span class="co"># calculate the distances from peaks to tss</span></a>
+<a class="sourceLine" id="cb103-2" data-line-number="2">h3k4me3_to_tss &lt;-<span class="st"> </span><span class="kw">distanceToNearest</span>(mono_h3k4me3, tss)</a></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1"><span class="kw">grade_code</span>()</a></code></pre></div>
 <p><br> Let’s look at the resulting <code>Hits</code> object.<br />
 <br></p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show object h3k4me3_to_tss</span></span>
-<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(h3k4me3_to_tss)</span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1"><span class="co"># show object h3k4me3_to_tss</span></a>
+<a class="sourceLine" id="cb105-2" data-line-number="2"><span class="kw">show</span>(h3k4me3_to_tss)</a></code></pre></div>
 <pre><code>## Hits object with 2838 hits and 1 metadata column:
 ##          queryHits subjectHits |  distance
 ##          &lt;integer&gt;   &lt;integer&gt; | &lt;integer&gt;
@@ -1631,12 +1576,12 @@ Use <code>distanceToNearest()</code> to get the distance between h3k4me3 peaks a
 ##   [2838]      2838        1416 |      1545
 ##   -------
 ##   queryLength: 2838 / subjectLength: 1729</code></pre>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary of distances</span></span>
-<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">mcols</span>(h3k4me3_to_tss)[,<span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" data-line-number="1"><span class="co"># summary of distances</span></a>
+<a class="sourceLine" id="cb107-2" data-line-number="2"><span class="kw">summary</span>(<span class="kw">mcols</span>(h3k4me3_to_tss)[,<span class="dv">1</span>])</a></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##       0       0    3422    9599   11567  447135</code></pre>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the distribution of distances</span></span>
-<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">mcols</span>(h3k4me3_to_tss)[,<span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" data-line-number="1"><span class="co"># plot the distribution of distances</span></a>
+<a class="sourceLine" id="cb109-2" data-line-number="2"><span class="kw">boxplot</span>(<span class="kw">mcols</span>(h3k4me3_to_tss)[,<span class="dv">1</span>])</a></code></pre></div>
 <p><img src="p4_week2_v4_files/figure-html/look%20at%20hits-1.png" width="672" /> <br></p>
 </div>
 <div id="find-associating-gene" class="section level3">
@@ -1647,28 +1592,28 @@ Use <code>distanceToNearest()</code> to get the distance between h3k4me3 peaks a
 <p><strong>Exercise 16</strong><br />
 Subset the h3k4me3_to_tss for distances =&lt; 10kb and select the associated genes from <code>genes</code> object.</p>
 </blockquote>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save the distances in a vector</span></span>
-<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a>distances <span class="ot">&lt;-</span> <span class="fu">mcols</span>(h3k4me3_to_tss)[,<span class="dv">1</span>]</span>
-<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a><span class="co"># subset h3k4me3_to_tss by distance</span></span>
-<span id="cb110-5"><a href="#cb110-5" aria-hidden="true" tabindex="-1"></a>h3k4me3_to_tss_close <span class="ot">&lt;-</span> ..[..,..]</span></code></pre></div>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save the distances in a vector</span></span>
-<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>distances <span class="ot">&lt;-</span> <span class="fu">mcols</span>(h3k4me3_to_tss)[,<span class="dv">1</span>]</span>
-<span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb111-4"><a href="#cb111-4" aria-hidden="true" tabindex="-1"></a><span class="co"># subset h3k4me3_to_tss for distances &lt;= 10000</span></span>
-<span id="cb111-5"><a href="#cb111-5" aria-hidden="true" tabindex="-1"></a>h3k4me3_to_tss_close <span class="ot">&lt;-</span> h3k4me3_to_tss[distances <span class="sc">&lt;=</span> <span class="dv">10000</span>,]</span></code></pre></div>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>()</span></code></pre></div>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># obtain the genes</span></span>
-<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>mono_h3k4me3_genes <span class="ot">&lt;-</span> <span class="fu">unique</span>(genes[<span class="fu">..</span>(..)])</span>
-<span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb113-4"><a href="#cb113-4" aria-hidden="true" tabindex="-1"></a><span class="co"># look at the output</span></span>
-<span id="cb113-5"><a href="#cb113-5" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(mono_h3k4me3_genes)</span></code></pre></div>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="co"># obtain the genes</span></span>
-<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>mono_h3k4me3_genes <span class="ot">&lt;-</span> <span class="fu">unique</span>(genes[<span class="fu">subjectHits</span>(h3k4me3_to_tss_close)])</span>
-<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb114-4"><a href="#cb114-4" aria-hidden="true" tabindex="-1"></a><span class="co"># look at the output</span></span>
-<span id="cb114-5"><a href="#cb114-5" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(mono_h3k4me3_genes)</span></code></pre></div>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grade_code</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" data-line-number="1"><span class="co"># save the distances in a vector</span></a>
+<a class="sourceLine" id="cb110-2" data-line-number="2">distances &lt;-<span class="st"> </span><span class="kw">mcols</span>(h3k4me3_to_tss)[,<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb110-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb110-4" data-line-number="4"><span class="co"># subset h3k4me3_to_tss by distance</span></a>
+<a class="sourceLine" id="cb110-5" data-line-number="5">h3k4me3_to_tss_close &lt;-<span class="st"> </span>..[..,..]</a></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" data-line-number="1"><span class="co"># save the distances in a vector</span></a>
+<a class="sourceLine" id="cb111-2" data-line-number="2">distances &lt;-<span class="st"> </span><span class="kw">mcols</span>(h3k4me3_to_tss)[,<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb111-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb111-4" data-line-number="4"><span class="co"># subset h3k4me3_to_tss for distances &lt;= 10000</span></a>
+<a class="sourceLine" id="cb111-5" data-line-number="5">h3k4me3_to_tss_close &lt;-<span class="st"> </span>h3k4me3_to_tss[distances <span class="op">&lt;=</span><span class="st"> </span><span class="dv">10000</span>,]</a></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" data-line-number="1"><span class="kw">grade_code</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" data-line-number="1"><span class="co"># obtain the genes</span></a>
+<a class="sourceLine" id="cb113-2" data-line-number="2">mono_h3k4me3_genes &lt;-<span class="st"> </span><span class="kw">unique</span>(genes[<span class="kw">..</span>(..)])</a>
+<a class="sourceLine" id="cb113-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb113-4" data-line-number="4"><span class="co"># look at the output</span></a>
+<a class="sourceLine" id="cb113-5" data-line-number="5"><span class="kw">show</span>(mono_h3k4me3_genes)</a></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1"><span class="co"># obtain the genes</span></a>
+<a class="sourceLine" id="cb114-2" data-line-number="2">mono_h3k4me3_genes &lt;-<span class="st"> </span><span class="kw">unique</span>(genes[<span class="kw">subjectHits</span>(h3k4me3_to_tss_close)])</a>
+<a class="sourceLine" id="cb114-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb114-4" data-line-number="4"><span class="co"># look at the output</span></a>
+<a class="sourceLine" id="cb114-5" data-line-number="5"><span class="kw">show</span>(mono_h3k4me3_genes)</a></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1"><span class="kw">grade_code</span>()</a></code></pre></div>
 <p><br> Besides the distance, we are also (very!) interested in the distribution of the ChIP-seq signal around the TSS. We will look at that next week.</p>
 </div>
 </div>
@@ -1684,13 +1629,56 @@ Subset the h3k4me3_to_tss for distances =&lt; 10kb and select the associated gen
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

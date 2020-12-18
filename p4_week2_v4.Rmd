@@ -20,7 +20,7 @@ editor_options:
 </style>
 
 ```{r setup, echo = F, warning = F, include=FALSE}
-knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
+knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=FALSE)
 #installed required libraries via .yaml file environment_v3_withversions.yml
 #see Home/GitHub/learnr_20201020_installing_learnr_conda_environment.txt
 library(IRanges)
@@ -822,12 +822,12 @@ question("Is H3K27ac enriched at promoters?",
 `r colorize("remove?", "red")`  
 To understand the function of a ChIPped mark or factor we often want to know to which genes and genomic features it binds.
 <br>
-We will use a `TxDb` objects. Such an object is an R interface to prefabricated databases contained by specific annotation packages. The package TxDb.Hsapiens.UCSC.hg18.knownGene includes all human genes and transcripts from UCSC with coordinates for the hg18 genome assembly.
+We will use a `TxDb` objects. Such an object is an R interface to prefabricated databases contained by specific annotation packages. The package TxDb.Hsapiens.UCSC.hg38.knownGene includes all human genes and transcripts from UCSC with coordinates for the hg18 genome assembly.
 
 ```{r anno_h3k4me3_prep, echo = T}
 # we need the `TxDb` object and limits its active chromosomes to chromosome 19
-library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
 seqlevels(txdb) <- "chr19"
 
 # laod package to annotate peaks with genes
@@ -966,8 +966,8 @@ mono_list  <- GRangesList(mono_h3k4me1, mono_h3k4me3, mono_h3k9me3, mono_h3k27ac
 # add names to each element in the list
 names(mono_list) <- c("h3k4me1", "h3k4me3", "h3k9me3", "h3k27ac", "h3k27me3", "h3k36me3")
 # we need the `TxDb` object and limits its active chromosomes to chromosome 19
-library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
 seqlevels(txdb) <- "chr19"
 ```
 

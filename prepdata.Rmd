@@ -46,7 +46,7 @@ save(mono_h3k4me1, mono_h3k4me3, mono_h3k9me3, mono_h3k27ac, mono_h3k27me3, mono
 seqlevels(txdb) <- "chr19" 
 
 # generate list of genomic annotations
-proximal.promoter.cutoff=1000L # Specify the cutoff in bases to classify proximal promoter or enhencer. Peaks that reside within proximal.promoter.cutoff upstream from or overlap with transcription start site are classified as proximal promoters. The default is 1000 bases.
+proximal.promoter.cutoff=1000L # Specify the cutoff in bases to classify proximal promoter or enhancer. Peaks that reside within proximal.promoter.cutoff upstream from or overlap with transcription start site are classified as proximal promoters. The default is 1000 bases.
 immediate.downstream.cutoff=1000L # Specify the cutoff in bases to classify immediate downstream region or enhancer region. Peaks that reside within immediate.downstream.cutoff downstream of gene end but not overlap 3 prime UTR are classified as immediate downstream. 
 #' The default is 1000 bases.
 
@@ -152,5 +152,45 @@ encode_chr19 <- encode[, c("cCRE_accession", "ucsc_label")]
 show(encode_chr19)
 # save this object
 saveRDS(encode_chr19, file = "data/prepared_rds/encode_ccres_chr19.rds")
+```
+
+### transcript quantification
+```{r}
+#BiocManager::install("org.Hs.eg.db")
+library(org.Hs.eg.db)
+
+all_results <- read.table("/Users/christatoenhake/GitHub/FunctGen/data/blueprint/quantification/C000S5B1.gene_quantification.rsem_grape2_crg.GRCh38.20150622.results", header =T)
+
+# remove version from ensemble gene id 
+all_results$gene_id <- sapply(all_results$gene_id,  sub, pattern = "\\.\\d+$", replacement = "")
+
+# map entrez id to ensemble id
+all_results$entrez_id = mapIds(org.Hs.eg.db,
+                    keys=all_results$gene_id, 
+                    column="ENTREZID",
+                    keytype="ENSEMBL",
+                    multiVals="first")
+
+# vector of entrez ids for genes on chr19 
+genes_chr19 <- genes(txdb)
+geneids_genes_chr19 <- mcols(genes_chr19)[,1]
+
+# subset all_results for genes on chr19
+quantification_chr19 <- all_results %>% filter(entrez_id %in% geneids_genes_chr19)
+# write quantification_chr19 to rds
+saveRDS(quantification_chr19, file = "data/prepared_rds/blueprint_c000s5_gene_quantification_chr19.rds")
+
+```
+
+
+```{r}
+# prepare objects for upset plot in week 2
+# BiocManager::install("ComplexHeatmap")
+library(ComplexHeatmap)
+
+monocytes_combinationmatrix <- make_comb_mat(mono_list) # takes a while! 
+
+saveRDS(monocytes_combinationmatrix, file =  "data/prepared_rds/blueprint_monocyte_chr19_complexheatmap_combmatrix.rds")
+
 ```
 
