@@ -4,10 +4,10 @@ navbar:
   left:
     - text: "Home"
       href: index.html
-    - text: "Week 1"
-      href: p3_week1.html  
-    - text: "Week 2"
-      href: p4_week2_v4.html
+    - text: "fg1"
+      href: fg1.html     
+    - text: "fg2"
+      href: fg2.html
     - text: "Appendix"  
       href: prepdata.html  
     - text: "FASTQC_exmpl1"

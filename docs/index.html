@@ -14,6 +14,7 @@
 
 <title>Functional Genomics 1 practical 2020</title>
 
+<script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
@@ -26,8 +27,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -82,6 +81,7 @@ h6 {
   text-align: left;
 }
 </style>
+
 
 <link rel="stylesheet" href="custom.css" type="text/css" />
 
@@ -364,10 +364,10 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="p3_week1.html">Week 1</a>
+  <a href="fg1.html">fg1</a>
 </li>
 <li>
-  <a href="p4_week2_v4.html">Week 2</a>
+  <a href="fg2.html">fg2</a>
 </li>
 <li>
   <a href="prepdata.html">Appendix</a>
@@ -400,69 +400,8 @@ div.tocify {
 
 
 
-<div id="introduction" class="section level2">
-<h2>Introduction</h2>
-<p>This is the computer practical for the <a href="https://www.ru.nl/courseguides/science/vm/osirislinks/bb/nwi-bb064b/">Functional Genomics 1</a> course. It builds upon R programming skills taught in the first year during <a href="https://www.ru.nl/courseguides/science/vm/osirislinks/bp/nwi-bp031/">Genomics and Big Data</a> and a basic understanding of the R programming language is required. We will also use statistics from the course <a href="https://www.ru.nl/courseguides/science/vm/osirislinks/bp/nwi-bp012c/">Statistics 1</a>.</p>
-<p>The <strong>purpose</strong> of this practical is to teach you common bio-informatics analyses performed to analyse epigenomics data. You may already be familiar with the output of these analyses from scientific publications or lectures. We will focus on <strong>how to detect, quantify, annotate and visualise epigenetic marks</strong>. At the end of our analyses, we will also relate epigenetic markings to gene activity as well as candidate TFs that might establish them.</p>
-<p>For this practical, we will use <strong>data of white blood cells</strong> from the <a href="http://dcc.blueprint-epigenome.eu/#/home">the BLUEPRINT project</a>, namely: monocytes, T cells, B cells and natural killer cells. We have chosen these datasets because they are well-documented and easy to find through the BLUEPRINT data portal, and not because we want to teach you the hematopoietic system.<br />
-<br></p>
-<blockquote>
-<h3 id="global-learning-objectives">Global learning objectives</h3>
-<ol style="list-style-type: decimal">
-<li>Explain how to process raw reads from a ChIP-sequencing experiment.<br />
-</li>
-<li>Display and browse genomics data in the UCSC Genome Browser.<br />
-</li>
-<li>Distinguish different genomic datasets based on their coverage profile in the UCSC Genome Browser.<br />
-</li>
-<li>Quantify the overlap among histone ChIP-seq peaks and promoters.<br />
-</li>
-<li>Visually summarize this quantification in a venn diagram.<br />
-</li>
-<li>Statistically test for enrichment of this histone marks in promoters.<br />
-</li>
-<li>Identify the nearest TSS to a histone ChIP-seq peak.<br />
-</li>
-<li>Plot the distribution of distances to the TSS.<br />
-</li>
-<li>Summarize the signal signal strength of a histone ChIP-seq dataset around a genomic feature like the TSS or across gene body.<br />
-</li>
-<li>Visualize the distribution of signal strength in a density plot.<br />
-</li>
-<li>Visualize the signal strength around the TSS in a clustered heatmap.<br />
-</li>
-<li>Check hypotheses about the epigenetic landscape based on single-cell RNA-seq data with actual epigenomics data, and vice versa (check hypotheses on gene activity in single-cel RNA-seq data).</li>
-</ol>
-</blockquote>
-<p><br></p>
-<div id="structure-of-this-practical" class="section level3">
-<h3>Structure of this practical</h3>
-<p>We have divided these global learning objectives into 4 parts:</p>
-<p><strong>Week 1</strong>: Raw ChIP-seq data processing and visualize epigenomics data in the UCSC Genome browser.<br />
-Global learning objectives #1-3.</p>
-<p><strong>Week 2</strong>: Quantify the (co-)occurrences of epigenetic marks and use this to annotate genomic regions.<br />
-Global learning objectives #4-5.</p>
-<p><strong>Week 3</strong>: Compare epigenetic profiles among different cell types.<br />
-Global learning objectives #5-6.</p>
-<p><strong>Week 4</strong>: Synthesis: epigenomics and scRNA-seq.<br />
-Global learning objectives #12.<br />
-<br></p>
-<div id="tutorial-specs" class="section level4">
-<h4>Tutorial specs</h4>
-<ul>
-<li>For each week you will run a different tutorial.<br />
-</li>
-<li>Answers should be saved for each of your sessions.<br />
-</li>
-<li>Background information and tips are formatted in gray boxes and are not obligatory. Background information can also be collapsed and recognized by black arrowheads.</li>
-</ul>
-</div>
-<div id="need-help" class="section level4">
-<h4>Need help?</h4>
-<p>Use the virtual classroom space in Brightspace/Zoom meeting when you need advice. A lecturer will be present there during practical hours.</p>
-<p>Additional links to resoures can be found under <a href="#Resources">links</a> <br></p>
-</div>
-</div>
+<div id="this-page-wont-be-part-of-the-tutorial-run-by-students-on-the-server" class="section level2">
+<h2>This page won’t be part of the tutorial run by students on the server</h2>
 </div>
 
 

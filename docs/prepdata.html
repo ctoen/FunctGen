@@ -12,8 +12,9 @@
 <meta name="author" content="Christa Toenhake" />
 
 
-<title>Prepare files for week 2</title>
+<title>Prepare files for week 2 and 3</title>
 
+<script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -23,8 +24,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -79,6 +78,7 @@ h6 {
   text-align: left;
 }
 </style>
+
 
 
 
@@ -287,10 +287,10 @@ $(document).ready(function () {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="p3_week1.html">Week 1</a>
+  <a href="fg1.html">fg1</a>
 </li>
 <li>
-  <a href="p4_week2_v4.html">Week 2</a>
+  <a href="fg2.html">fg2</a>
 </li>
 <li>
   <a href="prepdata.html">Appendix</a>
@@ -313,36 +313,47 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Prepare files for week 2</h1>
+<h1 class="title toc-ignore">Prepare files for week 2 and 3</h1>
 <h4 class="author">Christa Toenhake</h4>
 <h4 class="date">13/11/2020</h4>
 
 </div>
 
 
-<pre class="r"><code>library(tidyverse)
+<div id="load-libraries" class="section level3">
+<h3>Load libraries</h3>
+<pre class="r"><code>#library(tidyverse)
 library(GenomicRanges)
 library(rtracklayer)
 library(org.Hs.eg.db)
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
-txdb &lt;- TxDb.Hsapiens.UCSC.hg38.knownGene </code></pre>
+txdb &lt;- TxDb.Hsapiens.UCSC.hg38.knownGene 
+library(stringr)
+#BiocManager::install(&quot;biomaRt&quot;)
+library(biomaRt)
+#BiocManager::install(&quot;ComplexHeatmap&quot;)
+library(ComplexHeatmap)</code></pre>
 <pre class="r"><code># H3k4me1 
-mono_h3k4me1 &lt;- rtracklayer::import(&quot;data/blueprint/bed/C000S5H2.ERX547981.H3K4me1.bwa.GRCh38.broad.20150527.chr19.bed&quot;, format = &quot;broadPeak&quot;)
+mono_h3k4me1 &lt;- rtracklayer::import(&quot;data/blueprint/chip_bed/C000S5H2.ERX547981.H3K4me1.bwa.GRCh38.broad.20150527.chr19.bed&quot;, format = &quot;broadPeak&quot;)
 # H3K4me3  
-mono_h3k4me3 &lt;- rtracklayer::import(&quot;data/blueprint/bed/C000S5H2.ERX547984.H3K4me3.bwa.GRCh38.20150527.chr19.bed&quot;, format = &quot;narrowPeak&quot;)
+mono_h3k4me3 &lt;- rtracklayer::import(&quot;data/blueprint/chip_bed/C000S5H2.ERX547984.H3K4me3.bwa.GRCh38.20150527.chr19.bed&quot;, format = &quot;narrowPeak&quot;)
 # H3K9me3 
-mono_h3k9me3 &lt;- rtracklayer::import(&quot;data/blueprint/bed/C000S5H2.ERX547982.H3K9me3.bwa.GRCh38.broad.20150527.chr19.bed&quot;, format = &quot;broadPeak&quot;)
+mono_h3k9me3 &lt;- rtracklayer::import(&quot;data/blueprint/chip_bed/C000S5H2.ERX547982.H3K9me3.bwa.GRCh38.broad.20150527.chr19.bed&quot;, format = &quot;broadPeak&quot;)
 # H3K27ac 
-mono_h3k27ac &lt;- rtracklayer::import(&quot;data/blueprint/bed/C000S5H2.ERX547980.H3K27ac.bwa.GRCh38.20150527.chr19.bed&quot;, format = &quot;narrowPeak&quot;)
+mono_h3k27ac &lt;- rtracklayer::import(&quot;data/blueprint/chip_bed/C000S5H2.ERX547980.H3K27ac.bwa.GRCh38.20150527.chr19.bed&quot;, format = &quot;narrowPeak&quot;)
 # H3K27me3   
-mono_h3k27me3 &lt;- rtracklayer::import(&quot;data/blueprint/bed/C000S5H2.ERX547983.H3K27me3.bwa.GRCh38.broad.20150527.chr19.bed&quot;, format = &quot;broadPeak&quot;)
+mono_h3k27me3 &lt;- rtracklayer::import(&quot;data/blueprint/chip_bed/C000S5H2.ERX547983.H3K27me3.bwa.GRCh38.broad.20150527.chr19.bed&quot;, format = &quot;broadPeak&quot;)
 # H3K36me3
-mono_h3k36me3 &lt;- rtracklayer::import(&quot;data/blueprint/bed/C000S5H2.ERX547979.H3K36me3.bwa.GRCh38.broad.20150527.chr19.bed&quot;, format = &quot;broadPeak&quot;)
+mono_h3k36me3 &lt;- rtracklayer::import(&quot;data/blueprint/chip_bed/C000S5H2.ERX547979.H3K36me3.bwa.GRCh38.broad.20150527.chr19.bed&quot;, format = &quot;broadPeak&quot;)
 # create list
 mono_list  &lt;- GRangesList(mono_h3k4me1, mono_h3k4me3, mono_h3k9me3, mono_h3k27ac, mono_h3k27me3, mono_h3k36me3)
 # add names to each element in the list
-names(mono_list) &lt;- c(&quot;h3k4me1&quot;, &quot;h3k4me3&quot;, &quot;h3k9me3&quot;, &quot;h3k27ac&quot;, &quot;h3k27me3&quot;, &quot;h3k36me3&quot;)
-save(mono_h3k4me1, mono_h3k4me3, mono_h3k9me3, mono_h3k27ac, mono_h3k27me3, mono_h3k36me3, mono_list, file =  &quot;data/prepared_rds/blueprint_monocyte_chr19_granges.RData&quot;)</code></pre>
+names(mono_list) &lt;- c(&quot;h3k4me1&quot;, &quot;h3k4me3&quot;, &quot;h3k9me3&quot;, &quot;h3k27ac&quot;, &quot;h3k27me3&quot;, &quot;h3k36me3&quot;)</code></pre>
+<pre class="r"><code>save(mono_h3k4me1, mono_h3k4me3, mono_h3k9me3, mono_h3k27ac, mono_h3k27me3, mono_h3k36me3, mono_list, file =  &quot;data/prepared_rds/blueprint_monocyte_chr19_granges.RData&quot;)</code></pre>
+</div>
+<div id="granges-of-transcript-centered-genomic-features" class="section level3">
+<h3>GRanges of transcript-centered genomic features</h3>
+<p>Not used anymore in practical (2021 version)</p>
 <pre class="r"><code># make my own list of GRanges objects of differnt genomic features (transcript-centered)
 
 seqlevels(txdb) &lt;- &quot;chr19&quot; 
@@ -364,7 +375,7 @@ immediateDownstream_chr19 &lt;- unique(flank(transcripts_chr19, width=immediate.
 annotation_chr19 &lt;- list(exons_chr19, introns_chr19, fiveUTRs_chr19, threeUTRs_chr19, promoters_chr19, immediateDownstream_chr19)
 
 # remove all metadata information
-annotation_chr19 &lt;- lapply(annotation_chr19, function(.anno){mcols(.anno)&lt;-NULL; .anno})
+annotation_chr19 &lt;- lapply(annotation_chr19, function(.anno){mcols(.anno)&lt;-NULL; .anno, echo = T, eval = F})
 
 # add names
 names(annotation_chr19)[1:6] &lt;- c(&quot;Exons&quot;, &quot;Introns&quot;, &quot;fiveUTRs&quot;, &quot;threeUTRs&quot;, &quot;Promoters&quot;, &quot;immediateDownstream&quot;)
@@ -389,47 +400,28 @@ rm(newAnno.rd, newAnno, annotation_chr19, transcripts_chr19)
 
 # save the final GRangesList object
 saveRDS(annotation_chr19_gr, file = &quot;data/prepared_rds/txdb_annotation_chr19_grangeslist.rds&quot;)</code></pre>
+<p>Not used anymore in practical (2021 version)</p>
 <pre class="r"><code>genes &lt;- unique(genes(txdb, filter = list(tx_chrom = &quot;chr19&quot;)))
 transcripts&lt;-  unique(transcripts(txdb, filter = list(tx_chrom = &quot;chr19&quot;)))
 promoters_def &lt;- unique(promoters(txdb, filter = list(tx_chrom = &quot;chr19&quot;))) # upstream=2000, downstream=200
 promoters_3k &lt;- unique(promoters(txdb, filter = list(tx_chrom = &quot;chr19&quot;), upstream = 3000, downstream = 3000)) 
 
 # save above GRanges objects in RData file
-save(genes, transcripts, promoters_def, promoters_3k, file =  &quot;data/prepared_rds/txdb_annotation_chr19_genes_tx_pr_tss_granges.RData&quot;)
-
-# map ENTREZ gene id to gene SYMBOL
-entrezid_symbols &lt;- AnnotationDbi::select(org.Hs.eg.db, keys = genes$gene_id, columns = c(&quot;ENTREZID&quot;, &quot;SYMBOL&quot;), keytype = &quot;ENTREZID&quot;)</code></pre>
-<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
-<pre class="r"><code># save the final GRangesList object
+save(genes, transcripts, promoters_def, promoters_3k, file =  &quot;data/prepared_rds/txdb_annotation_chr19_genes_tx_pr_tss_granges.RData&quot;)</code></pre>
+</div>
+<div id="df-of-gene-symbols-and-entrezids" class="section level3">
+<h3>df of gene symbols and entrezIDs</h3>
+<p>Not used anymore in practical (2021 version)</p>
+<pre class="r"><code># map ENTREZ gene id to gene SYMBOL
+entrezid_symbols &lt;- AnnotationDbi::select(org.Hs.eg.db, keys = genes$gene_id, columns = c(&quot;ENTREZID&quot;, &quot;SYMBOL&quot;), keytype = &quot;ENTREZID&quot;)
+# save the final GRangesList object
 saveRDS(entrezid_symbols, file = &quot;data/prepared_rds/gene_entrezids_genesymbols_df.rds&quot;)</code></pre>
-<pre class="r"><code>library(plyr)</code></pre>
-<pre><code>## ------------------------------------------------------------------------------</code></pre>
-<pre><code>## You have loaded plyr after dplyr - this is likely to cause problems.
-## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
-## library(plyr); library(dplyr)</code></pre>
-<pre><code>## ------------------------------------------------------------------------------</code></pre>
-<pre><code>## 
-## Attaching package: &#39;plyr&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:XVector&#39;:
-## 
-##     compact</code></pre>
-<pre><code>## The following objects are masked from &#39;package:plyranges&#39;:
-## 
-##     arrange, mutate, summarise, summarize</code></pre>
-<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
-## 
-##     arrange, count, desc, failwith, id, mutate, rename, summarise,
-##     summarize</code></pre>
-<pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
-##     compact</code></pre>
-<pre><code>## The following object is masked from &#39;package:IRanges&#39;:
-## 
-##     desc</code></pre>
-<pre><code>## The following object is masked from &#39;package:S4Vectors&#39;:
-## 
-##     rename</code></pre>
-<pre class="r"><code># Supplementary Table 10 from &#39;The ENCODE consortium, 2020, nature&#39;
+</div>
+<div id="df-of-encode-cis-regulatory-elements" class="section level3">
+<h3>df of ENCODE cis-regulatory elements</h3>
+<p>Not used anymore in practical (2021 version)</p>
+<pre class="r"><code>library(plyr)
+# Supplementary Table 10 from &#39;The ENCODE consortium, 2020, nature&#39;
 # https://www.nature.com/articles/s41586-020-2493-4#MOESM12
 # table has same format as .bed file so probably 0-based
 # r works 1-based, therefore have to set &#39;start.in.df.are.0based = T&#39; 
@@ -445,30 +437,13 @@ encode$ucsc_rgb &lt;- encode_ucsc[match(encode$cCRE_accession, encode_ucsc$name)
 # check that each name as the right itemRGB
 encode_labels &lt;- arrange(as.data.frame(mcols(encode[, c(&quot;cCRE_accession&quot;, &quot;ucsc_rgb&quot;)])), desc(cCRE_accession))
 encodeucsc_labels &lt;- arrange(as.data.frame(mcols(encode_ucsc[, c(&quot;name&quot;, &quot;itemRgb&quot;)])), desc(name))
-all(encode_labels$cCRE_accession == encodeucsc_labels$name)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>all(encode_labels$ucsc_rgb == encodeucsc_labels$itemRgb)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>head(encodeucsc_labels)</code></pre>
-<pre><code>##           name itemRgb
-## 1 EH38E1966500 #FFA700
-## 2 EH38E1966499 #FFA700
-## 3 EH38E1966498 #FFA700
-## 4 EH38E1966495 #FFA700
-## 5 EH38E1966494 #FFCD00
-## 6 EH38E1966492 #FFA700</code></pre>
-<pre class="r"><code>head(encode_labels)</code></pre>
-<pre><code>##   cCRE_accession ucsc_rgb
-## 1   EH38E1966500  #FFA700
-## 2   EH38E1966499  #FFA700
-## 3   EH38E1966498  #FFA700
-## 4   EH38E1966495  #FFA700
-## 5   EH38E1966494  #FFCD00
-## 6   EH38E1966492  #FFA700</code></pre>
-<pre class="r"><code>all_labels &lt;- merge(encode_labels, encodeucsc_labels, by.x = &quot;cCRE_accession&quot;, by.y = &quot;name&quot;, all.x = T, all.y = T)
-identical(all_labels$ucsc_rgb,all_labels$itemRgb)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>rm(all_labels, encode_labels, encodeucsc_labels)
+all(encode_labels$cCRE_accession == encodeucsc_labels$name)
+all(encode_labels$ucsc_rgb == encodeucsc_labels$itemRgb)
+head(encodeucsc_labels)
+head(encode_labels)
+all_labels &lt;- merge(encode_labels, encodeucsc_labels, by.x = &quot;cCRE_accession&quot;, by.y = &quot;name&quot;, all.x = T, all.y = T)
+identical(all_labels$ucsc_rgb,all_labels$itemRgb)
+rm(all_labels, encode_labels, encodeucsc_labels)
 
 # translate itemRGB into a categorie 
 # ref: http://genome.ucsc.edu/cgi-bin/hgTrackUi?db=hg38&amp;g=encodeCcreCombined
@@ -483,113 +458,120 @@ itemRGBs$ucsc_labels &lt;- c(&quot;CTCF&quot;, &quot;prom&quot;, &quot;enhP&quot
 # based on reported itemRGB
 encode$ucsc_label &lt;- as.factor(encode$ucsc_rgb)
 encode$ucsc_label &lt;- as.character(mapvalues(encode$ucsc_label, from = c(&quot;#00B0F0&quot;, &quot;#FF0000&quot;, &quot;#FFA700&quot;, &quot;#FFAAAA&quot;, &quot;#FFCD00&quot;), to = c(&quot;CTCF&quot;, &quot;prom&quot;, &quot;enhP&quot;, &quot;K4m3&quot;, &quot;enhD&quot;)))
-encode</code></pre>
-<pre><code>## GRanges object with 26322 ranges and 5 metadata columns:
-##                seqnames            ranges strand | rDHS_accession
-##                   &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;character&gt;
-##   EH38E1929820    chr19     246842-247054      * |   EH38D3030298
-##   EH38E1929821    chr19     247094-247443      * |   EH38D3030299
-##   EH38E1929826    chr19     266736-266899      * |   EH38D3030305
-##   EH38E1929827    chr19     266947-267110      * |   EH38D3030306
-##   EH38E1929828    chr19     267118-267414      * |   EH38D3030307
-##            ...      ...               ...    ... .            ...
-##   EH38E1966262    chr19 58345946-58346125      * |   EH38D3077319
-##   EH38E1966270    chr19 58355116-58355351      * |   EH38D3077332
-##   EH38E1966302    chr19 58383534-58383786      * |   EH38D3077378
-##   EH38E1966345    chr19 58416697-58416857      * |   EH38D3077428
-##   EH38E1966346    chr19 58417101-58417448      * |   EH38D3077429
-##                cCRE_accession                    group    ucsc_rgb  ucsc_label
-##                   &lt;character&gt;              &lt;character&gt; &lt;character&gt; &lt;character&gt;
-##   EH38E1929820   EH38E1929820 DNase-H3K4me3,CTCF-bound     #FFAAAA        K4m3
-##   EH38E1929821   EH38E1929821 DNase-H3K4me3,CTCF-bound     #FFAAAA        K4m3
-##   EH38E1929826   EH38E1929826          dELS,CTCF-bound     #FFCD00        enhD
-##   EH38E1929827   EH38E1929827          dELS,CTCF-bound     #FFCD00        enhD
-##   EH38E1929828   EH38E1929828          dELS,CTCF-bound     #FFCD00        enhD
-##            ...            ...                      ...         ...         ...
-##   EH38E1966262   EH38E1966262          pELS,CTCF-bound     #FFA700        enhP
-##   EH38E1966270   EH38E1966270          pELS,CTCF-bound     #FFA700        enhP
-##   EH38E1966302   EH38E1966302                     dELS     #FFCD00        enhD
-##   EH38E1966345   EH38E1966345                     pELS     #FFA700        enhP
-##   EH38E1966346   EH38E1966346                     pELS     #FFA700        enhP
-##   -------
-##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
-<pre class="r"><code>table(encode$group, encode$ucsc_label)</code></pre>
-<pre><code>##                           
-##                            CTCF enhD enhP K4m3 prom
-##   CTCF-only,CTCF-bound      776    0    0    0    0
-##   dELS                        0 8097    0    0    0
-##   dELS,CTCF-bound             0 6776    0    0    0
-##   DNase-H3K4me3               0    0    0  323    0
-##   DNase-H3K4me3,CTCF-bound    0    0    0  288    0
-##   pELS                        0    0 3078    0    0
-##   pELS,CTCF-bound             0    0 4735    0    0
-##   PLS                         0    0    0    0  430
-##   PLS,CTCF-bound              0    0    0    0 1819</code></pre>
-<pre class="r"><code># make simplfied object for tutorial
+encode
+table(encode$group, encode$ucsc_label)
+
+# make simplfied object for tutorial
 encode_chr19 &lt;- encode[, c(&quot;cCRE_accession&quot;, &quot;ucsc_label&quot;)]
-show(encode_chr19)</code></pre>
-<pre><code>## GRanges object with 26322 ranges and 2 metadata columns:
-##                seqnames            ranges strand | cCRE_accession  ucsc_label
-##                   &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;character&gt; &lt;character&gt;
-##   EH38E1929820    chr19     246842-247054      * |   EH38E1929820        K4m3
-##   EH38E1929821    chr19     247094-247443      * |   EH38E1929821        K4m3
-##   EH38E1929826    chr19     266736-266899      * |   EH38E1929826        enhD
-##   EH38E1929827    chr19     266947-267110      * |   EH38E1929827        enhD
-##   EH38E1929828    chr19     267118-267414      * |   EH38E1929828        enhD
-##            ...      ...               ...    ... .            ...         ...
-##   EH38E1966262    chr19 58345946-58346125      * |   EH38E1966262        enhP
-##   EH38E1966270    chr19 58355116-58355351      * |   EH38E1966270        enhP
-##   EH38E1966302    chr19 58383534-58383786      * |   EH38E1966302        enhD
-##   EH38E1966345    chr19 58416697-58416857      * |   EH38E1966345        enhP
-##   EH38E1966346    chr19 58417101-58417448      * |   EH38E1966346        enhP
-##   -------
-##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
-<pre class="r"><code># save this object
+show(encode_chr19)
+# save this object
 saveRDS(encode_chr19, file = &quot;data/prepared_rds/encode_ccres_chr19.rds&quot;)</code></pre>
-<div id="transcript-quantification" class="section level3">
-<h3>transcript quantification</h3>
+</div>
+<div id="blueprint-monocytes-transcript-quantification" class="section level3">
+<h3>BLUEPRINT monocytes transcript quantification</h3>
+<ul>
+<li>add entrez gene id using org.Hs.eg.db package<br />
+</li>
+<li>restrict to genes on chromosome 19</li>
+</ul>
 <pre class="r"><code>#BiocManager::install(&quot;org.Hs.eg.db&quot;)
 library(org.Hs.eg.db)
 
-all_results &lt;- read.table(&quot;/Users/christatoenhake/GitHub/FunctGen/data/blueprint/quantification/C000S5B1.gene_quantification.rsem_grape2_crg.GRCh38.20150622.results&quot;, header =T)
+all_results &lt;- read.table(&quot;data/blueprint/rna_quantification/C000S5B1.gene_quantification.rsem_grape2_crg.GRCh38.20150622.results&quot;, header =T)
 
 # remove version from ensemble gene id 
 all_results$gene_id &lt;- sapply(all_results$gene_id,  sub, pattern = &quot;\\.\\d+$&quot;, replacement = &quot;&quot;)
 
 # map entrez id to ensemble id
-all_results$entrez_id = mapIds(org.Hs.eg.db,
+all_results$entrezgene_id = mapIds(org.Hs.eg.db,
                     keys=all_results$gene_id, 
                     column=&quot;ENTREZID&quot;,
                     keytype=&quot;ENSEMBL&quot;,
-                    multiVals=&quot;first&quot;)</code></pre>
-<pre><code>## &#39;select()&#39; returned 1:many mapping between keys and columns</code></pre>
-<pre class="r"><code># vector of entrez ids for genes on chr19 
+                    multiVals=&quot;first&quot;)
+
+# vector of entrez ids for genes on chr19 
 genes_chr19 &lt;- genes(txdb)
 geneids_genes_chr19 &lt;- mcols(genes_chr19)[,1]
 
 # subset all_results for genes on chr19
-quantification_chr19 &lt;- all_results %&gt;% filter(entrez_id %in% geneids_genes_chr19)
-# write quantification_chr19 to rds
+quantification_chr19 &lt;- all_results[all_results$entrezgene_id %in% geneids_genes_chr19,c(&quot;entrezgene_id&quot;, &quot;TPM&quot;, &quot;FPKM&quot;)]</code></pre>
+<pre class="r"><code># write quantification_chr19 to rds
 saveRDS(quantification_chr19, file = &quot;data/prepared_rds/blueprint_c000s5_gene_quantification_chr19.rds&quot;)</code></pre>
+<div id="alternative-gene-id-mapping-with-biomart" class="section level4">
+<h4>Alternative gene ID mapping with biomaRt:</h4>
+<ul>
+<li>add entrez gene id using biomaRt (see steps on )<br />
+</li>
+<li>restrict to genes on chromosome 19</li>
+</ul>
+<p>Ref: <a href="https://www.biostars.org/p/302441/#302485" class="uri">https://www.biostars.org/p/302441/#302485</a></p>
+<pre class="r"><code>all_results &lt;- read.table(&quot;data/blueprint/rna_quantification/C000S5B1.gene_quantification.rsem_grape2_crg.GRCh38.20150622.results&quot;, header =T)
+
+# remove version from ensemble gene id  with stringi
+all_results$gene_id_short  &lt;- str_replace(all_results$gene_id,
+                        pattern = &quot;.[0-9]+$&quot;,
+                        replacement = &quot;&quot;)
+# obtain mart object 
+mart &lt;- useMart(biomart = &quot;ensembl&quot;, dataset = &quot;hsapiens_gene_ensembl&quot;)
+
+
+
+# Test example from https://www.biostars.org/p/302441/#302485  
+gene_ids_version &lt;- c(&quot;ENSG00000236246.1&quot;, # note: none of these can be mapped to entrezgene_id
+                      &quot;ENSG00000281088.1&quot;,
+                      &quot;ENSG00000254526.1&quot;,
+                      &quot;ENSG00000223575.2&quot;,
+                      &quot;ENSG00000201444.1&quot;,
+                      &quot;ENSG00000232573.1&quot;)
+gene_ids &lt;- str_replace(gene_ids_version,
+                        pattern = &quot;.[0-9]+$&quot;,
+                        replacement = &quot;&quot;)
+
+getBM(attributes = c(&#39;ensembl_gene_id&#39;,
+                     &#39;entrezgene_id&#39;),
+      filters = &#39;ensembl_gene_id&#39;, 
+      values = gene_ids,
+      mart = mart)
+
+getBM(attributes = c(&#39;ensembl_gene_id&#39;,
+                     &#39;entrezgene_id&#39;),
+      filters = &#39;ensembl_gene_id&#39;, 
+      values = c(&#39;ENSG00000001460&#39;, &#39;ENSG00000008517&#39;, &#39;ENSG00000009724&#39;), #these should map
+      mart = mart)
+
+# map entrez id to ensemble id with biomaRt 
+#library(biomaRt)
+geneids &lt;- all_results$gene_id_short
+
+mappings &lt;- getBM(attributes = c(&#39;ensembl_gene_id&#39;,&#39;entrezgene_id&#39;), 
+      values = geneids,
+      filters = &#39;ensembl_gene_id&#39;, 
+      mart = mart)
+
+dim(mappings)
+
+all_results &lt;- merge(all_results, mappings, by.x = &quot;gene_id_short&quot; , by.y = &quot;ensembl_gene_id&quot;)
+
+# vector of entrez ids for genes on chr19 
+genes_chr19 &lt;- genes(txdb)
+geneids_genes_chr19 &lt;- mcols(genes_chr19)[,1]
+
+# subset all_results for genes on chr19
+quantification_chr19_biomart &lt;- all_results[all_results$entrezgene_id %in% geneids_genes_chr19,]</code></pre>
+</div>
+</div>
+<div id="complex-heatmap-object-week-2" class="section level3">
+<h3>Complex Heatmap object week 2</h3>
+<p>Used for exercises in fg2 (2021 version)<br />
+This function is also run by students but resulting object by several exercises and as the function takes a while, I decided to prepare the object in advance.</p>
 <pre class="r"><code># prepare objects for upset plot in week 2
-# BiocManager::install(&quot;ComplexHeatmap&quot;)
-library(ComplexHeatmap)</code></pre>
-<pre><code>## ========================================
-## ComplexHeatmap version 2.4.3
-## Bioconductor page: http://bioconductor.org/packages/ComplexHeatmap/
-## Github page: https://github.com/jokergoo/ComplexHeatmap
-## Documentation: http://jokergoo.github.io/ComplexHeatmap-reference
-## 
-## If you use it in published research, please cite:
-## Gu, Z. Complex heatmaps reveal patterns and correlations in multidimensional 
-##   genomic data. Bioinformatics 2016.
-## 
-## This message can be suppressed by:
-##   suppressPackageStartupMessages(library(ComplexHeatmap))
-## ========================================</code></pre>
-<pre class="r"><code>monocytes_combinationmatrix &lt;- make_comb_mat(mono_list) # takes a while! 
+monocytes_combinationmatrix &lt;- make_comb_mat(mono_list) # takes a while! 
 
 saveRDS(monocytes_combinationmatrix, file =  &quot;data/prepared_rds/blueprint_monocyte_chr19_complexheatmap_combmatrix.rds&quot;)</code></pre>
+</div>
+<div id="session-info" class="section level3">
+<h3>session Info</h3>
+<pre class="r"><code>sessionInfo()</code></pre>
 </div>
 
 

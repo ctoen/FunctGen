@@ -16,58 +16,8 @@ output:
 <div class="row" style="padding-top: 20px;">
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
+knitr::opts_chunk$set(message=FALSE, warning=FALSE, cache=FALSE)
 ```
 
-## Introduction
-This is the computer practical for the [Functional Genomics 1](https://www.ru.nl/courseguides/science/vm/osirislinks/bb/nwi-bb064b/) course. It builds upon R programming skills taught in the first year during [Genomics and Big Data](https://www.ru.nl/courseguides/science/vm/osirislinks/bp/nwi-bp031/) and a basic understanding of the R programming language is required. We will also use statistics from the course [Statistics 1](https://www.ru.nl/courseguides/science/vm/osirislinks/bp/nwi-bp012c/).  
-
-The **purpose** of this practical is to teach you common bio-informatics analyses performed to analyse epigenomics data. You may already be familiar with the output of these analyses from scientific publications or lectures. We will focus on **how to detect, quantify, annotate and visualise epigenetic marks**. At the end of our analyses, we will also relate epigenetic markings to gene activity as well as candidate TFs that might establish them.  
-
-For this practical, we will use **data of white blood cells** from the [the BLUEPRINT project](http://dcc.blueprint-epigenome.eu/#/home), namely: monocytes, T cells, B cells and natural killer cells. We have chosen these datasets because they are well-documented and easy to find through the BLUEPRINT data portal, and not because we want to teach you the hematopoietic system.  
-<br>  
-
-> ### Global learning objectives  
-  1. Explain how to process raw reads from a ChIP-sequencing experiment.   
-  2. Display and browse genomics data in the UCSC Genome Browser.  
-  3. Distinguish different genomic datasets based on their coverage profile in the UCSC Genome Browser.   
-  4. Quantify the overlap among histone ChIP-seq peaks and promoters.    
-  5. Visually summarize this quantification in a venn diagram.  
-  6. Statistically test for enrichment of this histone marks in promoters.   
-  7. Identify the nearest TSS to a histone ChIP-seq peak.  
-  8. Plot the distribution of distances to the TSS.  
-  9. Summarize the signal signal strength of a histone ChIP-seq dataset around a genomic feature like the TSS or across gene body.  
-  10. Visualize the distribution of signal strength in a density plot.  
-  11. Visualize the signal strength around the TSS in a clustered heatmap.   
-  12. Check hypotheses about the epigenetic landscape based on single-cell RNA-seq data with actual epigenomics data, and vice versa (check hypotheses on gene activity in single-cel RNA-seq data).   
-  
-<br>  
-
-### Structure of this practical  
-We have divided these global learning objectives into 4 parts:  
-
-**Week 1**: Raw ChIP-seq data processing and visualize epigenomics data in the UCSC Genome browser.  
-Global learning objectives #1-3.  
-  
-**Week 2**: Quantify the (co-)occurrences of epigenetic marks and use this to annotate genomic regions.   
-Global learning objectives #4-5.  
-  
-**Week 3**: Compare epigenetic profiles among different cell types.   
-Global learning objectives #5-6.  
-  
-**Week 4**: Synthesis: epigenomics and scRNA-seq.  
-Global learning objectives #12.  
-<br>  
-
-#### Tutorial specs  
-
-- For each week you will run a different tutorial.  
-- Answers should be saved for each of your sessions.  
-- Background information and tips are formatted in gray boxes and are not obligatory. Background information can also be collapsed and recognized by black arrowheads.  
-
-
-#### Need help?  
-Use the virtual classroom space in Brightspace/Zoom meeting when you need advice. A lecturer will be present there during practical hours.  
-
-Additional links to resoures can be found under [links](#Resources) 
-<br>    
+## This page won't be part of the tutorial run by students on the server
+   
