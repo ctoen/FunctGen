@@ -1,6 +1,6 @@
 ---
 title: "Functional Genomics 1 practical 2020"
-author: "Written by: Klaas, Simon, Siebren, Christa ... "
+author: "Written by: Klaas, Simon, Siebren & Christa"
 output: 
   html_document:
     toc: true
@@ -13,11 +13,17 @@ output:
     
 ---
 
-<div class="row" style="padding-top: 20px;">
+<style type="text/css">
+.title {
+  display: none;
+}
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(message=FALSE, warning=FALSE, cache=FALSE)
-```
+#getting-started img {
+  margin-right: 10px;
+}
 
-## This page won't be part of the tutorial run by students on the server
+</style>
+
+# **Appedices**  
+This repo contains the FASTQ reports used in the Functional Genomics 1 tutorial.      
    

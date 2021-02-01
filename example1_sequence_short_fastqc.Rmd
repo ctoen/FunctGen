@@ -1,4 +1,4 @@
-<html><head><title>example1_sequence_short.txt FastQC Report</title><style type="text/css">
+<html><head><title>example1_sequence.txt FastQC Report</title><style type="text/css">
  @media screen {
   div.summary {
     width: 18em;

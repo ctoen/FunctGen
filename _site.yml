@@ -1,17 +1,11 @@
-name: "FG 2020"
+name: "FG1 2020"
 navbar:
-  title: "FG 2020"
+  title: "FG1 2020"
   left:
-    - text: "Home"
-      href: index.html
-    - text: "fg1"
-      href: fg1.html     
-    - text: "fg2"
-      href: fg2.html
-    - text: "Appendix"  
-      href: prepdata.html  
-    - text: "FASTQC_exmpl1"
+    - text: "Site index"  
+    - href: index.html
+    - text: "FASTQC report 1"  
       href: example1_sequence_short_fastqc.html
-    - text: "FASTQC_exmpl2"
+    - text: "FASTQC report 2"
       href: example2_sequence_short_fastqc.html
 output_dir: "docs"
